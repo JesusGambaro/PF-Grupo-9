@@ -1,4 +1,5 @@
 const {Router} = require('express');
+const {shoesRoutes} = require('./shoesRoutes.js');
 
 const router = Router();
 

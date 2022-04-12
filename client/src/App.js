@@ -1,9 +1,19 @@
-import './App.css';
+import "./Css/app.scss";
+import Shoes from "./Components/Shoes";
+import {Route, Routes} from "react-router-dom";
+import NotFound from "./Components/NotFound";
+import NavBar from "./Components/NavBar";
 
 function App() {
   return (
-    <div className="App">
-    </div>
+    <Routes>
+      <Route
+        exact
+        path="/"
+        element={[<NavBar key={"nav"} />, <Shoes key={"shoes"} />]}
+      />
+      <Route path="*" exact={true} element={<NotFound />} />
+    </Routes>
   );
 }
 

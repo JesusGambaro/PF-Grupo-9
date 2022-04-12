@@ -30,14 +30,34 @@ let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].s
 sequelize.models = Object.fromEntries(capsEntries);
 
 // Se hace destructuring para los modelos para relacionarlos.
-const {} = sequelize.models;
+const {Product, Gender, Category, Brand, Color, Stock, Image} = sequelize.models;
 
 // Se asignan las relaciones M:N
-
-     // EJEMPLO
+// EJEMPLO
 
 // Country.belongsToMany(Activity, {through: 'Country_activity', timestamps: false});
 // Activity.belongsToMany(Country, {through: 'Country_activity', timestamps: false});
+
+Product.hasMany(Stock);
+Stock.belongsTo(Product);
+
+Gender.hasMany(Product);
+Product.belongsTo(Gender);
+
+Category.hasMany(Product);
+Product.belongsTo(Category);
+
+Brand.hasMany(Product);
+Product.belongsTo(Brand);
+
+Color.hasMany(Stock);
+Stock.belongsTo(Color);
+
+Stock.hasMany(Image);
+Image.belongsTo(Stock);
+
+Product.hasMany(Stock);
+Stock.belongsTo(Product);
 
 
 module.exports = {

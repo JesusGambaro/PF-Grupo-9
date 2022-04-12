@@ -1,19 +1,10 @@
-const express = require('express');
-const {conn} = require('./src/db.js');
-const routes = require('./src/routes/index.js');
+const server = require('./src/app.js');
+const { conn } = require('./src/db.js');
 
-const port = process.env.PORT || 3001;
 
-const app = express();
-
-// app.get("/", (req, res) => res.send("Hello World!"));
-
-// app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-app.use('/', routes)
-
-conn.sync({force: true}).then(() => {
-     app.listen(port, () => {
-          console.log(`Server listening on port ${port}`);
-     })
-})
+// Syncing all the models at once.
+conn.sync({ force: false }).then(async () => {
+     server.listen(3001, () => {
+          console.log('%s listening at 3001');
+     });
+});

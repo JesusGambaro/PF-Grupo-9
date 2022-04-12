@@ -1,10 +1,11 @@
-const { Router } = require("express");
-const allCategories = require("./categories");
-const footwearRoutes = require("./footwearRoutes.js");
+const {Router} = require('express');
+const footwearRoutes = require('./footwearRoutes.js');
 
 const router = Router();
 
-router.use("/allFootwear/", footwearRoutes);
-router.use("/allCategories", allCategories);
+// router.use('/users', usersRoutes);
+router.use('/allFootwear/', footwearRoutes);
+
+
 
 module.exports = router;

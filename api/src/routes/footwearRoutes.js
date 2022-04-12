@@ -18,4 +18,16 @@ router.get('/:id', async (req, res) => {
      }
 });
 
+// Provisional, hay que probarla.
+router.get('/allGenders', async (req,res) => {
+     try {
+          const genders = Product.findAll({
+               attributes: [[sequelize.fn('DISTINCT', sequelize.col('gender')), 'genders']]
+          })
+          res.json(genders ? genders : []);
+     } catch (error) {
+          
+     }
+})
+
 module.exports = router;

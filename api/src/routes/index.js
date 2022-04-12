@@ -1,9 +1,9 @@
 const {Router} = require('express');
-const {shoesRoutes} = require('./shoesRoutes.js');
+const {footwearRoutes} = require('./footwearRoutes.js');
 
 const router = Router();
 
-router.use('/allFootwear/', shoesRoutes);
+router.use('/allFootwear/', footwearRoutes);
 // router.use('/users', usersRoutes);
 
 module.exports = router;

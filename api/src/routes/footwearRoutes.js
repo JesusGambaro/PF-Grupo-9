@@ -17,3 +17,5 @@ router.get('/:id', async (req, res) => {
           res.status(403).json({msg: error.message});
      }
 });
+
+module.exports = router;

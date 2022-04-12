@@ -3,7 +3,7 @@ const {shoesRoutes} = require('./shoesRoutes.js');
 
 const router = Router();
 
-// router.use('/shoes', shoesRoutes);
+router.use('/allFootwear/', shoesRoutes);
 // router.use('/users', usersRoutes);
 
 module.exports = router;

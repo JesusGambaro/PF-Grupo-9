@@ -3,7 +3,7 @@ const { Router } = require('express');
 const { Product } = require('../db.js');
 const router = Router();
 
-// Ruta que retorna el modelo de calzado pasado por params.id
+// Ruta que retorna el modelo de calzado pasado por params.id 
 
 // Provisional, hay que probarla.
 router.get('/allGenders', async (req,res) => {

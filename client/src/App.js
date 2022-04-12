@@ -1,9 +1,14 @@
 import './App.css';
+import { Route, Routes } from "react-router-dom"
+import Details from './components/Details/Details';
 
 function App() {
   return (
-    <div className="App">
-    </div>
+    <>
+      <Routes>
+        <Route path="home/:id" element={<Details/>}/>
+      </Routes>
+    </>
   );
 }
 

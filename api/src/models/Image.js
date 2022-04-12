@@ -10,8 +10,3 @@ module.exports = (sequelize) => {
         },
     });
 };
-
-
-// id (PK)
-// url
-// Stock_ID(FK)

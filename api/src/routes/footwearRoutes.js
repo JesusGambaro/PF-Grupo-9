@@ -1,4 +1,4 @@
-const {Router} = require('express');
+const { Router } = require('express');
 // Cambiar por el nombre del Modelo 
 const { Product } = require('../db.js');
 
@@ -11,10 +11,10 @@ router.get('/:id', async (req, res) => {
           // footwear es el calzado encontrado, findByPk retorna el coincidente con el id
           const footwear = await Product.findByPk(id);
           // Retorna el coincidente. Si no existe, retorna un array vacio
-          res.json(footwear ? footwear : []);
+          res.json(footwear);
      }catch(e){
           const error = new Error('No existe el calzado');
-          res.status(403).json({msg: error.message});
+          res.status(404).json({msg: error.message});
      }
 });
 

@@ -9,7 +9,6 @@ import {
     CarouselItem,
     CarouselIndicators,
 } from 'reactstrap';
-import NavBar from '../NavBar/NavBar';
   
 export default function LandingPage() {
     
@@ -72,7 +71,7 @@ export default function LandingPage() {
     });
   
     return (
-        <div><NavBar/>
+        <div>
         <div style={{
             display: 'block', width: '100%', padding: 10
         }} className='container-fluid'>

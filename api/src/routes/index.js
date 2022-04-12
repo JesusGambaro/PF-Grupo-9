@@ -7,4 +7,5 @@ const router = Router();
 router.use('/allFootwear/', footwearRoutes);
 
 
+
 module.exports = router;

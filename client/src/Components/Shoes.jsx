@@ -4,6 +4,7 @@ import axios from "axios";
 import Loading from "./Loading";
 import LeftSideFilters from "./LeftSideFilters";
 import UpSideBar from "./UpSideBar";
+import NavBar from "./NavBar";
 const Shoes = () => {
   const [info, setInfo] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,29 +19,10 @@ const Shoes = () => {
       setLoading(false);
     })();
   }, [start]);
-
-
-  const scrollBar = document.getElementById("scroll-bar");
-  console.log(scrollBar);
-  const capo = document.getElementById("capo");
-  console.log(capo);
-  const height =
-    document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  
-  window.addEventListener("scroll", () => {
-    const scrollTop =
-      document.body.scrollTop || document.documentElement.scrollTop;
-    scrollBar.style.height = `${(scrollTop / height) * 100}%`;
-  });
-  
-
-
-
-
-
   return (
     <div className="home-container">
-     <div id="scroll-bar"></div>
+      <NavBar key={"nav"} />
+      <div id="scroll-bar"></div>
       <UpSideBar quantity={info.length} handleToggle={(p) => setToggle(p)} />
       <LeftSideFilters />
       {loading ? (

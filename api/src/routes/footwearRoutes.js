@@ -56,6 +56,7 @@ router.get("/allCategories", async (req, res) => {
     res.status(404).send({ msg: error.message })
   }
 })
+
 router.get("/sales", async (req, res) => {
   try {
     const carouselSale = await Product.findAll({
@@ -67,6 +68,7 @@ router.get("/sales", async (req, res) => {
         model: Image,
       },
     })
+    res.send(carouselSale)
   } catch (error) {
     console.log(error)
     res.status(404).send({ msg: error.message })
@@ -83,6 +85,8 @@ router.get("/:id", async (req, res) => {
     console.log(error)
     res.status(404).send({ msg: error.message })
   }
+})
+
 router.post("/", async (req, res) => {
      try {
           const {model, brand, category, gender, price, description, sale, size, amount, color, addedImages} = req.body;

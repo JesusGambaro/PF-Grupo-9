@@ -28,15 +28,6 @@ function Details() {
       "thumbnail": "https://image.goat.com/375/attachments/product_template_pictures/images/067/561/185/original/887470_00.png.png"
     }
   }
-  /*
-  Id
-  Marca
-  Categoria
-  Genero
-  Descripcion 
-  
-  Sale
-  */
   return (
     <div className="bg-light">
       <div className="container mt-5 mb-5 rounded-3 shadow-lg ">

@@ -1,13 +1,26 @@
 import "../Css/navbar.scss";
+import '../Css/NavBar.css'
 import logo from "../Images/logo2.png"
+import { useState } from "react";
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
+import { Link } from "react-router-dom";
+
+
+
 const NavBar = () => {
+  const [dropDown, setDropDown]=useState(false)
+    function abrirYcerrar(){
+        setDropDown(!dropDown)
+    }
   return (
     <div className="navbarOwn">
-      <img className="logoOwn" src={logo} alt="logo" />
+       <img className="logoOwn" src={logo} alt="logo" />
+      
       <ul className="sectionsOwn">
-        <li className="liOwn">MEN</li>
-        <li className="liOwn">WOMEN</li>
-        <li className="liOwn">KIDS</li>
+        <li><Link to='/home' className="gohome">HOME</Link></li>
+        <li>MEN</li>
+        <li>WOMEN</li>
+        <li>KIDS</li>
       </ul>
       <form className="searchOwn">
         <button type="submitOwn">
@@ -16,14 +29,25 @@ const NavBar = () => {
         <input type="text" placeholder="SEARCH" />
       </form>
       <ul className="shortcutOwn">
-        <li className="liOwn">
+        <li>
           <i className="bi bi-heart"></i>
         </li>
-        <li className="liOwn">
+        <li>
           <i className="bi bi-bag"></i>
         </li>
-        <li className="liOwn">
-          <i className="bi bi-person"></i>
+        <li>
+          
+          <Dropdown isOpen={dropDown} toggle={abrirYcerrar} >
+                <DropdownToggle className='drop'>
+                <i className="bi bi-person"></i>
+                </DropdownToggle>
+                <DropdownMenu >
+                    
+                    <DropdownItem>cerrar sesión</DropdownItem>
+                    <DropdownItem>información</DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
+          
         </li>
       </ul>
     </div>

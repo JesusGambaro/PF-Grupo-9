@@ -1,9 +1,9 @@
 import "../Css/navbar.scss";
-
+import logo from "../Images/logo2.png"
 const NavBar = () => {
   return (
     <div className="navbarOwn">
-      <img className="logoOwn" src="./Images/logo2.png" alt="logo" />
+      <img className="logoOwn" src={logo} alt="logo" />
       <ul className="sectionsOwn">
         <li className="liOwn">MEN</li>
         <li className="liOwn">WOMEN</li>

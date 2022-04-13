@@ -89,6 +89,28 @@ router.get("/:id", async (req, res) => {
     console.log(error)
     res.status(404).send({ msg: error.message })
   }
+<<<<<<< HEAD
 })
 
 module.exports = router
+=======
+});
+
+router.post("/", async (req, res) => {
+     try {
+          const {model, brand, category, gender, price, description, sale, size, amount, color, addedImages} = req.body;
+          let product = await Product.create({model, brand, category, gender, price, description, sale, size, amount, color})
+
+          addedImages.length > 0 && addedImages.map(async (image) =>{
+               let imageProduct = await Image.create({url: image });
+               await product.addImage(imageProduct);
+          })
+
+          res.send("Product with its images created!");
+     } catch (error) {
+          console.log(error);
+          res.status(404).send({ msg: error.message });
+     }
+});
+module.exports = router;
+>>>>>>> c11bb2be7ca639fcaf8015edaa06f9a7cfe7b8ec

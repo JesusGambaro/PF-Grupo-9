@@ -4,6 +4,7 @@ import {Route, Routes} from "react-router-dom";
 import NotFound from "./Components/NotFound";
 import NavBar from "./Components/NavBar";
 import LandingPage from "./Components/LandingPage";
+import Details from "./Components/Details";
 function App() {
   return (
     <Routes>
@@ -18,7 +19,7 @@ function App() {
         element={[<NavBar key={"nav"} />, <Shoes key={"shoes"} />]}
       />
       
-      <Route path="home/:id" element={[<NavBar key={"nav"} />,<Details key={"details"}/>]}/>
+      <Route exact path="home/details/:id" element={[<NavBar key={"nav"} /> , <Details key={"details"} />]}/>
       
       <Route path="*" exact={true} element={<NotFound />} />
     </Routes>

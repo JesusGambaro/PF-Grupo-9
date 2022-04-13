@@ -1,7 +1,7 @@
 //import { useParams } from "react-router-dom"
 import { useState } from "react";
-import style from "./Details.module.css"
-import { data } from "../data"
+import style from "../Css/Details.module.css"
+import { data } from "./data"
 
 function Details() {
   const [colorSelect, setColorSelect] = useState()
@@ -29,7 +29,7 @@ function Details() {
     }
   }
   return (
-    <div className="bg-light">
+    <div style={{"marginTop":"7%"}}>
       <div className="container mt-5 mb-5 rounded-3 shadow-lg ">
         <div className="row pt-4 pb-4 bg-white">
           <h1 className="text-info text-center">{details.name}</h1>

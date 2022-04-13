@@ -9,7 +9,8 @@ import {
     CarouselItem,
     CarouselIndicators,
 } from 'reactstrap';
-import NavBar from '../NavBar/NavBar';
+import Footer from '../Footer/Footer';
+
   
 export default function LandingPage() {
     
@@ -72,21 +73,21 @@ export default function LandingPage() {
     });
   
     return (
-        <div><NavBar/>
+        <div>{/* <NavBar/> */}
         <div style={{
             display: 'block', width: '100%', padding: 10
         }} className='container-fluid'>
             
-            <Carousel previous={previousButton} next={nextButton}
+            <Carousel previous={previousButton} next={nextButton} 
                 activeIndex={activeIndex}>
-                <CarouselIndicators items={items}
+                <CarouselIndicators items={items} 
                     activeIndex={activeIndex}
                     onClickHandler={(newIndex) => {
                         if (animating) return;
                         setActiveIndex(newIndex);
                     }} />
                 {carouselItemData}
-                <CarouselControl directionText="Prev"
+                <CarouselControl directionText="Prev" 
                     direction="prev" onClickHandler={previousButton} />
                 <CarouselControl directionText="Next"
                     direction="next" onClickHandler={nextButton} />
@@ -96,35 +97,133 @@ export default function LandingPage() {
 
         </div>
               
-        <div className='cards'>
-              <Link to='/'><img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img></Link>
-              <Link to='/'><img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img></Link>
-              <Link to='/'><img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img></Link>
-              <Link to='/'><img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img></Link>
-              <Link to='/'><img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img></Link>
-              <Link to='/'><img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img></Link>
-              
+        <div className='cards-container'>
+            <div className='card' >
+                <div className='card-encabezado' >
+                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img>
+                </div>
+                <div className='card-contenido'>
+                    <div className='info'>shoe name</div>
+                    <div className='info'>Price </div>
+                    
+                </div>
+                <div className='card-iconos'>
+                  <button className='add'> <li className='agrandar'><i className="bi bi-heart"></i></li> </button>
+                   <Link to='/' className='go-detail'><li className='agrandar' >more details</li> </Link>
+                  <button className='add' > <li className='agrandar'><i className="bi bi-bag"></i></li></button>
+                  
+                </div>
+                
+            
+                
+            </div>
 
+            <div className='card' >
+                <div className='card-encabezado' >
+                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img>
+                </div>
+                <div className='card-contenido'>
+                    <div className='info'>shoe name</div>
+                    <div className='info'>Price </div>
+                    
+                </div>
+                <div className='card-iconos'>
+                  <button className='add'> <li className='agrandar'><i className="bi bi-heart"></i></li> </button>
+                   <Link to='/' className='go-detail'><li className='agrandar' >more details</li> </Link>
+                  <button className='add' > <li className='agrandar'><i className="bi bi-bag"></i></li></button>
+                  
+                </div>
+                
+            
+                
+            </div>
+            <div className='card' >
+                <div className='card-encabezado' >
+                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img>
+                </div>
+                <div className='card-contenido'>
+                    <div className='info'>shoe name</div>
+                    <div className='info'>Price </div>
+                    
+                </div>
+                <div className='card-iconos'>
+                  <button className='add'> <li className='agrandar'><i className="bi bi-heart"></i></li> </button>
+                   <Link to='/' className='go-detail'><li className='agrandar' >more details</li> </Link>
+                  <button className='add' > <li className='agrandar'><i className="bi bi-bag"></i></li></button>
+                  
+                </div>
+                
+            
+                
+            </div>
+            <div className='card' >
+                <div className='card-encabezado' >
+                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img>
+                </div>
+                <div className='card-contenido'>
+                    <div className='info'>shoe name</div>
+                    <div className='info'>Price </div>
+                    
+                </div>
+                <div className='card-iconos'>
+                  <button className='add'> <li className='agrandar'><i className="bi bi-heart"></i></li> </button>
+                   <Link to='/' className='go-detail'><li className='agrandar' >more details</li> </Link>
+                  <button className='add' > <li className='agrandar'><i className="bi bi-bag"></i></li></button>
+                  
+                </div>
+                
+            
+                
+            </div>
+            <div className='card' >
+                <div className='card-encabezado' >
+                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img>
+                </div>
+                <div className='card-contenido'>
+                    <div className='info'>shoe name</div>
+                    <div className='info'>Price </div>
+                    
+                </div>
+                <div className='card-iconos'>
+                  <button className='add'> <li className='agrandar'><i className="bi bi-heart"></i></li> </button>
+                   <Link to='/' className='go-detail'><li className='agrandar' >more details</li> </Link>
+                  <button className='add' > <li className='agrandar'><i className="bi bi-bag"></i></li></button>
+                  
+                </div>
+                
+            
+                
+            </div>
 
+             
+
+            <div className='card' >
+                <div className='card-encabezado' >
+                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img>
+                </div>
+                <div className='card-contenido'>
+                    <div className='info'>shoe name</div>
+                    <div className='info'>Price </div>
+                    
+                </div>
+                <div className='card-iconos'>
+                  <button className='add'> <li className='agrandar'><i className="bi bi-heart"></i></li> </button>
+                   <Link to='/' className='go-detail'><li className='agrandar' >more details</li> </Link>
+                  <button className='add' > <li className='agrandar'><i className="bi bi-bag"></i></li></button>
+                  
+                </div>
+                
+            
+                
+            </div>
 
 
                 
             </div>
 
        
-            <div className='images-container'>
-                <Link to='/'><img className='icons' src='https://cdn-icons-png.flaticon.com/512/53/53283.png'></img></Link>
-                <Link to='/' ><img className='icons' src='https://static.vecteezy.com/system/resources/previews/001/196/883/non_2x/basketball-png.png'></img></Link>
-                <Link to='/' ><img className='icons' src='https://cdn-icons-png.flaticon.com/512/2362/2362563.png'></img></Link>
-                <Link to='/' ><img className='icons' src='https://cdn-icons-png.flaticon.com/512/82/82705.png'></img></Link>
-                <Link to='/' ><img className='icons' src='https://cdn-icons-png.flaticon.com/512/1851/1851806.png'></img></Link>
-        
             
-        </div>
-
-        <footer className='footer'>información de contácto:
-
-        </footer>
+        <Footer/>
         </div>
     );
 }

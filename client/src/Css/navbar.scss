@@ -1,4 +1,4 @@
-.navbar {
+.navbarOwn {
   width: 100%;
   height: 4rem;
   display: flex;
@@ -13,18 +13,26 @@
   font-style: normal;
   font-size: medium;
   color: #000;
-  .logo {
+  .logoOwn {
     margin-left: 1rem;
     width: 4%;
   }
-  .sections {
+
+  .gohome{
+    text-decoration:none;
+    color:rgb(0, 0, 0);
+    font-family: "Gelion", sans-serif;
+    padding: 0;
+    gap: 1rem;
+  }
+  .sectionsOwn {
     display: flex;
     justify-content: center;
     gap: 1rem;
     list-style: none;
     padding: 0;
   }
-  .shortcut {
+  .shortcutOwn {
     margin-right: 1rem;
     color: #000;
     display: flex;
@@ -42,7 +50,7 @@
       }
     }
   }
-  .search {
+  .searchOwn {
     height: 60%;
     border-radius: 0.5rem;
     display: flex;

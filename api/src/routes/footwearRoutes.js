@@ -9,14 +9,10 @@ router.get("/", async (req, res) => {
   const { footwear } = req.query;
   try {
     const allFootwears = await Product.findAll({
-      attributes: [{ exclude: description }],
-      include: {
-        model: Image,
-        attributes: ["url"],
-        through: {
-          attributes: [],
-        },
-      },
+     attributes: { exclude: "description" },
+     include: [{
+          model: Image,
+     }],
     });
     if (footwear) {
       const footwearsSearched = await Product.findAll({

@@ -123,7 +123,6 @@ router.post("/", async (req, res) => {
         let imageProduct = await Image.create({ url: image })
         await product.addImage(imageProduct)
       })
-
     res.send("Product with its images created!")
   } catch (error) {
     console.log(error)

@@ -18,6 +18,9 @@ router.get("/", async (req, res) => {
         where: {
           model: { [Op.iLike]: `%${footwear}%` },
         },
+        include: {
+          model: Image,
+        },
       })
 
       return res.send(footwearsSearched)
@@ -37,7 +40,7 @@ router.get("/allGenders", async (req, res) => {
       attributes: ["gender"],
       group: ["gender"],
     })
-    res.json(genders ? genders : [])
+    res.send(genders ? genders : [])
   } catch (error) {
     console.log(error)
     res.status(404).send({ msg: error.message })
@@ -46,7 +49,7 @@ router.get("/allGenders", async (req, res) => {
 
 router.get("/allCategories", async (req, res) => {
   try {
-    let allCategories = await Product.findAll({
+    const allCategories = await Product.findAll({
       attributes: ["category"],
       group: ["category"],
     })
@@ -60,7 +63,7 @@ router.get("/allCategories", async (req, res) => {
 router.get("/sales", async (req, res) => {
   try {
     const carouselSale = await Product.findAll({
-      limit: 3,
+      limit: 4,
       where: {
         sale: { [Op.gt]: 0 },
       },
@@ -68,6 +71,7 @@ router.get("/sales", async (req, res) => {
         model: Image,
       },
     })
+
     res.send(carouselSale)
   } catch (error) {
     console.log(error)
@@ -80,28 +84,49 @@ router.get("/:id", async (req, res) => {
     // footwear es el calzado encontrado, findByPk retorna el coincidente con el id
     const footwear = await Product.findByPk(id)
     // Retorna el coincidente. Si no existe, retorna un array vacio
-    res.json(footwear)
+    res.send(footwear)
   } catch (error) {
     console.log(error)
     res.status(404).send({ msg: error.message })
   }
 })
-
 router.post("/", async (req, res) => {
-     try {
-          const {model, brand, category, gender, price, description, sale, size, amount, color, addedImages} = req.body;
-          let product = await Product.create({model, brand, category, gender, price, description, sale, size, amount, color})
+  try {
+    const {
+      model,
+      brand,
+      category,
+      gender,
+      price,
+      description,
+      sale,
+      size,
+      amount,
+      color,
+      addedImages,
+    } = req.body
+    let product = await Product.create({
+      model,
+      brand,
+      category,
+      gender,
+      price,
+      description,
+      sale,
+      size,
+      amount,
+      color,
+    })
 
-          addedImages.length > 0 && addedImages.map(async (image) =>{
-               let imageProduct = await Image.create({url: image });
-               await product.addImage(imageProduct);
-          })
-
-          res.send("Product with its images created!");
-     } catch (error) {
-          console.log(error);
-          res.status(404).send({ msg: error.message });
-     }
-});
-module.exports = router;
-
+    addedImages.length > 0 &&
+      addedImages.map(async (image) => {
+        let imageProduct = await Image.create({ url: image })
+        await product.addImage(imageProduct)
+      })
+    res.send("Product with its images created!")
+  } catch (error) {
+    console.log(error)
+    res.status(404).send({ msg: error.message })
+  }
+})
+module.exports = router

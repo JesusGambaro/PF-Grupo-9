@@ -1,4 +1,4 @@
-import './LandingPage.css'
+import '../Css/LandingPage.css'
 import { Link } from "react-router-dom";
 import React from 'react'
 
@@ -9,7 +9,7 @@ import {
     CarouselItem,
     CarouselIndicators,
 } from 'reactstrap';
-import Footer from '../Footer/Footer';
+import Footer from './Footer/Footer';
 
   
 export default function LandingPage() {

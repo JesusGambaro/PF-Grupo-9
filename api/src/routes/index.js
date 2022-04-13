@@ -1,8 +1,8 @@
-const {Router} = require('express');
+const { Router } = require("express");
+const footwearRoutes = require("./footwearRoutes.js");
 
 const router = Router();
 
-// router.use('/shoes', shoesRoutes);
-// router.use('/users', usersRoutes);
+router.use("/allFootwear/", footwearRoutes);
 
 module.exports = router;

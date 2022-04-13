@@ -1,0 +1,16 @@
+.footer-container{
+    display: flex;
+   background-color: rgba(238, 240, 241, 0.591);
+    width: 100%;
+}
+.footer{
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 15px ;
+    
+}
+.itemL{
+    list-style: none;
+}

@@ -1,12 +1,9 @@
 //import { useParams } from "react-router-dom"
 import { useState } from "react";
-import style from "../Css/Details.module.css"
+import "../Css/Details.css"
 import { data } from "./data"
 
 function Details() {
-  const [colorSelect, setColorSelect] = useState()
-  const [sizeSelect, setSizeSelect] = useState()
-  //const { id } = useParams()
   const details = {
     "id": "24467d63-43b6-40f9-a009-3b486db9d519",
     "sku": "A01231F",
@@ -28,8 +25,17 @@ function Details() {
       "thumbnail": "https://image.goat.com/375/attachments/product_template_pictures/images/067/561/185/original/887470_00.png.png"
     }
   }
+  const [colorSelect, setColorSelect] = useState()
+  const [sizeSelect, setSizeSelect] = useState()
+  const [mainImage, setMainImage] = useState(details.image.original)
+
+  const handleMainImage = (e) => {
+    setMainImage(e.target.src)
+  }
+
+  //const { id } = useParams()
   return (
-    <div style={{"marginTop":"7%"}}>
+    <div style={{ "marginTop": "6%" }}>
       <div className="container mt-5 mb-5 rounded-3 shadow-lg ">
         <div className="row pt-4 pb-4 bg-white">
           <h1 className="text-info text-center">{details.name}</h1>
@@ -39,36 +45,37 @@ function Details() {
 
           <div className="col bg-white">
             <div className="col col-12 text-end mt-2">
-              <a href="#">
+              <button className="border-0 bg-transparent" id="fav" title="Add to favorites">
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" className="bi bi-chat-heart-fill" viewBox="0 0 16 16">
                   <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15Zm0-9.007c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z" />
                 </svg>
-              </a>
+              </button>
             </div>
-            <img src={details.image.original} alt="imagen" className="col-12 w-50 bg-white mx-auto d-block" />
+            <div className="col-12 overflow-hidden">
+              <img src={mainImage} alt="imagen" id="mainImage" className="w-50 bg-white mx-auto d-block" />
+            </div>
 
-            <div className="row grid gap-2">
-              <div className="col">
-                <a href="#">
-                  <img src={details.image.thumbnail} alt="zapato" className="w-100 border border-info border-4 rounded shadow-lg" />
-                </a>
-              </div>
-              <div className="col">
-                <a href="#">
-                  <img src={details.image.small} alt="zapato" className="w-100 border border-info border-4 rounded shadow-lg" />
-                </a>
-              </div>
-              <div className="col">
-                <a href="#">
-                  <img src={details.image.thumbnail} alt="zapato" className="w-100 border border-info border-4 
+            <div className="row grid gap-4 ms-2 mx-2">
+
+              <button className="col border-0 bg-transparent p-0">
+                <img src={data.data[2].image.small} alt="zapato" className="w-100 border border-info border-4 rounded shadow-lg"
+                  onClick={handleMainImage}
+                />
+              </button>
+
+              <button onClick={handleMainImage} className="col border-0 bg-transparent p-0">
+                <img src={details.image.small} alt="zapato" className="w-100 border border-info border-4 rounded shadow-lg" />
+              </button>
+
+              <button onClick={handleMainImage} className="col border-0 bg-transparent p-0">
+                <img src={details.image.thumbnail} alt="zapato" className="w-100 border border-info border-4 
                   rounded shadow-lg" />
-                </a>
-              </div>
-              <div className="col">
-                <a href="#">
-                  <img src={details.image.thumbnail} alt="zapato" className="w-100 border border-info border-4 rounded shadow-lg" />
-                </a>
-              </div>
+              </button>
+
+              <button onClick={handleMainImage} className="col border-0 bg-transparent p-0">
+                <img src={details.image.thumbnail} alt="zapato" className="w-100 border border-info border-4 rounded shadow-lg" />
+              </button>
+
             </div>
           </div>
 
@@ -98,7 +105,7 @@ function Details() {
               </div>
             </div>
             <div className="row d-flex justify-content-center mt-5 pt-4">
-              <button className="w-50 btn btn-outline-info fs-3">ADD TO CART</button>
+              <button className="w-50 btn btn-outline-info fs-3 fw-bold">ADD TO CART</button>
             </div>
 
           </div>
@@ -113,20 +120,20 @@ function Details() {
       </div>
       <hr className="border border-2 border-secondary" />
 
-      <div className="container mt-5 mb-5">
+      <div className="container mt-5 mb-5 w-75">
         <div className="row">
           <h1 className="text-center text-info">Related products</h1>
         </div>
         <div className="row text-center m-0 mt-5 grid gap-5">
-          <a href="#" className="col">
-            <img src={data.data[2].image.small} alt="foto" className="w-75 border border-5 border-info shadow-lg rounded rounded-3" />
-          </a>
-          <a href="#" className="col">
-            <img src={data.data[3].image.small} alt="foto" className="w-75 border border-5 border-info shadow-lg rounded rounded-3" />
-          </a>
-          <a href="#" className="col">
-            <img src={data.data[4].image.small} alt="foto" className="w-75 border border-5 border-info shadow-lg rounded rounded-3" />
-          </a>
+          <button className="col border-0 bg-transparent p-0 w-50" id="relatedProduct">
+            <img src={data.data[2].image.small} alt="foto" className="w-100 border border-5 border-info shadow-lg rounded rounded-3" />
+          </button>
+          <button className="col border-0 bg-transparent p-0" id="relatedProduct">
+            <img src={data.data[3].image.small} alt="foto" className="w-100 border border-5 border-info shadow-lg rounded rounded-3" />
+          </button>
+          <button className="col border-0 bg-transparent p-0" id="relatedProduct">
+            <img src={data.data[4].image.small} alt="foto" className="w-100 border border-5 border-info shadow-lg rounded rounded-3" />
+          </button>
         </div>
       </div>
     </div>

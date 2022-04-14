@@ -1,26 +1,51 @@
 import "../Css/navbar.scss";
-import '../Css/NavBar.css'
-import logo from "../Images/logo2.png"
-import { useState } from "react";
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
-import { Link } from "react-router-dom";
-
-
+import logo from "../Images/logo2.png";
+import {useState} from "react";
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
+import {NavLink, useNavigate} from "react-router-dom";
+import {sortByGender} from "../Redux/actions/sortBy";
+import {useDispatch} from "react-redux";
 
 const NavBar = () => {
-  const [dropDown, setDropDown]=useState(false)
-    function abrirYcerrar(){
-        setDropDown(!dropDown)
-    }
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [dropDown, setDropDown] = useState(false);
+  function abrirYcerrar() {
+    setDropDown(!dropDown);
+  }
   return (
     <div className="navbarOwn">
-       <img className="logoOwn" src={logo} alt="logo" />
-      
+      <NavLink to={"/"}>
+        <img className="logoOwn" src={logo} alt="logo" />
+      </NavLink>
       <ul className="sectionsOwn">
-        <li><Link to='/home' className="gohome">HOME</Link></li>
-        <li>MEN</li>
-        <li>WOMEN</li>
-        <li>KIDS</li>
+        <li>
+          <NavLink to="/home">HOME</NavLink>
+        </li>
+        <li
+          onClick={() => {
+            dispatch(sortByGender("men"));
+            navigate("/home");
+          }}
+        >
+          MEN
+        </li>
+        <li
+          onClick={() => {
+            dispatch(sortByGender("women"));
+            navigate("/home");
+          }}
+        >
+          WOMEN
+        </li>
+        <li
+          onClick={() => {
+            dispatch(sortByGender("kids"));
+            navigate("/home");
+          }}
+        >
+          KIDS
+        </li>
       </ul>
       <form className="searchOwn">
         <button type="submitOwn">
@@ -36,18 +61,15 @@ const NavBar = () => {
           <i className="bi bi-bag"></i>
         </li>
         <li>
-          
-          <Dropdown isOpen={dropDown} toggle={abrirYcerrar} >
-                <DropdownToggle className='drop'>
-                <i className="bi bi-person"></i>
-                </DropdownToggle>
-                <DropdownMenu >
-                    
-                    <DropdownItem>cerrar sesión</DropdownItem>
-                    <DropdownItem>información</DropdownItem>
-                </DropdownMenu>
-            </Dropdown>
-          
+          <Dropdown isOpen={dropDown} toggle={abrirYcerrar}>
+            <DropdownToggle className="drop">
+              <i className="bi bi-person"></i>
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem>cerrar sesión</DropdownItem>
+              <DropdownItem>información</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </li>
       </ul>
     </div>

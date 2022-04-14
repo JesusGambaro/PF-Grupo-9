@@ -1,4 +1,10 @@
 .navbarOwn {
+  .drop {
+    background-color: rgba(255, 252, 252, 0.158) !important;
+    color: black !important;
+    border: none !important;
+    margin: 0 !important;
+  }
   ul {
     margin-bottom: 0;
   }
@@ -18,7 +24,7 @@
   color: #000;
   .logoOwn {
     margin-left: 1rem;
-    width: 4%;
+    width: 5rem;
   }
   .sectionsOwn {
     display: flex;
@@ -27,6 +33,19 @@
     align-items: center;
     list-style: none;
     padding: 0;
+    li {
+      cursor: pointer;
+      &:hover {
+        color: #0d6efd;
+      }
+      a {
+        text-decoration: none;
+        color: #000;
+        &:hover {
+          color: #0d6efd;
+        }
+      }
+    }
   }
   .shortcutOwn {
     margin-right: 1rem;
@@ -44,6 +63,13 @@
       &:hover {
         transform: scale(1.2);
       }
+    }
+    .gohome {
+      text-decoration: none;
+      color: rgb(0, 0, 0);
+      font-family: "Gelion", sans-serif;
+      padding: 0;
+      gap: 1rem;
     }
   }
   .searchOwn {
@@ -80,5 +106,5 @@
       height: 100%;
     }
   }
-  z-index: 999;
+  z-index: 9999;
 }

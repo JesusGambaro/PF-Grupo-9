@@ -85,7 +85,7 @@
 
 }
 
-.card{
+.card-land{
   height: 230px;
   width: 300px;
   overflow: hidden;
@@ -94,7 +94,7 @@
   background: linear-gradient(-135deg, rgb(222, 217, 223), rgb(235, 216, 219) );
 }
 
-.card:hover{
+.card-land:hover{
   height: 350px;
   width: 300px;
 

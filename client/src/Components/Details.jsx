@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import getDetail from "../redux/actions/getDetail";
 import Loading from "./Loading";
+
 function Details() {
   const details = {
     id: "24467d63-43b6-40f9-a009-3b486db9d519",
@@ -12,7 +13,7 @@ function Details() {
     brand: "Converse",
     size: [36, 37, 38, 39, 40],
     name: "Converse Chuck Taylor All-Star Pokemon Pikachu (TD)",
-    colorway: ["yellow", "white"],
+    colorway:"yellow/white",
     gender: "toddler",
     silhouette: "Chuck Taylor All Star",
     releaseYear: "2022",
@@ -31,6 +32,7 @@ function Details() {
         "https://image.goat.com/375/attachments/product_template_pictures/images/067/561/185/original/887470_00.png.png",
     },
   };
+  
   const [colorSelect, setColorSelect] = useState();
   const [sizeSelect, setSizeSelect] = useState();
   const { id } = useParams();
@@ -38,10 +40,10 @@ function Details() {
   const { detail, loading } = useSelector((state) => state);
   const initialMount = useRef(true);
   const [mainImage, setMainImage] = useState(
-    detail.image
-      ? !detail.image.original
+    detail.images
+      ? !detail.images.original
         ? "/Images/logo2.png"
-        : detail.image.original
+        : detail.images.original
       : "/Images/logo2.png"
   );
   const handleMainImage = (e) => {
@@ -61,7 +63,7 @@ function Details() {
       );
     }
   }, [initialMount]);
-
+  console.log(detail)
   return (
     <div style={{ marginTop: "4rem" }}>
       {loading ? (
@@ -70,7 +72,7 @@ function Details() {
         <>
           <div className="container mt-5 mb-5 rounded-3 shadow-lg ">
             <div className="row pt-4 pb-4 bg-white">
-              <h1 className="text-info text-center">{detail.name}</h1>
+              <h1 className="text-info text-center">{detail.brand} {detail.model}</h1>
             </div>
 
             <div className="row overflow-hidden bg-secondary">
@@ -168,8 +170,8 @@ function Details() {
 
               <div className="col col-5 pt-4">
                 <div className="row m-0 p-0">
-                  <h3 className="text-light fs-2">$ {detail.retailPrice}</h3>
-                  <p className="text-warning fs-3">Available: 40</p>
+                  <h3 className="text-light fs-2">$ {detail.price}</h3>
+                  <p className="text-warning fs-3">Available: {detail.amount}</p>
                 </div>
 
                 <div className="row text-white mt-3 ms-2">
@@ -181,8 +183,8 @@ function Details() {
                       value={colorSelect}
                       onChange={(e) => setColorSelect(e.target.value)}
                     >
-                      {detail.colorway &&
-                        detail.colorway.split("/").map((color, index) => (
+                      {details.colorway &&
+                        details.colorway.split("/").map((color, index) => (
                           <option key={index} value={color} className="fw-bold">
                             {color.toUpperCase()}
                           </option>
@@ -228,11 +230,11 @@ function Details() {
             <hr className="border border-2 border-secondary" />
             <div className="mt-5 pb-5">
               <h1 className="ms-3">About the product: </h1>
-              <h3 className="ms-5 mt-4 mb-3 fs-4 text-info">
-                {detail.brand} - {detail.sku}
+              <h3 className="ms-4 mt-4 mb-3 fs-4 text-info">
+                {detail.brand} - {detail.model}
               </h3>
               <p className="ms-5 mx-5 fs-3" style={{ textAlign: "justify" }}>
-                {details.story}
+                {detail.description}
               </p>
             </div>
           </div>

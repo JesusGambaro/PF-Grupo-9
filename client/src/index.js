@@ -4,7 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
-import store from "./Redux/store/store";
+import store from "./redux/store/store";
 // API URL https://rapidapi.com/tg4-solutions-tg4-solutions-default/api/the-sneaker-database/
 const container = document.getElementById("root");
 

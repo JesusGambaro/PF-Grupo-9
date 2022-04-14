@@ -3,7 +3,7 @@ import logo from "../Images/logo2.png";
 import {useState} from "react";
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
 import {NavLink, useNavigate} from "react-router-dom";
-import {sortByGender} from "../Redux/actions/sortBy";
+import {sortByGender} from "../redux/actions/sortBy";
 import {useDispatch} from "react-redux";
 
 const NavBar = () => {

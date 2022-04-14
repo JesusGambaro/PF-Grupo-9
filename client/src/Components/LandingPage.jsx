@@ -1,8 +1,10 @@
 import '../Css/LandingPage.css'
 import { Link } from "react-router-dom";
-import React from 'react'
+import React, { useEffect } from 'react'
 import Footer from './Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import { bringAllData } from '../redux/actions/action';
 import {
     CarouselControl,
     Carousel,
@@ -13,6 +15,11 @@ import {
 
   
 export default function LandingPage() {
+
+  /* useEffect(()=>{
+    const data = bringAllData()
+    console.log(data)
+  }) */
     
     // State for Active index
     const [activeIndex, setActiveIndex] = React.useState(0);

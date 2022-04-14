@@ -1,6 +1,6 @@
 import axios from "axios";
 import {BRING_ALL_DATA, LOADING} from "./actions";
-const URL = "http://localhost:3001/sneaks";
+const URL = "http://localhost:3001/allFootwear";
 
 const bringAllData = () => {
   return async (dispatch) => {

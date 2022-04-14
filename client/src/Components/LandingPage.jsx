@@ -1,12 +1,14 @@
 
-import '../Css/LandingPage.css'
-import { Link } from "react-router-dom";
-import React, { useEffect } from 'react'
-import Footer from './Footer';
-import Card from './Card';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useDispatch } from 'react-redux';
-import bringAllData  from '../redux/actions/bringAllData';
+import "../Css/LandingPage.scss";
+import {Link, NavLink} from "react-router-dom";
+import React from "react";
+import Footer from "./Footer";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Card from "./Card";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import bringAllData from "../redux/actions/bringAllData";
+
 
 import {
   CarouselControl,
@@ -23,8 +25,10 @@ export default function LandingPage() {
     }) */
 
   // State for Active index
+  const offerShoes = useSelector((state) => state.allData);
   const [activeIndex, setActiveIndex] = React.useState(0);
 
+  const dispatch = useDispatch();
 
   // State for Animation
   const [animating, setAnimating] = React.useState(false);
@@ -34,17 +38,22 @@ export default function LandingPage() {
     {
       /* caption: 'Sample Caption One', */ src: require("../Images/calzado al mejor precio fondo morado.jpg"),
       altText: "Slide One",
+      red: "/home",
     },
     {
       /* caption: 'Sample Caption Two', */ src: "https://http2.mlstatic.com/D_NQ_993577-MLA49602953344_042022-OO.webp",
       altText: "Slide Two",
+      red: "/home",
     },
     {
       /* caption: 'Sample Caption Two', */ src: require("../Images/zapatos fondo gris.png"),
       altText: "Slide Two",
+      red: "/home",
     },
   ];
-
+  useEffect(() => {
+    if (!offerShoes.length) dispatch(bringAllData());
+  }, []);
   // Items array length
   const itemLength = items.length - 1;
 
@@ -70,13 +79,15 @@ export default function LandingPage() {
         onExited={() => setAnimating(false)}
         onExiting={() => setAnimating(true)}
       >
-        <img src={item.src} alt={item.altText} width="100%" height="200%" />
+        <NavLink to={item.red}>
+          <img src={item.src} alt={item.altText} width="100%" height="200%" />
+        </NavLink>
       </CarouselItem>
     );
   });
 
   return (
-    <div>
+    <div style={{width: "100%"}}>
       {/* <NavBar/> */}
       <div
         style={{
@@ -114,189 +125,10 @@ export default function LandingPage() {
       </div>
 
       <div className="cards-container">
-        <div className="card-land">
-          <div className="card-encabezado">
-            <img
-              className="foto-card"
-              src="https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000"
-              alt="imagen"
-            ></img>
-          </div>
-          <div className="card-contenido">
-            <div className="info">shoe name</div>
-            <div className="info">Price </div>
-          </div>
-          <div className="card-iconos">
-            <button className="add">
-              {" "}
-              <li className="agrandar">
-                <i className="bi bi-heart"></i>
-              </li>{" "}
-            </button>
-            <Link to="/" className="go-detail">
-              <li className="agrandar">more details</li>{" "}
-            </Link>
-            <button className="add">
-              {" "}
-              <li className="agrandar">
-                <i className="bi bi-bag"></i>
-              </li>
-            </button>
-          </div>
-        </div>
 
-        <div className="card-land">
-          <div className="card-encabezado">
-            <img
-              className="foto-card"
-              src="https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000"
-              alt="imagen"
-            ></img>
-          </div>
-          <div className="card-contenido">
-            <div className="info">shoe name</div>
-            <div className="info">Price </div>
-          </div>
-          <div className="card-iconos">
-            <button className="add">
-              {" "}
-              <li className="agrandar">
-                <i className="bi bi-heart"></i>
-              </li>{" "}
-            </button>
-            <Link to="/" className="go-detail">
-              <li className="agrandar">more details</li>{" "}
-            </Link>
-            <button className="add">
-              {" "}
-              <li className="agrandar">
-                <i className="bi bi-bag"></i>
-              </li>
-            </button>
-          </div>
-        </div>
-        <div className="card-land">
-          <div className="card-encabezado">
-            <img
-              className="foto-card"
-              src="https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000"
-              alt="imagen"
-            ></img>
-          </div>
-          <div className="card-contenido">
-            <div className="info">shoe name</div>
-            <div className="info">Price </div>
-          </div>
-          <div className="card-iconos">
-            <button className="add">
-              {" "}
-              <li className="agrandar">
-                <i className="bi bi-heart"></i>
-              </li>{" "}
-            </button>
-            <Link to="/" className="go-detail">
-              <li className="agrandar">more details</li>{" "}
-            </Link>
-            <button className="add">
-              {" "}
-              <li className="agrandar">
-                <i className="bi bi-bag"></i>
-              </li>
-            </button>
-          </div>
-        </div>
-        <div className="card-land">
-          <div className="card-encabezado">
-            <img
-              className="foto-card"
-              src="https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000"
-              alt="imagen"
-            ></img>
-          </div>
-          <div className="card-contenido">
-            <div className="info">shoe name</div>
-            <div className="info">Price </div>
-          </div>
-          <div className="card-iconos">
-            <button className="add">
-              {" "}
-              <li className="agrandar">
-                <i className="bi bi-heart"></i>
-              </li>{" "}
-            </button>
-            <Link to="/" className="go-detail">
-              <li className="agrandar">more details</li>{" "}
-            </Link>
-            <button className="add">
-              {" "}
-              <li className="agrandar">
-                <i className="bi bi-bag"></i>
-              </li>
-            </button>
-          </div>
-        </div>
-        <div className="card-land">
-          <div className="card-encabezado">
-            <img
-              className="foto-card"
-              src="https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000"
-              alt="imagen"
-            ></img>
-          </div>
-          <div className="card-contenido">
-            <div className="info">shoe name</div>
-            <div className="info">Price </div>
-          </div>
-          <div className="card-iconos">
-            <button className="add">
-              {" "}
-              <li className="agrandar">
-                <i className="bi bi-heart"></i>
-              </li>{" "}
-            </button>
-            <Link to="/" className="go-detail">
-              <li className="agrandar">more details</li>{" "}
-            </Link>
-            <button className="add">
-              {" "}
-              <li className="agrandar">
-                <i className="bi bi-bag"></i>
-              </li>
-            </button>
-          </div>
-        </div>
+        {offerShoes.length > 0 &&
+          offerShoes.map((shoe, i) => <Card e={shoe} key={i} />)}
 
-       {/*  <div className="card-land">
-          <div className="card-encabezado">
-            <img
-              className="foto-card"
-              src="https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000"
-              alt="imagen"
-            ></img>
-          </div>
-          <div className="card-contenido">
-            <div className="info">shoe name</div>
-            <div className="info">Price </div>
-          </div>
-          <div className="card-iconos">
-            <button className="add">
-              {" "}
-              <li className="agrandar">
-                <i className="bi bi-heart"></i>
-              </li>{" "}
-            </button>
-            <Link to="/" className="go-detail">
-              <li className="agrandar">more details</li>{" "}
-            </Link>
-            <button className="add">
-              {" "}
-              <li className="agrandar">
-                <i className="bi bi-bag"></i>
-              </li>
-            </button>
-          </div>
-        </div> */}
-        <Card/>
       </div>
 
       <Footer />

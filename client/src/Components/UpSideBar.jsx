@@ -23,8 +23,8 @@ const UpSideBar = ({quantity, handleToggle}) => {
         <p>
           Hide Filters <i className="bi bi-toggle2-off"></i>
         </p>
-        <select className="form-select" name="sortby" onChange={handleSelect}>
-          <option selected>Sort By</option>
+        <select className="form-select" defaultValue="default" name="sortby" onChange={handleSelect}>
+          <option value="default">Sort By</option>
           <option value="asc">Price - Low to High</option>
           <option value="des">Price - High to Low</option>
         </select>

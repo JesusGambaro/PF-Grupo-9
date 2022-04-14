@@ -2,6 +2,7 @@ import {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import Pagination from "./Pagination";
 import bringAllData from "../redux/actions/bringAllData";
+
 const Shoes = () => {
   const dispatch = useDispatch();
   const shoes = useSelector((state) => state);

@@ -1,4 +1,5 @@
 import {ORDER_PRICE} from "./actions";
+
 const sortByPrice = (order) => {
   return async (dispatch, getState) => {
     let filtered = [...getState().allData];

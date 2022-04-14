@@ -1,8 +1,10 @@
 import "../Css/Details.css";
-import {data} from "./data";
-import {useParams} from "react-router-dom";
-import {useState, useEffect, useRef} from "react";
-import {useDispatch, useSelector} from "react-redux";
+
+import { data } from "./data";
+import { useParams } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import getDetail from "../redux/actions/getDetail";
 import Loading from "./Loading";
 function Details() {
@@ -33,9 +35,9 @@ function Details() {
   };
   const [colorSelect, setColorSelect] = useState();
   const [sizeSelect, setSizeSelect] = useState();
-  const {id} = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const {detail, loading} = useSelector((state) => state);
+  const { detail, loading } = useSelector((state) => state);
   const initialMount = useRef(true);
   const [mainImage, setMainImage] = useState(
     detail.image
@@ -61,8 +63,9 @@ function Details() {
       );
     }
   }, [initialMount]);
+
   return (
-    <div style={{marginTop: "4rem"}}>
+    <div style={{ marginTop: "4rem" }}>
       {loading ? (
         <Loading />
       ) : (
@@ -230,7 +233,7 @@ function Details() {
               <h3 className="ms-5 mt-4 mb-3 fs-4 text-info">
                 {detail.brand} - {detail.sku}
               </h3>
-              <p className="ms-5 mx-5 fs-3" style={{textAlign: "justify"}}>
+              <p className="ms-5 mx-5 fs-3" style={{ textAlign: "justify" }}>
                 {details.story}
               </p>
             </div>

@@ -100,7 +100,7 @@ export default function LandingPage() {
         <div className='cards-container'>
             <div className='card' >
                 <div className='card-encabezado' >
-                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img>
+                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000' alt='imagen'></img>
                 </div>
                 <div className='card-contenido'>
                     <div className='info'>shoe name</div>
@@ -120,7 +120,7 @@ export default function LandingPage() {
 
             <div className='card' >
                 <div className='card-encabezado' >
-                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img>
+                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000' alt='imagen'></img>
                 </div>
                 <div className='card-contenido'>
                     <div className='info'>shoe name</div>
@@ -139,7 +139,7 @@ export default function LandingPage() {
             </div>
             <div className='card' >
                 <div className='card-encabezado' >
-                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img>
+                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000' alt='imagen'></img>
                 </div>
                 <div className='card-contenido'>
                     <div className='info'>shoe name</div>
@@ -158,7 +158,7 @@ export default function LandingPage() {
             </div>
             <div className='card' >
                 <div className='card-encabezado' >
-                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img>
+                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000' alt='imagen'></img>
                 </div>
                 <div className='card-contenido'>
                     <div className='info'>shoe name</div>
@@ -177,7 +177,7 @@ export default function LandingPage() {
             </div>
             <div className='card' >
                 <div className='card-encabezado' >
-                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img>
+                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000' alt='imagen'></img>
                 </div>
                 <div className='card-contenido'>
                     <div className='info'>shoe name</div>
@@ -199,7 +199,7 @@ export default function LandingPage() {
 
             <div className='card' >
                 <div className='card-encabezado' >
-                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000'></img>
+                <img className='foto-card' src='https://calzatodocol.vteximg.com.br/arquivos/ids/187217-292-292/1312100011_blanco-azul_01.jpg?v=637783622330730000' alt='imagen'></img>
                 </div>
                 <div className='card-contenido'>
                     <div className='info'>shoe name</div>

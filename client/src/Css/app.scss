@@ -8,15 +8,15 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  min-height: calc(100vh - 8rem);
   .shoes-container {
-    margin-top: 8rem;
     width: 80%;
-    align-self: flex-end;
+    margin-top: 8rem;
     @include flex-b();
     flex-wrap: wrap;
     gap: 1rem;
     padding: 1rem;
-    .card {
+    .cardOwn {
       @include flex-b();
       /*    border: 1px solid rgba(0, 0, 0, 0.1); */
       border: none;
@@ -116,11 +116,10 @@
     }
   }
   .shoes-container.h {
-    flex-direction: column;
-    .card.h {
+    .cardOwn.h {
       background: var(--i);
       flex-direction: row;
-      flex: 1 0 20rem;
+      flex: 1 0 100%;
       width: 100%;
       max-width: 100%;
       transition: all 0.5s ease-in-out;

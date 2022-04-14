@@ -1,6 +1,6 @@
 import "../Css/upsidebar.scss";
 import {useDispatch} from "react-redux";
-import {sortByPrice} from "../Redux/actions/sortBy";
+import {sortByPrice} from "../redux/actions/sortBy";
 const UpSideBar = ({quantity, handleToggle}) => {
   const dispatch = useDispatch();
   const handleSelect = (e) => {

@@ -3,9 +3,10 @@ import '../Css/LandingPage.css'
 import { Link } from "react-router-dom";
 import React, { useEffect } from 'react'
 import Footer from './Footer';
+import Card from './Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import { bringAllData } from '../redux/actions/action';
+import { useDispatch } from 'react-redux';
+import bringAllData  from '../redux/actions/bringAllData';
 
 import {
   CarouselControl,
@@ -15,6 +16,11 @@ import {
 } from "reactstrap";
 
 export default function LandingPage() {
+/* const dispatch = useDispatch()
+    useEffect(()=>{
+      const datos =  dispatch(bringAllData())
+        console.log(datos)
+    }) */
 
   // State for Active index
   const [activeIndex, setActiveIndex] = React.useState(0);
@@ -260,7 +266,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <div className="card-land">
+       {/*  <div className="card-land">
           <div className="card-encabezado">
             <img
               className="foto-card"
@@ -289,7 +295,8 @@ export default function LandingPage() {
               </li>
             </button>
           </div>
-        </div>
+        </div> */}
+        <Card/>
       </div>
 
       <Footer />

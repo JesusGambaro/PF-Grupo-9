@@ -5,6 +5,7 @@ import NotFound from "./Components/NotFound";
 import NavBar from "./Components/NavBar";
 import LandingPage from "./Components/LandingPage";
 import Details from "./Components/Details";
+import Footer from "./Components/Footer";
 function App() {
   return (
     <Routes>
@@ -16,11 +17,22 @@ function App() {
       <Route
         exact
         path="/home"
-        element={[<NavBar key={"nav"} />, <Shoes key={"shoes"} />]}
+        element={[
+          <NavBar key={"nav"} />,
+          <Shoes key={"shoes"} />,
+          <Footer key={"footer"} />,
+        ]}
       />
-      
-      <Route exact path="home/details/:id" element={[<NavBar key={"nav"} /> , <Details key={"details"} />]}/>
-      
+      <Route
+        exact
+        path="home/:id"
+        element={[
+          <NavBar key={"nav"} />,
+          <Details key={"details"} />,
+          <Footer key={"footer"} />,
+        ]}
+      />
+
       <Route path="*" exact={true} element={<NotFound />} />
     </Routes>
   );

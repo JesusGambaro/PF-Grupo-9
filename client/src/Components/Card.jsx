@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom";
 
 const Card = ({e, horizontal}) => {
-  /*   const colors = [
+  const colors = [
     "rgba(3, 169, 244, 0.7)",
     "rgba(244, 67, 54, 0.7)",
     "rgba(233, 30, 99, 0.7)",
@@ -16,15 +16,15 @@ const Card = ({e, horizontal}) => {
     "rgba(121, 85, 72, 0.7)",
     "rgba(96, 125, 139, 0.7)",
     "rgba(158, 158, 158, 0.7)",
-  ]; */
-  const colors = [
+  ];
+  /*   const colors = [
     "RGB(239, 145, 155)",
     "RGB(248, 179, 146)",
     "RGB(246, 247, 176)",
     "RGB(160, 207, 162)",
     "RGB(113, 190, 231)",
     "RGB(131, 128, 179)",
-  ];
+  ]; */
 
   return (
     <div
@@ -42,23 +42,27 @@ const Card = ({e, horizontal}) => {
       <div className="content">
         <div className="f-section">
           <NavLink
-            to={`/detail/${e.id}`}
+            to={`/home/${e.id}`}
             style={{color: "black", textDecoration: "none"}}
           >
-            <p>{e.silhouette}</p>
+            <p title="Name">{e.silhouette}</p>
           </NavLink>
-          <p>${e.retailPrice}</p>
+          <span>
+            <div className="rating" title="Rating">
+              <i className="bi bi-star-fill"></i>
+              <i className="bi bi-star-fill"></i>
+              <i className="bi bi-star-fill"></i>
+              <i className="bi bi-star-half"></i>
+              <i className="bi bi-star"></i>
+            </div>
+            <p title="Price">${e.retailPrice}</p>
+          </span>
         </div>
-        <span>
-          <div className="rating">
-            <i className="bi bi-star-fill"></i>
-            <i className="bi bi-star-fill"></i>
-            <i className="bi bi-star-fill"></i>
-            <i className="bi bi-star-half"></i>
-            <i className="bi bi-star"></i>
-          </div>
-          <i className="bi bi-heart"></i>
-        </span>
+        <div className="appear">
+          <i className="bi bi-bag" title="Add to cart"></i>
+          <i className="bi bi-toggles2" title="View details"></i>
+          <i className="bi bi-heart" title="Add to favorites"></i>
+        </div>
       </div>
     </div>
   );

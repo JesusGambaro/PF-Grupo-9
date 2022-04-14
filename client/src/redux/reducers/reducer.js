@@ -1,25 +1,32 @@
 import {
-    BRING_ALL_DATA,
-    ORDER_NAME,
-    ORDER_PRICE,
-    bringAllData
-} from "../actions/action"
+  BRING_ALL_DATA,
+  ORDER_NAME,
+  ORDER_PRICE,
+  LOADING,
+  DETAIL,
+} from "../actions/actions";
 
-const initialState = { 
-    allData:[],
-    filtereds:[],
-    detail:{},
-}
+const initialState = {
+  allData: [],
+  loading: false,
+  filtereds: [],
+  detail: {},
+};
 
-export default function rootReducer(state = initialState, action){
-    switch(action.type){
-        case BRING_ALL_DATA:
-            return{
-                ...state,
-                allData:action.payload,
-            }
-
-        case ORDER_NAME:
-        case ORDER_NAME:
-    }
-}
+const rootReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case BRING_ALL_DATA:
+      return {...state, allData: action.payload};
+    case ORDER_PRICE:
+      return {...state, allData: action.payload};
+    case ORDER_NAME:
+      break;
+    case LOADING:
+      return {...state, loading: action.payload};
+    case DETAIL:
+      return {...state, detail: action.payload};
+    default:
+      return state;
+  }
+};
+export default rootReducer;

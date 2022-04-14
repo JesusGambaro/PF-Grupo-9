@@ -28,7 +28,7 @@ const Card = ({e, horizontal}) => {
 
   return (
     <div
-      className={"card" + (horizontal ? " h" : "")}
+      className={"cardOwn" + (horizontal ? " h" : "")}
       style={{"--i": colors[Math.floor(Math.random() * colors.length)]}}
     >
       <div className="img">

@@ -1,6 +1,6 @@
 const { Router } = require("express")
 const { Op } = require("sequelize")
-const { Product, Image } = require("../db.js")
+const { Product, Image, Stock } = require("../db.js")
 
 const router = Router()
 
@@ -9,18 +9,34 @@ router.get("/", async (req, res) => {
   try {
     const allFootwears = await Product.findAll({
       attributes: { exclude: "description" },
-      include: {
-        model: Image,
-      },
+      include: [
+        {
+          model: Image,
+        },
+        {
+          model: Stock,
+          where: {
+            amount: { [Op.gt]: 0 },
+          },
+        },
+      ],
     })
     if (footwear) {
       const footwearsSearched = await Product.findAll({
         where: {
           model: { [Op.iLike]: `%${footwear}%` },
         },
-        include: {
-          model: Image,
-        },
+        include: [
+          {
+            model: Image,
+          },
+          {
+            model: Stock,
+            where: {
+              amount: { [Op.gt]: 0 },
+            },
+          },
+        ],
       })
 
       return res.send(footwearsSearched)
@@ -78,11 +94,48 @@ router.get("/sales", async (req, res) => {
     res.status(404).send({ msg: error.message })
   }
 })
+router.get("/detail/:model", async (req, res) => {
+  const { footwear } = req.params
+  const prueba = await Product.findAll({
+    where: {
+      model: {
+        [Op.eq]: footwear,
+      },
+    },
+    include: [
+      {
+        model: Image,
+      },
+      {
+        model: Stock,
+        where: {
+          amount: { [Op.gt]: 0 },
+        },
+      },
+    ],
+  })
+  res.send(prueba)
+})
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params
     // footwear es el calzado encontrado, findByPk retorna el coincidente con el id
-    const footwear = await Product.findByPk(id)
+    const footwear = await Product.findOne({
+      where: {
+        id: { [Op.eq]: id },
+      },
+      include: [
+        {
+          model: Image,
+        },
+        {
+          model: Stock,
+          where: {
+            amount: { [Op.gt]: 0 },
+          },
+        },
+      ],
+    })
     // Retorna el coincidente. Si no existe, retorna un array vacio
     res.send(footwear)
   } catch (error) {

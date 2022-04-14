@@ -40,6 +40,7 @@ const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
       behavior: "smooth",
     });
   }, [currentPage]);
+
   return (
     <div className="home-container">
       <UpSideBar
@@ -51,7 +52,7 @@ const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
         <Loading />
       ) : (
         <div className={"shoes-container" + (toggle ? "" : " h")}>
-          {dataPerPage().map((e, i) => (
+          {allData.length>0 && dataPerPage().map((e, i) => (
             <Card e={e} key={i} horizontal={!toggle} />
           ))}
 

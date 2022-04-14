@@ -1,14 +1,12 @@
 import axios from "axios";
-import {BRING_ALL_DATA, LOADING, DETAIL} from "./actions";
-const URL = "http://localhost:3001/sneaks";
+import { LOADING, DETAIL } from "./actions";
 
 const getDetail = (id) => {
   return async (dispatch) => {
-    dispatch({type: LOADING, payload: true});
-    const {data} = await axios.get(URL);
-    const shoeFinded = data.find((e) => e.id === id);
-    dispatch({type: DETAIL, payload: shoeFinded});
-    dispatch({type: LOADING, payload: false});
+    dispatch({ type: LOADING, payload: true });
+    const data = await axios.get(`http://localhost:3001/allFootwear/${id}`);
+    dispatch({ type: DETAIL, payload: data });
+    dispatch({ type: LOADING, payload: false });
   };
 };
 export default getDetail;

@@ -34,9 +34,9 @@ const Card = ({e, horizontal}) => {
       <div className="img">
         <img
           src={
-            e.image.original === "" ? "./Images/logo2.png" : e.image.original
+            e.images[0].url?e.images[0].url :"./Images/logo2.png"
           }
-          alt={e.styleID}
+          alt={e.model}
         />
       </div>
       <div className="content">
@@ -45,7 +45,7 @@ const Card = ({e, horizontal}) => {
             to={`/home/${e.id}`}
             style={{color: "black", textDecoration: "none"}}
           >
-            <p title="Name">{e.silhouette}</p>
+            <p title="Name">{e.brand}</p>
           </NavLink>
           <span>
             <div className="rating" title="Rating">
@@ -55,7 +55,7 @@ const Card = ({e, horizontal}) => {
               <i className="bi bi-star-half"></i>
               <i className="bi bi-star"></i>
             </div>
-            <p title="Price">${e.retailPrice}</p>
+            <p title="Price">${e.price}</p>
           </span>
         </div>
         <div className="appear">

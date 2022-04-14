@@ -1,11 +1,11 @@
 .upsidebar-container {
-  p{
+  p {
     margin-bottom: 0;
   }
-  width: 80%;
+  width: 100%;
   position: fixed;
   top: 4rem;
-  left: 20%;
+  left: 0;
   background: rgb(242, 242, 242);
   height: 4rem;
   z-index: 999;
@@ -31,6 +31,9 @@
     border-radius: 1rem;
     p {
       padding: 0 0.5rem;
+    }
+    select {
+      width: 60%;
     }
   }
 }

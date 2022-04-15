@@ -3,6 +3,8 @@ import {
   SORT_BY,
   LOADING,
   DETAIL,
+  DETAILCOLOR,
+  CLEARDETAIL,
   RESET,
 } from "../actions/actions";
 
@@ -12,20 +14,25 @@ const initialState = {
   loading: false,
   filtereds: [],
   detail: {},
+  detailColor: [],
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case BRING_ALL_DATA:
-      return {...state, allData: action.payload, allDataCopy: action.payload};
+      return { ...state, allData: action.payload };
     case SORT_BY:
-      return {...state, allDataCopy: action.payload};
+      return { ...state, allDataCopy: action.payload };
     case LOADING:
-      return {...state, loading: action.payload};
+      return { ...state, loading: action.payload };
     case DETAIL:
-      return {...state, detail: action.payload};
+      return { ...state, detail: action.payload };
     case RESET:
-      return {...state, allDataCopy: action.payload};
+      return { ...state, allDataCopy: action.payload };
+    case DETAILCOLOR:
+      return { ...state, detailColor: action.payload };
+    case CLEARDETAIL:
+      return { ...state, detailColor: action.payload, detail: {} };
     default:
       return state;
   }

@@ -78,6 +78,7 @@ conn.sync({ force: true }).then(async () => {
   const imageAdidasBlack = await Image.create({
     url: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/70ae150b4f51490d8d87ab2001505c1f_9366/Botines_de_futbol_Predator_20.3_cesped_natural_seco_Negro_EF1929_01_standard.jpg",
   })
+  
   const stockShoeBlack39 = await Stock.create({ size: 39, amount: 0 })
   const stockShoeBlack40 = await Stock.create({ size: 40, amount: 23 })
   const stockShoeBlack41 = await Stock.create({ size: 41, amount: 23 })

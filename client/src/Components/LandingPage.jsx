@@ -1,3 +1,4 @@
+
 import "../Css/LandingPage.scss";
 import {Link, NavLink} from "react-router-dom";
 import React from "react";
@@ -8,6 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import bringAllData from "../redux/actions/bringAllData";
 
+
 import {
   CarouselControl,
   Carousel,
@@ -16,10 +18,19 @@ import {
 } from "reactstrap";
 
 export default function LandingPage() {
+/* const dispatch = useDispatch()
+    useEffect(()=>{
+      const datos =  dispatch(bringAllData())
+        console.log(datos)
+    }) */
+
   // State for Active index
-  const offerShoes = useSelector((state) => state.allData);
+  const state = useSelector((state) => state.allData);
+  const offers = [...state].splice(0, 4);
   const [activeIndex, setActiveIndex] = React.useState(0);
+
   const dispatch = useDispatch();
+
   // State for Animation
   const [animating, setAnimating] = React.useState(false);
 
@@ -42,7 +53,7 @@ export default function LandingPage() {
     },
   ];
   useEffect(() => {
-    if (!offerShoes.length) dispatch(bringAllData());
+    if (!state.length) dispatch(bringAllData());
   }, []);
   // Items array length
   const itemLength = items.length - 1;
@@ -115,8 +126,10 @@ export default function LandingPage() {
       </div>
 
       <div className="cards-container">
-        {offerShoes.length > 0 &&
-          offerShoes.map((shoe, i) => <Card e={shoe} key={i} />)}
+
+        {state.length > 0 &&
+          offers.map((shoe, i) => <Card e={shoe} key={i} />)}
+
       </div>
 
       <Footer />

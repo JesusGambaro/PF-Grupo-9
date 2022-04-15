@@ -2,14 +2,72 @@
   display: flex;
   background-color: rgba(238, 240, 241, 0.591);
   width: 100%;
+  margin-top: 40px;
+   height: 150px !important; 
 }
 .footer {
   display: flex;
   justify-content: center;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
   margin: 15px;
 }
 .itemL {
   list-style: none;
+  font-size: 30px;
+  
+
+  
+}
+.list-items{
+  display: flex;
+  justify-content: space-around;
+  margin: 10px;
+  
+}
+
+.instagram{
+  
+ background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+border-radius: 5px;
+
+
+
+} 
+
+
+.footer-text{
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: larger;
+}
+
+.fa-whatsapp{
+  background-color: green;
+  color: white !important;
+  
+}
+
+.whatsapp{
+  
+  border-radius: 5px;
+ 
+
+}
+
+.facebook{
+color:#285AEB
+}
+
+.paypal{
+  color: #274bb9;
+  background-color: rgba(255, 255, 255, 0.563);
+}
+
+.parrafo{
+  align-self: flex-end;
+  margin-top: 5px;
+}
+
+.mediosde-pago{
+  margin-right: 30px;
 }

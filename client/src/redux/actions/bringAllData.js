@@ -10,5 +10,6 @@ const bringAllData = () => {
     dispatch({type: LOADING, payload: false});
   };
 };
-const orderByName = () => {};
+//const orderByName = () => {};
+
 export default bringAllData;

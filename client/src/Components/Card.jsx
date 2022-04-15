@@ -42,7 +42,7 @@ const Card = ({e, horizontal}) => {
       <div className="content">
         <div className="f-section">
           <NavLink
-            to={`/home/${e.id}`}
+            to={`/home/${e.id}/${e.model}`}
             style={{color: "black", textDecoration: "none"}}
           >
             <p title="Name">{e.brand}</p>

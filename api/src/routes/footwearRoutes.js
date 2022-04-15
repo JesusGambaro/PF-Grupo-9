@@ -95,11 +95,11 @@ router.get("/sales", async (req, res) => {
   }
 })
 router.get("/detail/:model", async (req, res) => {
-  const { footwear } = req.params
+  const { model } = req.params
   const prueba = await Product.findAll({
     where: {
       model: {
-        [Op.eq]: footwear,
+        [Op.eq]: model,
       },
     },
     include: [

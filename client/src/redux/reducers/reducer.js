@@ -22,20 +22,17 @@ const rootReducer = (state = initialState, action) => {
     case BRING_ALL_DATA:
       return { ...state, allData: action.payload };
     case SORT_BY:
-      return {...state, allDataCopy: action.payload};
+      return { ...state, allDataCopy: action.payload };
     case LOADING:
       return { ...state, loading: action.payload };
     case DETAIL:
       return { ...state, detail: action.payload };
+    case RESET:
+      return { ...state, allDataCopy: action.payload };
     case DETAILCOLOR:
       return { ...state, detailColor: action.payload };
     case CLEARDETAIL:
-      return { ...state, 
-        detailColor: action.payload,
-        detail:{}
-      };
-    case RESET:
-      return {...state, allDataCopy: action.payload};
+      return { ...state, detailColor: action.payload, detail: {} };
     default:
       return state;
   }

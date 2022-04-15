@@ -55,22 +55,22 @@ conn.sync({force: true}).then(async () => {
   });
   nikeShoeBlack.addImage(imageNikeBlack);
 
-  const adidasShoeBlack = await Product.create({
-    model: "Predator",
-    brand: "Adidas",
-    category: "Football",
-    gender: "Male",
-    price: 25000,
-    description: "Adidas shoe football",
-    sale: 10,
-    size: 10,
-    amount: 42,
-    color: "Black",
-  });
-  const imageAdidasBlack = await Image.create({
-    url: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/70ae150b4f51490d8d87ab2001505c1f_9366/Botines_de_futbol_Predator_20.3_cesped_natural_seco_Negro_EF1929_01_standard.jpg",
-  });
-  adidasShoeBlack.addImage(imageAdidasBlack);
+  // const adidasShoeBlack = await Product.create({
+  //   model: "Predator",
+  //   brand: "Adidas",
+  //   category: "Football",
+  //   gender: "Male",
+  //   price: 25000,
+  //   description: "Adidas shoe football",
+  //   sale: 10,
+  //   size: 10,
+  //   amount: 42,
+  //   color: "Black",
+  // });
+  // const imageAdidasBlack = await Image.create({
+  //   url: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/70ae150b4f51490d8d87ab2001505c1f_9366/Botines_de_futbol_Predator_20.3_cesped_natural_seco_Negro_EF1929_01_standard.jpg",
+  // });
+  // adidasShoeBlack.addImage(imageAdidasBlack);
 
   server.listen(3001, () => {
     console.log("%s listening at 3001");

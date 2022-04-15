@@ -1,27 +1,32 @@
-import {ORDER_PRICE} from "./actions";
+import {SORT_BY, RESET} from "./actions";
 
 const sortByPrice = (order) => {
   return async (dispatch, getState) => {
-    let filtered = [...getState().allData];
+    let filtered = [...getState().allDataCopy];
     if (order === "asc") {
-      console.log(filtered);
       filtered.sort((a, b) => {
-        return a.retailPrice - b.retailPrice;
+        return a.price - b.price;
       });
     } else if (order === "des")
       filtered.sort((a, b) => {
-        return b.retailPrice - a.retailPrice;
+        return b.price - a.price;
       });
-    dispatch({type: ORDER_PRICE, payload: filtered});
+    dispatch({type: SORT_BY, payload: filtered});
   };
 };
 const sortByGender = (gender) => {
   return async (dispatch, getState) => {
     let filtered = [...getState().allData];
     dispatch({
-      type: ORDER_PRICE,
+      type: SORT_BY,
       payload: filtered.filter((shoe) => shoe.gender === gender),
     });
   };
 };
-export {sortByPrice, sortByGender};
+const resetState = () => {
+  return async (dispatch, getState) => {
+    const state = getState().allData;
+    dispatch({type: RESET, payload: state});
+  };
+};
+export {sortByPrice, sortByGender, resetState};

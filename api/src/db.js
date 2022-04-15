@@ -3,7 +3,6 @@ const fs = require("fs")
 const path = require("path")
 require("dotenv").config()
 
-// Se hace la conexion a la BD.
 const sequelize = new Sequelize(
   `postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/pfshoes`,
   {
@@ -14,10 +13,8 @@ const sequelize = new Sequelize(
 
 const basename = path.basename(__filename)
 
-// modelDefiners Almacena los modelos
 const modelDefiners = []
 
-// Se leen los archivos de la carpeta Models
 fs.readdirSync(path.join(__dirname, "/models"))
   .filter(
     (file) =>
@@ -27,10 +24,8 @@ fs.readdirSync(path.join(__dirname, "/models"))
     modelDefiners.push(require(path.join(__dirname, "/models", file)))
   })
 
-// Se inyecta la conexion a los modelos
 modelDefiners.forEach((model) => model(sequelize))
 
-// Capitalizamos los nombres de los modelos
 let entries = Object.entries(sequelize.models)
 let capsEntries = entries.map((entry) => [
   entry[0][0].toUpperCase() + entry[0].slice(1),
@@ -38,10 +33,7 @@ let capsEntries = entries.map((entry) => [
 ])
 sequelize.models = Object.fromEntries(capsEntries)
 
-// Se hace destructuring para los modelos para relacionarlos.
 const { Product, Image, Stock } = sequelize.models
-
-// Se asignan las relaciones M:N
 
 Product.hasMany(Image)
 Image.belongsTo(Product)

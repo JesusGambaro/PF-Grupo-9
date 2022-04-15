@@ -1,7 +1,7 @@
 const BRING_ALL_DATA = "@shoes/bringAllData";
-const ORDER_NAME = "@shoes/orderByName";
-const ORDER_PRICE = "@shoes/orderByPrice";
+const SORT_BY = "@shoes/sortBy";
 const LOADING = "@shoes/loading";
 const DETAIL = "@shoes/detail";
+const RESET = "@shoes/reset";
 
-export {BRING_ALL_DATA, ORDER_NAME, ORDER_PRICE, LOADING, DETAIL};
+export {BRING_ALL_DATA, SORT_BY, LOADING, DETAIL,RESET};

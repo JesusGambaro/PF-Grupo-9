@@ -33,9 +33,7 @@ const Card = ({e, horizontal}) => {
     >
       <div className="img">
         <img
-          src={
-            e.images[0].url?e.images[0].url :"./Images/logo2.png"
-          }
+          src={e.images[0].url ? e.images[0].url : "./Images/logo2.png"}
           alt={e.model}
         />
       </div>
@@ -60,7 +58,12 @@ const Card = ({e, horizontal}) => {
         </div>
         <div className="appear">
           <i className="bi bi-bag" title="Add to cart"></i>
-          <i className="bi bi-toggles2" title="View details"></i>
+          <NavLink
+            to={`/home/${e.id}`}
+            style={{color: "black", textDecoration: "none"}}
+          >
+            <i className="bi bi-toggles2" title="View details"></i>
+          </NavLink>
           <i className="bi bi-heart" title="Add to favorites"></i>
         </div>
       </div>

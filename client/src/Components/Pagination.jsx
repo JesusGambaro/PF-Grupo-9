@@ -6,9 +6,9 @@ import {useEffect, useState} from "react";
 
 const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
   const [toggle, setToggle] = useState(true);
-  const {allData, loading} = shoes;
+  const {allDataCopy, loading} = shoes;
   const [currentPage, setCurrentPage] = useState(1);
-  const pages = Math.ceil(allData.length / cardsPerPage);
+  const pages = Math.ceil(allDataCopy.length / cardsPerPage);
 
   const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);
 
@@ -17,13 +17,13 @@ const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
   const goPage = (e) => setCurrentPage(Number(e.target.textContent));
 
   useEffect(() => {
-    if (allData.length < 40) setCurrentPage(1);
-  }, [allData]);
+    if (allDataCopy.length < 40) setCurrentPage(1);
+  }, [allDataCopy]);
 
   const dataPerPage = () => {
     const start = currentPage * cardsPerPage - cardsPerPage,
       end = start + cardsPerPage;
-    return allData.slice(start, end);
+    return allDataCopy.slice(start, end);
   };
 
   const dividedGroups = () => {
@@ -44,7 +44,7 @@ const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
   return (
     <div className="home-container">
       <UpSideBar
-        quantity={shoes.allData.length}
+        quantity={shoes.allDataCopy.length}
         handleToggle={(p) => setToggle(p)}
       />
       <LeftSideFilters />
@@ -52,11 +52,12 @@ const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
         <Loading />
       ) : (
         <div className={"shoes-container" + (toggle ? "" : " h")}>
-          {allData.length>0 && dataPerPage().map((e, i) => (
-            <Card e={e} key={i} horizontal={!toggle} />
-          ))}
+          {allDataCopy.length > 0 &&
+            dataPerPage().map((e, i) => (
+              <Card e={e} key={i} horizontal={!toggle} />
+            ))}
 
-          {allData.length > 1 && (
+          {allDataCopy.length > 1 && (
             <div className="pagination-container">
               <div className="selectionOwn">
                 <button

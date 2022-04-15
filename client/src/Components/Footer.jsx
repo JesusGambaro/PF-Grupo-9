@@ -10,7 +10,7 @@ export default function Footer() {
         
 
         <div className="icons-container-footer">
-         <p className="footer-text"> información de contácto:</p>
+         <p className="footer-text"> Información de contácto:</p>
           <div className="list-items">
           <li className="itemL">
           <i className="fa-brands fa-whatsapp whatsapp"></i>
@@ -26,7 +26,7 @@ export default function Footer() {
         <div className="parrafo">
     Henry © 2022 | Todos los derechos reservados.</div>
         <div className="mediosde-pago">
-        <p className="footer-text"> medios de pago:</p>
+        <p className="footer-text"> Medios de pago:</p>
           <li className="itemL">
           <i className="fa-brands fa-cc-paypal paypal"></i>
           </li>

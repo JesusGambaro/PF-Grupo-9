@@ -1,5 +1,5 @@
 const { Router } = require("express")
-const { Op } = require("sequelize")
+const { Op, Sequelize, where } = require("sequelize")
 const { Product, Image, Stock } = require("../db.js")
 
 const router = Router()
@@ -22,9 +22,15 @@ router.get("/", async (req, res) => {
       ],
     })
     if (footwear) {
+      const brandVarchar = Sequelize.cast(Sequelize.col("brand"), "varchar")
       const footwearsSearched = await Product.findAll({
         where: {
-          model: { [Op.iLike]: `%${footwear}%` },
+          [Op.or]: [
+            { model: { [Op.iLike]: `%${footwear}%` } },
+            Sequelize.where(Sequelize.cast(Sequelize.col("brand"), "varchar"), {
+              [Op.iLike]: `%${footwear}%`,
+            }),
+          ],
         },
         include: [
           {
@@ -79,7 +85,7 @@ router.get("/allCategories", async (req, res) => {
 router.get("/sales", async (req, res) => {
   try {
     const carouselSale = await Product.findAll({
-      limit: 4,
+      limit: 6,
       where: {
         sale: { [Op.gt]: 0 },
       },

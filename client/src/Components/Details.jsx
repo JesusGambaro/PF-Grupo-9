@@ -4,45 +4,23 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetail, getDetailColor, clearDetail } from "../redux/actions/getDetail";
+import bringAllData from "../redux/actions/bringAllData";
 import Loading from "./Loading";
 
 function Details() {
-  const details = {
-    id: "24467d63-43b6-40f9-a009-3b486db9d519",
-    sku: "A01231F",
-    brand: "Converse",
-    size: [36, 37, 38, 39, 40],
-    name: "Converse Chuck Taylor All-Star Pokemon Pikachu (TD)",
-    colorway: "yellow/white",
-    gender: "toddler",
-    silhouette: "Chuck Taylor All Star",
-    releaseYear: "2022",
-    releaseDate: "2022-12-07",
-    retailPrice: 40,
-    estimatedMarketValue: 48,
-    story:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus ratione ducimus totam excepturi. Illo dolor totam in provident alias, sequi libero similique maxime vitae delectus numquam porro ab illum! Nisi. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat autem recusandae at optio delectus eos asperiores, inventore facilis quae error ipsum cupiditate fugit soluta incidunt neque alias in? Ipsam, ipsum.",
-    image: {
-      360: [],
-      original:
-        "https://image.goat.com/attachments/product_template_pictures/images/067/561/185/original/887470_00.png.png",
-      small:
-        "https://image.goat.com/750/attachments/product_template_pictures/images/067/561/185/original/887470_00.png.png",
-      thumbnail:
-        "https://image.goat.com/375/attachments/product_template_pictures/images/067/561/185/original/887470_00.png.png",
-    },
-  };
 
-  const [colorSelect, setColorSelect] = useState();
-  const [sizeSelect, setSizeSelect] = useState();
-  const { id, model } = useParams();
   const dispatch = useDispatch();
-  const { detail, loading, detailColor } = useSelector((state) => state);
+  const { id, model } = useParams();
   const initialMount = useRef(true);
-  const [mainImage, setMainImage] = useState();
-  const [Images, setImages] = useState([]);
-  const [size, setSize] = useState([]);
+  const { detail, loading, detailColor, allData } = useSelector((state) => state);
+
   const [stock, setStock] = useState();
+  const [size, setSize] = useState([]);
+  const [Images, setImages] = useState([]);
+  const [mainImage, setMainImage] = useState();
+  const [sizeSelect, setSizeSelect] = useState();
+  const [colorSelect, setColorSelect] = useState();
+
 
   const handleMainImage = (e) => {
     setMainImage(e.target.src);
@@ -52,38 +30,34 @@ function Details() {
     setColorSelect(e.target.value)
     let index = e.target.selectedIndex;
     let identificador = e.target.options[index].id
-    
-    const shoes=detailColor.find(detail=>detail.id==identificador)
+
+    const shoes = detailColor.find(detail => detail.id == identificador)
     setImages(shoes.images)
     setMainImage(shoes.images[0].url)
     setSize(shoes.stocks)
     setStock(shoes.stocks[0].amount)
   };
+
   const handleSize = (e) => {
     setSizeSelect(e.target.value)
     let index = e.target.selectedIndex;
     let identificador = e.target.options[index].id
-    const stock=size.find(siz=>siz.id==identificador)
+    const stock = size.find(siz => siz.id == identificador)
     setStock(stock.amount)
-
   };
 
   useEffect(() => {
     dispatch(getDetail(id));
     dispatch(getDetailColor(model));
+    if (allData.length === 0) dispatch(bringAllData())
 
     if (initialMount.current) initialMount.current = false;
-  
+
   }, [initialMount]);
 
-  useEffect(()=>{
-
-    return ()=>{
-      console.log(detail)
-      console.log(detailColor)
-      return clearDetail()
-    }
-  },[])
+  useEffect(() => {
+    return () => dispatch(clearDetail())
+  }, [])
 
   return (
     <div style={{ marginTop: "4rem" }}>
@@ -96,7 +70,7 @@ function Details() {
                 <h1 className="text-info text-center">{detail.brand} {detail.model}</h1>
               </div>
 
-              <div className="row overflow-hidden bg-secondary">
+              <div className="row overflow-hidden bg-secondary h-auto">
                 <div className="col bg-white">
                   <div className="col col-12 text-end mt-2">
                     <button
@@ -117,33 +91,30 @@ function Details() {
                     </button>
                   </div>
 
-                  <div className="col-12 overflow-hidden">
-                    <img
-                      src={mainImage}
-                      alt="imagen"
-                      id="mainImage"
-                      className="w-50 bg-white mx-auto d-block"
-                    />
+                  <div className="col-12 overflow-hidden w-100" style={{"height":"53vh"}}>
+                    <img src={mainImage} alt="imagen" id="mainImage"
+                      className="w-50 bg-white mx-auto d-block"/>
                   </div>
 
-                  <div className="row grid gap-4 ms-2 mx-2">
+                  <div className="row grid gap-2 ms-1 mx-1">
                     {
-                      Images.length > 0 
-                      ? Images.map(diseño => (
-                            <button className="col border-0 bg-transparent p-0" key={diseño.id}>
+                      Images.length > 0
+                        ? Images.map(diseño => (
+                          <button className={`${Images.length===1?"col col-3":"col"} border-0 bg-transparent p-0`} key={diseño.id}>
                             <img
                               src={diseño.url}
+                              style={{"height":"23vh"}}
                               alt="zapato"
                               className="w-100 border border-info border-4 rounded shadow-lg"
                               onClick={handleMainImage}
                             />
                           </button>
                         ))
-                      :detailColor.length>0
-                        ? setImages(detailColor[0].images) & setMainImage(detailColor[0].images[0].url)
-                        :null
-                      }
-                    
+                        : detailColor.length > 0
+                          ? setImages(detailColor[0].images) & setMainImage(detailColor[0].images[0].url)
+                          : null
+                    }
+
                   </div>
                 </div>
 
@@ -182,16 +153,16 @@ function Details() {
                       <select className="form-select fw-bold" name="size"
                         value={sizeSelect} onChange={handleSize}
                       >
-                        {size.length>0
-                        ? size.map((talla) => (
-                          <option key={talla.id} value={talla.size} className="fw-bold" id={talla.id}>
-                            {talla.size}
-                          </option>
-                        ))
-                        : detailColor.length>0
-                        ? setSize(detailColor[0].stocks) & setStock(detailColor[0].stocks[0].amount)
-                        :null
-                      }
+                        {size.length > 0
+                          ? size.map((talla) => (
+                            <option key={talla.id} value={talla.size} className="fw-bold" id={talla.id}>
+                              {talla.size}
+                            </option>
+                          ))
+                          : detailColor.length > 0
+                            ? setSize(detailColor[0].stocks) & setStock(detailColor[0].stocks[0].amount)
+                            : null
+                        }
                       </select>
                       <label
                         htmlFor="floatingSelect"

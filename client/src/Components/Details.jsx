@@ -1,4 +1,5 @@
 import "../Css/Details.css";
+
 import { data } from "./data";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
@@ -58,7 +59,7 @@ function Details() {
   useEffect(() => {
     return () => dispatch(clearDetail())
   }, [])
-
+  console.log(detail)
   return (
     <div style={{ marginTop: "4rem" }}>
       {loading ?
@@ -110,8 +111,8 @@ function Details() {
                             />
                           </button>
                         ))
-                        : detailColor.length > 0
-                          ? setImages(detailColor[0].images) & setMainImage(detailColor[0].images[0].url)
+                        : detail.id
+                          ? setImages(detail.images) & setMainImage(detail.images[0].url)
                           : null
                     }
 
@@ -130,7 +131,7 @@ function Details() {
                       <select
                         className="form-select fw-bold"
                         name="colors"
-                        value={colorSelect}
+                        value={colorSelect?colorSelect:detail.color}
                         onChange={handleColor}
                       >
                         {detailColor.length > 0 &&
@@ -159,8 +160,8 @@ function Details() {
                               {talla.size}
                             </option>
                           ))
-                          : detailColor.length > 0
-                            ? setSize(detailColor[0].stocks) & setStock(detailColor[0].stocks[0].amount)
+                          : detail.id
+                            ? setSize(detail.stocks) & setStock(detail.stocks[0].amount)
                             : null
                         }
                       </select>

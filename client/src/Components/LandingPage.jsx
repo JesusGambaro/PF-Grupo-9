@@ -17,7 +17,8 @@ import {
 
 export default function LandingPage() {
   // State for Active index
-  const offerShoes = useSelector((state) => state.allData);
+  const state = useSelector((state) => state.allData);
+  const offers = [...state].splice(0, 4);
   const [activeIndex, setActiveIndex] = React.useState(0);
   const dispatch = useDispatch();
   // State for Animation
@@ -42,7 +43,7 @@ export default function LandingPage() {
     },
   ];
   useEffect(() => {
-    if (!offerShoes.length) dispatch(bringAllData());
+    if (!state.length) dispatch(bringAllData());
   }, []);
   // Items array length
   const itemLength = items.length - 1;
@@ -115,8 +116,8 @@ export default function LandingPage() {
       </div>
 
       <div className="cards-container">
-        {offerShoes.length > 0 &&
-          offerShoes.map((shoe, i) => <Card e={shoe} key={i} />)}
+        {state.length > 0 &&
+          offers.map((shoe, i) => <Card e={shoe} key={i} />)}
       </div>
 
       <Footer />

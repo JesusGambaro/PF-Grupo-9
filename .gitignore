@@ -25,4 +25,4 @@ yarn-error.log*
 
 # package-lock.json
 package-lock.json
-api/.env
+

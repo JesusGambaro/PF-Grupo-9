@@ -3,7 +3,7 @@ import logo from "../Images/logo2.png";
 import {useState} from "react";
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
 import {NavLink, useNavigate} from "react-router-dom";
-import {sortByGender} from "../redux/actions/sortBy";
+import {sortByGender, resetState} from "../redux/actions/sortBy";
 import {useDispatch} from "react-redux";
 
 const NavBar = () => {
@@ -19,12 +19,12 @@ const NavBar = () => {
         <img className="logoOwn" src={logo} alt="logo" />
       </NavLink>
       <ul className="sectionsOwn">
-        <li>
+        <li onClick={() => dispatch(resetState())}>
           <NavLink to="/home">HOME</NavLink>
         </li>
         <li
           onClick={() => {
-            dispatch(sortByGender("men"));
+            dispatch(sortByGender("Male"));
             navigate("/home");
           }}
         >
@@ -32,7 +32,7 @@ const NavBar = () => {
         </li>
         <li
           onClick={() => {
-            dispatch(sortByGender("women"));
+            dispatch(sortByGender("Female"));
             navigate("/home");
           }}
         >
@@ -40,7 +40,7 @@ const NavBar = () => {
         </li>
         <li
           onClick={() => {
-            dispatch(sortByGender("kids"));
+            dispatch(sortByGender("Kids"));
             navigate("/home");
           }}
         >

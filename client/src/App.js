@@ -25,7 +25,7 @@ function App() {
       />
       <Route
         exact
-        path="home/:id"
+        path="home/:id/:model"
         element={[
           <NavBar key={"nav"} />,
           <Details key={"details"} />,

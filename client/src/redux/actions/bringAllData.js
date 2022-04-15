@@ -10,4 +10,5 @@ const bringAllData = () => {
     dispatch({type: LOADING, payload: false});
   };
 };
+
 export default bringAllData;

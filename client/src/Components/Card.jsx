@@ -31,6 +31,7 @@ const Card = ({e, horizontal}) => {
       className={"cardOwn" + (horizontal ? " h" : "")}
       style={{"--i": colors[Math.floor(Math.random() * colors.length)]}}
     >
+      {e.sale !== 0 && <p className="offer-ribbon" offer={e.sale + "%"}></p>}
       <div className="img">
         <img
           src={e.images[0].url ? e.images[0].url : "./Images/logo2.png"}
@@ -53,13 +54,24 @@ const Card = ({e, horizontal}) => {
               <i className="bi bi-star-half"></i>
               <i className="bi bi-star"></i>
             </div>
-            <p title="Price">${e.price}</p>
+            <p
+              title="Price"
+              style={
+                e.sale ? {textDecoration: "line-through", color: "#999"} : {}
+              }
+            >
+              ${e.price}
+            </p>
+            &nbsp;
+            {e.sale !== 0 && (
+              <p title="Offer Price">${e.price - (e.price * e.sale) / 100}</p>
+            )}
           </span>
         </div>
         <div className="appear">
           <i className="bi bi-bag" title="Add to cart"></i>
           <NavLink
-            to={`/home/${e.id}`}
+            to={`/home/${e.id}/${e.model}`}
             style={{color: "black", textDecoration: "none"}}
           >
             <i className="bi bi-toggles2" title="View details"></i>

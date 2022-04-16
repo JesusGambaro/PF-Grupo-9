@@ -21,6 +21,9 @@
     align-items: center;
     gap: 1rem;
     font-size: large;
+    i{
+      cursor: pointer;
+    }
   }
   .quantity {
   }
@@ -34,6 +37,7 @@
     }
     select {
       width: 60%;
+      cursor: pointer;
     }
   }
 }

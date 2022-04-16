@@ -27,7 +27,6 @@
         cursor: pointer;
         position: relative;
         @include flex-b();
-        /*    border: 1px solid rgba(0, 0, 0, 0.1); */
         border: none;
         justify-content: space-between;
         box-shadow: 0.2rem 0.2rem 0.5rem rgba($color: #000, $alpha: 0.2);
@@ -60,6 +59,18 @@
             p {
               margin-bottom: 0;
             }
+            span {
+              @include flex-b();
+              width: 100%;
+              .rating {
+                width: 100%;
+                display: flex;
+                align-self: flex-start;
+                i {
+                  font-size: 0.8rem;
+                }
+              }
+            }
           }
           .appear {
             width: 100%;
@@ -76,26 +87,27 @@
               &::after {
                 content: attr(title);
                 font-size: 1rem;
+                background: #000;
+                padding: 0 0.3rem;
+                color: #fff;
+                border-radius: 0.5rem;
                 position: absolute;
                 display: none;
                 top: -1.2rem;
                 transform: translate(-40%);
                 white-space: nowrap;
+                animation: 1s fadeIn;
               }
               &:hover::after {
                 display: block;
               }
-            }
-          }
-          span {
-            @include flex-b();
-            width: 100%;
-            .rating {
-              width: 100%;
-              display: flex;
-              align-self: flex-start;
-              i {
-                font-size: 0.8rem;
+              @keyframes fadeIn {
+                from {
+                  opacity: 0;
+                }
+                to {
+                  opacity: 1;
+                }
               }
             }
           }
@@ -130,10 +142,86 @@
         flex: 1 0 100%;
         width: 100%;
         max-width: 100%;
-        transition: all 0.5s ease-in-out;
+        .content {
+          height: 100%;
+          justify-content: space-evenly;
+          .f-section {
+            p {
+              &:first-child {
+                font-size: xx-large;
+              }
+            }
+            span {
+              font-size: large;
+              .rating {
+                i {
+                  font-size: large;
+                }
+              }
+            }
+          }
+          .appear {
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            position: relative;
+            padding: 0.2rem 0;
+            transition: 0.3s all ease-in-out;
+            font-size: 1.2rem;
+            i {
+              font-size: x-large;
+              cursor: pointer;
+              &[title="Add to cart"] {
+                background: #fff;
+                padding: 0.2rem 1rem;
+                border-radius: 0.5rem;
+                width: 8rem;
+                display: flex;
+                white-space: nowrap;
+                align-items: center;
+                justify-content: center;
+                p {
+                  font-size: small;
+                  margin-bottom: 0;
+                }
+                &::after {
+                  display: none;
+                }
+              }
+              &::after {
+                content: attr(title);
+                font-size: 1rem;
+                background: #000;
+                padding: 0 0.3rem;
+                color: #fff;
+                border-radius: 0.5rem;
+                position: absolute;
+                top: -1.5rem;
+                transform: translate(-40%);
+                white-space: nowrap;
+                animation: 1s fadeIn;
+              }
+              @keyframes fadeIn {
+                from {
+                  opacity: 0;
+                }
+                to {
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
         .img {
-          border: 1px solid red;
-          background: transparent;
+          border: 1px solid violet;
+          img {
+            border: 1px solid violet;
+          }
+        }
+        &:hover .img,
+        &:hover .content {
+          top: 0;
         }
       }
     }

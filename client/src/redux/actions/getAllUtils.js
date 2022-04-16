@@ -15,7 +15,6 @@ const getAllGenders = () => {
   return async (dispatch) => {
     dispatch({type: LOADING, payload: true});
     const {data} = await axios.get(URL_GENDERS);
-    console.log("genders=>", data);
     dispatch({type: GET_ALL_GENDERS, payload: data});
     dispatch({type: LOADING, payload: false});
   };

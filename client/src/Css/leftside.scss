@@ -6,7 +6,6 @@
   color: white;
   display: flex;
   padding: 1rem;
-  justify-content: center;
   align-items: flex-start;
   flex-direction: column;
   color: black;
@@ -19,6 +18,7 @@
       gap: 1rem;
       flex-wrap: wrap;
       div {
+        cursor: pointer;
         background: var(--c);
         border-radius: 50%;
         width: 3rem;
@@ -27,8 +27,8 @@
         justify-content: center;
         align-items: center;
         font-size: small;
-        border: 1px solid black;
-        transition: all 0.1s ease-in;
+        outline: 1px solid #999;
+        transition: all 0.1s ease-in-out;
         &:hover {
           outline: 0.1rem solid black;
           border: 0.1rem solid white;

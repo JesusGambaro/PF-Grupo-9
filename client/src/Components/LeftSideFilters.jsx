@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {getAllCategories, getAllGenders} from "../redux/actions/getAllUtils";
 import MultiRangeSlider from "multi-range-slider-react";
-
+import leftSideFilter from "../redux/actions/leftSideFilter";
 const colors = [
   "Black",
   "White",
@@ -104,7 +104,15 @@ const LeftSideFilters = () => {
         <h4>Colors</h4>
         <div className="colors">
           {colors.map((c, i) => {
-            return <div key={i} style={{"--c": c}}></div>;
+            return (
+              <div
+                onClick={() => {
+                  dispatch(leftSideFilter("color", c));
+                }}
+                key={i}
+                style={{"--c": c}}
+              ></div>
+            );
           })}
         </div>
       </div>

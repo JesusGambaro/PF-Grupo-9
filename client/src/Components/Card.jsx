@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom";
 
 const Card = ({e, horizontal}) => {
-  const colors = [
+  /* const colors = [
        "Black",
         "White",
         "Brown",
@@ -14,16 +14,15 @@ const Card = ({e, horizontal}) => {
         "Gray",
         "Beige",
         "Pink"
-  ];
-  /*   const colors = [
+  ]; */
+  const colors = [
     "RGB(239, 145, 155)",
     "RGB(248, 179, 146)",
     "RGB(246, 247, 176)",
     "RGB(160, 207, 162)",
     "RGB(113, 190, 231)",
     "RGB(131, 128, 179)",
-  ]; */
-
+  ];
   return (
     <div
       className={"cardOwn" + (horizontal ? " h" : "")}
@@ -67,7 +66,9 @@ const Card = ({e, horizontal}) => {
           </span>
         </div>
         <div className="appear">
-          <i className="bi bi-bag" title="Add to cart"></i>
+          <i className="bi bi-bag" title="Add to cart">
+            <p>{horizontal ? "Add to cart" : ""}</p>
+          </i>
           <NavLink
             to={`/home/${e.id}/${e.model}`}
             style={{color: "black", textDecoration: "none"}}

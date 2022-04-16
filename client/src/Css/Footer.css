@@ -28,49 +28,36 @@
 
 .instagram{
   
- background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+
 border-radius: 5px;
 } 
 .instagram:hover{
-  background: radial-gradient(circle at 30% 107%, #fdf49790 0%, #fdf49794 5%, #fd584997 45%,#d6249e93 60%,#2859eb91 90%);
+ color: rgb(175, 182, 182);
 }
 
 
 .footer-text{
   font-family: 'Josefin Sans', sans-serif;
   font-size: larger;
+  margin: 0;
 }
 
-.fa-whatsapp{
-  background-color: green;
-  color: white !important;
-  
-}
 
-.whatsapp{
-  
-  border-radius: 5px;
- 
 
-}
+
 .whatsapp:hover{
-  background-color: rgba(18, 142, 18, 0.614);
-  color: white !important;
+  color: rgba(166, 166, 166, 0.614);
+
 }
 
-.facebook{
-color:#285AEB
-}
+
 .facebook:hover{
-  color:#2859eb91
+  color:#babbbf91
 }
 
-.paypal{
-  color: #274bb9;
-  background-color: rgba(255, 255, 255, 0.563);
-}
-.paypal:hover{
-  color: #274bb992;
+.mercado-pago{
+  width:  60px;
+  margin-top: 0;
 }
 
 .parrafo{

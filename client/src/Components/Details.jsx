@@ -66,7 +66,7 @@ function Details() {
         <Loading />
         : (
           <>
-            <div className="container mt-5 mb-5 rounded-3 shadow-lg ">
+            <div className="container mt-5 mb-5 rounded-3 shadow-lg">
               <div className="row pt-4 pb-4 bg-white">
                 <h1 className="text-info text-center">{detail.brand} {detail.model}</h1>
               </div>
@@ -106,7 +106,7 @@ function Details() {
                               src={diseño.url}
                               style={{"height":"23vh"}}
                               alt="zapato"
-                              className="w-100 border border-info border-4 rounded shadow-lg"
+                              className={`w-100 border border-4 rounded shadow-lg ${mainImage===diseño.url?"border-warning":"border-info"}`}
                               onClick={handleMainImage}
                             />
                           </button>

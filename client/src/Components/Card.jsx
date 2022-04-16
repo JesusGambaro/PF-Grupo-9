@@ -2,20 +2,18 @@ import {NavLink} from "react-router-dom";
 
 const Card = ({e, horizontal}) => {
   const colors = [
-    "rgba(3, 169, 244, 0.7)",
-    "rgba(244, 67, 54, 0.7)",
-    "rgba(233, 30, 99, 0.7)",
-    "rgba(156, 39, 176, 0.7)",
-    "rgba(63, 81, 181, 0.7)",
-    "rgba(0, 188, 212, 0.7)",
-    "rgba(0, 150, 136, 0.7)",
-    "rgba(76, 175, 80, 0.7)",
-    "rgba(205, 220, 57, 0.7)",
-    "rgba(255, 235, 59, 0.7)",
-    "rgba(255, 152, 0, 0.7)",
-    "rgba(121, 85, 72, 0.7)",
-    "rgba(96, 125, 139, 0.7)",
-    "rgba(158, 158, 158, 0.7)",
+       "Black",
+        "White",
+        "Brown",
+        "Purple",
+        "Orange",
+        "Red",
+        "Blue",
+        "Green",
+        "Yellow",
+        "Gray",
+        "Beige",
+        "Pink"
   ];
   /*   const colors = [
     "RGB(239, 145, 155)",

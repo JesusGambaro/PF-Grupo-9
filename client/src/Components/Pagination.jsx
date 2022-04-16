@@ -51,12 +51,13 @@ const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
       {loading ? (
         <Loading />
       ) : (
-        <div className={"shoes-container" + (toggle ? "" : " h")}>
-          {allDataCopy.length > 0 &&
-            dataPerPage().map((e, i) => (
-              <Card e={e} key={i} horizontal={!toggle} />
-            ))}
-
+        <div className="allContainer">
+          <div className={"shoes-container" + (toggle ? "" : " h")}>
+            {allDataCopy.length > 0 &&
+              dataPerPage().map((e, i) => (
+                <Card e={e} key={i} horizontal={!toggle} />
+              ))}
+          </div>
           {allDataCopy.length > 1 && (
             <div className="pagination-container">
               <div className="selectionOwn">

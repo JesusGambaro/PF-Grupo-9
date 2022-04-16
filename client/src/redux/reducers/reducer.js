@@ -7,6 +7,8 @@ import {
   CLEARDETAIL,
   GET_ALL_SALES,
   RESET,
+  GET_ALL_CATEGORIES,
+  GET_ALL_GENDERS,
 } from "../actions/actions";
 
 const initialState = {
@@ -17,12 +19,18 @@ const initialState = {
   filtereds: [],
   detail: {},
   detailColor: [],
+  categories: [],
+  genders: [],
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case BRING_ALL_DATA:
       return {...state, allData: action.payload, allDataCopy: action.payload};
+    case GET_ALL_CATEGORIES:
+      return {...state, categories: action.payload};
+    case GET_ALL_GENDERS:
+      return {...state, genders: action.payload};
     case SORT_BY:
       return {...state, allDataCopy: action.payload};
     case LOADING:

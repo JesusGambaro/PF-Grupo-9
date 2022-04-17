@@ -165,98 +165,98 @@ conn.sync({ force: true }).then(async () => {
     ///////////////////////
 
 
-    const NikeDownshifterBlack  = await Product.create({
-      model: "Downshifter",
-      brand: "Nike",
-      category: "Running",
-      gender: "Female",
-      price: 33000,
-      description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-      sale: 0,
-      color: "Black",
-    })
-    const imageNikeDownshifterBlack = await Image.create({
-      url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/d2bf9416-7733-4e0e-a505-97e4f8c262c7/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
-    })
-    const imageNikeDownshifterBlack2 = await Image.create({
-      url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/c47702cf-6b27-4ac3-b68c-3ab33d59f805/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
-    })
-    const imageNikeDownshifterBlack3 = await Image.create({
-      url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/67dd0126-1d99-402c-baa1-6d3231ee4f26/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
-    })
-    const imageNikeDownshifterBlack4 = await Image.create({
-      url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/13fbc390-887a-4d8b-926b-45c5462f86d9/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
-    })
-    NikeDownshifterBlack.addImages([imageNikeDownshifterBlack, imageNikeDownshifterBlack2, imageNikeDownshifterBlack3, imageNikeDownshifterBlack4])
-    const stockiNikeDownshifterBlack10 = await Stock.create({ size: 10, amount: 20 })
-    const stockiNikeDownshifterBlack11 = await Stock.create({ size: 11, amount: 21 })
-    const stockiNikeDownshifterBlack12 = await Stock.create({ size: 12, amount: 22 })
-    NikeDownshifterBlack.addStock([stockiNikeDownshifterBlack10, stockiNikeDownshifterBlack11, stockiNikeDownshifterBlack12])
-    
-    
-      ///////////////////////
+  const NikeDownshifterBlack  = await Product.create({
+    model: "Downshifter",
+    brand: "Nike",
+    category: "Running",
+    gender: "Female",
+    price: 33000,
+    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+    sale: 0,
+    color: "Black",
+  })
+  const imageNikeDownshifterBlack = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/d2bf9416-7733-4e0e-a505-97e4f8c262c7/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
+  })
+  const imageNikeDownshifterBlack2 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/c47702cf-6b27-4ac3-b68c-3ab33d59f805/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
+  })
+  const imageNikeDownshifterBlack3 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/67dd0126-1d99-402c-baa1-6d3231ee4f26/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
+  })
+  const imageNikeDownshifterBlack4 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/13fbc390-887a-4d8b-926b-45c5462f86d9/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
+  })
+  NikeDownshifterBlack.addImages([imageNikeDownshifterBlack, imageNikeDownshifterBlack2, imageNikeDownshifterBlack3, imageNikeDownshifterBlack4])
+  const stockiNikeDownshifterBlack10 = await Stock.create({ size: 10, amount: 20 })
+  const stockiNikeDownshifterBlack11 = await Stock.create({ size: 11, amount: 21 })
+  const stockiNikeDownshifterBlack12 = await Stock.create({ size: 12, amount: 22 })
+  NikeDownshifterBlack.addStock([stockiNikeDownshifterBlack10, stockiNikeDownshifterBlack11, stockiNikeDownshifterBlack12])
+  
+  
+    ///////////////////////
 
-      const NikeKyrieInfinity  = await Product.create({
-        model: "Kyrie Infinity",
-        brand: "Nike",
-        category: "Urban",
-        gender: "Male",
-        price: 47000,
-        description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-        sale: 0,
-        color: "Green",
-      })
-      const imageNikeKyrieInfinity = await Image.create({
-        url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/31894742-692c-45d0-bba6-b034571c23b9/kyrie-infinity-basketball-shoes-LvzsVp.png",
-      })
-      const imageNikeKyrieInfinity2 = await Image.create({
-        url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/ce351403-5d20-4f84-8d01-ebd61a38c828/kyrie-infinity-basketball-shoes-LvzsVp.png",
-      })
-      const imageNikeKyrieInfinity3 = await Image.create({
-        url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/1583433a-3f93-461f-803c-92d1c87d47a1/kyrie-infinity-basketball-shoes-LvzsVp.png",
-      })
-      const imageNikeKyrieInfinity4 = await Image.create({
-        url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/516cded5-91a4-48d8-8e5c-a2a2d31aff0b/kyrie-infinity-basketball-shoes-LvzsVp.png",
-      })
-      NikeKyrieInfinity.addImages([imageNikeKyrieInfinity, imageNikeKyrieInfinity2, imageNikeKyrieInfinity3, imageNikeKyrieInfinity4])
-      const stockNikeKyrieInfinity10 = await Stock.create({ size: 10, amount: 20 })
-      const stockNikeKyrieInfinity11 = await Stock.create({ size: 11, amount: 21 })
-      const stockNikeKyrieInfinity12 = await Stock.create({ size: 12, amount: 22 })
-      NikeKyrieInfinity.addStock([stockNikeKyrieInfinity10, stockNikeKyrieInfinity11, stockNikeKyrieInfinity12])
-      
-      
-        ///////////////////////
+  const NikeKyrieInfinity  = await Product.create({
+    model: "Kyrie Infinity",
+    brand: "Nike",
+    category: "Urban",
+    gender: "Male",
+    price: 47000,
+    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+    sale: 0,
+    color: "Green",
+  })
+  const imageNikeKyrieInfinity = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/31894742-692c-45d0-bba6-b034571c23b9/kyrie-infinity-basketball-shoes-LvzsVp.png",
+  })
+  const imageNikeKyrieInfinity2 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/ce351403-5d20-4f84-8d01-ebd61a38c828/kyrie-infinity-basketball-shoes-LvzsVp.png",
+  })
+  const imageNikeKyrieInfinity3 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/1583433a-3f93-461f-803c-92d1c87d47a1/kyrie-infinity-basketball-shoes-LvzsVp.png",
+  })
+  const imageNikeKyrieInfinity4 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/516cded5-91a4-48d8-8e5c-a2a2d31aff0b/kyrie-infinity-basketball-shoes-LvzsVp.png",
+  })
+  NikeKyrieInfinity.addImages([imageNikeKyrieInfinity, imageNikeKyrieInfinity2, imageNikeKyrieInfinity3, imageNikeKyrieInfinity4])
+  const stockNikeKyrieInfinity10 = await Stock.create({ size: 10, amount: 20 })
+  const stockNikeKyrieInfinity11 = await Stock.create({ size: 11, amount: 21 })
+  const stockNikeKyrieInfinity12 = await Stock.create({ size: 12, amount: 22 })
+  NikeKyrieInfinity.addStock([stockNikeKyrieInfinity10, stockNikeKyrieInfinity11, stockNikeKyrieInfinity12])
+  
+  
+    ///////////////////////
 
-        const NikeKyrieInfinityPurple  = await Product.create({
-          model: "Kyrie Infinity",
-          brand: "Nike",
-          category: "Urban",
-          gender: "Male",
-          price: 47000,
-          description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-          sale: 0,
-          color: "Purple",
-        })
-        const imageNikeKyrieInfinityPurple = await Image.create({
-          url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/d6f5179b-2c54-47ca-ab43-6a43200cae62/kyrie-infinity-basketball-shoes-LvzsVp.png",
-        })
-        const imageNikeKyrieInfinityPurple2 = await Image.create({
-          url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/389bc835-458d-4877-8534-66aae2923f8e/kyrie-infinity-basketball-shoes-LvzsVp.png",
-        })
-        const imageNikeKyrieInfinityPurple3 = await Image.create({
-          url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/fd9e6360-4422-4863-9ad3-20b265b29146/kyrie-infinity-basketball-shoes-LvzsVp.png",
-        })
-        const imageNikeKyrieInfinityPurple4 = await Image.create({
-          url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/a211de35-26d2-4432-8ea8-dd6d7e550357/kyrie-infinity-basketball-shoes-LvzsVp.png",
-        })
-        NikeKyrieInfinityPurple.addImages([imageNikeKyrieInfinityPurple, imageNikeKyrieInfinityPurple2, imageNikeKyrieInfinityPurple3, imageNikeKyrieInfinityPurple4])
-        const stockNikeKyrieInfinityPurple10 = await Stock.create({ size: 10, amount: 20 })
-        const stockNikeKyrieInfinityPurple11 = await Stock.create({ size: 11, amount: 21 })
-        const stockNikeKyrieInfinityPurple12 = await Stock.create({ size: 12, amount: 22 })
-        NikeKyrieInfinityPurple.addStock([stockNikeKyrieInfinityPurple10, stockNikeKyrieInfinityPurple11, stockNikeKyrieInfinityPurple12])
-        
-        
-          ///////////////////////
+  const NikeKyrieInfinityPurple  = await Product.create({
+    model: "Kyrie Infinity",
+    brand: "Nike",
+    category: "Urban",
+    gender: "Male",
+    price: 47000,
+    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+    sale: 0,
+    color: "Purple",
+  })
+  const imageNikeKyrieInfinityPurple = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/d6f5179b-2c54-47ca-ab43-6a43200cae62/kyrie-infinity-basketball-shoes-LvzsVp.png",
+  })
+  const imageNikeKyrieInfinityPurple2 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/389bc835-458d-4877-8534-66aae2923f8e/kyrie-infinity-basketball-shoes-LvzsVp.png",
+  })
+  const imageNikeKyrieInfinityPurple3 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/fd9e6360-4422-4863-9ad3-20b265b29146/kyrie-infinity-basketball-shoes-LvzsVp.png",
+  })
+  const imageNikeKyrieInfinityPurple4 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/a211de35-26d2-4432-8ea8-dd6d7e550357/kyrie-infinity-basketball-shoes-LvzsVp.png",
+  })
+  NikeKyrieInfinityPurple.addImages([imageNikeKyrieInfinityPurple, imageNikeKyrieInfinityPurple2, imageNikeKyrieInfinityPurple3, imageNikeKyrieInfinityPurple4])
+  const stockNikeKyrieInfinityPurple10 = await Stock.create({ size: 10, amount: 20 })
+  const stockNikeKyrieInfinityPurple11 = await Stock.create({ size: 11, amount: 21 })
+  const stockNikeKyrieInfinityPurple12 = await Stock.create({ size: 12, amount: 22 })
+  NikeKyrieInfinityPurple.addStock([stockNikeKyrieInfinityPurple10, stockNikeKyrieInfinityPurple11, stockNikeKyrieInfinityPurple12])
+  
+  
+    ///////////////////////
 
   const NikeKyrieInfinityBeige  = await Product.create({
     model: "Kyrie Infinity",
@@ -352,160 +352,160 @@ conn.sync({ force: true }).then(async () => {
     ///////////////////////
 
 
-    const NikeZoomXInvincibleBlack  = await Product.create({
-      model: "ZoomX Invincible Run Flyknit",
-      brand: "Nike",
-      category: "Running",
-      gender: "Female",
-      price: 53000,
-      description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-      sale: 0,
-      color: "Black",
-    })
-    const imageNikeZoomXInvincibleBlack = await Image.create({
-      url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/9314e18a-3324-4249-8592-0e795acc3db5/zoomx-invincible-run-flyknit-womens-road-running-shoes-kVqSJ8.png",
-    })
-    const imageNikeZoomXInvincibleBlack2 = await Image.create({
-      url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/61f49a5c-f0d0-49c9-b6d1-c12447a2ba0c/zoomx-invincible-run-flyknit-womens-road-running-shoes-kVqSJ8.png",
-    })
-    const imageNikeZoomXInvincibleBlack3 = await Image.create({
-      url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/b6dc1750-2110-4588-8b0d-93f5f892b648/zoomx-invincible-run-flyknit-womens-road-running-shoes-kVqSJ8.png",
-    })
-    const imageNikeZoomXInvincibleBlack4 = await Image.create({
-      url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/4139dcc3-2df3-4eda-9f7f-3c90099f0f35/zoomx-invincible-run-flyknit-womens-road-running-shoes-kVqSJ8.png",
-    })
-    NikeZoomXInvincibleBlack.addImages([imageNikeZoomXInvincibleBlack, imageNikeZoomXInvincibleBlack2, imageNikeZoomXInvincibleBlack3, imageNikeZoomXInvincibleBlack4])
-    const stockNikeZoomXInvincibleBlack10 = await Stock.create({ size: 10, amount: 20 })
-    const stockNikeZoomXInvincibleBlack11 = await Stock.create({ size: 11, amount: 21 })
-    const stockNikeZoomXInvincibleBlack12 = await Stock.create({ size: 12, amount: 22 })
-    NikeZoomXInvincibleBlack.addStock([stockNikeZoomXInvincibleBlack10, stockNikeZoomXInvincibleBlack11, stockNikeZoomXInvincibleBlack12])
-    
-    
-      ///////////////////////
+  const NikeZoomXInvincibleBlack  = await Product.create({
+    model: "ZoomX Invincible Run Flyknit",
+    brand: "Nike",
+    category: "Running",
+    gender: "Female",
+    price: 53000,
+    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+    sale: 0,
+    color: "Black",
+  })
+  const imageNikeZoomXInvincibleBlack = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/9314e18a-3324-4249-8592-0e795acc3db5/zoomx-invincible-run-flyknit-womens-road-running-shoes-kVqSJ8.png",
+  })
+  const imageNikeZoomXInvincibleBlack2 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/61f49a5c-f0d0-49c9-b6d1-c12447a2ba0c/zoomx-invincible-run-flyknit-womens-road-running-shoes-kVqSJ8.png",
+  })
+  const imageNikeZoomXInvincibleBlack3 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/b6dc1750-2110-4588-8b0d-93f5f892b648/zoomx-invincible-run-flyknit-womens-road-running-shoes-kVqSJ8.png",
+  })
+  const imageNikeZoomXInvincibleBlack4 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/4139dcc3-2df3-4eda-9f7f-3c90099f0f35/zoomx-invincible-run-flyknit-womens-road-running-shoes-kVqSJ8.png",
+  })
+  NikeZoomXInvincibleBlack.addImages([imageNikeZoomXInvincibleBlack, imageNikeZoomXInvincibleBlack2, imageNikeZoomXInvincibleBlack3, imageNikeZoomXInvincibleBlack4])
+  const stockNikeZoomXInvincibleBlack10 = await Stock.create({ size: 10, amount: 20 })
+  const stockNikeZoomXInvincibleBlack11 = await Stock.create({ size: 11, amount: 21 })
+  const stockNikeZoomXInvincibleBlack12 = await Stock.create({ size: 12, amount: 22 })
+  NikeZoomXInvincibleBlack.addStock([stockNikeZoomXInvincibleBlack10, stockNikeZoomXInvincibleBlack11, stockNikeZoomXInvincibleBlack12])
+  
+  
+    ///////////////////////
 
-      const NikeLegendEssential  = await Product.create({
-        model: "Legend Essential",
-        brand: "Nike",
-        category: "Running",
-        gender: "Female",
-        price: 40000,
-        description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-        sale: 0,
-        color: "Black",
-      })
-      const imageNikeLegendEssential = await Image.create({
-        url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/eacd9775-1eef-4187-b98d-969022e361f2/legend-essential-2-womens-training-shoes-LnSrgb.png",
-      })
-      const imageNikeLegendEssential2 = await Image.create({
-        url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/5a807375-bd66-4538-926b-b99b02f63070/legend-essential-2-womens-training-shoes-LnSrgb.png",
-      })
-      const imageNikeLegendEssential3 = await Image.create({
-        url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/2ed275bc-357a-4707-a14c-0da11ca2bf4b/legend-essential-2-womens-training-shoes-LnSrgb.png",
-      })
-      const imageNikeLegendEssential4 = await Image.create({
-        url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/e3b4dd33-620b-42f8-9f16-fed2e4ead37f/legend-essential-2-womens-training-shoes-LnSrgb.png",
-      })
-      NikeLegendEssential.addImages([imageNikeLegendEssential, imageNikeLegendEssential2, imageNikeLegendEssential3, imageNikeLegendEssential4])
-      const stockNikeLegendEssential10 = await Stock.create({ size: 10, amount: 20 })
-      const stockNikeLegendEssential11 = await Stock.create({ size: 11, amount: 21 })
-      const stockNikeLegendEssential12 = await Stock.create({ size: 12, amount: 22 })
-      NikeLegendEssential.addStock([stockNikeLegendEssential10, stockNikeLegendEssential11, stockNikeLegendEssential12])
-      
-      
-        ///////////////////////
+  const NikeLegendEssential  = await Product.create({
+    model: "Legend Essential",
+    brand: "Nike",
+    category: "Running",
+    gender: "Female",
+    price: 40000,
+    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+    sale: 0,
+    color: "Black",
+  })
+  const imageNikeLegendEssential = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/eacd9775-1eef-4187-b98d-969022e361f2/legend-essential-2-womens-training-shoes-LnSrgb.png",
+  })
+  const imageNikeLegendEssential2 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/5a807375-bd66-4538-926b-b99b02f63070/legend-essential-2-womens-training-shoes-LnSrgb.png",
+  })
+  const imageNikeLegendEssential3 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/2ed275bc-357a-4707-a14c-0da11ca2bf4b/legend-essential-2-womens-training-shoes-LnSrgb.png",
+  })
+  const imageNikeLegendEssential4 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/e3b4dd33-620b-42f8-9f16-fed2e4ead37f/legend-essential-2-womens-training-shoes-LnSrgb.png",
+  })
+  NikeLegendEssential.addImages([imageNikeLegendEssential, imageNikeLegendEssential2, imageNikeLegendEssential3, imageNikeLegendEssential4])
+  const stockNikeLegendEssential10 = await Stock.create({ size: 10, amount: 20 })
+  const stockNikeLegendEssential11 = await Stock.create({ size: 11, amount: 21 })
+  const stockNikeLegendEssential12 = await Stock.create({ size: 12, amount: 22 })
+  NikeLegendEssential.addStock([stockNikeLegendEssential10, stockNikeLegendEssential11, stockNikeLegendEssential12])
+  
+  
+    ///////////////////////
 
-        const NikeLegendEssentialPink  = await Product.create({
-          model: "Legend Essential",
-          brand: "Nike",
-          category: "Running",
-          gender: "Female",
-          price: 40000,
-          description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-          sale: 0,
-          color: "Pink",
-        })
-        const imageNikeLegendEssentialPink = await Image.create({
-          url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/c373e1f7-4c2a-41d7-bf9a-77f6ac9c39cc/legend-essential-2-womens-training-shoes-LnSrgb.png",
-        })
-        const imageNikeLegendEssentialPink2 = await Image.create({
-          url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/8aae9721-0b49-42ef-bbf6-97cc84747d98/legend-essential-2-womens-training-shoes-LnSrgb.png",
-        })
-        const imageNikeLegendEssentialPink3 = await Image.create({
-          url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/76de1ccf-e6cf-4cd9-a78f-e63fb0da3f6a/legend-essential-2-womens-training-shoes-LnSrgb.png",
-        })
-        const imageNikeLegendEssentialPink4 = await Image.create({
-          url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/689b74c9-0653-4bf4-9713-a9eb3166afa6/legend-essential-2-womens-training-shoes-LnSrgb.png",
-        })
-        NikeLegendEssentialPink.addImages([imageNikeLegendEssentialPink, imageNikeLegendEssentialPink2, imageNikeLegendEssentialPink3, imageNikeLegendEssentialPink4])
-        const stockNikeLegendEssentialPink10 = await Stock.create({ size: 10, amount: 20 })
-        const stockNikeLegendEssentialPink11 = await Stock.create({ size: 11, amount: 21 })
-        const stockNikeLegendEssentialPink12 = await Stock.create({ size: 12, amount: 22 })
-        NikeLegendEssentialPink.addStock([stockNikeLegendEssentialPink10, stockNikeLegendEssentialPink11, stockNikeLegendEssentialPink12])
-        
-        
-          ///////////////////////
+  const NikeLegendEssentialPink  = await Product.create({
+    model: "Legend Essential",
+    brand: "Nike",
+    category: "Running",
+    gender: "Female",
+    price: 40000,
+    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+    sale: 0,
+    color: "Pink",
+  })
+  const imageNikeLegendEssentialPink = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/c373e1f7-4c2a-41d7-bf9a-77f6ac9c39cc/legend-essential-2-womens-training-shoes-LnSrgb.png",
+  })
+  const imageNikeLegendEssentialPink2 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/8aae9721-0b49-42ef-bbf6-97cc84747d98/legend-essential-2-womens-training-shoes-LnSrgb.png",
+  })
+  const imageNikeLegendEssentialPink3 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/76de1ccf-e6cf-4cd9-a78f-e63fb0da3f6a/legend-essential-2-womens-training-shoes-LnSrgb.png",
+  })
+  const imageNikeLegendEssentialPink4 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/689b74c9-0653-4bf4-9713-a9eb3166afa6/legend-essential-2-womens-training-shoes-LnSrgb.png",
+  })
+  NikeLegendEssentialPink.addImages([imageNikeLegendEssentialPink, imageNikeLegendEssentialPink2, imageNikeLegendEssentialPink3, imageNikeLegendEssentialPink4])
+  const stockNikeLegendEssentialPink10 = await Stock.create({ size: 10, amount: 20 })
+  const stockNikeLegendEssentialPink11 = await Stock.create({ size: 11, amount: 21 })
+  const stockNikeLegendEssentialPink12 = await Stock.create({ size: 12, amount: 22 })
+  NikeLegendEssentialPink.addStock([stockNikeLegendEssentialPink10, stockNikeLegendEssentialPink11, stockNikeLegendEssentialPink12])
+  
+  
+    ///////////////////////
 
-          const NikeReactInfinity  = await Product.create({
-            model: "React Infinity",
-            brand: "Nike",
-            category: "Running",
-            gender: "Male",
-            price: 48000,
-            description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-            sale: 0,
-            color: "White",
-          })
-          const imageNikeReactInfinity = await Image.create({
-            url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/bdd3f8d9-e05e-43ab-8dbe-694f9e49cb0c/react-infinity-run-flyknit-2-mens-road-running-shoes-DttDF2.png",
-          })
-          const imageNikeReactInfinity2 = await Image.create({
-            url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/046a48ce-3b0b-41b2-8937-5133cb2c1740/react-infinity-run-flyknit-2-mens-road-running-shoes-DttDF2.png",
-          })
-          const imageNikeReactInfinity3 = await Image.create({
-            url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/188658f4-980c-49ee-8fdd-05697a32490d/react-infinity-run-flyknit-2-mens-road-running-shoes-DttDF2.png",
-          })
-          const imageNikeReactInfinity4 = await Image.create({
-            url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/94c76582-001e-4f61-97ab-a95189cb32a1/react-infinity-run-flyknit-2-mens-road-running-shoes-DttDF2.png",
-          })
-          NikeReactInfinity.addImages([imageNikeReactInfinity, imageNikeReactInfinity2, imageNikeReactInfinity3, imageNikeReactInfinity4])
-          const stockNikeReactInfinity10 = await Stock.create({ size: 10, amount: 20 })
-          const stockNikeReactInfinity11 = await Stock.create({ size: 11, amount: 21 })
-          const stockNikeReactInfinity12 = await Stock.create({ size: 12, amount: 22 })
-          NikeReactInfinity.addStock([stockNikeReactInfinity10, stockNikeReactInfinity11, stockNikeReactInfinity12])
-          
-          
-            ///////////////////////
+  const NikeReactInfinity  = await Product.create({
+    model: "React Infinity",
+    brand: "Nike",
+    category: "Running",
+    gender: "Male",
+    price: 48000,
+    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+    sale: 0,
+    color: "White",
+  })
+  const imageNikeReactInfinity = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/bdd3f8d9-e05e-43ab-8dbe-694f9e49cb0c/react-infinity-run-flyknit-2-mens-road-running-shoes-DttDF2.png",
+  })
+  const imageNikeReactInfinity2 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/046a48ce-3b0b-41b2-8937-5133cb2c1740/react-infinity-run-flyknit-2-mens-road-running-shoes-DttDF2.png",
+  })
+  const imageNikeReactInfinity3 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/188658f4-980c-49ee-8fdd-05697a32490d/react-infinity-run-flyknit-2-mens-road-running-shoes-DttDF2.png",
+  })
+  const imageNikeReactInfinity4 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/94c76582-001e-4f61-97ab-a95189cb32a1/react-infinity-run-flyknit-2-mens-road-running-shoes-DttDF2.png",
+  })
+  NikeReactInfinity.addImages([imageNikeReactInfinity, imageNikeReactInfinity2, imageNikeReactInfinity3, imageNikeReactInfinity4])
+  const stockNikeReactInfinity10 = await Stock.create({ size: 10, amount: 20 })
+  const stockNikeReactInfinity11 = await Stock.create({ size: 11, amount: 21 })
+  const stockNikeReactInfinity12 = await Stock.create({ size: 12, amount: 22 })
+  NikeReactInfinity.addStock([stockNikeReactInfinity10, stockNikeReactInfinity11, stockNikeReactInfinity12])
+  
+  
+    ///////////////////////
 
-        const NikeLegendEssentialGray  = await Product.create({
-          model: "Legend Essential",
-          brand: "Nike",
-          category: "Running",
-          gender: "Female",
-          price: 40000,
-          description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-          sale: 0,
-          color: "Gray",
-        })
-        const imageNikeLegendEssentialGray = await Image.create({
-          url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/cf0bb345-427a-4f95-b5ae-e082b110122b/legend-essential-2-womens-training-shoes-LnSrgb.png",
-        })
-        const imageNikeLegendEssentialGray2 = await Image.create({
-          url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/02017e44-8b89-4f47-8a1d-4cb39d300590/legend-essential-2-womens-training-shoes-LnSrgb.png",
-        })
-        const imageNikeLegendEssentialGray3 = await Image.create({
-          url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/32616664-1c8c-413e-8adc-e3ed1cc3dfe5/legend-essential-2-womens-training-shoes-LnSrgb.png",
-        })
-        const imageNikeLegendEssentialGray4 = await Image.create({
-          url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/f439c9b9-479b-4cea-960b-02133d4b9b64/legend-essential-2-womens-training-shoes-LnSrgb.png",
-        })
-        NikeLegendEssentialGray.addImages([imageNikeLegendEssentialGray, imageNikeLegendEssentialGray2, imageNikeLegendEssentialGray3, imageNikeLegendEssentialGray4])
-        const stockNikeLegendEssentialGray10 = await Stock.create({ size: 10, amount: 20 })
-        const stockNikeLegendEssentialGray11 = await Stock.create({ size: 11, amount: 21 })
-        const stockNikeLegendEssentialGray12 = await Stock.create({ size: 12, amount: 22 })
-        NikeLegendEssentialGray.addStock([stockNikeLegendEssentialGray10, stockNikeLegendEssentialGray11, stockNikeLegendEssentialGray12])
-        
-        
-          ///////////////////////
+  const NikeLegendEssentialGray  = await Product.create({
+    model: "Legend Essential",
+    brand: "Nike",
+    category: "Running",
+    gender: "Female",
+    price: 40000,
+    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+    sale: 0,
+    color: "Gray",
+  })
+  const imageNikeLegendEssentialGray = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/cf0bb345-427a-4f95-b5ae-e082b110122b/legend-essential-2-womens-training-shoes-LnSrgb.png",
+  })
+  const imageNikeLegendEssentialGray2 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/02017e44-8b89-4f47-8a1d-4cb39d300590/legend-essential-2-womens-training-shoes-LnSrgb.png",
+  })
+  const imageNikeLegendEssentialGray3 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/32616664-1c8c-413e-8adc-e3ed1cc3dfe5/legend-essential-2-womens-training-shoes-LnSrgb.png",
+  })
+  const imageNikeLegendEssentialGray4 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/f439c9b9-479b-4cea-960b-02133d4b9b64/legend-essential-2-womens-training-shoes-LnSrgb.png",
+  })
+  NikeLegendEssentialGray.addImages([imageNikeLegendEssentialGray, imageNikeLegendEssentialGray2, imageNikeLegendEssentialGray3, imageNikeLegendEssentialGray4])
+  const stockNikeLegendEssentialGray10 = await Stock.create({ size: 10, amount: 20 })
+  const stockNikeLegendEssentialGray11 = await Stock.create({ size: 11, amount: 21 })
+  const stockNikeLegendEssentialGray12 = await Stock.create({ size: 12, amount: 22 })
+  NikeLegendEssentialGray.addStock([stockNikeLegendEssentialGray10, stockNikeLegendEssentialGray11, stockNikeLegendEssentialGray12])
+  
+  
+    ///////////////////////
 
   const converseChuckTaylor = await Product.create({
     model: "Chuck Taylor",
@@ -637,4 +637,4 @@ conn.sync({ force: true }).then(async () => {
   server.listen(3001, () => {
     console.log("%s listening at 3001")
   })
-}) 
+})

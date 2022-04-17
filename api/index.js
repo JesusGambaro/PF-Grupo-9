@@ -108,7 +108,7 @@ conn.sync({ force: true }).then(async () => {
     gender: "Female",
     price: 45000,
     description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-    sale: 0,
+    sale: 10,
     color: "Pink",
   })
   const imagenikeZoomXVaporfly = await Image.create({
@@ -234,7 +234,7 @@ conn.sync({ force: true }).then(async () => {
     gender: "Male",
     price: 47000,
     description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-    sale: 0,
+    sale: 10,
     color: "Purple",
   })
   const imageNikeKyrieInfinityPurple = await Image.create({

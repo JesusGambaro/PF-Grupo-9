@@ -149,7 +149,6 @@ router.get("/:id", async (req, res) => {
     res.status(404).send({ msg: error.message })
   }
 })
-
 router.post("/", async (req, res) => {
   try {
     const {
@@ -160,9 +159,10 @@ router.post("/", async (req, res) => {
       price,
       description,
       sale,
+      size,
+      amount,
       color,
       addedImages,
-      stock,
     } = req.body
     let product = await Product.create({
       model,
@@ -172,6 +172,8 @@ router.post("/", async (req, res) => {
       price,
       description,
       sale,
+      size,
+      amount,
       color,
     })
 
@@ -180,13 +182,7 @@ router.post("/", async (req, res) => {
         let imageProduct = await Image.create({ url: image })
         await product.addImage(imageProduct)
       })
-
-    stock.length > 0 &&
-    stock.map(async (sizeAndAmount) => {
-      let stockBySize = await Stock.create({ amount: sizeAndAmount.amount, size: sizeAndAmount.size })
-      await product.addStock(stockBySize)
-    })
-    res.send("Product with its images and stock created!")
+    res.send("Product with its images created!")
   } catch (error) {
     console.log(error)
     res.status(404).send({ msg: error.message })

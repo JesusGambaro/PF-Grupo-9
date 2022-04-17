@@ -1,7 +1,7 @@
 .loading-container {
   width: 100%;
   height: 100vh;
-  background: #000;
+  background: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,7 +10,7 @@
     width: 10rem;
     height: 10rem;
     border-radius: 50%;
-    border: 1rem solid white;
+    border: 1rem solid #000;
     animation: spin 1s linear infinite;
     border-bottom: transparent 1rem solid;
   }
@@ -24,4 +24,3 @@
     }
   }
 }
-

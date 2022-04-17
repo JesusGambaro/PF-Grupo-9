@@ -17,6 +17,8 @@
     gap: 1rem;
     padding: 1rem;
     .cardOwn {
+      cursor: pointer;
+      position: relative;
       @include flex-b();
       /*    border: 1px solid rgba(0, 0, 0, 0.1); */
       border: none;
@@ -103,7 +105,7 @@
         align-items: center;
         border-radius: 1rem 1rem 0 0;
         transition: 0.3s all ease-in-out;
-        img {
+        a img {
           transform: scaleX(-1) rotate(30deg) translateX(0.5rem);
           width: 70%;
         }
@@ -111,7 +113,6 @@
       &:hover .img,
       &:hover .content {
         top: -2rem;
-        opacity: 0.9;
       }
     }
   }
@@ -124,6 +125,7 @@
       max-width: 100%;
       transition: all 0.5s ease-in-out;
       .img {
+        border: 1px solid red;
         background: transparent;
       }
     }
@@ -168,6 +170,26 @@
         color: white;
         opacity: 1;
       }
+    }
+  }
+  .offer-ribbon {
+    position: absolute; 
+    top: -1rem;
+    left: -1.3rem;
+    z-index: 888;
+    width: 6rem;
+    height: 5rem;
+    @include flex-b();
+    background: transparent;
+    &::after {
+      content: attr(offer);
+      color: white;
+      @include flex-b();
+      position: absolute;
+      width: 150%;
+      height: 40%;
+      transform: rotate(-45deg);
+      background: #000;
     }
   }
 }

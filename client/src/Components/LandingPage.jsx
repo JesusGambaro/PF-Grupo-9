@@ -1,4 +1,3 @@
-
 import "../Css/LandingPage.scss";
 import {Link, NavLink} from "react-router-dom";
 import React from "react";
@@ -8,8 +7,7 @@ import Card from "./Card";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import bringAllData from "../redux/actions/bringAllData";
-
-
+import getAllSales from "../redux/actions/getAllSales";
 import {
   CarouselControl,
   Carousel,
@@ -18,15 +16,14 @@ import {
 } from "reactstrap";
 
 export default function LandingPage() {
-/* const dispatch = useDispatch()
+  /* const dispatch = useDispatch()
     useEffect(()=>{
       const datos =  dispatch(bringAllData())
         console.log(datos)
     }) */
 
   // State for Active index
-  const state = useSelector((state) => state.allData);
-  const offers = [...state].splice(0, 4);
+  const sales = useSelector((state) => state.sales);
   const [activeIndex, setActiveIndex] = React.useState(0);
 
   const dispatch = useDispatch();
@@ -53,7 +50,10 @@ export default function LandingPage() {
     },
   ];
   useEffect(() => {
-    if (!state.length) dispatch(bringAllData());
+    if (!sales.length) {
+      dispatch(bringAllData());
+      dispatch(getAllSales());
+    }
   }, []);
   // Items array length
   const itemLength = items.length - 1;
@@ -126,10 +126,7 @@ export default function LandingPage() {
       </div>
 
       <div className="cards-container">
-
-        {state.length > 0 &&
-          offers.map((shoe, i) => <Card e={shoe} key={i} />)}
-
+        {sales.length > 0 && sales.map((shoe, i) => <Card e={shoe} key={i} />)}
       </div>
 
       <Footer />

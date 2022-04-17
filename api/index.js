@@ -422,7 +422,7 @@ conn.sync({ force: true }).then(async () => {
           price: 40000,
           description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
           sale: 0,
-          color: "Gray",
+          color: "Pink",
         })
         const imageNikeLegendEssentialPink = await Image.create({
           url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/c373e1f7-4c2a-41d7-bf9a-77f6ac9c39cc/legend-essential-2-womens-training-shoes-LnSrgb.png",

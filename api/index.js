@@ -2,7 +2,6 @@ const server = require("./src/app.js")
 const { conn } = require("./src/db.js")
 const { Stock, Product, Image } = require("./src/db.js")
 
-// Syncing all the models at once.
 conn.sync({ force: true }).then(async () => {
   const NikeAirZoomAlphafly = await Product.create({
     model: "Air Zoom Alphafly",
@@ -591,7 +590,7 @@ conn.sync({ force: true }).then(async () => {
     model: "Air",
     brand: "Nike",
     category: "Urban",
-    gender: "Male",
+    gender: "Kids",
     price: 15000,
     description: "Nice shoe",
     sale: 0,
@@ -608,7 +607,7 @@ conn.sync({ force: true }).then(async () => {
     model: "Predator",
     brand: "Adidas",
     category: "Sport",
-    gender: "Male",
+    gender: "Female",
     price: 25000,
     description: "Adidas shoe football",
     sale: 10,
@@ -617,7 +616,7 @@ conn.sync({ force: true }).then(async () => {
   const imageAdidasBlack = await Image.create({
     url: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/70ae150b4f51490d8d87ab2001505c1f_9366/Botines_de_futbol_Predator_20.3_cesped_natural_seco_Negro_EF1929_01_standard.jpg",
   })
-  
+
   const stockShoeBlack39 = await Stock.create({ size: 39, amount: 0 })
   const stockShoeBlack40 = await Stock.create({ size: 40, amount: 23 })
   const stockShoeBlack41 = await Stock.create({ size: 41, amount: 23 })

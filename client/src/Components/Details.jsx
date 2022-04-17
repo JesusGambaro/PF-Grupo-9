@@ -1,15 +1,14 @@
 import "../Css/Details.css";
-
-import { data } from "./data";
-import { useParams } from "react-router-dom";
+import Loading from "./Loading";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetail, getDetailColor, clearDetail } from "../redux/actions/getDetail";
 import bringAllData from "../redux/actions/bringAllData";
-import Loading from "./Loading";
+import { getDetail, getDetailColor, clearDetail } from "../redux/actions/getDetail";
 
 function Details() {
 
+  const navigate=useNavigate()
   const dispatch = useDispatch();
   const { id, model } = useParams();
   const initialMount = useRef(true);
@@ -21,7 +20,8 @@ function Details() {
   const [mainImage, setMainImage] = useState();
   const [sizeSelect, setSizeSelect] = useState();
   const [colorSelect, setColorSelect] = useState();
-
+  const [reload, setReload] = useState(false)
+  const [relatedProduct, setRelatedProduct] = useState([]);
 
   const handleMainImage = (e) => {
     setMainImage(e.target.src);
@@ -37,6 +37,7 @@ function Details() {
     setMainImage(shoes.images[0].url)
     setSize(shoes.stocks)
     setStock(shoes.stocks[0].amount)
+    setSizeSelect(shoes.stocks[0].size)
   };
 
   const handleSize = (e) => {
@@ -47,26 +48,44 @@ function Details() {
     setStock(stock.amount)
   };
 
+  const handleReload=(id,model)=>{
+    navigate(`/home/${id}/${model}`)
+    setReload(true)
+  }
+
   useEffect(() => {
+    setReload(false)
+    setImages([])
+    setColorSelect()
+    setSizeSelect()
+    setSize([])
+    setStock()
+
     dispatch(getDetail(id));
     dispatch(getDetailColor(model));
-    if (allData.length === 0) dispatch(bringAllData())
+    
+    if(allData.length>3){
+      const numRandom=Math.round(Math.random() * (allData.length - 3) + 3);
+      setRelatedProduct(allData.slice(numRandom-3,numRandom))
+    }
+    else if (allData.length === 0) dispatch(bringAllData())
 
     if (initialMount.current) initialMount.current = false;
 
-  }, [initialMount]);
+  }, [initialMount,allData,reload,id]);
 
   useEffect(() => {
+    window.scroll({ top: 0, behavior: 'smooth' })
     return () => dispatch(clearDetail())
-  }, [])
-  console.log(detail)
+  }, [reload])
+
   return (
     <div style={{ marginTop: "4rem" }}>
       {loading ?
         <Loading />
         : (
           <>
-            <div className="container mt-5 mb-5 rounded-3 shadow-lg ">
+            <div className="container mt-5 mb-5 rounded-3 shadow-lg">
               <div className="row pt-4 pb-4 bg-white">
                 <h1 className="text-info text-center">{detail.brand} {detail.model}</h1>
               </div>
@@ -92,21 +111,21 @@ function Details() {
                     </button>
                   </div>
 
-                  <div className="col-12 overflow-hidden w-100" style={{"height":"53vh"}}>
+                  <div className="col-12 overflow-hidden w-100" style={{ "height": "53vh" }}>
                     <img src={mainImage} alt="imagen" id="mainImage"
-                      className="w-50 bg-white mx-auto d-block"/>
+                      className="w-50 bg-white mx-auto d-block" />
                   </div>
 
-                  <div className="row grid gap-2 ms-1 mx-1">
+                  <div className="row grid ms-1 mx-1">
                     {
                       Images.length > 0
                         ? Images.map(diseño => (
-                          <button className={`${Images.length===1?"col col-3":"col"} border-0 bg-transparent p-0`} key={diseño.id}>
+                          <button className={`${Images.length === 1 ? "col col-3" : "col"} border-0 bg-transparent p-0`} key={diseño.id}>
                             <img
                               src={diseño.url}
-                              style={{"height":"23vh"}}
+                              style={{ "height": "18vh" }}
                               alt="zapato"
-                              className="w-100 border border-info border-4 rounded shadow-lg"
+                              className={`w-75 border border-4 rounded shadow-lg ${mainImage === diseño.url ? "border-warning" : "border-info"}`}
                               onClick={handleMainImage}
                             />
                           </button>
@@ -131,7 +150,7 @@ function Details() {
                       <select
                         className="form-select fw-bold"
                         name="colors"
-                        value={colorSelect?colorSelect:detail.color}
+                        value={colorSelect ? colorSelect : detail.color}
                         onChange={handleColor}
                       >
                         {detailColor.length > 0 &&
@@ -197,36 +216,17 @@ function Details() {
                 <h1 className="text-center text-info">Related products</h1>
               </div>
               <div className="row text-center m-0 mt-5 grid gap-5">
-                <button
-                  className="col border-0 bg-transparent p-0 w-50"
-                  id="relatedProduct"
-                >
+                {relatedProduct && relatedProduct.map(product=>(
+                  <button className="col border-0 bg-transparent p-0 w-50"
+                  id="relatedProduct" key={product.id} onClick={()=>handleReload(product.id,product.model)}>
                   <img
-                    src={data.data[2].image.small}
+                    src={product.images[0].url}
                     alt="foto"
                     className="w-100 border border-5 border-info shadow-lg rounded rounded-3"
+                    style={{"height":"39vh"}}
                   />
                 </button>
-                <button
-                  className="col border-0 bg-transparent p-0"
-                  id="relatedProduct"
-                >
-                  <img
-                    src={data.data[3].image.small}
-                    alt="foto"
-                    className="w-100 border border-5 border-info shadow-lg rounded rounded-3"
-                  />
-                </button>
-                <button
-                  className="col border-0 bg-transparent p-0"
-                  id="relatedProduct"
-                >
-                  <img
-                    src={data.data[4].image.small}
-                    alt="foto"
-                    className="w-100 border border-5 border-info shadow-lg rounded rounded-3"
-                  />
-                </button>
+                ))}
               </div>
             </div>
           </>

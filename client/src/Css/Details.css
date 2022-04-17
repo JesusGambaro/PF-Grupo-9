@@ -14,7 +14,7 @@
   content: "See more details";
   color:rgb(7, 238, 255) ;
   font-weight: bold;
-  padding: 41% 6%;
+  padding: 43% 6%;
   font-size: 2rem;
   bottom: 50%;
   left: 100%;
@@ -37,6 +37,6 @@
 }
 
 #mainImage:hover{
-  transform: scale(2,2);
+  transform: scale(1.5,1.5);
   transition: transform 1s;
 }

@@ -28,7 +28,7 @@ export default function Footer() {
         <div className="mediosde-pago">
         <p className="footer-text"> Medios de pago:</p>
           <li className="itemL">
-          <i className="fa-brands fa-cc-paypal paypal"></i>
+          <img src="https://files.kuder.com.ar/images/kuder-mercadopago-blanco-negro.png" className="mercado-pago"></img>
           </li>
         </div>
       </div>

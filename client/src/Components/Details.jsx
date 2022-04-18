@@ -11,7 +11,6 @@ function Details() {
   const navigate=useNavigate()
   const dispatch = useDispatch();
   const { id, model } = useParams();
-  const initialMount = useRef(true);
   const { detail, loading, detailColor, allData } = useSelector((state) => state);
 
   const [stock, setStock] = useState();
@@ -70,9 +69,7 @@ function Details() {
     }
     else if (allData.length === 0) dispatch(bringAllData())
 
-    if (initialMount.current) initialMount.current = false;
-
-  }, [initialMount,allData,reload,id]);
+  }, [allData,reload,id]);
 
   useEffect(() => {
     window.scroll({ top: 0, behavior: 'smooth' })

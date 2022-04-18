@@ -14,7 +14,7 @@ conn.sync({ force: true }).then(async () => {
     color: "Orange",
   })
   const imageNikeAirZoomAlphafly = await Image.create({
-    url: "https://static.nike.com/a/images/f_auto/dpr_1.3,cs_srgb/w_1423,c_limit/8926409b-ccf7-43e8-bcbf-3ec09e0a0f77/colleci%C3%B3n-hakone-ekiden.png",
+    url: "https://static.nike.com/a/images/t_default/40c3c2d4-7449-43dc-9b44-e3ad58181da8/calzado-de-carrera-en-carretera-air-zoom-alphafly-next-flyknit-ekiden-fNntgL.png",
   })
   const imageNikeAirZoomAlphafly2 = await Image.create({
     url: "https://static.nike.com/a/images/f_auto/dpr_1.3,cs_srgb/w_467,c_limit/bb1e9189-e599-4edf-a1f3-47a3dc7a3305/colleci%C3%B3n-hakone-ekiden.png",
@@ -607,7 +607,7 @@ conn.sync({ force: true }).then(async () => {
     model: "Predator",
     brand: "Adidas",
     category: "Sport",
-    gender: "Male",
+    gender: "Unisex",
     price: 25000,
     description: "Adidas shoe football",
     sale: 10,

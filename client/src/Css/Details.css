@@ -31,12 +31,3 @@
   transition: left .8s;
 
 }
-
-#mainImage{
-  transition: transform 1s;
-}
-
-#mainImage:hover{
-  transform: scale(1.5,1.5);
-  transition: transform 1s;
-}

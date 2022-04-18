@@ -1,0 +1,33 @@
+#fav{
+  color: rgb(247, 62, 62);
+}
+
+#fav:hover{
+  color: red;
+}
+#relatedProduct{
+  overflow: hidden;
+  transition: transform .5s;
+}
+#relatedProduct::after{
+  position: relative;
+  content: "See more details";
+  color:rgb(7, 238, 255) ;
+  font-weight: bold;
+  padding: 43% 6%;
+  font-size: 2rem;
+  bottom: 50%;
+  left: 100%;
+  background-color: rgba(0, 0, 0, 0.705);
+  transition: left .5s ;
+}
+#relatedProduct:hover{
+  transform: scale(1.2,1.2);
+  transition: transform .7s;
+}
+
+#relatedProduct:hover::after{
+  left: 0%;
+  transition: left .8s;
+
+}

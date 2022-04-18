@@ -1,0 +1,72 @@
+.footer-container {
+  display: flex;
+  background-color: rgba(238, 240, 241, 0.591);
+  width: 100%;
+  /* margin-top: 40px; */
+   height: 150px !important; 
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  justify-content: space-around;
+  width: 100%;
+  margin: 15px;
+}
+.itemL {
+  list-style: none;
+  font-size: 30px;
+  margin: 10px;  
+
+  
+}
+.list-items{
+  display: flex;
+  justify-content: space-between;
+  margin: 0px;
+  
+}
+
+.instagram{
+  
+
+border-radius: 5px;
+} 
+.instagram:hover{
+ color: rgb(175, 182, 182);
+}
+
+
+.footer-text{
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: larger;
+  margin: 5px;
+  
+}
+
+
+
+
+.whatsapp:hover{
+  color: rgba(166, 166, 166, 0.614);
+
+}
+
+
+.facebook:hover{
+  color:#babbbf91
+}
+
+.mercado-pago{
+  width:  60px;
+  margin-top: 0;
+}
+
+.parrafo{
+  align-self: flex-end;
+  margin-top: 5px;
+}
+
+.mediosde-pago{
+  margin-right: 30px;
+}

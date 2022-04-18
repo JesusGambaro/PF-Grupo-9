@@ -1,4 +1,13 @@
-.navbar {
+.navbarOwn {
+  .drop {
+    background-color: rgba(255, 252, 252, 0.158) !important;
+    color: black !important;
+    border: none !important;
+    margin: 0 !important;
+  }
+  ul {
+    margin-bottom: 0;
+  }
   width: 100%;
   height: 4rem;
   display: flex;
@@ -13,18 +22,32 @@
   font-style: normal;
   font-size: medium;
   color: #000;
-  .logo {
+  .logoOwn {
     margin-left: 1rem;
-    width: 4%;
+    width: 5rem;
   }
-  .sections {
+  .sectionsOwn {
     display: flex;
     justify-content: center;
     gap: 1rem;
+    align-items: center;
     list-style: none;
     padding: 0;
+    li {
+      cursor: pointer;
+      &:hover {
+        color: #0d6efd;
+      }
+      a {
+        text-decoration: none;
+        color: #000;
+        &:hover {
+          color: #0d6efd;
+        }
+      }
+    }
   }
-  .shortcut {
+  .shortcutOwn {
     margin-right: 1rem;
     color: #000;
     display: flex;
@@ -41,8 +64,15 @@
         transform: scale(1.2);
       }
     }
+    .gohome {
+      text-decoration: none;
+      color: rgb(0, 0, 0);
+      font-family: "Gelion", sans-serif;
+      padding: 0;
+      gap: 1rem;
+    }
   }
-  .search {
+  .searchOwn {
     height: 60%;
     border-radius: 0.5rem;
     display: flex;
@@ -76,5 +106,5 @@
       height: 100%;
     }
   }
-  z-index: 999;
+  z-index: 9999;
 }

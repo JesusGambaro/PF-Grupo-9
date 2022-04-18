@@ -17,6 +17,7 @@
   padding: 1rem;
   .view {
     display: flex;
+    visibility: hidden;
     justify-content: center;
     align-items: center;
     gap: 1rem;

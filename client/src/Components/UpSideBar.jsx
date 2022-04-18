@@ -18,7 +18,7 @@ const UpSideBar = ({quantity, handleToggle}) => {
         <i className="bi bi-list" onClick={() => handleToggle(false)}></i>
       </div>
       <div className="quantity">
-        <p>Cantidad de productos: {quantity}</p>
+        <p>{quantity} Results</p>
       </div>
       <div className="simple-filters">
         <p>

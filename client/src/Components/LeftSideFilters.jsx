@@ -32,6 +32,7 @@ const brands = [
   "Puma",
   "Jordan",
 ];
+const size = [9, 10, 11, 12, 13, 14, 15, 16];
 const LeftSideFilters = () => {
   const {categories, genders} = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -78,12 +79,10 @@ const LeftSideFilters = () => {
 
       <div className="size-filter">
         <h4>Size</h4>
-        <div className="hijos">
-          <ul>
-            <li>Male</li>
-            <li>Male</li>
-            <li>Male</li>
-          </ul>
+        <div className="sizes-container">
+          {size.map((s) => {
+            return <i className="size-box">{s}</i>;
+          })}
         </div>
       </div>
 
@@ -101,7 +100,7 @@ const LeftSideFilters = () => {
       </div>
 
       <div className="color-filter">
-        <h4>Colors</h4>
+        <h4>Color</h4>
         <div className="colors">
           {colors.map((c, i) => {
             return (

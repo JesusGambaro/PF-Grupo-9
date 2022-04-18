@@ -24,10 +24,7 @@ const Card = ({e, horizontal}) => {
     "RGB(131, 128, 179)",
   ];
   return (
-    <div
-      className={"cardOwn" + (horizontal ? " h" : "")}
-      style={{"--i": colors[Math.floor(Math.random() * colors.length)]}}
-    >
+    <div className={"cardOwn" + (horizontal ? " h" : "")}>
       {e.sale !== 0 && <p className="offer-ribbon" offer={e.sale + "%"}></p>}
       <div className="img">
         <img
@@ -37,12 +34,7 @@ const Card = ({e, horizontal}) => {
       </div>
       <div className="content">
         <div className="f-section">
-          <NavLink
-            to={`/home/${e.id}/${e.model}`}
-            style={{color: "black", textDecoration: "none"}}
-          >
-            <p title="Name">{e.brand}</p>
-          </NavLink>
+          <p title="Name">{e.brand}</p>
           <span>
             <div className="rating" title="Rating">
               <i className="bi bi-star-fill"></i>
@@ -51,22 +43,23 @@ const Card = ({e, horizontal}) => {
               <i className="bi bi-star-half"></i>
               <i className="bi bi-star"></i>
             </div>
-            <p
-              title="Price"
-              style={
-                e.sale ? {textDecoration: "line-through", color: "#999"} : {}
-              }
-            >
-              ${e.price}
-            </p>
             &nbsp;
             {e.sale !== 0 && (
-              <p title="Offer Price">${e.price - (e.price * e.sale) / 100}</p>
+              <p
+                title="Offer Price"
+                style={
+                  e.sale ? {textDecoration: "line-through", color: "#999"} : {}
+                }
+              >
+                ${Math.floor((e.price * 100) / (100 - e.sale))}
+              </p>
             )}
+            <p title="Price">${e.price}</p>
           </span>
         </div>
         <div className="appear">
           <i className="bi bi-bag" title="Add to cart">
+            &nbsp;
             <p>{horizontal ? "Add to cart" : ""}</p>
           </i>
           <NavLink

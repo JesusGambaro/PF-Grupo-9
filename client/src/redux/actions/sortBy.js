@@ -17,10 +17,18 @@ const sortByPrice = (order) => {
 const sortByGender = (gender) => {
   return async (dispatch, getState) => {
     let filtered = [...getState().allData];
-    dispatch({
-      type: SORT_BY,
-      payload: filtered.filter((shoe) => shoe.gender === gender),
-    });
+    if (gender === "Kids")
+      dispatch({
+        type: SORT_BY,
+        payload: filtered.filter((shoe) => shoe.gender === gender),
+      });
+    else
+      dispatch({
+        type: SORT_BY,
+        payload: filtered.filter(
+          (shoe) => shoe.gender === gender || shoe.gender === "Unisex"
+        ),
+      });
   };
 };
 const resetState = () => {

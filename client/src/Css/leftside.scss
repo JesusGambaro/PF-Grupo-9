@@ -1,4 +1,7 @@
 .left-side-container {
+  input[type="checkbox"]{
+    cursor: pointer;
+  }
   width: 20%;
   margin-top: 8rem;
   background: white;
@@ -6,6 +9,7 @@
   color: white;
   display: flex;
   padding: 1rem;
+  gap: 1rem;
   align-items: flex-start;
   flex-direction: column;
   color: black;
@@ -44,6 +48,24 @@
     width: 100%;
     .price-range {
       border: 2px solid violet;
+    }
+  }
+  .size-filter {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    .sizes-container {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      .size-box {
+        cursor: pointer;
+        padding: .2rem .3rem;
+        border: 0.1rem solid black;
+      }
     }
   }
 }

@@ -213,7 +213,7 @@ function Details() {
             <hr className="border border-2 border-secondary" />
             <div className="container mt-5 mb-5 w-75">
               <div className="row">
-                <h1 className="text-center text-info">Related products</h1>
+                <h1 className="text-center text-info">More products</h1>
               </div>
               <div className="row text-center m-0 mt-5 grid gap-5">
                 {relatedProduct && relatedProduct.map(product=>(

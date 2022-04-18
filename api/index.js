@@ -723,7 +723,7 @@ conn.sync({ force: true }).then(async () => {
     color: "White",
   })
   const imagenConverseChuckTaylor4 = await Image.create({
-    url: "https://www.converse.com.au/media/catalog/product/cache/122ed3c57cbb9e5a97d45d900d4f4066/u/n/unisex_converse_chuck_taylor_all_star_classic_colour_low_top_white_17652_1.jpg",
+    url: "https://www.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dwd4d59ab3/images/a_107/M7652_A_107X1.jpg?sw=964",
   })
   const imagenConverseChuckTaylor3 = await Image.create({
     url: "https://png.pngitem.com/pimgs/s/47-478423_converse-hd-png-download.png",

@@ -11,22 +11,33 @@
   margin-right: 0;
   padding: 25px;
 }
+.oferta{
+  text-align: center;
+  margin-top:70px;
+  font-size: xxx-large;
+  font-weight: 700;
+  /* font-family: 'Abril Fatface', cursive !important; */
+  font-family: "Gelion", sans-serif;
+  
+}
 
 .cards-container {
   display: flex;
   padding: 50px;
   margin: 0px;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  
-  margin-bottom: 40px;
-  border-radius: 5px solid black;
+  justify-content:space-around; 
+  margin-left: 5%;
+  margin-bottom: 10px;
   background-color: #fffefe;
-  margin-top: 100px;
+  
 }
 .landing-card{
-  margin: 20px;
+  margin: 10px;
+  margin-top: 40px;
+ flex-basis: 20rem; 
 }
+
 .cardOwn {
   position: relative;
   @include flex-b();

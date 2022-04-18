@@ -5,6 +5,7 @@
   /* margin-top: 40px; */
    height: 150px !important; 
 }
+
 .footer {
   display: flex;
   justify-content: center;
@@ -15,14 +16,14 @@
 .itemL {
   list-style: none;
   font-size: 30px;
-  
+  margin: 10px;  
 
   
 }
 .list-items{
   display: flex;
-  justify-content: space-around;
-  margin: 10px;
+  justify-content: space-between;
+  margin: 0px;
   
 }
 
@@ -39,7 +40,8 @@ border-radius: 5px;
 .footer-text{
   font-family: 'Josefin Sans', sans-serif;
   font-size: larger;
-  margin: 0;
+  margin: 5px;
+  
 }
 
 

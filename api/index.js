@@ -3,46 +3,6 @@ const { conn } = require("./src/db.js")
 const { Stock, Product, Image } = require("./src/db.js")
 
 conn.sync({ force: true }).then(async () => {
-  const NikeKyrieInfinity = await Product.create({
-    model: "Kyrie Infinity",
-    brand: "Nike",
-    category: "Urban",
-    gender: "Male",
-    price: 47000,
-    description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
-    sale: 0,
-    color: "Green",
-  })
-  const imageNikeKyrieInfinity = await Image.create({
-    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/31894742-692c-45d0-bba6-b034571c23b9/kyrie-infinity-basketball-shoes-LvzsVp.png",
-  })
-  const imageNikeKyrieInfinity2 = await Image.create({
-    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/ce351403-5d20-4f84-8d01-ebd61a38c828/kyrie-infinity-basketball-shoes-LvzsVp.png",
-  })
-  const imageNikeKyrieInfinity3 = await Image.create({
-    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/1583433a-3f93-461f-803c-92d1c87d47a1/kyrie-infinity-basketball-shoes-LvzsVp.png",
-  })
-  const imageNikeKyrieInfinity4 = await Image.create({
-    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/516cded5-91a4-48d8-8e5c-a2a2d31aff0b/kyrie-infinity-basketball-shoes-LvzsVp.png",
-  })
-  NikeKyrieInfinity.addImages([
-    imageNikeKyrieInfinity,
-    imageNikeKyrieInfinity2,
-    imageNikeKyrieInfinity3,
-    imageNikeKyrieInfinity4,
-  ])
-  const stockNikeKyrieInfinity10 = await Stock.create({ size: 10, amount: 20 })
-  const stockNikeKyrieInfinity11 = await Stock.create({ size: 11, amount: 21 })
-  const stockNikeKyrieInfinity12 = await Stock.create({ size: 12, amount: 22 })
-  NikeKyrieInfinity.addStock([
-    stockNikeKyrieInfinity10,
-    stockNikeKyrieInfinity11,
-    stockNikeKyrieInfinity12,
-  ])
-
-  ///////////////////////
-
   const NikeKyrieInfinityPurple = await Product.create({
     model: "Kyrie Infinity",
     brand: "Nike",
@@ -176,41 +136,75 @@ conn.sync({ force: true }).then(async () => {
   NikeAirZoomAlphafly.addStock([stockNike10, stockNike11, stockNike13])
 
   ///////////////////////
+  const adidasShoeBlack = await Product.create({
+    model: "Predator",
+    brand: "Adidas",
+    category: "Sport",
+    gender: "Female",
+    price: 25000,
+    description: "Adidas shoe football",
+    sale: 10,
+    color: "Black",
+  })
+  const imageAdidasBlack = await Image.create({
+    url: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/70ae150b4f51490d8d87ab2001505c1f_9366/Botines_de_futbol_Predator_20.3_cesped_natural_seco_Negro_EF1929_01_standard.jpg",
+  })
 
-  const NikeAirZoomAlphaflyG = await Product.create({
-    model: "Air Zoom Alphafly",
-    brand: "Nike",
+  const stockShoeBlack39 = await Stock.create({ size: 39, amount: 0 })
+  const stockShoeBlack40 = await Stock.create({ size: 40, amount: 23 })
+  const stockShoeBlack41 = await Stock.create({ size: 41, amount: 23 })
+  const stockShoeBlack42 = await Stock.create({ size: 42, amount: 22 })
+  const stockShoeBlack43 = await Stock.create({ size: 43, amount: 25 })
+  const stockShoeBlack44 = await Stock.create({ size: 44, amount: 20 })
+  adidasShoeBlack.addStocks([
+    stockShoeBlack39,
+    stockShoeBlack40,
+    stockShoeBlack41,
+    stockShoeBlack42,
+    stockShoeBlack43,
+    stockShoeBlack44,
+  ])
+  adidasShoeBlack.addImage(imageAdidasBlack)
+  ////////////////////////////////////////////////
+
+  const classicLeather = await Product.create({
+    model: "Classic Leather",
+    brand: "Reebok",
     category: "Running",
-    gender: "Male",
+    gender: "Kids",
     price: 28000,
     description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+      "Give your look a touch of classic style. This youth model comes with a smooth, supportive leather upper. The cushioned midsole offers comfort to your feet and the durable rubber outsole resists daily use.",
     sale: 10,
-    color: "Green",
+    color: "Black",
   })
-  const imageNikeAirZoomAlphaflyG = await Image.create({
-    url: "https://www.retrojordan2021.com/wp-content/uploads/2021/04/discount-nike-air-zoom-alphafly-next-volt-racer-blue-multi-color-black-dc5238-702-2.png",
+  const imageClassicLeather = await Image.create({
+    url: "https://assets.reebok.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/917dc5159a1647dea9b9ab0300043ee7_9366/Zapatillas_Classic_Leather_Negro_50149_01_standard.jpg",
   })
-  const imageNikeAirZoomAlphaflyG2 = await Image.create({
-    url: "https://www.retrojordan2021.com/wp-content/uploads/2021/04/discount-nike-air-zoom-alphafly-next-volt-racer-blue-multi-color-black-dc5238-702-1.png",
+  const imageClassicLeather1 = await Image.create({
+    url: "https://assets.reebok.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/2d87a3848581490c9497a782008b3466_9366/Zapatillas_Classic_Leather_Negro_50149_06_standard.jpg",
   })
-  const imageNikeAirZoomAlphaflyG3 = await Image.create({
-    url: "https://www.retrojordan2021.com/wp-content/uploads/2021/04/discount-nike-air-zoom-alphafly-next-volt-racer-blue-multi-color-black-dc5238-702-3.png",
+  const imageClassicLeather2 = await Image.create({
+    url: "https://assets.reebok.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/51e81e9cc1154e8f8174a782008b7344_9366/Zapatillas_Classic_Leather_Negro_50149_05_standard.jpg",
   })
-  const imageNikeAirZoomAlphaflyG4 = await Image.create({
-    url: "https://www.retrojordan2021.com/wp-content/uploads/2021/04/discount-nike-air-zoom-alphafly-next-volt-racer-blue-multi-color-black-dc5238-702-1.png",
+  const imageClassicLeather3 = await Image.create({
+    url: "https://assets.reebok.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/53f0f101a5214148b130a782008b4d81_9366/Zapatillas_Classic_Leather_Negro_50149_02_standard_hover.jpg",
   })
 
-  NikeAirZoomAlphaflyG.addImages([
-    imageNikeAirZoomAlphaflyG,
-    imageNikeAirZoomAlphaflyG2,
-    imageNikeAirZoomAlphaflyG3,
-    imageNikeAirZoomAlphaflyG4,
+  classicLeather.addImages([
+    imageClassicLeather,
+    imageClassicLeather1,
+    imageClassicLeather2,
+    imageClassicLeather3,
   ])
-  const stockNike14 = await Stock.create({ size: 14, amount: 24 })
-  const stockNike15 = await Stock.create({ size: 15, amount: 25 })
-  const stockNike16 = await Stock.create({ size: 16, amount: 26 })
-  NikeAirZoomAlphaflyG.addStock([stockNike14, stockNike15, stockNike16])
+  const stockclassicLeather14 = await Stock.create({ size: 14, amount: 24 })
+  const stockclassicLeather15 = await Stock.create({ size: 15, amount: 25 })
+  const stockclassicLeather16 = await Stock.create({ size: 16, amount: 26 })
+  classicLeather.addStock([
+    stockclassicLeather14,
+    stockclassicLeather15,
+    stockclassicLeather16,
+  ])
 
   //////////////////////////////////////////////
 
@@ -254,47 +248,45 @@ conn.sync({ force: true }).then(async () => {
   ])
 
   ////////////////////////////////////////////////
-
-  const nikeZoomXVaporfly = await Product.create({
-    model: "ZoomX Vaporfly",
+  const NikeKyrieInfinity = await Product.create({
+    model: "Kyrie Infinity",
     brand: "Nike",
-    category: "Running",
-    gender: "Female",
-    price: 45000,
+    category: "Urban",
+    gender: "Male",
+    price: 47000,
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
     sale: 0,
-    color: "Pink",
+    color: "Green",
   })
-  const imagenikeZoomXVaporfly3 = await Image.create({
-    url: "https://www.zapatillasysneakers.com/sites/default/files/static/images/nike_zoomx_vaporfly_next6.png",
+  const imageNikeKyrieInfinity = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/31894742-692c-45d0-bba6-b034571c23b9/kyrie-infinity-basketball-shoes-LvzsVp.png",
   })
-  const imagenikeZoomXVaporfly = await Image.create({
-    url: "https://www.loberen.dk/sites/default/files/ao4568-600-phsrh001-750.png",
+  const imageNikeKyrieInfinity2 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/ce351403-5d20-4f84-8d01-ebd61a38c828/kyrie-infinity-basketball-shoes-LvzsVp.png",
   })
-  const imagenikeZoomXVaporfly2 = await Image.create({
-    url: "https://www.zapatillasysneakers.com/sites/default/files/static/images/nike_zoomx_vaporfly_next5.png",
+  const imageNikeKyrieInfinity3 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/1583433a-3f93-461f-803c-92d1c87d47a1/kyrie-infinity-basketball-shoes-LvzsVp.png",
   })
-  const imagenikeZoomXVaporfly4 = await Image.create({
-    url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/nwtrnwbxlqzqkdwfbsbd/calzado-de-carrera-para-carretera-zoomx-vaporfly-next-Sf9zRb.png",
+  const imageNikeKyrieInfinity4 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/516cded5-91a4-48d8-8e5c-a2a2d31aff0b/kyrie-infinity-basketball-shoes-LvzsVp.png",
   })
-
-  nikeZoomXVaporfly.addImages([
-    imagenikeZoomXVaporfly,
-    imagenikeZoomXVaporfly2,
-    imagenikeZoomXVaporfly3,
-    imagenikeZoomXVaporfly4,
+  NikeKyrieInfinity.addImages([
+    imageNikeKyrieInfinity,
+    imageNikeKyrieInfinity2,
+    imageNikeKyrieInfinity3,
+    imageNikeKyrieInfinity4,
   ])
-  const stockNikeZoomXVaporfly10 = await Stock.create({ size: 10, amount: 20 })
-  const stockNikeZoomXVaporfly11 = await Stock.create({ size: 11, amount: 21 })
-  const stockNikeZoomXVaporfly12 = await Stock.create({ size: 12, amount: 22 })
-  nikeZoomXVaporfly.addStock([
-    stockNikeZoomXVaporfly10,
-    stockNikeZoomXVaporfly11,
-    stockNikeZoomXVaporfly12,
+  const stockNikeKyrieInfinity10 = await Stock.create({ size: 10, amount: 20 })
+  const stockNikeKyrieInfinity11 = await Stock.create({ size: 11, amount: 21 })
+  const stockNikeKyrieInfinity12 = await Stock.create({ size: 12, amount: 22 })
+  NikeKyrieInfinity.addStock([
+    stockNikeKyrieInfinity10,
+    stockNikeKyrieInfinity11,
+    stockNikeKyrieInfinity12,
   ])
 
-  ////////////////////////////////////////////////
+  ///////////////////////
 
   const NikeDownshifter = await Product.create({
     model: "Downshifter",
@@ -730,6 +722,9 @@ conn.sync({ force: true }).then(async () => {
     sale: 0,
     color: "White",
   })
+  const imagenConverseChuckTaylor4 = await Image.create({
+    url: "https://i.dlpng.com/static/png/6920936_preview.png",
+  })
   const imagenConverseChuckTaylor3 = await Image.create({
     url: "https://png.pngitem.com/pimgs/s/47-478423_converse-hd-png-download.png",
   })
@@ -738,9 +733,6 @@ conn.sync({ force: true }).then(async () => {
   })
   const imagenConverseChuckTaylor2 = await Image.create({
     url: "https://png.pngitem.com/pimgs/s/47-477825_white-leather-converse-low-cut-hd-png-download.png",
-  })
-  const imagenConverseChuckTaylor4 = await Image.create({
-    url: "https://i.dlpng.com/static/png/6920936_preview.png",
   })
 
   converseChuckTaylor.addImages([
@@ -851,35 +843,44 @@ conn.sync({ force: true }).then(async () => {
   nikeShoeBlack.addStock(stockNikeShoeBlack)
   nikeShoeBlack.addImage(imageNikeBlack)
 
-  const adidasShoeBlack = await Product.create({
-    model: "Predator",
-    brand: "Adidas",
-    category: "Sport",
+  const nikeZoomXVaporfly = await Product.create({
+    model: "ZoomX Vaporfly",
+    brand: "Nike",
+    category: "Running",
     gender: "Female",
-    price: 25000,
-    description: "Adidas shoe football",
-    sale: 10,
-    color: "Black",
+    price: 45000,
+    description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+    sale: 0,
+    color: "Pink",
   })
-  const imageAdidasBlack = await Image.create({
-    url: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/70ae150b4f51490d8d87ab2001505c1f_9366/Botines_de_futbol_Predator_20.3_cesped_natural_seco_Negro_EF1929_01_standard.jpg",
+  const imagenikeZoomXVaporfly3 = await Image.create({
+    url: "https://www.zapatillasysneakers.com/sites/default/files/static/images/nike_zoomx_vaporfly_next6.png",
+  })
+  const imagenikeZoomXVaporfly = await Image.create({
+    url: "https://www.loberen.dk/sites/default/files/ao4568-600-phsrh001-750.png",
+  })
+  const imagenikeZoomXVaporfly2 = await Image.create({
+    url: "https://www.zapatillasysneakers.com/sites/default/files/static/images/nike_zoomx_vaporfly_next5.png",
+  })
+  const imagenikeZoomXVaporfly4 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/nwtrnwbxlqzqkdwfbsbd/calzado-de-carrera-para-carretera-zoomx-vaporfly-next-Sf9zRb.png",
   })
 
-  const stockShoeBlack39 = await Stock.create({ size: 39, amount: 0 })
-  const stockShoeBlack40 = await Stock.create({ size: 40, amount: 23 })
-  const stockShoeBlack41 = await Stock.create({ size: 41, amount: 23 })
-  const stockShoeBlack42 = await Stock.create({ size: 42, amount: 22 })
-  const stockShoeBlack43 = await Stock.create({ size: 43, amount: 25 })
-  const stockShoeBlack44 = await Stock.create({ size: 44, amount: 20 })
-  adidasShoeBlack.addStocks([
-    stockShoeBlack39,
-    stockShoeBlack40,
-    stockShoeBlack41,
-    stockShoeBlack42,
-    stockShoeBlack43,
-    stockShoeBlack44,
+  nikeZoomXVaporfly.addImages([
+    imagenikeZoomXVaporfly,
+    imagenikeZoomXVaporfly2,
+    imagenikeZoomXVaporfly3,
+    imagenikeZoomXVaporfly4,
   ])
-  adidasShoeBlack.addImage(imageAdidasBlack)
+  const stockNikeZoomXVaporfly10 = await Stock.create({ size: 10, amount: 20 })
+  const stockNikeZoomXVaporfly11 = await Stock.create({ size: 11, amount: 21 })
+  const stockNikeZoomXVaporfly12 = await Stock.create({ size: 12, amount: 22 })
+  nikeZoomXVaporfly.addStock([
+    stockNikeZoomXVaporfly10,
+    stockNikeZoomXVaporfly11,
+    stockNikeZoomXVaporfly12,
+  ])
 
   server.listen(3001, () => {
     console.log("%s listening at 3001")

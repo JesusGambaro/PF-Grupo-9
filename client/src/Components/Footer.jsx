@@ -10,7 +10,7 @@ export default function Footer() {
         
 
         <div className="icons-container-footer">
-         <p className="footer-text"> Información de contácto:</p>
+         <p className="footer-text"> Find us on</p>
           <div className="list-items">
           <li className="itemL">
           <i className="fa-brands fa-whatsapp whatsapp"></i>
@@ -24,9 +24,9 @@ export default function Footer() {
           </div>
         </div>
         <div className="parrafo">
-    Henry © 2022 | Todos los derechos reservados.</div>
+    Henry © 2022 | All rights reserved.</div>
         <div className="mediosde-pago">
-        <p className="footer-text"> Medios de pago:</p>
+        <p className="footer-text">Payment Methods</p>
           <li className="itemL">
           <img src="https://files.kuder.com.ar/images/kuder-mercadopago-blanco-negro.png" className="mercado-pago"></img>
           </li>

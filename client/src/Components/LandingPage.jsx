@@ -124,12 +124,20 @@ export default function LandingPage() {
           />
         </Carousel>
       </div>
-      <h1 className="oferta">
-            SALE
-      </h1>
+      <h1 className="oferta">SALE</h1>
 
       <div className="cards-container">
-        {sales.length > 0 && sales.map((shoe, i) => <div  className='landing-card col col-3' ><Card e={shoe} key={i}/></div>)}
+        {sales.length > 0 &&
+          sales.map((shoe, i) => (
+            <div className="landing-card col col-3">
+              <NavLink
+                to={`/home/${shoe.id}/${shoe.model}`}
+                style={{textDecoration: "none"}}
+              >
+                <Card e={shoe} key={i} />
+              </NavLink>
+            </div>
+          ))}
       </div>
 
       <Footer />

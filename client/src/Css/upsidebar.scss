@@ -17,10 +17,14 @@
   padding: 1rem;
   .view {
     display: flex;
+    visibility: hidden;
     justify-content: center;
     align-items: center;
     gap: 1rem;
     font-size: large;
+    i{
+      cursor: pointer;
+    }
   }
   .quantity {
   }
@@ -34,6 +38,7 @@
     }
     select {
       width: 60%;
+      cursor: pointer;
     }
   }
 }

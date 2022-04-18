@@ -3,6 +3,7 @@ import Loading from "./Loading";
 import LeftSideFilters from "./LeftSideFilters";
 import UpSideBar from "./UpSideBar";
 import {useEffect, useState} from "react";
+import {NavLink} from "react-router-dom";
 
 const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
   const [toggle, setToggle] = useState(true);
@@ -51,12 +52,18 @@ const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
       {loading ? (
         <Loading />
       ) : (
-        <div className={"shoes-container" + (toggle ? "" : " h")}>
-          {allDataCopy.length > 0 &&
-            dataPerPage().map((e, i) => (
-              <Card e={e} key={i} horizontal={!toggle} />
-            ))}
-
+        <div className="allContainer">
+          <div className={"shoes-container" + (toggle ? "" : " h")}>
+            {allDataCopy.length > 0 &&
+              dataPerPage().map((e, i) => (
+                <NavLink
+                  to={`/home/${e.id}/${e.model}`}
+                  style={{textDecoration: "none"}}
+                >
+                  <Card e={e} key={i} horizontal={!toggle} />
+                </NavLink>
+              ))}
+          </div>
           {allDataCopy.length > 1 && (
             <div className="pagination-container">
               <div className="selectionOwn">

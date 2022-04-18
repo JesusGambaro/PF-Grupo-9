@@ -14,17 +14,19 @@
 
 .cards-container {
   display: flex;
-  padding: 20px;
+  padding: 50px;
   margin: 0px;
   flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: flex-end;
+  justify-content: space-evenly;
+  
   margin-bottom: 40px;
   border-radius: 5px solid black;
   background-color: #fffefe;
   margin-top: 100px;
 }
-
+.landing-card{
+  margin: 20px;
+}
 .cardOwn {
   position: relative;
   @include flex-b();

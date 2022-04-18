@@ -126,7 +126,7 @@ export default function LandingPage() {
       </div>
 
       <div className="cards-container">
-        {sales.length > 0 && sales.map((shoe, i) => <Card e={shoe} key={i} />)}
+        {sales.length > 0 && sales.map((shoe, i) => <div  className='landing-card'><Card e={shoe} key={i}/></div>)}
       </div>
 
       <Footer />

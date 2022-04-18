@@ -1,5 +1,5 @@
 const { Router } = require("express")
-const { Op } = require("sequelize")
+const { Op, Sequelize, where } = require("sequelize")
 const { Product, Image, Stock } = require("../db.js")
 
 const router = Router()
@@ -22,9 +22,15 @@ router.get("/", async (req, res) => {
       ],
     })
     if (footwear) {
+      const brandVarchar = Sequelize.cast(Sequelize.col("brand"), "varchar")
       const footwearsSearched = await Product.findAll({
         where: {
-          model: { [Op.iLike]: `%${footwear}%` },
+          [Op.or]: [
+            { model: { [Op.iLike]: `%${footwear}%` } },
+            Sequelize.where(Sequelize.cast(Sequelize.col("brand"), "varchar"), {
+              [Op.iLike]: `%${footwear}%`,
+            }),
+          ],
         },
         include: [
           {
@@ -79,7 +85,7 @@ router.get("/allCategories", async (req, res) => {
 router.get("/sales", async (req, res) => {
   try {
     const carouselSale = await Product.findAll({
-      limit: 4,
+      limit: 6,
       where: {
         sale: { [Op.gt]: 0 },
       },
@@ -143,7 +149,6 @@ router.get("/:id", async (req, res) => {
     res.status(404).send({ msg: error.message })
   }
 })
-
 router.post("/", async (req, res) => {
   try {
     const {
@@ -154,9 +159,10 @@ router.post("/", async (req, res) => {
       price,
       description,
       sale,
+      size,
+      amount,
       color,
       addedImages,
-      stock,
     } = req.body
     let product = await Product.create({
       model,
@@ -166,6 +172,8 @@ router.post("/", async (req, res) => {
       price,
       description,
       sale,
+      size,
+      amount,
       color,
     })
 
@@ -174,13 +182,7 @@ router.post("/", async (req, res) => {
         let imageProduct = await Image.create({ url: image })
         await product.addImage(imageProduct)
       })
-
-    stock.length > 0 &&
-    stock.map(async (sizeAndAmount) => {
-      let stockBySize = await Stock.create({ amount: sizeAndAmount.amount, size: sizeAndAmount.size })
-      await product.addStock(stockBySize)
-    })
-    res.send("Product with its images and stock created!")
+    res.send("Product with its images created!")
   } catch (error) {
     console.log(error)
     res.status(404).send({ msg: error.message })

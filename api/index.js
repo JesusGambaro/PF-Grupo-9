@@ -348,13 +348,13 @@ conn.sync({ force: true }).then(async () => {
   const imageNikeDownshifterBlack2 = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/c47702cf-6b27-4ac3-b68c-3ab33d59f805/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
   })
-  const imageNikeDownshifterBlack3 = await Image.create({
-    url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/67dd0126-1d99-402c-baa1-6d3231ee4f26/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
-  })
+  // const imageNikeDownshifterBlack3 = await Image.create({
+  //   url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/67dd0126-1d99-402c-baa1-6d3231ee4f26/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
+  // })
   NikeDownshifterBlack.addImages([
     imageNikeDownshifterBlack,
     imageNikeDownshifterBlack2,
-    imageNikeDownshifterBlack3,
+    // imageNikeDownshifterBlack3,
     imageNikeDownshifterBlack4,
   ])
   const stockiNikeDownshifterBlack10 = await Stock.create({

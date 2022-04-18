@@ -34,7 +34,8 @@ const Card = ({e, horizontal}) => {
       </div>
       <div className="content">
         <div className="f-section">
-          <p title="Name">{e.brand}</p>
+
+          <p title="Name">{e.brand} - {e.model}</p>
           <span>
             <div className="rating" title="Rating">
               <i className="bi bi-star-fill"></i>

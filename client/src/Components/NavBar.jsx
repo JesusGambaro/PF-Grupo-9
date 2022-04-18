@@ -66,8 +66,8 @@ const NavBar = () => {
               <i className="bi bi-person"></i>
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem>cerrar sesión</DropdownItem>
-              <DropdownItem>información</DropdownItem>
+              <DropdownItem>Profile</DropdownItem>
+              <DropdownItem>Log out</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </li>

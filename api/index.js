@@ -17,13 +17,13 @@ conn.sync({ force: true }).then(async () => {
     url: "https://static.nike.com/a/images/f_auto/dpr_1.3,cs_srgb/w_1423,c_limit/8926409b-ccf7-43e8-bcbf-3ec09e0a0f77/colleci%C3%B3n-hakone-ekiden.png",
   })
   const imageNikeAirZoomAlphafly2 = await Image.create({
-    url: "https://static.nike.com/a/images/f_auto/dpr_1.3,cs_srgb/w_467,c_limit/1ddeb3c4-61aa-471f-8cc8-7e94e4f087cd/colleci%C3%B3n-hakone-ekiden.png",
-  })
-  const imageNikeAirZoomAlphafly3 = await Image.create({
     url: "https://static.nike.com/a/images/f_auto/dpr_1.3,cs_srgb/w_467,c_limit/bb1e9189-e599-4edf-a1f3-47a3dc7a3305/colleci%C3%B3n-hakone-ekiden.png",
   })
-  const imageNikeAirZoomAlphafly4 = await Image.create({
+  const imageNikeAirZoomAlphafly3 = await Image.create({
     url: "https://static.nike.com/a/images/f_auto/dpr_1.3,cs_srgb/w_467,c_limit/30566e88-8c14-4b88-9014-a2a0315b0ed8/colleci%C3%B3n-hakone-ekiden.png",
+  })
+  const imageNikeAirZoomAlphafly4 = await Image.create({
+    url: "https://static.nike.com/a/images/f_auto/dpr_1.3,cs_srgb/w_467,c_limit/1ddeb3c4-61aa-471f-8cc8-7e94e4f087cd/colleci%C3%B3n-hakone-ekiden.png",
   })
 
   NikeAirZoomAlphafly.addImages([imageNikeAirZoomAlphafly, imageNikeAirZoomAlphafly2, imageNikeAirZoomAlphafly3, imageNikeAirZoomAlphafly4])
@@ -520,13 +520,13 @@ conn.sync({ force: true }).then(async () => {
     url: "https://www.clara.es/medio/2018/10/23/converse-blancas_abd30912_800x577.png",
   })
   const imagenConverseChuckTaylor2 = await Image.create({
-    url: "https://png.pngitem.com/pimgs/s/47-477825_white-leather-converse-low-cut-hd-png-download.png",
+    url: "https://i.dlpng.com/static/png/6920936_preview.png",
   })
   const imagenConverseChuckTaylor3 = await Image.create({
     url: "https://png.pngitem.com/pimgs/s/47-478423_converse-hd-png-download.png",
   })
   const imagenConverseChuckTaylor4 = await Image.create({
-    url: "https://i.dlpng.com/static/png/6920936_preview.png",
+    url: "https://png.pngitem.com/pimgs/s/47-477825_white-leather-converse-low-cut-hd-png-download.png",
   })
 
   converseChuckTaylor.addImages([imagenConverseChuckTaylor, imagenConverseChuckTaylor2, imagenConverseChuckTaylor3, imagenConverseChuckTaylor4])
@@ -592,7 +592,7 @@ conn.sync({ force: true }).then(async () => {
     category: "Urban",
     gender: "Kids",
     price: 15000,
-    description: "Nice shoe",
+    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
     sale: 0,
     color: "Black",
   })
@@ -607,7 +607,7 @@ conn.sync({ force: true }).then(async () => {
     model: "Predator",
     brand: "Adidas",
     category: "Sport",
-    gender: "Female",
+    gender: "Male",
     price: 25000,
     description: "Adidas shoe football",
     sale: 10,

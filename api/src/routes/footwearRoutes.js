@@ -159,10 +159,9 @@ router.post("/", async (req, res) => {
       price,
       description,
       sale,
-      size,
-      amount,
       color,
       addedImages,
+      stock
     } = req.body
     let product = await Product.create({
       model,
@@ -172,8 +171,6 @@ router.post("/", async (req, res) => {
       price,
       description,
       sale,
-      size,
-      amount,
       color,
     })
 
@@ -182,6 +179,14 @@ router.post("/", async (req, res) => {
         let imageProduct = await Image.create({ url: image })
         await product.addImage(imageProduct)
       })
+
+      stock.length > 0 &&
+      stock.map(async (amountAndSize) => {
+        let stockProduct = await Stock.create({ size: amountAndSize.size , amount: amountAndSize.amount })
+        await product.addStock(stockProduct)
+     })
+
+
     res.send("Product with its images created!")
   } catch (error) {
     console.log(error)

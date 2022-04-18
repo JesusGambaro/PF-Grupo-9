@@ -124,7 +124,7 @@ export default function LandingPage() {
           />
         </Carousel>
       </div>
-      <h1 className="oferta">SALE</h1>
+      <h1 className="oferta">ON SALE</h1>
 
       <div className="cards-container">
         {sales.length > 0 &&

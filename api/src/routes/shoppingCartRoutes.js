@@ -7,11 +7,10 @@ const router = Router();
 // router.delete("/cart", deleteCart);
 // router.put("/cart", putCart);
 // router.post("/cart", postCart);
-
 router.route('/cart')
-     .get(getCart)
-     .delete(deleteCart)
-     .put(putCart)
-     .post(postCart);
+  .get(getCart)
+  .delete(deleteCart)
+  .put(putCart)
+  .post(postCart);
 
 module.exports = router;

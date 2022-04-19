@@ -1,5 +1,5 @@
 const { Sequelize } = require("sequelize");
-const { Product, Image, Stock, Cart } = require("../db.js");
+const { Product, Image, Stock,Cart } = require("../db.js");
 
 module.exports = {
      getCart: async (req, res) => {

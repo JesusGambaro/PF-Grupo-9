@@ -6,5 +6,11 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       default: false,
     },
+    address: {
+        type: DataTypes.TEXT,
+      },
+      telephoneNum: {
+        type: DataTypes.INTEGER,
+      },
   })
 }

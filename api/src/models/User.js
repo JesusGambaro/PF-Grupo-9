@@ -15,13 +15,6 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    address: {
-      type: DataTypes.TEXT,
-    },
-
-    telephoneNum: {
-      type: DataTypes.INTEGER,
-    },
     isAdmin: {
       type: DataTypes.BOOLEAN,
       default: false,

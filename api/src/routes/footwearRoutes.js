@@ -1,59 +1,11 @@
 const { Router } = require("express")
 const { Op, Sequelize, where } = require("sequelize")
+const { getAllFootwear } = require("../controllers/footwear.js")
 const { Product, Image, Stock } = require("../db.js")
 
 const router = Router()
 
-router.get("/", async (req, res) => {
-  const { footwear } = req.query
-  try {
-    const allFootwears = await Product.findAll({
-      attributes: { exclude: "description" },
-      include: [
-        {
-          model: Image,
-        },
-        {
-          model: Stock,
-          where: {
-            amount: { [Op.gt]: 0 },
-          },
-        },
-      ],
-    })
-    if (footwear) {
-      const brandVarchar = Sequelize.cast(Sequelize.col("brand"), "varchar")
-      const footwearsSearched = await Product.findAll({
-        where: {
-          [Op.or]: [
-            { model: { [Op.iLike]: `%${footwear}%` } },
-            Sequelize.where(Sequelize.cast(Sequelize.col("brand"), "varchar"), {
-              [Op.iLike]: `%${footwear}%`,
-            }),
-          ],
-        },
-        include: [
-          {
-            model: Image,
-          },
-          {
-            model: Stock,
-            where: {
-              amount: { [Op.gt]: 0 },
-            },
-          },
-        ],
-      })
-
-      return res.send(footwearsSearched)
-    }
-    return res.send(allFootwears)
-  } catch (error) {
-    console.log(error)
-    res.status(404).send({ msg: error.message })
-  }
-})
-// Ruta que retorna el modelo de calzado pasado por params.id
+router.get("/", getAllFootwear)
 
 // Provisional, hay que probarla.
 router.get("/allGenders", async (req, res) => {

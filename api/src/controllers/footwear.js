@@ -185,7 +185,7 @@ module.exports = {
         stock.map(async (amountAndSize) => {
           let stockProduct = await Stock.create({ size: amountAndSize.size , amount: amountAndSize.amount })
           await product.addStock(stockProduct)
-       })
+        })
       res.send("Product with its images created!")
       
     } catch (error) {

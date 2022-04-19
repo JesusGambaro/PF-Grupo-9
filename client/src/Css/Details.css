@@ -5,18 +5,31 @@
 #fav:hover{
   color: red;
 }
+
+#container{
+  width: 75%;
+}
 #relatedProduct{
   overflow: hidden;
   transition: transform .5s;
 }
+#selectColor, #selectSize{
+  width: 50%;
+}
+
+#mainImage{
+  width: 50%;
+}
+#images{
+  width: 75%;
+}
 #relatedProduct::after{
-  position: relative;
+  position: fixed;
   content: "See more details";
   color:rgb(7, 238, 255) ;
   font-weight: bold;
-  padding: 43% 6%;
+  padding: 43% 7%;
   font-size: 2rem;
-  bottom: 50%;
   left: 100%;
   background-color: rgba(0, 0, 0, 0.705);
   transition: left .5s ;
@@ -30,4 +43,53 @@
   left: 0%;
   transition: left .8s;
 
+}
+
+@media (max-width:1200px ){
+  
+  #relatedProduct::after{
+    padding: 51% 6%;
+  }
+}
+
+@media (max-width:1000px ){
+  #mainImage{
+    height: 60vh;
+  }
+  #selectColor, #selectSize{
+    width: 70%;
+  }
+  
+  #relatedProduct:hover{
+    transform: scale(1,1);
+  }
+  #relatedProduct::after{
+    padding: 43% 9%;
+  }
+}
+
+@media (max-width:768px ){
+  
+  #relatedProduct::after{
+    padding: 53% 6%;
+  }
+}
+
+@media (max-width:460px ){
+  #selectColor, #selectSize{
+    width: 100%;
+  }
+
+
+  #images{
+    width: 90%;
+    margin: 0%;
+  }
+
+  #mainImage{
+    width: 80%;
+  }
+  #container{
+    width: 100%;
+  }
 }

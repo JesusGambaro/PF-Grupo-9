@@ -194,4 +194,8 @@ module.exports = {
     }
   },
 
+  editProduct: async (req, res) =>{
+    
+  }
+
 }

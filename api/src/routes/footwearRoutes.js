@@ -5,7 +5,7 @@ const { Product, Image, Stock } = require("../db.js")
 
 const router = Router();
 
-router.get("/", getAllFootwear)
+router.get("/", getAllFootwear);
 router.get("/allGenders", getAllGenders)
 router.get("/allCategories", getAllCategories)
 router.get("/sales", getAllSales)

@@ -1,13 +1,13 @@
 const { Sequelize } = require("sequelize");
-const { Product, Image, Stock,Cart } = require("../db.js");
+const { Product, Image, Stock, ShoppingCartItem } = require("../db.js");
 
 module.exports = {
      getCart: async (req, res) => {
-          const {id} = req.body;
+          const {userId} = req.body;
           try{
-               const cart = await Cart.findAll({
+               const cart = await ShoppingCartItem.findAll({
                     where: {
-                         id_client: id
+                         userId
                     }
                })
                res.send(cart)
@@ -17,22 +17,22 @@ module.exports = {
      },
 
      deleteCart: async (req,res) => {
-          const {id_product, id_client} = req.body;
+          const {productId, userId} = req.body;
           try{
-               await Cart.destroy({
-                    where: {id_product, id_client}
+               await ShoppingCartItem.destroy({
+                    where: {productId, userId}
                })
-               res.send({msg: 'Product removed'})
+               res.send({msg: 'Product removed'});
           }catch(error){
                console.log(error);
           }
      },
 
      putCart: async (req,res) => {
-          const {id_product, id_client, amount} = req.body;
+          const {productId, userId, amount} = req.body;
           try {
-               const product = await Cart.findOne({
-                    where: {id_product, id_client}
+               const product = await ShoppingCartItem.findOne({
+                    where: {productId, userId}
                });
                product.amount = amount;
                product.save();
@@ -43,10 +43,10 @@ module.exports = {
      },
 
      postCart: async (req,res) => {
-          const {id_product, id_client, amount} = req.body;
+          const {productId, userId, amount} = req.body;
           try {
-               const product = await Cart.findOrCreate({
-                    where: {id_product, id_client}
+               const product = await ShoppingCartItem.findOrCreate({
+                    where: {productId, userId}
                })
                product.amount = amount;
                product.save();

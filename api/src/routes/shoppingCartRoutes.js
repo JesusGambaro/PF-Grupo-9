@@ -1,5 +1,5 @@
 const {Router} = require("express");
-const {getCart} = require("../controllers/shoppingCart.js");
+const {getCart, deleteCart, putCart, postCart} = require("../controllers/shoppingCart.js");
 
 const router = Router();
 
@@ -7,7 +7,7 @@ const router = Router();
 // router.delete("/cart", deleteCart);
 // router.put("/cart", putCart);
 // router.post("/cart", postCart);
-router.route('/cart')
+router.route('/')
   .get(getCart)
   .delete(deleteCart)
   .put(putCart)

@@ -195,4 +195,9 @@ module.exports = {
       res.status(404).send({ msg: error.message })
     }
   },
+
+
+  editProduct: async (req, res) =>{
+    
+  }
 }

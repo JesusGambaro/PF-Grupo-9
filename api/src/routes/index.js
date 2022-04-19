@@ -1,7 +1,7 @@
 const { Router } = require("express")
-const footwearRoutes = require("./footwearRoutes.js")
+const footwear = require("./footwear.js")
 
 const router = Router()
 
-router.use("/allFootwear/", footwearRoutes)
+router.use("/allFootwear/", footwear)
 module.exports = router

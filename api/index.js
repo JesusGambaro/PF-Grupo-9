@@ -348,13 +348,13 @@ conn.sync({ force: true }).then(async () => {
   const imageNikeDownshifterBlack2 = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/c47702cf-6b27-4ac3-b68c-3ab33d59f805/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
   })
-  const imageNikeDownshifterBlack3 = await Image.create({
-    url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/67dd0126-1d99-402c-baa1-6d3231ee4f26/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
-  })
+  // const imageNikeDownshifterBlack3 = await Image.create({
+  //   url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/67dd0126-1d99-402c-baa1-6d3231ee4f26/calzado-de-running-para-carretera-downshifter-10-xvvLtx.png",
+  // })
   NikeDownshifterBlack.addImages([
     imageNikeDownshifterBlack,
     imageNikeDownshifterBlack2,
-    imageNikeDownshifterBlack3,
+    // imageNikeDownshifterBlack3,
     imageNikeDownshifterBlack4,
   ])
   const stockiNikeDownshifterBlack10 = await Stock.create({
@@ -723,7 +723,7 @@ conn.sync({ force: true }).then(async () => {
     color: "White",
   })
   const imagenConverseChuckTaylor4 = await Image.create({
-    url: "https://www.converse.com.au/media/catalog/product/cache/122ed3c57cbb9e5a97d45d900d4f4066/u/n/unisex_converse_chuck_taylor_all_star_classic_colour_low_top_white_17652_1.jpg",
+    url: "https://www.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dwd4d59ab3/images/a_107/M7652_A_107X1.jpg?sw=964",
   })
   const imagenConverseChuckTaylor3 = await Image.create({
     url: "https://png.pngitem.com/pimgs/s/47-478423_converse-hd-png-download.png",

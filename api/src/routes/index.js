@@ -1,5 +1,5 @@
 const { Router } = require("express")
-const footwear = require("./footwear.js")
+const footwear = require("./footwearRoutes.js")
 
 const router = Router()
 

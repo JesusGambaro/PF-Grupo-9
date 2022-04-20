@@ -64,7 +64,7 @@ const LeftSideFilters = () => {
   };
   return (
     <div className="left-side-container">
-      <Filters filters={filters} genderActual={genderActual} />
+      <Filters filters={filters} />
       <div className="gender-filter">
         <h4>Gender</h4>
         {genders.length !== 0 &&
@@ -75,11 +75,11 @@ const LeftSideFilters = () => {
         <h4>Price</h4>
         <MultiRangeSlider
           min={0}
-          max={100000}
+          max={75000}
           step={10000}
           ruler={false}
           label={true}
-          preventWheel={false}
+          preventWheel={true}
           minValue={range.minValue}
           maxValue={range.maxValue}
           onInput={(e) => {
@@ -104,7 +104,7 @@ const LeftSideFilters = () => {
             />
           </span>
           <button onClick={handlePrice}>
-            <i class="bi bi-caret-right-fill"></i>
+            <i className="bi bi-caret-right-fill"></i>
           </button>
         </div>
       </div>

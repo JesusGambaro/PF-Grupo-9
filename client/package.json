@@ -11,6 +11,7 @@
     "bootstrap-icons": "^1.8.1",
     "multi-range-slider-react": "^1.0.7",
     "react": "^18.0.0",
+    "react-bootstrap": "^2.3.0",
     "react-dom": "^18.0.0",
     "react-redux": "^7.2.8",
     "react-router-dom": "^6.3.0",

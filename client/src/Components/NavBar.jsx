@@ -1,24 +1,24 @@
 import "../Css/navbar.scss";
 import logo from "../Images/logo2.png";
-import { useState } from "react";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-} from "reactstrap";
-import { NavLink, useNavigate } from "react-router-dom";
-import { sortByGender, resetState } from "../redux/actions/sortBy";
-import { resetFilters, genderFilter } from "../redux/actions/leftSideFilter";
-import { useDispatch } from "react-redux";
+import {useState} from "react";
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
+import {NavLink, useNavigate} from "react-router-dom";
+import {sortByGender, resetState} from "../redux/actions/sortBy";
+import {resetFilters, genderFilter} from "../redux/actions/leftSideFilter";
+import {useDispatch} from "react-redux";
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [dropDown, setDropDown] = useState(false);
+  const [search, setSearch] = useState("");
   function abrirYcerrar() {
     setDropDown(!dropDown);
   }
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log(search);
+  };
   return (
     <div className="navbarOwn">
       <NavLink to={"/"}>
@@ -68,12 +68,19 @@ const NavBar = () => {
           KIDS
         </li>
       </ul>
-      <form className="searchOwn">
-        <button type="submitOwn">
+
+      <form className="searchOwn" onSubmit={handleSearch}>
+        <button type="submit">
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
-        <input type="text" placeholder="SEARCH" />
+        <input
+          type="text"
+          placeholder="SEARCH"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </form>
+
       <ul className="shortcutOwn">
         <li>
           <i className="bi bi-heart"></i>

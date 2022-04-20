@@ -1,6 +1,7 @@
 
 const { Op,  Sequelize } = require("sequelize")
 const { Product, Image, Stock, Order, ShoppingCartItem } = require("../db.js")
+const moment = require('moment')
 
 module.exports = {
   getAllFootwear: async (req, res) => {

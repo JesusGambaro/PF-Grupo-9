@@ -55,5 +55,20 @@ module.exports = {
           }catch(error){
                console.log(error)
           }
-     }
+     },
+
+     getLastSevenDaysOrders: async (req, res) => {
+          try {
+            const lastOrders = await Order.findAll({
+              where: {
+                createdAt: {
+                  [Op.gte]: moment().subtract(7, 'days').toDate()
+                }
+              }
+            })
+            res.send(lastOrders)
+          } catch (error) {
+            console.log(error);
+          }
+        },
 }

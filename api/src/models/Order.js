@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
   sequelize.define("order", {
     delivered: {
       type: DataTypes.BOOLEAN,
-      default: false,
+      defaultValue: false,
     },
     address: {
         type: DataTypes.TEXT,

@@ -10,6 +10,8 @@ const RESET = "@shoes/reset";
 const DETAILCOLOR = "@shoes/detailColor";
 const GET_ALL_SALES = "@shoes/sales";
 const CLEARDETAIL = "@shoes/clearColor";
+const REGISTER_USER = "@shoes/registerUser"
+const LOGIN_USER = "@shoes/loginUser"
 
 export {
   BRING_ALL_DATA,
@@ -24,4 +26,6 @@ export {
   DETAILCOLOR,
   CLEARDETAIL,
   GET_ALL_SALES,
+  REGISTER_USER,
+  LOGIN_USER
 };

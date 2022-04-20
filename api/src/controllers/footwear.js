@@ -1,4 +1,5 @@
-const { Op,  Sequelize, where } = require("sequelize")
+
+const { Op,  Sequelize } = require("sequelize")
 const { Product, Image, Stock, Order, ShoppingCartItem } = require("../db.js")
 
 module.exports = {
@@ -91,7 +92,7 @@ module.exports = {
           model: Image,
         },
       })
-  
+
       res.send(carouselSale)
     } catch (error) {
       console.log(error)
@@ -101,25 +102,25 @@ module.exports = {
 
   getAllProductsSameModel: async (req, res) => {
     const { model } = req.params
-  const prueba = await Product.findAll({
-    where: {
-      model: {
-        [Op.eq]: model,
-      },
-    },
-    include: [
-      {
-        model: Image,
-      },
-      {
-        model: Stock,
-        where: {
-          amount: { [Op.gt]: 0 },
+    const prueba = await Product.findAll({
+      where: {
+        model: {
+          [Op.eq]: model,
         },
       },
-    ],
-  })
-  res.send(prueba)
+      include: [
+        {
+          model: Image,
+        },
+        {
+          model: Stock,
+          where: {
+            amount: { [Op.gt]: 0 },
+          },
+        },
+      ],
+    })
+    res.send(prueba)
   },
 
   getProductById: async (req, res) => {
@@ -162,7 +163,7 @@ module.exports = {
         sale,
         color,
         addedImages,
-        stock
+        stock,
       } = req.body
       let product = await Product.create({
         model,
@@ -174,25 +175,28 @@ module.exports = {
         sale,
         color,
       })
-  
+
       addedImages.length > 0 &&
         addedImages.map(async (image) => {
           let imageProduct = await Image.create({ url: image })
           await product.addImage(imageProduct)
         })
-  
-        stock.length > 0 &&
+
+      stock.length > 0 &&
         stock.map(async (amountAndSize) => {
-          let stockProduct = await Stock.create({ size: amountAndSize.size , amount: amountAndSize.amount })
+          let stockProduct = await Stock.create({
+            size: amountAndSize.size,
+            amount: amountAndSize.amount,
+          })
           await product.addStock(stockProduct)
         })
       res.send("Product with its images created!")
-      
     } catch (error) {
       console.log(error)
       res.status(404).send({ msg: error.message })
     }
   },
+
 
   editProduct: async (req, res) =>{
     try {
@@ -299,5 +303,5 @@ module.exports = {
       console.log(error);
     }
   },
-}
+
 

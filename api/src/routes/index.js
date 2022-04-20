@@ -1,7 +1,15 @@
 const { Router } = require("express")
-const footwearRoutes = require("./footwearRoutes.js")
+const footwear = require("./footwearRoutes.js")
+const user = require("./userRoutes.js")
+const cartRoutes = require("./shoppingCartRoutes.js")
+const orderRoutes = require("./orderRoutes.js")
 
 const router = Router()
 
-router.use("/allFootwear/", footwearRoutes)
+router.use("/allFootwear/", footwear)
+router.use("/user/", user)
+router.use("/cart/", cartRoutes)
+router.use("/orders/", orderRoutes)
+
 module.exports = router
+

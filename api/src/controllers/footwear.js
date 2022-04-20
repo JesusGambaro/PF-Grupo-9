@@ -1,5 +1,6 @@
-const { Op, Sequelize, where } = require("sequelize")
-const { Product, Image, Stock } = require("../db.js")
+
+const { Op,  Sequelize } = require("sequelize")
+const { Product, Image, Stock, Order, ShoppingCartItem } = require("../db.js")
 
 module.exports = {
   getAllFootwear: async (req, res) => {
@@ -91,7 +92,7 @@ module.exports = {
           model: Image,
         },
       })
-  
+
       res.send(carouselSale)
     } catch (error) {
       console.log(error)
@@ -101,25 +102,25 @@ module.exports = {
 
   getAllProductsSameModel: async (req, res) => {
     const { model } = req.params
-  const prueba = await Product.findAll({
-    where: {
-      model: {
-        [Op.eq]: model,
-      },
-    },
-    include: [
-      {
-        model: Image,
-      },
-      {
-        model: Stock,
-        where: {
-          amount: { [Op.gt]: 0 },
+    const prueba = await Product.findAll({
+      where: {
+        model: {
+          [Op.eq]: model,
         },
       },
-    ],
-  })
-  res.send(prueba)
+      include: [
+        {
+          model: Image,
+        },
+        {
+          model: Stock,
+          where: {
+            amount: { [Op.gt]: 0 },
+          },
+        },
+      ],
+    })
+    res.send(prueba)
   },
 
   getProductById: async (req, res) => {
@@ -162,7 +163,7 @@ module.exports = {
         sale,
         color,
         addedImages,
-        stock
+        stock,
       } = req.body
       let product = await Product.create({
         model,
@@ -174,24 +175,133 @@ module.exports = {
         sale,
         color,
       })
-  
+
       addedImages.length > 0 &&
         addedImages.map(async (image) => {
           let imageProduct = await Image.create({ url: image })
           await product.addImage(imageProduct)
         })
-  
-        stock.length > 0 &&
+
+      stock.length > 0 &&
         stock.map(async (amountAndSize) => {
-          let stockProduct = await Stock.create({ size: amountAndSize.size , amount: amountAndSize.amount })
+          let stockProduct = await Stock.create({
+            size: amountAndSize.size,
+            amount: amountAndSize.amount,
+          })
           await product.addStock(stockProduct)
         })
       res.send("Product with its images created!")
-      
     } catch (error) {
       console.log(error)
       res.status(404).send({ msg: error.message })
     }
   },
 
-}
+
+  editProduct: async (req, res) =>{
+    try {
+      const {model, brand, category, gender, price, description, sale, color, size, amount, images} = req.body;
+      const {id} = req.params;
+
+      const product = await Product.findOne({
+        where: {id}
+      })
+
+      if(model){
+        product.model = model;
+        await product.save();
+      } 
+      if(brand){
+        product.brand = brand;
+        await product.save();
+      } 
+      if(category){
+        product.category = category;
+        await product.save();
+      } 
+      if(gender){
+        product.gender = gender;
+        await product.save();
+      } 
+      if(price){
+        product.price = price;
+        await product.save();
+      } 
+      if(description){
+        product.description = description;
+        await product.save();
+      } 
+      if(sale){
+        product.sale = sale;
+        await product.save();
+      } 
+      if(color){
+        product.color = color;
+        await product.save();
+      } 
+      if(size && amount){
+        const stockPerModel = await Stock.findAll({
+          where: { productId: product.id}  
+        });
+        stockPerModel.map((stockPerSize)=>{
+          if(stockPerSize.size === size){
+            stockPerSize.amount = amount;
+            stockPerSize.save();
+          }
+        })
+      }
+      if(images){
+      //definir con el front cómo va a ser el form para editar.
+      }
+
+      res.send("calzado editado");
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  deleteProduct: async (req, res) => {
+    try {
+      const {id} = req.params;
+      const product = await Product.findOne({ id })
+      if(product){
+        // eliminar todas las imagenes relacionadas al producto.
+        const imageProduct = await Image.findAll({
+          where:{productId: id}
+        })
+        imageProduct && imageProduct.map(async (imageItem)=>{
+          await imageItem.destroy();
+        })
+
+        // eliminar todo el stock relacionado al producto. ordenes, cartItems.
+        const stockProduct = await Stock.findAll({
+          where:{productId: id}
+        })
+        stockProduct && stockProduct.map(async (stockItem)=>{
+          await stockItem.destroy();
+        })
+        
+        // eliminar todas las ordenes relacionadas al producto.
+        const orderProduct = await Order.findAll({
+          where:{productId: id}
+        })
+        orderProduct && orderProduct.map(async (oderItem)=>{
+          await oderItem.destroy();
+        })
+
+        // eliminar todos los cart items relacionados al producto.
+        const cartProduct = await ShoppingCartItem.findAll({
+          where:{productId: id}
+        })
+        cartProduct && cartProduct.map(async (cartItem)=>{
+          await cartItem.destroy();
+        })
+        product.destroy()
+      }
+      res.send("product destroyed");
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+

@@ -1,5 +1,6 @@
 import {
   BRING_ALL_DATA,
+  LOAD_GENDERS,
   SORT_BY,
   LEFT_SIDE_FILTERS,
   LOADING,
@@ -23,28 +24,35 @@ const initialState = {
   categories: [],
   genders: [],
   filters: [],
+  genderData: {},
+  genderActual: "all",
 };
-
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case BRING_ALL_DATA:
       return {...state, allData: action.payload, allDataCopy: action.payload};
+    case LOAD_GENDERS:
+      return {...state, genderData: action.payload};
     case "@shoes/agregarFiltro":
       return {...state, filters: [...state.filters, action.payload]};
+    case "@shoes/borrarFiltros":
+      return {...state, filters: action.payload};
+    case "@shoes/genderActual":
+      return {...state, genderActual: action.payload};
     case GET_ALL_CATEGORIES:
       return {...state, categories: action.payload};
     case GET_ALL_GENDERS:
       return {...state, genders: action.payload};
     case SORT_BY:
-      return {...state, allDataCopy: action.payload};
+      return {...state, allData: action.payload};
     case LEFT_SIDE_FILTERS:
-      return {...state, allDataCopy: action.payload};
+      return {...state, allData: action.payload};
     case LOADING:
       return {...state, loading: action.payload};
     case DETAIL:
       return {...state, detail: action.payload};
     case RESET:
-      return {...state, allDataCopy: action.payload};
+      return {...state, allData: action.payload};
     case DETAILCOLOR:
       return {...state, detailColor: action.payload};
     case CLEARDETAIL:

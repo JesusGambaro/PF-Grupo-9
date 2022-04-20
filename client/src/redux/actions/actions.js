@@ -1,4 +1,5 @@
 const BRING_ALL_DATA = "@shoes/bringAllData";
+const LOAD_GENDERS = "@shoes/loadGenders";
 const GET_ALL_CATEGORIES = "@shoes/bringAllCategories";
 const GET_ALL_GENDERS = "@shoes/bringAllGenders";
 const SORT_BY = "@shoes/sortBy";
@@ -12,6 +13,7 @@ const CLEARDETAIL = "@shoes/clearColor";
 
 export {
   BRING_ALL_DATA,
+  LOAD_GENDERS,
   GET_ALL_CATEGORIES,
   GET_ALL_GENDERS,
   SORT_BY,

@@ -6,5 +6,9 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       defaultValue: 1,
     },
+    size: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
   })
 }

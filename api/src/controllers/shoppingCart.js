@@ -1,5 +1,5 @@
 
-const { Product, User, ShoppingCartItem } = require("../db.js")
+const { Product, User, ShoppingCartItem, Stock } = require("../db.js")
 
 module.exports = {
      getCart: async (req, res) => {
@@ -17,7 +17,7 @@ module.exports = {
      },
 
      deleteCart: async (req,res) => {
-          const { productId, userId, amount, size } = req.body;
+          const { productId, userId, size } = req.body;
           try{
                await ShoppingCartItem.destroy({
                     where: {productId, userId, size}
@@ -31,12 +31,20 @@ module.exports = {
      putCart: async (req,res) => {
           const { productId, userId, amount, size } = req.body;
           try {
-               const product = await ShoppingCartItem.findOne({
-                    where: {productId, userId, size}
+               const productSelected = await Product.findOne({
+                    where: {id: productId}, include: {model: Stock, where: {size}}
                });
-               product.amount = amount;
-               product.save();
-               res.send({msg: 'Product modified'})
+
+               if(productSelected?.stocks[0].amount>=amount){
+                    const cartItem = await ShoppingCartItem.findOne({
+                         where: {productId, userId, size}
+                    });
+                    cartItem.amount = amount;
+                    await cartItem.save();
+                    res.send({msg: 'Product modified'})
+               }else{
+                    res.send({msg: 'No Stock'});
+               }               
           } catch (error) {
                console.log(error);
           }
@@ -45,23 +53,35 @@ module.exports = {
      postCart: async (req,res) => {
           const {productId, userId, size} = req.body;
           try {
-               const cartItem = await ShoppingCartItem.findOrCreate({
-                    where: {productId, userId, size}
-               })
-               cartItem.amount = 1;
-               await cartItem.save();
+               const productSelected = await Product.findOne({
+                    where: {id: productId}, include: {model: Stock, where: {size}}
+               });
 
-               const product = await Product.findOne({
-                    where: {id: productId}
-               })
-               await cartItem.addProduct(product)
+               if(productSelected?.stocks[0].amount>0){
+                    let [cartItem, ] = await ShoppingCartItem.findOrCreate({
+                         where: {productId, userId, size}
+                    });
 
-               const user = await User.findOne({
-                    where: {id: userId}
-               })
-               await cartItem.addUser(user)
+                    cartItem.amount++;
+                    await cartItem.save();
 
-               res.send({msg: 'Cart Item created'})
+                    res.send(cartItem)
+               }else{
+                    res.send({msg: 'No Stock'});
+               }
+
+               // const product = await Product.findOne({
+               //      where: {id: productId}
+               // })
+               // await cartItem.addProduct(product)
+
+               // const user = await User.findOne({
+               //      where: {id: userId}
+               // })
+               // await cartItem.addUser(user)
+
+               // res.send({msg: 'Cart Item created'})
+               
           } catch (error) {
                console.log(error)
           }

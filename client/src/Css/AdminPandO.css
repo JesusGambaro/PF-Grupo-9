@@ -14,3 +14,31 @@
     box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.45);
 
 }
+
+.title-and-search{
+    display: flex;
+}
+
+.admin-search{
+    display: flex;
+    height: 60px;
+    margin: 15px 0 0 75px;
+}
+.form-control-admin{
+    width: 400px;
+    height: 39px;
+    border: 2px solid rgb(208, 205, 205);
+    border-radius: 0.1rem;
+}
+.search-admin{
+    font-size: 20px;
+}
+
+.submit-admin{
+    width: 33px;
+    height: 39px;
+    background-color: transparent;
+    border: 2px solid rgb(208, 205, 205);
+    border-radius: 0.1rem;
+
+}

@@ -26,7 +26,7 @@ export default function OpenSideBarAdmin() {
 
     const {pathname}=location
     const splitLocation = pathname.split("/");
-    console.log(splitLocation)
+   
 
     const renderTooltip = (item) => (
       <Tooltip id="button-tooltip" >

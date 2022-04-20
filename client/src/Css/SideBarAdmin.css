@@ -1,0 +1,29 @@
+.boton-c{
+    width: 40px;
+    
+    background-color: rgb(208, 212, 212);
+    border: 2px solid rgb(189, 189, 189);
+    padding: 5px !important;
+    
+    
+}
+
+
+
+.itemL-admin:hover{
+    border-radius: 10px;
+    background-color: #c8cacd;
+}
+
+
+.option-text-admin{
+    margin-top: 25px ;
+    font-size: 25px;
+    font-family: 'Josefin Sans', sans-serif;
+    padding-right: 4px;
+}
+
+
+.logoOwn-admin{
+    width: 55px;
+}

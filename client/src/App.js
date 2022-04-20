@@ -6,6 +6,8 @@ import NavBar from "./Components/NavBar";
 import LandingPage from "./Components/LandingPage";
 import Details from "./Components/Details";
 import Footer from "./Components/Footer";
+import Login from "./Components/Login";
+
 function App() {
   return (
     <Routes>
@@ -32,6 +34,16 @@ function App() {
           <Footer key={"footer"} />,
         ]}
       />
+        <Route
+        exact
+        path="home/login"
+        element={[
+          <NavBar key={"nav"} />,
+          <Login key={"login"} />,
+          <Footer key={"footer"} />,
+        ]}
+      />
+
 
       <Route path="*" exact={true} element={<NotFound />} />
     </Routes>

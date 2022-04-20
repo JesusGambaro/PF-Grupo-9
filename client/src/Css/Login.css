@@ -1,0 +1,14 @@
+.bg{
+  background-image: url("https://i.pinimg.com/474x/86/9d/61/869d615682802d9615ed583c94ea49d4.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.contenido{
+  width: 75%;
+}
+
+@media (max-width:770px){
+  .contenido{
+    width: 100%;
+  }
+}

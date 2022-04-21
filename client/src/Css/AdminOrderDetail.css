@@ -38,7 +38,7 @@ small{
     font-size: larger;
 }
 .order-data{
-   
+   display: flex;
 
 margin: 20px;
 height: 125px;
@@ -87,4 +87,18 @@ width: 300px;
 
 dt{
     font-weight: 400;
+}
+
+.icon-text-detail-order{
+    display: flex;
+}
+
+.icon-detail-order{
+    margin: -10px 15px 0px;
+    font-size: 40px;
+    background-color: rgb(217, 220, 220);
+    border-radius: 25px;
+    padding: 0 8px;
+    height: min-content;
+    width: max-content;
 }

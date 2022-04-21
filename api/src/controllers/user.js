@@ -18,7 +18,11 @@ module.exports = {
         },
       })
       if (user) return res.status(200).send({ status: false })
-      const newUser = await User.create({ ...body, password: passwordHash })
+      const newUser = await User.create({
+        email,
+        userName,
+        password: passwordHash,
+      })
       return res.status(201).send({ status: true })
     } catch (error) {
       sendError(res, error)
@@ -31,7 +35,7 @@ module.exports = {
         where: { email },
       })
       const correctPassword =
-        user === null ? false : bcrypt.compare(password, user.password)
+        user === null ? false : await bcrypt.compare(password, user.password)
       if (!correctPassword)
         return res.status(200).send({ error: "Invalid email or password" })
       const token = generateToken({ id: user.id, isAdmin: user.isAdmin })

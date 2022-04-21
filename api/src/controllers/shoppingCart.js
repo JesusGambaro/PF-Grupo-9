@@ -31,6 +31,18 @@ module.exports = {
         }
   },
 
+  deleteAllCart: async (req,res) => {
+     const { userId } = req.body;
+     try{
+        await ShoppingCartItem.destroy({
+          where: { userId }
+        })
+          res.send({msg: 'Product removed'});
+        }catch(error){
+          sendError(res, error);
+        }
+  },
+
      putCart: async (req,res) => {
           const { productId, userId, amount, size } = req.body;
           try {

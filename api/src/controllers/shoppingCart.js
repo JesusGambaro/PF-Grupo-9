@@ -1,5 +1,6 @@
-const { Product, ShoppingCartItem, Stock } = require("../db.js");
-const { sendError } = require("../helpers/error.js");
+const { ShoppingCartItem } = require("../db.js")
+const { sendError } = require("../helpers/error.js")
+
 
 module.exports = {
   getCart: async (req, res) => {
@@ -30,7 +31,6 @@ module.exports = {
           sendError(res, error);
         }
   },
-
   deleteAllCart: async (req,res) => {
      const { userId } = req.body;
      try{
@@ -84,18 +84,6 @@ module.exports = {
                }else{
                     res.send({msg: 'No Stock'});
                }
-
-               // const product = await Product.findOne({
-               //      where: {id: productId}
-               // })
-               // await cartItem.addProduct(product)
-
-               // const user = await User.findOne({
-               //      where: {id: userId}
-               // })
-               // await cartItem.addUser(user)
-
-               // res.send({msg: 'Cart Item created'})
                
           } catch (error) {
                sendError(res, error);

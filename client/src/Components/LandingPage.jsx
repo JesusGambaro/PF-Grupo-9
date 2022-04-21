@@ -23,7 +23,7 @@ export default function LandingPage() {
     }) */
 
   // State for Active index
-  const sales = useSelector((state) => state.sales);
+  const sales = useSelector((state) => state.root.sales);
   const [activeIndex, setActiveIndex] = React.useState(0);
 
   const dispatch = useDispatch();

@@ -13,7 +13,6 @@ import {
   GET_ALL_GENDERS,
   REGISTER_USER,
   LOGIN_USER,
-  CLEAR_USER,
   SEARCH,
 } from "../actions/actions";
 
@@ -53,12 +52,12 @@ const rootReducer = (state = initialState, action) => {
       return {...state, allData: action.payload};
     case LEFT_SIDE_FILTERS:
       return {...state, allData: action.payload};
+    case SEARCH:
+      return {...state, allData: action.payload};
     case LOADING:
       return {...state, loading: action.payload};
     case DETAIL:
       return {...state, detail: action.payload};
-    case SEARCH:
-      return {...state, allData: action.payload};
     case RESET:
       return {...state, allData: action.payload};
     case DETAILCOLOR:
@@ -71,12 +70,6 @@ const rootReducer = (state = initialState, action) => {
       return {...state, registerUser: action.payload};
     case LOGIN_USER:
       return {...state, loginUser: action.payload};
-    case CLEAR_USER:
-      return {
-        ...state,
-        loginUser: action.payload,
-        registerUser: action.payload,
-      };
     default:
       return state;
   }

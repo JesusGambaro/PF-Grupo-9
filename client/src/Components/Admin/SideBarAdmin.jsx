@@ -1,5 +1,5 @@
-import '../Css/SideBarAdmin.css'
-import logo from "../Images/logo2.png";
+import '../../Css/SideBarAdmin.css'
+import logo from "../../Images/logo2.png";
 import React from "react"; 
 import { useState } from "react";
 import Offcanvas from 'react-bootstrap/Offcanvas'

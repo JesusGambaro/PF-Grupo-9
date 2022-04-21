@@ -1,4 +1,4 @@
-const { Order, Product, Stock } = require("../db.js")
+const { Order, ShoppingCartItem } = require("../db.js")
 const { Op } = require("sequelize")
 const moment = require("moment")
 const { sendError } = require("../helpers/error.js")
@@ -15,7 +15,9 @@ module.exports = {
         })
         res.send(orderSearched)
       } else {
-        const allOrders = await Order.findAll()
+        const allOrders = await Order.findAll({
+          include: { model: ShoppingCartItem },
+        })
         res.send(allOrders)
       }
     } catch (error) {
@@ -23,20 +25,26 @@ module.exports = {
     }
   },
 
-  postOrder: async ( req, res ) => {
-    const {productId, size} = req.body;
-    
-    try {      
-      const productSelected = await Product.findOne({
-        where: {id: productId}, include: {model: Stock, where: {size}}
-      });
 
-      if(productSelected?.stocks[0].amount>0){
-        await Order.create(req.body)
-        res.send({ msg: "Order created" })
-      }else{
-        res.send({msg: 'No Stock'});
-      }               
+  postOrder: async (req, res) => {
+    try {
+      const { telephoneNum, delivered, address, userId } = req.body
+      const allShoppingCarts = await ShoppingCartItem.findAll({
+        where: { userId },
+      })
+      const orderCreated = await Order.create({
+        telephoneNum,
+        delivered,
+        address,
+      })
+      await orderCreated.addShoppingCartItems(allShoppingCarts)
+      const order = await Order.findOne({
+        where: orderCreated,
+        include: {
+          model: ShoppingCartItem,
+        },
+      })
+      return res.send({ msg: "Order created" })
     } catch (error) {
       sendError(res, error)
     }

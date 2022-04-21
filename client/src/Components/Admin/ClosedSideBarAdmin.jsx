@@ -81,7 +81,7 @@ export default function OpenSideBarAdmin() {
     overlay={renderTooltip('Customers')}
   >
   <li className="nav-item itemL itemL-admin">
-    <Link to='/home/admin/users' className={splitLocation[3] === "users" ?'nav-link nLink': 'nav-link '} href="customers"><i className="bi bi-person account"></i></Link>
+    <Link to='/home/admin/customers' className={splitLocation[3] === "customers" ?'nav-link nLink': 'nav-link '} href="customers"><i className="bi bi-person account"></i></Link>
     </li> 
     </OverlayTrigger>
   

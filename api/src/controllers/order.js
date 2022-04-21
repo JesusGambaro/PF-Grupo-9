@@ -54,11 +54,11 @@ module.exports = {
     try {
       const order = await Order.findOne({
         where: {
-          id
-        }
+          id,
+        },
       })
-      order.delivered = req.body.delivered;
-      await order.save();
+      order.delivered = req.body.delivered
+      await order.save()
       res.send({ msg: "Order updated" })
     } catch (error) {
       sendError(res, error)
@@ -71,7 +71,7 @@ module.exports = {
       await Order.destroy({
         where: { id },
       })
-      res.send({ msg: "Order deleted" });
+      res.send({ msg: "Order deleted" })
     } catch (error) {
       sendError(res, error)
     }
@@ -83,7 +83,10 @@ module.exports = {
         where: {
           createdAt: {
             [Op.gte]: moment().subtract(7, "days").toDate(),
-          },
+          }
+        },
+        include: {
+          model: ShoppingCartItem
         },
       })
       res.send(lastOrders)

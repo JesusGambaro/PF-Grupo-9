@@ -18,20 +18,22 @@ const AdminNav = ({section}) => {
       <NavLink to={"/"}>
         <img className="logo-admin" src={logo} alt="logo" />
       </NavLink>
-    <h1 className='admin-title'>{section}</h1>
-    
-    <div className="icons-nav-admin">
-        <li onClick={() => dispatch(resetState())} >
-          <NavLink to="/home" className="goHome-admin">HOME</NavLink>
+      <h1 className="admin-title">{section}</h1>
+
+      <div className="icons-nav-admin">
+        <li onClick={() => dispatch(resetState())}>
+          <NavLink to="/home" className="goHome-admin">
+            HOME
+          </NavLink>
         </li>
-        
+
         <li>
-        <i class="bi bi-bell bell-admin"></i>
+          <i class="bi bi-bell bell-admin"></i>
         </li>
         <li>
           <Dropdown isOpen={dropDown} toggle={abrirYcerrar}>
-            <DropdownToggle  caret className="admin-drop">
-              <i className="bi bi-person person-admin" width='40px'></i>
+            <DropdownToggle caret className="admin-drop">
+              <i className="bi bi-person person-admin" width="40px"></i>
             </DropdownToggle>
             <DropdownMenu>
               <DropdownItem>Profile</DropdownItem>
@@ -46,8 +48,6 @@ const AdminNav = ({section}) => {
         </button>
         <input type="text" placeholder="SEARCH" />
       </form> */}
-      
-        
     </div>
   );
 };

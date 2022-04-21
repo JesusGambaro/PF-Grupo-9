@@ -4,7 +4,7 @@ const moment = require("moment")
 const { sendError } = require("../helpers/error.js")
 
 module.exports = {
-  getOrders: async (req, res) => {
+  getOrders: async ( req, res ) => {
     const { order } = req.query
     try {
       if (order) {
@@ -25,56 +25,54 @@ module.exports = {
     }
   },
 
+
   postOrder: async (req, res) => {
     try {
       const { telephoneNum, delivered, address, userId } = req.body
-      const allShoppingCarts = await ShoppingCartItem.findOne({
+      const allShoppingCarts = await ShoppingCartItem.findAll({
         where: { userId },
       })
-      console.log(allShoppingCarts)
       const orderCreated = await Order.create({
         telephoneNum,
         delivered,
         address,
       })
-      await orderCreated.addShoppingCartItem(allShoppingCarts)
+      await orderCreated.addShoppingCartItems(allShoppingCarts)
       const order = await Order.findOne({
         where: orderCreated,
         include: {
           model: ShoppingCartItem,
         },
       })
-      return res.send(order)
-      res.send({ msg: "Order created" })
+      return res.send({ msg: "Order created" })
     } catch (error) {
       sendError(res, error)
     }
   },
 
-  putOrder: async () => {
+  putOrder: async ( req, res ) => {
     const { id } = req.params
     try {
-      const order = Order.findOne({
+      const order = await Order.findOne({
         where: {
-          id,
-        },
+          id
+        }
       })
-
-      order.delivered = req.body.delivered
-      order.save()
+      order.delivered = req.body.delivered;
+      await order.save();
       res.send({ msg: "Order updated" })
     } catch (error) {
       sendError(res, error)
     }
   },
 
-  deleteOrder: async () => {
+  deleteOrder: async ( req, res ) => {
     const { id } = req.params
     try {
-      Order.destroy({
+      await Order.destroy({
         where: { id },
       })
-      res.send({ msg: "Order deleted" })
+      res.send({ msg: "Order deleted" });
     } catch (error) {
       sendError(res, error)
     }

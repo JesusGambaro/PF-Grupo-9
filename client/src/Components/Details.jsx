@@ -11,7 +11,7 @@ function Details() {
   const navigate = useNavigate()
   const dispatch = useDispatch();
   const { id, model } = useParams();
-  const { detail, loading, detailColor, allData } = useSelector((state) => state);
+  const { detail, loading, detailColor, allData } = useSelector((state) => state.root);
 
   const [stock, setStock] = useState();
   const [size, setSize] = useState([]);

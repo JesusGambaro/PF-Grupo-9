@@ -10,6 +10,7 @@ import Login from "./Components/Login";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AdminDashboard from "./Components/AdminDashboard";
 import AdminPandO from "./Components/AdminPandO";
+import AdminOrderDetail from "./Components/AdminOrderDetail";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
 
       <Route exact  path="home/admin/dashboard"  element={<AdminDashboard/>}/>
       <Route exact  path="home/admin/orders" element={<AdminPandO/>}/>
+      <Route exact  path="home/admin/order/detail" element={<AdminOrderDetail/>}/>
 
         <Route
         exact

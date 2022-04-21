@@ -35,7 +35,7 @@ module.exports = {
       if (!correctPassword)
         return res.status(401).send({ error: "Invalid email or password" })
       const token = generateToken({ id: user.id, isAdmin: user.isAdmin })
-      return res.status(200).send({ token })
+      return res.status(200).send({ token, isAdmin: user.isAdmin })
     } catch (error) {
       sendError(res, error)
     }
@@ -65,7 +65,9 @@ module.exports = {
         where: { id },
       })
       if (removedUser) return res.send({ msg: `User ${id} removed` })
-      return res.status(400).send({ error: `User ${id} already removed` })
+      return res.status(400).send({
+        error: `User ${id} doesnt exist`,
+      })
     } catch (error) {
       sendError(res, error)
     }

@@ -4,7 +4,7 @@ const moment = require("moment")
 const { sendError } = require("../helpers/error.js")
 
 module.exports = {
-  getOrders: async ( req, res ) => {
+  getOrders: async (req, res) => {
     const { order } = req.query
     try {
       if (order) {
@@ -24,7 +24,6 @@ module.exports = {
       sendError(res, error)
     }
   },
-
 
   postOrder: async (req, res) => {
     try {
@@ -50,29 +49,29 @@ module.exports = {
     }
   },
 
-  putOrder: async ( req, res ) => {
+  putOrder: async (req, res) => {
     const { id } = req.params
     try {
       const order = await Order.findOne({
         where: {
-          id
-        }
+          id,
+        },
       })
-      order.delivered = req.body.delivered;
-      await order.save();
+      order.delivered = req.body.delivered
+      await order.save()
       res.send({ msg: "Order updated" })
     } catch (error) {
       sendError(res, error)
     }
   },
 
-  deleteOrder: async ( req, res ) => {
+  deleteOrder: async (req, res) => {
     const { id } = req.params
     try {
       await Order.destroy({
         where: { id },
       })
-      res.send({ msg: "Order deleted" });
+      res.send({ msg: "Order deleted" })
     } catch (error) {
       sendError(res, error)
     }

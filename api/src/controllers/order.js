@@ -28,16 +28,15 @@ module.exports = {
   postOrder: async (req, res) => {
     try {
       const { telephoneNum, delivered, address, userId } = req.body
-      const allShoppingCarts = await ShoppingCartItem.findOne({
+      const allShoppingCarts = await ShoppingCartItem.findAll({
         where: { userId },
       })
-      console.log(allShoppingCarts)
       const orderCreated = await Order.create({
         telephoneNum,
         delivered,
         address,
       })
-      await orderCreated.addShoppingCartItem(allShoppingCarts)
+      await orderCreated.addShoppingCartItems(allShoppingCarts)
       const order = await Order.findOne({
         where: orderCreated,
         include: {

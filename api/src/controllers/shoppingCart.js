@@ -1,4 +1,4 @@
-const { Product, User, ShoppingCartItem } = require("../db.js")
+const { ShoppingCartItem } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
 
 module.exports = {
@@ -34,9 +34,9 @@ module.exports = {
       const product = await ShoppingCartItem.findOne({
         where: { productId, userId, size },
       })
-      product.amount = amount;
-      product.save();
-      res.send({ msg: "Product modified" });
+      product.amount = amount
+      product.save()
+      res.send({ msg: "Product modified" })
     } catch (error) {
       sendError(res, error)
     }
@@ -48,10 +48,10 @@ module.exports = {
       const cartItem = await ShoppingCartItem.findOne({
         where: { productId, userId, size },
       })
-      if(cartItem){
-        cartItem.amount += 1;
+      if (cartItem) {
+        cartItem.amount += 1
         cartItem.save()
-      }else{
+      } else {
         await ShoppingCartItem.create({ productId, userId, size, amount: 1 })
       }
 
@@ -61,4 +61,3 @@ module.exports = {
     }
   },
 }
-

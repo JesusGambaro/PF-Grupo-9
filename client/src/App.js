@@ -12,7 +12,7 @@ import AdminDashboard from "./Components/Admin/AdminDashboard";
 import AdminPandO from "./Components/Admin/AdminPandO";
 import AdminProducts from "./Components/Admin/AdminProducts";
 import AdminUsers from "./Components/Admin/AdminUsers";
-import AdminOrderDetail from "./Components/AdminOrderDetail";
+import AdminOrderDetail from "./Components/Admin/AdminOrderDetail";
 
 
 function App() {

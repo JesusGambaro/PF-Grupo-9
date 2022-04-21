@@ -1,7 +1,7 @@
-import '../Css/AdminOrderDetail.css'
+import '../../Css/AdminOrderDetail.css'
 import React from "react"; 
-import ClosedSideBarAdmin from "./Admin/ClosedSideBarAdmin";
-import AdminNav from './Admin/AdminNav';
+import ClosedSideBarAdmin from "./ClosedSideBarAdmin";
+import AdminNav from './AdminNav';
 import {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
@@ -35,8 +35,9 @@ export default function AdminOrderDetail(){
 
   
     <article class="order-data"> 
+    <i class="bi bi-person icon-detail-order"></i>
       <div class="order-data-container">
-        <h5 class="">Customer</h5> 
+      <h5 class="">Customer</h5> 
         <p class="detail-text-data">
           John Alexander <br/> alex@example.com <br/> +998 99 22123456
         </p>
@@ -46,6 +47,7 @@ export default function AdminOrderDetail(){
  
 
     <article class="order-data">
+    <i class="bi bi-truck icon-detail-order"></i>
       <div class="order-data-container">
         <h5 class="">Order info</h5> 
         <p class=" detail-text-data">
@@ -57,6 +59,7 @@ export default function AdminOrderDetail(){
   
   
     <article class="order-data">
+    <i class="bi bi-geo-alt icon-detail-order"></i>
       <div class="order-data-container">
         <h5 class="">Deliver to</h5> 
         <p class="detail-text-data">

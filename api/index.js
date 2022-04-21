@@ -2,7 +2,7 @@ const server = require("./src/app.js")
 const { conn } = require("./src/db.js")
 const { Stock, Product, Image } = require("./src/db.js")
 
-conn.sync({ force: false }).then(async () => {
+conn.sync({ force: true }).then(async () => {
   const NikeKyrieInfinityPurple = await Product.create({
     model: "Kyrie Infinity",
     brand: "Nike",

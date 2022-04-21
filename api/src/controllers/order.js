@@ -84,7 +84,10 @@ module.exports = {
         where: {
           createdAt: {
             [Op.gte]: moment().subtract(7, "days").toDate(),
-          },
+          }
+        },
+        include: {
+          model: ShoppingCartItem
         },
       })
       res.send(lastOrders)

@@ -1,7 +1,7 @@
 import '../Css/AdminOrderDetail.css'
 import React from "react"; 
-import ClosedSideBarAdmin from "./ClosedSideBarAdmin";
-import AdminNav from './AdminNav';
+import ClosedSideBarAdmin from "./Admin/ClosedSideBarAdmin";
+import AdminNav from './Admin/AdminNav';
 import {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 

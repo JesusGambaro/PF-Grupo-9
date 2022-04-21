@@ -1,7 +1,7 @@
 import "../Css/upsidebar.scss";
 import {useDispatch} from "react-redux";
 import {sortByPrice, resetState} from "../redux/actions/sortBy";
-const UpSideBar = ({quantity, handleToggle}) => {
+const UpSideBar = ({quantity, handleToggle, genderActual}) => {
   const dispatch = useDispatch();
   const handleSelect = (e) => {
     if (e.target.value === "default") dispatch(resetState());
@@ -9,6 +9,7 @@ const UpSideBar = ({quantity, handleToggle}) => {
   };
   return (
     <div className="upsidebar-container">
+      <h3 className="titulo">{genderActual + " SHOES"}</h3>
       <div className="view">
         <p>View:</p>
         <i

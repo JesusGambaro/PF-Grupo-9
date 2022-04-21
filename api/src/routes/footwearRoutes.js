@@ -10,7 +10,7 @@ const {
   editProduct,
   deleteProduct,
 } = require("../controllers/footwear.js")
-const { verifyToken } = require("../middlewares/auth.js")
+const { verifyTokenAdmin } = require("../middlewares/auth.js")
 
 const router = Router()
 
@@ -20,8 +20,8 @@ router.get("/allCategories", getAllCategories)
 router.get("/sales", getAllSales)
 router.get("/detail/:model", getAllProductsSameModel)
 router.get("/:id", getProductById)
-router.post("/", verifyToken, postNewProduct)
-router.put("/:id", verifyToken, editProduct)
-router.delete("/:id", verifyToken, deleteProduct)
+router.post("/", verifyTokenAdmin, postNewProduct)
+router.put("/:id", verifyTokenAdmin, editProduct)
+router.delete("/:id", verifyTokenAdmin, deleteProduct)
 
 module.exports = router

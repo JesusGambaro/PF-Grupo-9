@@ -1,7 +1,7 @@
-import '../Css/AdminPandO.css'
+import "../../Css/AdminPandO.css"
 import React from "react"; 
 
-import ClosedSideBarAdmin from "./ClosedSideBarAdmin";
+import ClosedSideBarAdmin from "../ClosedSideBarAdmin";
 import AdminNav from './AdminNav';
 
 

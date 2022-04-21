@@ -114,6 +114,10 @@ function Login() {
       password: false,
       user: signUp
     })
+    setSignInUp({
+      login: false,
+      register: false
+    })
     setValidation(true)
   }
 
@@ -121,7 +125,7 @@ function Login() {
     const regexEmail = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
     const value = e.target.value
     const name = e.target.name
-
+    
     switch (name) {
       case "user":
         setState({
@@ -146,6 +150,10 @@ function Login() {
           ...state,
           [name]: value
         })
+        SigInUp.login && setSignInUp({
+          login: false,
+          register: false
+        })
         if (value.length > 4) {
           setError({
             ...error,
@@ -165,6 +173,11 @@ function Login() {
           ...state,
           [name]: value.trim()
         })
+        setSignInUp({
+          login: false,
+          register: false
+        })
+        
         if (regexEmail.test(value.trim())) {
           setError({
             ...error,
@@ -199,8 +212,7 @@ function Login() {
       }))
     }
   }
-  console.log(loginUser)
-  console.log(registerUser)
+
   return (
     <div className="container d-flex justify-content-center" style={{ "marginTop": "7rem", "marginBottom": "3rem" }}>
 
@@ -242,7 +254,7 @@ function Login() {
               <input type="email" value={state.email} name="email" autoFocus className="form-control" onChange={handleValidationInputs}
               />
             </div>
-            <div className="mb-5">
+            <div className={SigInUp.register || SigInUp.login?"mb-2":"mb-4"}>
               <div className="row">
                 <label htmlFor="password" className="col form-label">Password:</label>
                 {error.password
@@ -254,7 +266,7 @@ function Login() {
               />
             </div>
 
-            <div className="mb-5">
+            <div className="mb-2">
               {signUp
                 ? SigInUp.register
                   ? <label htmlFor="register" className="col form-label text-warning fw-bold text-start">This email already exists, please put another email or login</label>

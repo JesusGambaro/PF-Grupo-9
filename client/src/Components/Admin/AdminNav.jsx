@@ -1,10 +1,9 @@
-
-import "../Css/AdminNav.css";
-import logo from "../Images/logo2.png";
+import "../../Css/AdminNav.css";
+import logo from "../../Images/logo2.png";
 import {useState} from "react";
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
 import {NavLink, useNavigate} from "react-router-dom";
-import {sortByGender, resetState} from "../redux/actions/sortBy";
+import {sortByGender, resetState} from "../../redux/actions/sortBy";
 import {useDispatch} from "react-redux";
 
 const AdminNav = ({section}) => {

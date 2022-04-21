@@ -8,8 +8,8 @@ import Details from "./Components/Details";
 import Footer from "./Components/Footer";
 import Login from "./Components/Login";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import AdminDashboard from "./Components/AdminDashboard";
-import AdminPandO from "./Components/AdminPandO";
+import AdminDashboard from "./Components/Admin/AdminDashboard";
+import AdminPandO from "./Components/Admin/AdminPandO";
 
 
 function App() {

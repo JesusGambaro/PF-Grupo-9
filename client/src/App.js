@@ -8,10 +8,10 @@ import Details from "./Components/Details";
 import Footer from "./Components/Footer";
 import Login from "./Components/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
-import AdminDashboard from "./Components/AdminDashboard";
-import AdminPandO from "./Components/AdminPandO";
-import AdminProducts from "./Components/AdminProducts";
-import AdminUsers from "./Components/AdminUsers";
+import AdminDashboard from "./Components/Admin/AdminDashboard";
+import AdminPandO from "./Components/Admin/AdminPandO";
+import AdminProducts from "./Components/Admin/AdminProducts";
+import AdminUsers from "./Components/Admin/AdminUsers";
 
 function App() {
   return (

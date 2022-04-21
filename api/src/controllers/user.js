@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs")
 const { generateToken } = require("../helpers/token.js")
 const { Op } = require("sequelize")
 const { sendError } = require("../helpers/error.js")
-const { verifyToken } = require("../middlewares/auth.js")
+const { verifyToken } = require("../helpers/verify.js")
 
 module.exports = {
   userSingUp: async (req, res) => {
@@ -17,7 +17,7 @@ module.exports = {
           email,
         },
       })
-      if (user) return res.status(406).send({ status: false })
+      if (user) return res.status(200).send({ status: false })
       const newUser = await User.create({ ...body, password: passwordHash })
       return res.status(201).send({ status: true })
     } catch (error) {
@@ -33,7 +33,7 @@ module.exports = {
       const correctPassword =
         user === null ? false : bcrypt.compare(password, user.password)
       if (!correctPassword)
-        return res.status(401).send({ error: "Invalid email or password" })
+        return res.status(200).send({ error: "Invalid email or password" })
       const token = generateToken({ id: user.id, isAdmin: user.isAdmin })
       return res.status(200).send({ token, admin: user.isAdmin })
     } catch (error) {

@@ -1,10 +1,10 @@
-const { Order } = require("../db.js")
+const { Order, ShoppingCartItem } = require("../db.js")
 const { Op } = require("sequelize")
 const moment = require("moment")
 const { sendError } = require("../helpers/error.js")
 
 module.exports = {
-  getOrders: async () => {
+  getOrders: async (req, res) => {
     const { order } = req.query
     try {
       if (order) {
@@ -15,7 +15,9 @@ module.exports = {
         })
         res.send(orderSearched)
       } else {
-        const allOrders = await Order.findAll()
+        const allOrders = await Order.findAll({
+          include: { model: ShoppingCartItem },
+        })
         res.send(allOrders)
       }
     } catch (error) {
@@ -23,9 +25,26 @@ module.exports = {
     }
   },
 
-  postOrder: async () => {
+  postOrder: async (req, res) => {
     try {
-      await Order.create(req.body)
+      const { telephoneNum, delivered, address, userId } = req.body
+      const allShoppingCarts = await ShoppingCartItem.findOne({
+        where: { userId },
+      })
+      console.log(allShoppingCarts)
+      const orderCreated = await Order.create({
+        telephoneNum,
+        delivered,
+        address,
+      })
+      await orderCreated.addShoppingCartItem(allShoppingCarts)
+      const order = await Order.findOne({
+        where: orderCreated,
+        include: {
+          model: ShoppingCartItem,
+        },
+      })
+      return res.send(order)
       res.send({ msg: "Order created" })
     } catch (error) {
       sendError(res, error)
@@ -40,6 +59,7 @@ module.exports = {
           id,
         },
       })
+
       order.delivered = req.body.delivered
       order.save()
       res.send({ msg: "Order updated" })

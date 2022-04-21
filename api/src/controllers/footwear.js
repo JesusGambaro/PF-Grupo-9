@@ -2,6 +2,7 @@
 const { Op,  Sequelize } = require("sequelize")
 const { Product, Image, Stock, Order, ShoppingCartItem } = require("../db.js")
 
+
 module.exports = {
   getAllFootwear: async (req, res) => {
     const { footwear } = req.query

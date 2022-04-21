@@ -1,7 +1,8 @@
 import "../Css/upsidebar.scss";
 import {useDispatch} from "react-redux";
 import {sortByPrice, resetState} from "../redux/actions/sortBy";
-const UpSideBar = ({quantity, handleToggle}) => {
+import {resetFilters,leftSideFilter} from "../redux/actions/leftSideFilter"
+const UpSideBar = ({quantity, handleToggle, genderActual}) => {
   const dispatch = useDispatch();
   const handleSelect = (e) => {
     if (e.target.value === "default") dispatch(resetState());
@@ -9,6 +10,7 @@ const UpSideBar = ({quantity, handleToggle}) => {
   };
   return (
     <div className="upsidebar-container">
+      <h3 className="titulo">{genderActual + " SHOES"}</h3>
       <div className="view">
         <p>View:</p>
         <i
@@ -20,9 +22,12 @@ const UpSideBar = ({quantity, handleToggle}) => {
       <div className="quantity">
         <p>{quantity} Results</p>
       </div>
-      <div className="simple-filters">
-        <p>
-          Hide Filters <i className="bi bi-toggle2-off"></i>
+      <div className="simple-filters" >
+        <p onClick={() => {
+        dispatch(resetFilters())
+        dispatch(leftSideFilter())
+      }}>
+          Clear Filters
         </p>
         <select
           className="form-select"

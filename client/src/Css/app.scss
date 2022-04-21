@@ -9,7 +9,6 @@
   width: 100%;
   justify-content: space-between;
   min-height: calc(100vh - 8rem);
-
   .allContainer {
     width: 100%;
     margin-top: 8rem;
@@ -17,7 +16,7 @@
     align-items: center;
     flex-direction: column;
     .shoes-container {
-      width: 90%;
+      width: 100%;
       @include flex-b();
       align-items: flex-start;
       padding: 2rem 1rem 1rem 1rem;
@@ -92,26 +91,20 @@
                 border-radius: 0.5rem;
                 position: absolute;
                 display: none;
-                top: -1.2rem;
+                top: -1.4rem;
+                background: #000;
+                color: #fff;
                 transform: translate(-40%);
                 white-space: nowrap;
-                animation: 1s fadeIn;
               }
               &[title="Add to favorites"] {
                 &::after {
                   right: -3rem;
                 }
               }
-              &:hover::after {
+              &:hover::after,
+              &:hover {
                 display: block;
-              }
-              @keyframes fadeIn {
-                from {
-                  opacity: 0;
-                }
-                to {
-                  opacity: 1;
-                }
               }
             }
           }
@@ -123,11 +116,13 @@
           background: var(--i);
           background: #f6f6f6;
           width: 100%;
+          height: 70%;
           display: flex;
           justify-content: center;
           align-items: center;
           border-radius: 1rem 1rem 0 0;
-          transition: 0.3s all ease-in-out;
+          text-align: center;
+          overflow: hidden;
           a img {
             transform: scaleX(-1) rotate(30deg) translateX(0.5rem);
             width: 70%;
@@ -140,7 +135,6 @@
       }
     }
     .shoes-container.h {
-     
       .cardOwn.h {
         background: var(--i);
         background: #f6f6f6;
@@ -148,15 +142,19 @@
         flex: 1 0 100%;
         max-width: 100%;
         .content {
+          padding-bottom: 2rem;
           height: 100%;
           justify-content: space-evenly;
           .f-section {
+            display: flex;
+            align-items: baseline;
             p {
               &:first-child {
                 font-size: xx-large;
               }
             }
             span {
+              padding-right: 3rem;
               font-size: large;
               .rating {
                 i {
@@ -177,6 +175,7 @@
             i {
               font-size: x-large;
               cursor: pointer;
+
               &[title="Add to cart"] {
                 background: #000;
                 color: #fff;
@@ -186,8 +185,8 @@
                 white-space: nowrap;
                 align-items: center;
                 justify-content: center;
-                transition: all ease-in-out 0.5s;
-                
+                transition: all ease-in-out 0.3s;
+
                 p {
                   font-size: large;
                   margin-bottom: 0;
@@ -198,6 +197,12 @@
                 &:hover {
                   background: #fff;
                   color: #000;
+                  box-shadow: 0 0 1rem rgba($color: #000, $alpha: 0.1);
+                }
+              }
+              &[title="Add to favorites"] {
+                &::after {
+                  right: inherit;
                 }
               }
               &::after {
@@ -211,22 +216,19 @@
                 top: -1.5rem;
                 transform: translate(-40%);
                 white-space: nowrap;
-                animation: 1s fadeIn;
-              }
-              @keyframes fadeIn {
-                from {
-                  opacity: 0;
-                }
-                to {
-                  opacity: 1;
-                }
               }
             }
           }
         }
         .img {
-          img {
-            width: 20%;
+          position: relative;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          align-items: center;
+          a img {
+            width: 60%;
+            transform: scaleX(-1) rotate(30deg) translate(0.5rem, -5%);
           }
         }
         &:hover .img,
@@ -260,7 +262,7 @@
       }
       .btnOwn {
         border-radius: 0.3rem;
-        flex: 1 0 70%;
+        flex: 1 0 2.5rem;
         height: 100%;
         border: none;
         opacity: 0.5;

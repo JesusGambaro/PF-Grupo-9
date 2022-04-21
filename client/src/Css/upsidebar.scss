@@ -5,24 +5,33 @@
   width: 100%;
   position: fixed;
   top: 4rem;
-  left: 0;
-  background: rgb(242, 242, 242);
+  right: 0;
+  background: #fff;
+  border-bottom: 0.2rem solid #efefef;
   height: 4rem;
   z-index: 999;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   font-family: "Gelion", sans-serif;
   font-weight: 700;
   padding: 1rem;
+  .titulo {
+    text-transform: uppercase;
+    color: black;
+    display: flex;
+    margin-bottom: 0;
+    width: calc(20% - 0.5rem);
+    justify-content: center;
+  }
   .view {
     display: flex;
-    visibility: hidden;
+
     justify-content: center;
     align-items: center;
     gap: 1rem;
     font-size: large;
-    i{
+    i {
       cursor: pointer;
     }
   }
@@ -35,10 +44,17 @@
     border-radius: 1rem;
     p {
       padding: 0 0.5rem;
+    }p:hover{
+      cursor: pointer;
+      text-decoration: underline;
     }
     select {
       width: 60%;
       cursor: pointer;
+      &:active{
+        outline: none;
+        box-shadow: none;
+      }
     }
   }
 }

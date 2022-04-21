@@ -8,11 +8,10 @@ import { getDetail, getDetailColor, clearDetail } from "../redux/actions/getDeta
 
 function Details() {
 
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const { id, model } = useParams();
-  const initialMount = useRef(true);
-  const { detail, loading, detailColor, allData } = useSelector((state) => state);
+  const { detail, loading, detailColor, allData } = useSelector((state) => state.root);
 
   const [stock, setStock] = useState();
   const [size, setSize] = useState([]);
@@ -48,7 +47,7 @@ function Details() {
     setStock(stock.amount)
   };
 
-  const handleReload=(id,model)=>{
+  const handleReload = (id, model) => {
     navigate(`/home/${id}/${model}`)
     setReload(true)
   }
@@ -63,16 +62,14 @@ function Details() {
 
     dispatch(getDetail(id));
     dispatch(getDetailColor(model));
-    
-    if(allData.length>3){
-      const numRandom=Math.round(Math.random() * (allData.length - 3) + 3);
-      setRelatedProduct(allData.slice(numRandom-3,numRandom))
+
+    if (allData.length > 3) {
+      const numRandom = Math.round(Math.random() * (allData.length - 3) + 3);
+      setRelatedProduct(allData.slice(numRandom - 3, numRandom))
     }
     else if (allData.length === 0) dispatch(bringAllData())
 
-    if (initialMount.current) initialMount.current = false;
-
-  }, [initialMount,allData,reload,id]);
+  }, [allData, reload, id]);
 
   useEffect(() => {
     window.scroll({ top: 0, behavior: 'smooth' })
@@ -91,7 +88,7 @@ function Details() {
               </div>
 
               <div className="row overflow-hidden bg-secondary h-auto">
-                <div className="col bg-white">
+                <div className="col-12 pb-5 bg-white col-lg pb-lg-0 ">
                   <div className="col col-12 text-end mt-2">
                     <button
                       className="border-0 bg-transparent"
@@ -111,9 +108,9 @@ function Details() {
                     </button>
                   </div>
 
-                  <div className="col-12 overflow-hidden w-100" style={{ "height": "53vh" }}>
+                  <div className="col-12 overflow-hidden w-100" id="mainImage" style={{ "height": "54vh" }}>
                     <img src={mainImage} alt="imagen" id="mainImage"
-                      className="w-50 bg-white mx-auto d-block" />
+                      className="bg-white mx-auto d-block" />
                   </div>
 
                   <div className="row grid ms-1 mx-1">
@@ -125,8 +122,9 @@ function Details() {
                               src={diseño.url}
                               style={{ "height": "18vh" }}
                               alt="zapato"
-                              className={`w-75 border border-4 rounded shadow-lg ${mainImage === diseño.url ? "border-warning" : "border-info"}`}
+                              className={`border border-4 rounded shadow-lg ${mainImage === diseño.url ? "border-warning" : "border-info"}`}
                               onClick={handleMainImage}
+                              id={"images"}
                             />
                           </button>
                         ))
@@ -138,62 +136,65 @@ function Details() {
                   </div>
                 </div>
 
-                <div className="col col-5 pt-4">
+                <div className="m-0 pb-3 col col-12 col-lg-5 pt-4 pb-lg-0">
                   <div className="row m-0 p-0">
                     <h3 className="text-light fs-2">$ {detail.price}</h3>
                     <p className="text-warning fs-3">Available: {stock}</p>
                   </div>
 
-                  <div className="row text-white mt-3 ms-2">
-                    <h3 className="mb-3 fs-4">Colors:</h3>
-                    <div className="form-floating w-50 ms-5">
-                      <select
-                        className="form-select fw-bold"
-                        name="colors"
-                        value={colorSelect ? colorSelect : detail.color}
-                        onChange={handleColor}
-                      >
-                        {detailColor.length > 0 &&
-                          detailColor.map((diseño) => (
-                            <option key={diseño.id} value={diseño.color} className="fw-bold" id={diseño.id}>
-                              {diseño.color.toUpperCase()}
-                            </option>
-                          ))}
-                      </select>
-                      <label
-                        htmlFor="floatingSelect"
-                        className="text-dark fs-5 ms-2 p-1 mt-1"
-                      >
-                        Select a color
-                      </label>
+                  <div className="row text-white mt-3 ms-md-2 mt-md-1">
+                    <div className="ms-1 col col-lg-12 ms-sm-3 p-0">
+                      <h3 className="mb-3 fs-4">Colors:</h3>
+                      <div className="ms-0 form-floating ms-lg-5" id="selectColor">
+                        <select
+                          className="form-select fw-bold"
+                          name="colors"
+                          value={colorSelect ? colorSelect : detail.color}
+                          onChange={handleColor}
+                        >
+                          {detailColor.length > 0 &&
+                            detailColor.map((diseño) => (
+                              <option key={diseño.id} value={diseño.color} className="fw-bold" id={diseño.id}>
+                                {diseño.color.toUpperCase()}
+                              </option>
+                            ))}
+                        </select>
+                        <label
+                          htmlFor="floatingSelect"
+                          className="text-dark fs-5 ms-2 p-1 mt-1"
+                        >
+                          Select a color
+                        </label>
+                      </div>
                     </div>
-
-                    <h3 className="mt-4 mb-3 fs-4">Sizes:</h3>
-                    <div className="form-floating w-50 ms-5">
-                      <select className="form-select fw-bold" name="size"
-                        value={sizeSelect} onChange={handleSize}
-                      >
-                        {size.length > 0
-                          ? size.map((talla) => (
-                            <option key={talla.id} value={talla.size} className="fw-bold" id={talla.id}>
-                              {talla.size}
-                            </option>
-                          ))
-                          : detail.id
-                            ? setSize(detail.stocks) & setStock(detail.stocks[0].amount)
-                            : null
-                        }
-                      </select>
-                      <label
-                        htmlFor="floatingSelect"
-                        className="text-dark fs-5 ms-2 p-1 mt-1"
-                      >
-                        Select a size
-                      </label>
+                    <div className="col col-lg-12 ms-sm-3 p-0 ms-1">
+                      <h3 className="mt-0 mt-lg-4 mb-3 fs-4 ">Sizes:</h3>
+                      <div className="ms-0 form-floating ms-lg-5" id="selectSize">
+                        <select className="form-select fw-bold" name="size"
+                          value={sizeSelect} onChange={handleSize}
+                        >
+                          {size.length > 0
+                            ? size.map((talla) => (
+                              <option key={talla.id} value={talla.size} className="fw-bold" id={talla.id}>
+                                {talla.size}
+                              </option>
+                            ))
+                            : detail.id
+                              ? setSize(detail.stocks) & setStock(detail.stocks[0].amount)
+                              : null
+                          }
+                        </select>
+                        <label
+                          htmlFor="floatingSelect"
+                          className="text-dark fs-5 ms-2 p-1 mt-1"
+                        >
+                          Select a size
+                        </label>
+                      </div>
                     </div>
                   </div>
-                  <div className="row d-flex justify-content-center mt-5 pt-4">
-                    <button className="w-50 btn btn-outline-info fs-3 fw-bold">
+                  <div className="row mt-5 mb-4 d-flex justify-content-center mt-xl-4 pt-xl-4 mt-lg-3 pt-lg-3">
+                    <button className="w-50 btn btn-outline-info fs-4 fw-bold">
                       ADD TO CART
                     </button>
                   </div>
@@ -201,31 +202,31 @@ function Details() {
               </div>
               <hr className="border border-2 border-secondary" />
               <div className="mt-5 pb-5">
-                <h1 className="ms-3">About the product: </h1>
-                <h3 className="ms-4 mt-4 mb-3 fs-4 text-info">
+                <h1 className="ms-md-3">About the product: </h1>
+                <h3 className="ms-md-4 mt-md-4 mb-3 fs-4 text-info">
                   {detail.brand} - {detail.model}
                 </h3>
-                <p className="ms-5 mx-5 fs-3" style={{ textAlign: "justify" }}>
+                <p className="ms-1 mx-1 ms-md-5 mx-md-5 fs-3" style={{ textAlign: "justify" }}>
                   {detail.description}
                 </p>
               </div>
             </div>
             <hr className="border border-2 border-secondary" />
-            <div className="container mt-5 mb-5 w-75">
+            <div className="container mt-5 mb-5" id="container">
               <div className="row">
                 <h1 className="text-center text-info">More products</h1>
               </div>
-              <div className="row text-center m-0 mt-5 grid gap-5">
-                {relatedProduct && relatedProduct.map(product=>(
-                  <button className="col border-0 bg-transparent p-0 w-50"
-                  id="relatedProduct" key={product.id} onClick={()=>handleReload(product.id,product.model)}>
-                  <img
-                    src={product.images[0].url}
-                    alt="foto"
-                    className="w-100 border border-5 border-info shadow-lg rounded rounded-3"
-                    style={{"height":"39vh"}}
-                  />
-                </button>
+              <div className="row text-center m-0 mt-5 grid gap-3 gap-lg-5 justify-content-center">
+                {relatedProduct && relatedProduct.map(product => (
+                  <button className="col-8 col-sm-7 col-lg border-0 bg-transparent p-0"
+                    id="relatedProduct" key={product.id} onClick={() => handleReload(product.id, product.model)}>
+                    <img
+                      src={product.images[0].url}
+                      alt="foto"
+                      className="w-100 border border-5 border-info shadow-lg rounded rounded-3"
+                      style={{ "height": "39vh" }}
+                    />
+                  </button>
                 ))}
               </div>
             </div>

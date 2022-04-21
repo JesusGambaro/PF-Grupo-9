@@ -27,15 +27,26 @@ const Card = ({e, horizontal}) => {
     <div className={"cardOwn" + (horizontal ? " h" : "")}>
       {e.sale !== 0 && <p className="offer-ribbon" offer={e.sale + "%"}></p>}
       <div className="img">
-        <img
-          src={e.images[0].url ? e.images[0].url : "./Images/logo2.png"}
-          alt={e.model}
-        />
+        <NavLink
+          to={`/home/${e.id}/${e.model}`}
+          style={{textDecoration: "none"}}
+        >
+          <img
+            src={e.images[0].url ? e.images[0].url : "./Images/logo2.png"}
+            alt={e.model}
+          />
+        </NavLink>
       </div>
       <div className="content">
         <div className="f-section">
-
-          <p title="Name">{e.brand} - {e.model}</p>
+          <NavLink
+            to={`/home/${e.id}/${e.model}`}
+            style={{textDecoration: "none", color: "black"}}
+          >
+            <p title="Name">
+              {e.brand} - {e.model}
+            </p>
+          </NavLink>
           <span>
             <div className="rating" title="Rating">
               <i className="bi bi-star-fill"></i>

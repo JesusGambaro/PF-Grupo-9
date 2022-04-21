@@ -195,11 +195,12 @@ function Login() {
       dispatch(registerUsers({
         email: state.email,
         password: state.password,
-        user: state.user.trim()
+        userName: state.user.trim()
       }))
     }
   }
-
+  console.log(loginUser)
+  console.log(registerUser)
   return (
     <div className="container d-flex justify-content-center" style={{ "marginTop": "7rem", "marginBottom": "3rem" }}>
 

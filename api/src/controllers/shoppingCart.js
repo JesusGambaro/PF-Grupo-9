@@ -17,7 +17,7 @@ module.exports = {
   },
 
   deleteCart: async (req, res) => {
-    const { productId, userId, amount, size } = req.body
+    const { productId, userId, size } = req.body
     try {
       await ShoppingCartItem.destroy({
         where: { productId, userId, size },
@@ -34,9 +34,9 @@ module.exports = {
       const product = await ShoppingCartItem.findOne({
         where: { productId, userId, size },
       })
-      product.amount = amount
-      product.save()
-      res.send({ msg: "Product modified" })
+      product.amount = amount;
+      product.save();
+      res.send({ msg: "Product modified" });
     } catch (error) {
       sendError(res, error)
     }
@@ -45,21 +45,15 @@ module.exports = {
   postCart: async (req, res) => {
     const { productId, userId, size } = req.body
     try {
-      const cartItem = await ShoppingCartItem.findOrCreate({
+      const cartItem = await ShoppingCartItem.findOne({
         where: { productId, userId, size },
       })
-      cartItem.amount = 1
-      await cartItem.save()
-
-      const product = await Product.findOne({
-        where: { id: productId },
-      })
-      await cartItem.addProduct(product)
-
-      const user = await User.findOne({
-        where: { id: userId },
-      })
-      await cartItem.addUser(user)
+      if(cartItem){
+        cartItem.amount += 1;
+        cartItem.save()
+      }else{
+        await ShoppingCartItem.create({ productId, userId, size, amount: 1 })
+      }
 
       res.send({ msg: "Cart Item created" })
     } catch (error) {
@@ -67,3 +61,4 @@ module.exports = {
     }
   },
 }
+

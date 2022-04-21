@@ -13,6 +13,7 @@ import {
   GET_ALL_GENDERS,
   REGISTER_USER,
   LOGIN_USER,
+  CLEAR_USER
 } from "../actions/actions";
 
 const initialState = {
@@ -67,6 +68,8 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, registerUser: action.payload };
     case LOGIN_USER:
       return { ...state, loginUser: action.payload };
+    case CLEAR_USER:
+      return {...state, loginUser:action.payload, registerUser:action.payload}
     default:
       return state;
   }

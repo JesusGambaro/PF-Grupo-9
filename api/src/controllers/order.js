@@ -4,7 +4,7 @@ const moment = require("moment")
 const { sendError } = require("../helpers/error.js")
 
 module.exports = {
-  getOrders: async () => {
+  getOrders: async (req, res) => {
     const { order } = req.query
     try {
       if (order) {
@@ -23,16 +23,16 @@ module.exports = {
     }
   },
 
-  postOrder: async () => {
+  postOrder: async (req, res) => {
     try {
       await Order.create(req.body)
       res.send({ msg: "Order created" })
     } catch (error) {
-      sendError(res, error)
+      console.log(error)
     }
   },
 
-  putOrder: async () => {
+  putOrder: async (req, res) => {
     const { id } = req.params
     try {
       const order = Order.findOne({
@@ -48,7 +48,7 @@ module.exports = {
     }
   },
 
-  deleteOrder: async () => {
+  deleteOrder: async (req, res) => {
     const { id } = req.params
     try {
       Order.destroy({

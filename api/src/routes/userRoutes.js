@@ -3,6 +3,7 @@ const {
   userSingIn,
   getAllUsers,
   deleteUser,
+  getRole,
 } = require("../controllers/user")
 const { verifyTokenAdmin } = require("../middlewares/auth")
 
@@ -12,5 +13,6 @@ router.post("/signUp", userSingUp)
 router.post("/signIn", userSingIn)
 router.get("/allUsers", verifyTokenAdmin, getAllUsers)
 router.delete("/deleteUser", verifyTokenAdmin, deleteUser)
+router.get("/role", getRole)
 
 module.exports = router

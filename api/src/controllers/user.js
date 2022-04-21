@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs")
 const { generateToken } = require("../helpers/token.js")
 const { Op } = require("sequelize")
 const { sendError } = require("../helpers/error.js")
+const { verifyToken } = require("../middlewares/auth.js")
 
 module.exports = {
   userSingUp: async (req, res) => {
@@ -16,10 +17,9 @@ module.exports = {
           email,
         },
       })
-      if (user)
-        return res.status(406).send({ error: "The email already exist" })
+      if (user) return res.status(406).send({ status: false })
       const newUser = await User.create({ ...body, password: passwordHash })
-      return res.status(201).send({ msg: "User created successfully" })
+      return res.status(201).send({ status: true })
     } catch (error) {
       sendError(res, error)
     }
@@ -35,7 +35,16 @@ module.exports = {
       if (!correctPassword)
         return res.status(401).send({ error: "Invalid email or password" })
       const token = generateToken({ id: user.id, isAdmin: user.isAdmin })
-      return res.status(200).send({ token, isAdmin: user.isAdmin })
+      return res.status(200).send({ token, admin: user.isAdmin })
+    } catch (error) {
+      sendError(res, error)
+    }
+  },
+  getRole: async (req, res) => {
+    try {
+      const decodedToken = await verifyToken(req, res)
+      console.log(decodedToken)
+      if (decodedToken) res.status(200).send({ admin: decodedToken.isAdmin })
     } catch (error) {
       sendError(res, error)
     }

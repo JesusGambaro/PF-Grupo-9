@@ -18,7 +18,7 @@ module.exports = {
       sendError(res, error);
     }
   },
-
+  
   deleteCart: async (req,res) => {
      const { productId, userId, size } = req.body;
      try{

@@ -10,7 +10,7 @@ const genderFilter = (gender) => {
 };
 const deleteFilter = (filter) => {
   return async (dispatch, getState) => {
-    let filtros = [...getState().filters];
+    let filtros = [...getState().root.filters];
     filtros = filtros.filter((e) => {
       return e.name !== filter;
     });
@@ -23,14 +23,14 @@ const deleteFilter = (filter) => {
 const leftSideFilter = (filtroAgregar = null, valor = null) => {
   return async (dispatch, getState) => {
     let payload;
-    let genderActual = getState().genderActual.toLowerCase();
+    let genderActual = getState().root.genderActual.toLowerCase();
 
     let data =
       genderActual !== "all"
-        ? getState().genderData[genderActual]
-        : [...getState().allDataCopy];
+        ? getState().root.genderData[genderActual]
+        : [...getState().root.allDataCopy];
 
-    let filtros = [...getState().filters];
+    let filtros = [...getState().root.filters];
     let repetido = false;
     if (filtroAgregar && valor) {
       //console.log("ENTRE AL IF");

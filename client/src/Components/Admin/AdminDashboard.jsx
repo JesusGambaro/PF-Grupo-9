@@ -1,6 +1,6 @@
-import '../Css/AdminDashboard.css'
+import '../../Css/AdminDashboard.css'
 import React from "react"; 
-import bringAllData from "../redux/actions/bringAllData";
+import bringAllData from "../../redux/actions/bringAllData";
 import ClosedSideBarAdmin from "./ClosedSideBarAdmin";
 import AdminNav from './AdminNav';
 import {useEffect} from "react";

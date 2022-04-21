@@ -7,10 +7,10 @@ import {NavLink, useParams} from "react-router-dom";
 
 const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
   const [toggle, setToggle] = useState(true);
-  const {allData, loading} = shoes;
+  const {allData, loading, genderActual} = shoes;
   const [currentPage, setCurrentPage] = useState(1);
   const pages = Math.ceil(allData.length / cardsPerPage);
-  
+
   const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);
 
   const prevPage = () => setCurrentPage((currentPage) => currentPage - 1);
@@ -47,6 +47,7 @@ const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
       <UpSideBar
         quantity={shoes.allData.length}
         handleToggle={(p) => setToggle(p)}
+        genderActual={genderActual}
       />
       <LeftSideFilters />
       {loading ? (

@@ -16,7 +16,7 @@ const router = Router()
 router
   .route("/")
   .get(verifyTokenUserOrAdmin, getOrders)
-  .post(verifyTokenAdmin, postOrder)
+  .post(verifyTokenUserOrAdmin, postOrder)
   .put(verifyTokenAdmin, putOrder)
   .delete(verifyTokenAdmin, deleteOrder)
 router.get("/ByDate", verifyTokenAdmin, getLastSevenDaysOrders)

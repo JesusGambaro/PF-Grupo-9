@@ -1,0 +1,90 @@
+.card-order-detail{
+    position: absolute;
+    
+    display: flex;
+    
+    flex-wrap: wrap;
+    width: 80%;
+    top: 100px;
+    margin: 100px;
+    left: 100px;
+    border-radius: 5px ;
+    border: 2px solid rgb(145, 145, 145);
+    padding: 1rem;
+    box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.45);
+   
+}
+
+small{
+    margin-top: 10px;
+}
+.card-header{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+}
+
+.card-order-detail-body{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    
+    
+   
+}
+.detail-text-data{
+    
+    font-size: larger;
+}
+.order-data{
+   
+
+margin: 20px;
+height: 125px;
+width: 300px;
+
+}
+
+.order-data-container{
+    display: flex;
+    flex-direction: column;
+   
+    height: 125px;
+    width: 300px;
+}
+
+.table-container-detail{
+    width: 60%;
+    margin-top: 50px;
+    
+}
+
+.product{
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    margin-right: 0;
+}
+
+.Payment-info{
+    margin: 50px 0px 0 30px;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 20px  ;
+    width: max-content;
+    height: min-content;
+    
+    
+    
+}
+.dlist{
+    display: flex;
+    justify-content: space-between;
+   width: 300px;
+
+}
+
+dt{
+    font-weight: 400;
+}

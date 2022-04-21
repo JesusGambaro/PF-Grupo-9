@@ -12,6 +12,8 @@ import AdminDashboard from "./Components/Admin/AdminDashboard";
 import AdminPandO from "./Components/Admin/AdminPandO";
 import AdminProducts from "./Components/Admin/AdminProducts";
 import AdminUsers from "./Components/Admin/AdminUsers";
+import AdminOrderDetail from "./Components/AdminOrderDetail";
+
 
 function App() {
   return (
@@ -40,10 +42,12 @@ function App() {
         ]}
       />
 
+
       <Route exact path="home/admin/dashboard" element={<AdminDashboard />} />
       <Route exact path="home/admin/products" element={<AdminProducts />} />
       <Route exact path="home/admin/users" element={<AdminUsers />} />
       <Route exact path="home/admin/orders" element={<AdminPandO />} />
+      <Route exact  path="home/admin/order/detail" element={<AdminOrderDetail/>}/>
 
       <Route
         exact

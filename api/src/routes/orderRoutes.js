@@ -6,16 +6,19 @@ const {
   deleteOrder,
   getLastSevenDaysOrders,
 } = require("../controllers/order.js")
-const { verifyToken } = require("../middlewares/auth.js")
+const {
+  verifyTokenUserOrAdmin,
+  verifyTokenAdmin,
+} = require("../middlewares/auth.js")
 
 const router = Router()
 
 router
   .route("/")
-  .get(verifyToken, getOrders)
-  .post(verifyToken, postOrder)
-  .put(verifyToken, putOrder)
-  .delete(verifyToken, deleteOrder)
-router.get("/ByDate", verifyToken, getLastSevenDaysOrders)
+  .get(verifyTokenUserOrAdmin, getOrders)
+  .post(verifyTokenUserOrAdmin, postOrder)
+router.put('/:id', verifyTokenAdmin, putOrder);
+router.delete('/:id', verifyTokenAdmin, deleteOrder);
+router.get("/ByDate", verifyTokenAdmin, getLastSevenDaysOrders)
 
 module.exports = router

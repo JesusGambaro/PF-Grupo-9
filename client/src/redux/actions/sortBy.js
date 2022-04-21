@@ -1,7 +1,7 @@
 import {SORT_BY, RESET} from "./actions";
 const sortByPrice = (order) => {
   return async (dispatch, getState) => {
-    let filtered = [...getState().allDataCopy];
+    let filtered = [...getState().root.allDataCopy];
     if (order === "asc") {
       filtered.sort((a, b) => {
         return a.price - b.price;
@@ -15,7 +15,7 @@ const sortByPrice = (order) => {
 };
 const sortByGender = (gender) => {
   return async (dispatch, getState) => {
-    let filtered = getState().genderData;
+    let filtered = getState().root.genderData;
     let genderLower = gender.toLowerCase();
     dispatch({
       type: SORT_BY,
@@ -25,7 +25,7 @@ const sortByGender = (gender) => {
 };
 const resetState = () => {
   return async (dispatch, getState) => {
-    const state = getState().allDataCopy;
+    const state = getState().root.allDataCopy;
     dispatch({type: RESET, payload: state});
   };
 };

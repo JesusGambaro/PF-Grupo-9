@@ -1,12 +1,10 @@
-import "../Css/filtrosContainer.scss";
 import {deleteFilter, leftSideFilter} from "../redux/actions/leftSideFilter";
 import {useDispatch} from "react-redux";
-const Filters = ({filters, genderActual}) => {
+const Filters = ({filters}) => {
   const dispatch = useDispatch();
 
   return (
     <div className="filtrosContainer">
-      <h3 className="titulo">{genderActual + " SHOES"}</h3>
       {filters.map((el, i) => {
         return (
           <div key={i} className="filtroCard">

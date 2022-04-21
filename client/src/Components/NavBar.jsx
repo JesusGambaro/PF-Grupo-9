@@ -6,18 +6,19 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {sortByGender, resetState} from "../redux/actions/sortBy";
 import {resetFilters, genderFilter} from "../redux/actions/leftSideFilter";
 import {useDispatch} from "react-redux";
-
+import search from "../redux/actions/search";
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [dropDown, setDropDown] = useState(false);
-  const [search, setSearch] = useState("");
+  const [searchParam, setSearchParam] = useState("");
   function abrirYcerrar() {
     setDropDown(!dropDown);
   }
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log(search);
+    console.log(searchParam);
+    dispatch(search(searchParam));
   };
   return (
     <div className="navbarOwn">
@@ -69,15 +70,23 @@ const NavBar = () => {
         </li>
       </ul>
 
-      <form className="searchOwn" onSubmit={handleSearch}>
+      <form
+        className="searchOwn"
+        onSubmit={handleSearch}
+        onClick={() => {
+          dispatch(resetState());
+          dispatch(resetFilters());
+          navigate("/home");
+        }}
+      >
         <button type="submit">
           <i className="fa-solid fa-magnifying-glass"></i>
         </button>
         <input
           type="text"
           placeholder="SEARCH"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          value={searchParam}
+          onChange={(e) => setSearchParam(e.target.value)}
         />
       </form>
 

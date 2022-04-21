@@ -141,8 +141,8 @@
         flex-direction: row;
         flex: 1 0 100%;
         max-width: 100%;
-        padding-bottom: 2rem;
         .content {
+          padding-bottom: 2rem;
           height: 100%;
           justify-content: space-evenly;
           .f-section {
@@ -227,7 +227,8 @@
           height: 100%;
           align-items: center;
           a img {
-            transform: scaleX(-1) rotate(30deg) translate(0.5rem, -10%);
+            width: 60%;
+            transform: scaleX(-1) rotate(30deg) translate(0.5rem, -5%);
           }
         }
         &:hover .img,

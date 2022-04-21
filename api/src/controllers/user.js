@@ -2,6 +2,7 @@ const { User } = require("../db.js")
 const bcrypt = require("bcryptjs")
 const { generateToken } = require("../helpers/token.js")
 const { Op } = require("sequelize")
+const { sendError } = require("../helpers/error.js")
 
 module.exports = {
   userSingUp: async (req, res) => {
@@ -15,13 +16,12 @@ module.exports = {
           email,
         },
       })
-      if (user) return res.status(406).send("Existing email")
+      if (user)
+        return res.status(406).send({ error: "The email already exist" })
       const newUser = await User.create({ ...body, password: passwordHash })
-      const token = generateToken({ id: newUser.id })
-      return res.status(201).send({ token })
+      return res.status(201).send({ msg: "User created successfully" })
     } catch (error) {
-      console.log(error)
-      res.status(500).send({ msg: error.message })
+      sendError(res, error)
     }
   },
   userSingIn: async (req, res) => {
@@ -33,12 +33,11 @@ module.exports = {
       const correctPassword =
         user === null ? false : bcrypt.compare(password, user.password)
       if (!correctPassword)
-        return res.status(401).send({ msg: "Invalid email or password" })
-      const token = generateToken({ id: user.id })
+        return res.status(401).send({ error: "Invalid email or password" })
+      const token = generateToken({ id: user.id, isAdmin: user.isAdmin })
       return res.status(200).send({ token })
     } catch (error) {
-      console.log(error)
-      res.status(404).send({ msg: error.message })
+      sendError(res, error)
     }
   },
   getAllUsers: async (req, res) => {
@@ -56,8 +55,7 @@ module.exports = {
       const allUsers = await User.findAll()
       return res.status(200).send(allUsers)
     } catch (error) {
-      console.log(error)
-      res.status(404).send({ msg: error.message })
+      sendError(res, error)
     }
   },
   deleteUser: async (req, res) => {
@@ -67,10 +65,9 @@ module.exports = {
         where: { id },
       })
       if (removedUser) return res.send({ msg: `User ${id} removed` })
-      return res.status(400).send({ msg: `User ${id} already removed` })
+      return res.status(400).send({ error: `User ${id} already removed` })
     } catch (error) {
-      console.log(error)
-      res.status(404).send({ msg: error.message })
+      sendError(res, error)
     }
   },
 }

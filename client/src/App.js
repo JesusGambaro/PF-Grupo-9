@@ -42,12 +42,15 @@ function App() {
         ]}
       />
 
-
       <Route exact path="home/admin/dashboard" element={<AdminDashboard />} />
       <Route exact path="home/admin/products" element={<AdminProducts />} />
-      <Route exact path="home/admin/users" element={<AdminUsers />} />
+      <Route exact path="home/admin/customers" element={<AdminUsers />} />
       <Route exact path="home/admin/orders" element={<AdminPandO />} />
-      <Route exact  path="home/admin/order/detail" element={<AdminOrderDetail/>}/>
+      <Route
+        exact
+        path="home/admin/order/detail"
+        element={<AdminOrderDetail />}
+      />
 
       <Route
         exact

@@ -1,7 +1,6 @@
-
-const { Op,  Sequelize } = require("sequelize")
+const { Op, Sequelize } = require("sequelize")
 const { Product, Image, Stock, Order, ShoppingCartItem } = require("../db.js")
-
+const { sendError } = require("../helpers/error.js")
 
 module.exports = {
   getAllFootwear: async (req, res) => {
@@ -51,8 +50,7 @@ module.exports = {
       }
       return res.send(allFootwears)
     } catch (error) {
-      console.log(error)
-      res.status(404).send({ msg: error.message })
+      sendError(res, error)
     }
   },
 
@@ -64,8 +62,7 @@ module.exports = {
       })
       res.send(genders ? genders : [])
     } catch (error) {
-      console.log(error)
-      res.status(404).send({ msg: error.message })
+      sendError(res, error)
     }
   },
 
@@ -77,8 +74,7 @@ module.exports = {
       })
       res.send(allCategories)
     } catch (error) {
-      console.log(error)
-      res.status(404).send({ msg: error.message })
+      sendError(res, error)
     }
   },
 
@@ -96,32 +92,35 @@ module.exports = {
 
       res.send(carouselSale)
     } catch (error) {
-      console.log(error)
-      res.status(404).send({ msg: error.message })
+      sendError(res, error)
     }
   },
 
   getAllProductsSameModel: async (req, res) => {
-    const { model } = req.params
-    const prueba = await Product.findAll({
-      where: {
-        model: {
-          [Op.eq]: model,
-        },
-      },
-      include: [
-        {
-          model: Image,
-        },
-        {
-          model: Stock,
-          where: {
-            amount: { [Op.gt]: 0 },
+    try {
+      const { model } = req.params
+      const productsSearched = await Product.findAll({
+        where: {
+          model: {
+            [Op.eq]: model,
           },
         },
-      ],
-    })
-    res.send(prueba)
+        include: [
+          {
+            model: Image,
+          },
+          {
+            model: Stock,
+            where: {
+              amount: { [Op.gt]: 0 },
+            },
+          },
+        ],
+      })
+      res.status(200).send(productsSearched)
+    } catch (error) {
+      sendError(res, error)
+    }
   },
 
   getProductById: async (req, res) => {
@@ -147,8 +146,7 @@ module.exports = {
       // Retorna el coincidente. Si no existe, retorna un array vacio
       res.send(footwear)
     } catch (error) {
-      console.log(error)
-      res.status(404).send({ msg: error.message })
+      sendError(res, error)
     }
   },
 
@@ -193,116 +191,129 @@ module.exports = {
         })
       res.send("Product with its images created!")
     } catch (error) {
-      console.log(error)
-      res.status(404).send({ msg: error.message })
+      sendError(res, error)
     }
   },
 
-
-  editProduct: async (req, res) =>{
+  editProduct: async (req, res) => {
     try {
-      const {model, brand, category, gender, price, description, sale, color, size, amount, images} = req.body;
-      const {id} = req.params;
+      const {
+        model,
+        brand,
+        category,
+        gender,
+        price,
+        description,
+        sale,
+        color,
+        size,
+        amount,
+        images,
+      } = req.body
+      const { id } = req.params
 
       const product = await Product.findOne({
-        where: {id}
+        where: { id },
       })
 
-      if(model){
-        product.model = model;
-        await product.save();
-      } 
-      if(brand){
-        product.brand = brand;
-        await product.save();
-      } 
-      if(category){
-        product.category = category;
-        await product.save();
-      } 
-      if(gender){
-        product.gender = gender;
-        await product.save();
-      } 
-      if(price){
-        product.price = price;
-        await product.save();
-      } 
-      if(description){
-        product.description = description;
-        await product.save();
-      } 
-      if(sale){
-        product.sale = sale;
-        await product.save();
-      } 
-      if(color){
-        product.color = color;
-        await product.save();
-      } 
-      if(size && amount){
+      if (model) {
+        product.model = model
+        await product.save()
+      }
+      if (brand) {
+        product.brand = brand
+        await product.save()
+      }
+      if (category) {
+        product.category = category
+        await product.save()
+      }
+      if (gender) {
+        product.gender = gender
+        await product.save()
+      }
+      if (price) {
+        product.price = price
+        await product.save()
+      }
+      if (description) {
+        product.description = description
+        await product.save()
+      }
+      if (sale) {
+        product.sale = sale
+        await product.save()
+      }
+      if (color) {
+        product.color = color
+        await product.save()
+      }
+      if (size && amount) {
         const stockPerModel = await Stock.findAll({
-          where: { productId: product.id}  
-        });
-        stockPerModel.map((stockPerSize)=>{
-          if(stockPerSize.size === size){
-            stockPerSize.amount = amount;
-            stockPerSize.save();
+          where: { productId: product.id },
+        })
+        stockPerModel.map((stockPerSize) => {
+          if (stockPerSize.size === size) {
+            stockPerSize.amount = amount
+            stockPerSize.save()
           }
         })
       }
-      if(images){
-      //definir con el front cómo va a ser el form para editar.
+      if (images) {
+        //definir con el front cómo va a ser el form para editar.
       }
 
-      res.send("calzado editado");
+      res.send("calzado editado")
     } catch (error) {
-      console.log(error);
+      sendError(res, error)
     }
   },
 
   deleteProduct: async (req, res) => {
     try {
-      const {id} = req.params;
+      const { id } = req.params
       const product = await Product.findOne({ id })
-      if(product){
+      if (product) {
         // eliminar todas las imagenes relacionadas al producto.
         const imageProduct = await Image.findAll({
-          where:{productId: id}
+          where: { productId: id },
         })
-        imageProduct && imageProduct.map(async (imageItem)=>{
-          await imageItem.destroy();
-        })
+        imageProduct &&
+          imageProduct.map(async (imageItem) => {
+            await imageItem.destroy()
+          })
 
         // eliminar todo el stock relacionado al producto. ordenes, cartItems.
         const stockProduct = await Stock.findAll({
-          where:{productId: id}
+          where: { productId: id },
         })
-        stockProduct && stockProduct.map(async (stockItem)=>{
-          await stockItem.destroy();
-        })
-        
+        stockProduct &&
+          stockProduct.map(async (stockItem) => {
+            await stockItem.destroy()
+          })
+
         // eliminar todas las ordenes relacionadas al producto.
         const orderProduct = await Order.findAll({
-          where:{productId: id}
+          where: { productId: id },
         })
-        orderProduct && orderProduct.map(async (oderItem)=>{
-          await oderItem.destroy();
-        })
+        orderProduct &&
+          orderProduct.map(async (oderItem) => {
+            await oderItem.destroy()
+          })
 
         // eliminar todos los cart items relacionados al producto.
         const cartProduct = await ShoppingCartItem.findAll({
-          where:{productId: id}
+          where: { productId: id },
         })
-        cartProduct && cartProduct.map(async (cartItem)=>{
-          await cartItem.destroy();
-        })
+        cartProduct &&
+          cartProduct.map(async (cartItem) => {
+            await cartItem.destroy()
+          })
         product.destroy()
       }
-      res.send("product destroyed");
+      res.send("product destroyed")
     } catch (error) {
-      console.log(error);
+      sendError(res, error)
     }
   },
 }
-

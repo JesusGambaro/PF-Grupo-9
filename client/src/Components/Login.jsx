@@ -1,15 +1,27 @@
 import logo from "../Images/logo2.png"
 import "../Css/Login.css"
 import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { registerUsers, loginUsers, clearUser } from "../redux/actions/Loginregister"
+import Swal from "sweetalert2"
 
 function Login() {
+  const { registerUser, loginUser } = useSelector(store => store)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [validation, setValidation] = useState(true)
   const [signUp, setSignUp] = useState(false)
+  const [SigInUp, setSignInUp] = useState({
+    login: false,
+    register: false
+  })
   const [state, setState] = useState({
     email: "",
     password: "",
     user: ""
   })
-  const [validation, setValidation] = useState(true)
+
   const [error, setError] = useState({
     email: false,
     password: false,
@@ -17,24 +29,78 @@ function Login() {
   })
 
   useEffect(() => {
-   
-    if(signUp){
-      if(!error.email && !error.password && !error.user && state.email && state.password && state.user ){
+
+    if (signUp) {
+      if (!error.email && !error.password && !error.user && state.email && state.password && state.user) {
         setValidation(false)
       }
-      else{
+      else {
         setValidation(true)
       }
     }
-    else{
-      if(!error.email && !error.password && state.email && state.password){
+    else {
+      if (!error.email && !error.password && state.email && state.password) {
         setValidation(false)
       }
-      else{
+      else {
         setValidation(true)
       }
     }
-  }, [error,state])
+
+    return ()=> dispatch(clearUser())
+  }, [error, state])
+
+  useEffect(() => {
+    if (window.localStorage.getItem("token")) {
+      navigate("/home")
+    }
+    else {
+      if (loginUser.error) {
+        setSignInUp({
+          ...SigInUp,
+          login: true
+        })
+        setValidation(true)
+      }
+      else if (loginUser.token) {
+        window.localStorage.setItem("token", loginUser.token)
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Successfully logged-in',
+          showConfirmButton: false,
+          timer: 1200
+        })
+        if(loginUser.admin){
+          navigate("/home/admin/dashboard")
+        }
+        else{
+          navigate("/home")
+        }
+      }
+      else if (registerUser.status) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'You have successfully registered Now Login',
+          showConfirmButton: false,
+          timer: 1800
+        })
+        handleSignUp()
+      }
+      else if (registerUser.status === false) {
+        setSignInUp({
+          ...SigInUp,
+          register: true
+        })
+        setState({
+          email: "",
+          password: "",
+          user: ""
+        })
+      }
+    }
+  }, [registerUser, loginUser])
 
   const handleSignUp = () => {
     signUp ? setSignUp(false) : setSignUp(true)
@@ -53,8 +119,8 @@ function Login() {
 
   const handleValidationInputs = (e) => {
     const regexEmail = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
-    const value=e.target.value
-    const name=e.target.name
+    const value = e.target.value
+    const name = e.target.name
 
     switch (name) {
       case "user":
@@ -117,6 +183,23 @@ function Login() {
     }
   }
 
+  const hanldeSubmit = (e) => {
+    e.preventDefault()
+    if (e.nativeEvent.submitter.name === "login") {
+      dispatch(loginUsers({
+        email: state.email,
+        password: state.password,
+      }))
+    }
+    else if (e.nativeEvent.submitter.name === "signUp") {
+      dispatch(registerUsers({
+        email: state.email,
+        password: state.password,
+        user: state.user.trim()
+      }))
+    }
+  }
+
   return (
     <div className="container d-flex justify-content-center" style={{ "marginTop": "7rem", "marginBottom": "3rem" }}>
 
@@ -130,7 +213,7 @@ function Login() {
           </div>
           <h2 className="fw-bold text-center pt-3 mb-5">Welcome</h2>
 
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={hanldeSubmit}>
             {signUp
               ? (
                 <div className="mb-4">
@@ -141,7 +224,7 @@ function Login() {
                       : null
                     }
                   </div>
-                  <input type="text" value={state.user}  autoFocus name="user" className="form-control" onChange={handleValidationInputs}
+                  <input type="text" value={state.user} autoFocus name="user" className="form-control" onChange={handleValidationInputs}
                   />
                 </div>
               )
@@ -170,24 +253,34 @@ function Login() {
               />
             </div>
 
+            <div className="mb-5">
+              {signUp
+                ? SigInUp.register
+                  ? <label htmlFor="register" className="col form-label text-warning fw-bold text-start">This email already exists, please put another email or login</label>
+                  : null
+                : SigInUp.login
+                  ? <label htmlFor="login" className="col form-label text-warning fw-bold text-end">Invalid email or password</label>
+                  : null
+              }
+            </div>
             <div className="d-grid">
               {signUp
-                ? <button type="submit" className="btn btn-primary" id="signUp" disabled={validation}>Sign Up</button>
-                : <button type="submit" className="btn btn-primary" id="login" disabled={validation}>Login</button>
+                ? <button type="submit" className="btn btn-primary" name="signUp" disabled={validation}>Sign Up</button>
+                : <button type="submit" className="btn btn-primary" name="login" disabled={validation}>Login</button>
               }
 
             </div>
             <div className="mt-4">
               {!signUp
                 ? <span>You do not have an account? <button onClick={handleSignUp}
-                  className="bg-transparent border-0 text-primary text-decoration-underline">Sign up</button></span>
+                  className="bg-transparent border-0 mb-3 text-primary text-decoration-underline">Sign up</button></span>
                 : <span>You have an account? <button onClick={handleSignUp}
                   className="bg-transparent border-0 text-primary text-decoration-underline">Login</button></span>
               }
 
               <br />
               {!signUp
-                ? <span>Forgot your password? <button className="mt-3 bg-transparent border-0 text-primary text-decoration-underline">Recover password</button></span>
+                ? <span>Forgot your password? <button className="bg-transparent border-0 text-primary text-decoration-underline">Recover password</button></span>
                 : null
               }
             </div>

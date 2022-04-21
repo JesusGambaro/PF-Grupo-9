@@ -1,8 +1,8 @@
-import {LOGIN_USER,REGISTER_USER} from "./actions"
+import {LOGIN_USER,REGISTER_USER, CLEAR_USER} from "./actions"
 import axios from "axios"
 const URL="localhost:3001/user"
  
-export const registerUser= (datos)=>{
+export const registerUsers= (datos)=>{
   return async (dispatch)=>{
     const response= await axios.post(`${URL}/signUp`,datos)
     dispatch({
@@ -12,7 +12,7 @@ export const registerUser= (datos)=>{
   }
 }
 
-export const loginUser=(datos)=>{
+export const loginUsers=(datos)=>{
   return async (dispatch)=>{
     const response= await axios.post(`${URL}/signIn`,datos)
     dispatch({
@@ -21,3 +21,10 @@ export const loginUser=(datos)=>{
     })
   }
 }
+
+export const clearUser=()=>{
+  return {
+      type:CLEAR_USER,
+      payload:{}
+    }
+  }

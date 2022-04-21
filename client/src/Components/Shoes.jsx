@@ -5,7 +5,7 @@ import bringAllData from "../redux/actions/bringAllData";
 
 const Shoes = () => {
   const dispatch = useDispatch();
-  const shoes = useSelector((state) => state);
+  const shoes = useSelector((state) => state.root);
   useEffect(() => {
     if (!shoes.allData.length) dispatch(bringAllData());
   }, []);

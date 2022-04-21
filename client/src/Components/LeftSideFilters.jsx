@@ -37,7 +37,7 @@ const brands = [
 const size = [9, 10, 11, 12, 13, 14, 15, 16, 44];
 const LeftSideFilters = () => {
   const {categories, genders, filters, genderActual} = useSelector(
-    (state) => state
+    (state) => state.root
   );
   const dispatch = useDispatch();
   const [range, setRange] = useState({minValue: 2500, maxValue: 75000});

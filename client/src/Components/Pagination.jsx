@@ -3,14 +3,14 @@ import Loading from "./Loading";
 import LeftSideFilters from "./LeftSideFilters";
 import UpSideBar from "./UpSideBar";
 import {useEffect, useState} from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, useParams} from "react-router-dom";
 
 const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
   const [toggle, setToggle] = useState(true);
-  const {allDataCopy, loading} = shoes;
+  const {allData, loading} = shoes;
   const [currentPage, setCurrentPage] = useState(1);
-  const pages = Math.ceil(allDataCopy.length / cardsPerPage);
-
+  const pages = Math.ceil(allData.length / cardsPerPage);
+  
   const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);
 
   const prevPage = () => setCurrentPage((currentPage) => currentPage - 1);
@@ -18,13 +18,13 @@ const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
   const goPage = (e) => setCurrentPage(Number(e.target.textContent));
 
   useEffect(() => {
-    if (allDataCopy.length < 40) setCurrentPage(1);
-  }, [allDataCopy]);
+    if (allData.length < 40) setCurrentPage(1);
+  }, [allData]);
 
   const dataPerPage = () => {
     const start = currentPage * cardsPerPage - cardsPerPage,
       end = start + cardsPerPage;
-    return allDataCopy.slice(start, end);
+    return allData.slice(start, end);
   };
 
   const dividedGroups = () => {
@@ -45,7 +45,7 @@ const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
   return (
     <div className="home-container">
       <UpSideBar
-        quantity={shoes.allDataCopy.length}
+        quantity={shoes.allData.length}
         handleToggle={(p) => setToggle(p)}
       />
       <LeftSideFilters />
@@ -54,17 +54,12 @@ const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
       ) : (
         <div className="allContainer">
           <div className={"shoes-container" + (toggle ? "" : " h")}>
-            {allDataCopy.length > 0 &&
+            {allData.length > 0 &&
               dataPerPage().map((e, i) => (
-                <NavLink
-                  to={`/home/${e.id}/${e.model}`}
-                  style={{textDecoration: "none"}}
-                >
-                  <Card e={e} key={i} horizontal={!toggle} />
-                </NavLink>
+                <Card e={e} key={i} horizontal={!toggle} />
               ))}
           </div>
-          {allDataCopy.length > 1 && (
+          {allData.length > 1 && (
             <div className="pagination-container">
               <div className="selectionOwn">
                 <button

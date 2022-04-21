@@ -86,23 +86,23 @@
         &::after {
           content: attr(title);
           font-size: 1rem;
+          padding: 0 0.3rem;
+          border-radius: 0.5rem;
           position: absolute;
           display: none;
-          top: -1.2rem;
+          top: -1.4rem;
+          background: #000;
+          color: #fff;
           transform: translate(-40%);
           white-space: nowrap;
-          animation: 1s fadeIn;
+        }
+        &[title="Add to favorites"] {
+          &::after {
+            right: -3rem;
+          }
         }
         &:hover::after {
           display: block;
-        }
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
         }
       }
     }
@@ -132,8 +132,9 @@
     align-items: center;
     border-radius: 1rem 1rem 0 0;
     transition: 0.3s all ease-in-out;
+    text-align: center;
     overflow: hidden;
-    img {
+    a img {
       transform: scaleX(-1) rotate(30deg) translateX(0.5rem);
       width: 70%;
     }

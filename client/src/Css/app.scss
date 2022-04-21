@@ -9,6 +9,7 @@
   width: 100%;
   justify-content: space-between;
   min-height: calc(100vh - 8rem);
+  border: 1rem solid red;
 
   .allContainer {
     width: 100%;
@@ -92,10 +93,11 @@
                 border-radius: 0.5rem;
                 position: absolute;
                 display: none;
-                top: -1.2rem;
+                top: -1.4rem;
+                background: #000;
+                color: #fff;
                 transform: translate(-40%);
                 white-space: nowrap;
-                animation: 1s fadeIn;
               }
               &[title="Add to favorites"] {
                 &::after {
@@ -104,14 +106,6 @@
               }
               &:hover::after {
                 display: block;
-              }
-              @keyframes fadeIn {
-                from {
-                  opacity: 0;
-                }
-                to {
-                  opacity: 1;
-                }
               }
             }
           }
@@ -123,11 +117,14 @@
           background: var(--i);
           background: #f6f6f6;
           width: 100%;
+          height: 70%;
           display: flex;
           justify-content: center;
           align-items: center;
           border-radius: 1rem 1rem 0 0;
           transition: 0.3s all ease-in-out;
+          text-align: center;
+          overflow: hidden;
           a img {
             transform: scaleX(-1) rotate(30deg) translateX(0.5rem);
             width: 70%;
@@ -140,7 +137,6 @@
       }
     }
     .shoes-container.h {
-     
       .cardOwn.h {
         background: var(--i);
         background: #f6f6f6;
@@ -187,7 +183,7 @@
                 align-items: center;
                 justify-content: center;
                 transition: all ease-in-out 0.5s;
-                
+
                 p {
                   font-size: large;
                   margin-bottom: 0;
@@ -226,7 +222,7 @@
         }
         .img {
           img {
-            width: 20%;
+            width: 50%;
           }
         }
         &:hover .img,

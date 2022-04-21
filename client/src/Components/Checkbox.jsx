@@ -1,11 +1,16 @@
-import React from "react";
+import "../Css/checkbox.scss";
 
-const Checkbox = ({data}) => {
+const Checkbox = ({data, change, size}) => {
   return (
-    <div>
-      <input type="checkbox"/>
-      {data}
-    </div>
+    <label className={size ? "check-contain size" : "check-contain"}>
+      <input
+        type="checkbox"
+        className={size ? "checkbox size" : "checkbox"}
+        onChange={change}
+        title={data}
+      />
+      {!size && data}
+    </label>
   );
 };
 

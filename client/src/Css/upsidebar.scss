@@ -1,11 +1,12 @@
 .upsidebar-container {
+  border: 1rem solid red;
   p {
     margin-bottom: 0;
   }
-  width: 100%;
+  width: 80%;
   position: fixed;
   top: 4rem;
-  left: 0;
+  right: 0;
   background: rgb(242, 242, 242);
   height: 4rem;
   z-index: 999;
@@ -17,12 +18,12 @@
   padding: 1rem;
   .view {
     display: flex;
-    visibility: hidden;
+
     justify-content: center;
     align-items: center;
     gap: 1rem;
     font-size: large;
-    i{
+    i {
       cursor: pointer;
     }
   }

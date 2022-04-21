@@ -37,7 +37,7 @@ module.exports = {
         await ShoppingCartItem.destroy({
           where: { userId }
         })
-          res.send({msg: 'Product removed'});
+          res.send({msg: 'All Products removed'});
         }catch(error){
           sendError(res, error);
         }

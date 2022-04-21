@@ -17,6 +17,6 @@ router
   .put(verifyTokenUserOrAdmin, putCart)
   .post(verifyTokenUserOrAdmin, postCart)
 
-router.delete('/allCart', verifyToken, deleteAllCart)
+router.delete('/deleteAllCart', verifyTokenUserOrAdmin, deleteAllCart)
 
 module.exports = router

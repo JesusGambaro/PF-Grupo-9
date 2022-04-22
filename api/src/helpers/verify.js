@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken")
 const { User } = require("../db.js")
+const { sendError } = require("../helpers/error")
 
 module.exports = {
   verifyToken: async (req, res) => {

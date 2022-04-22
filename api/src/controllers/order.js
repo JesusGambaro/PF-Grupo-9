@@ -24,7 +24,7 @@ module.exports = {
       sendError(res, error)
     }
   },
-
+  getOrdersUser: async (req, res) => {},
   postOrder: async (req, res) => {
     try {
       const { telephoneNum, delivered, address, userId } = req.body
@@ -51,6 +51,7 @@ module.exports = {
 
   putOrder: async (req, res) => {
     const { id } = req.params
+    const { delivered } = req.body
     try {
       const order = await Order.findOne({
         where: {
@@ -83,10 +84,10 @@ module.exports = {
         where: {
           createdAt: {
             [Op.gte]: moment().subtract(7, "days").toDate(),
-          }
+          },
         },
         include: {
-          model: ShoppingCartItem
+          model: ShoppingCartItem,
         },
       })
       res.send(lastOrders)

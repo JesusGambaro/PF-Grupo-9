@@ -169,7 +169,7 @@ module.exports = {
         where: {model, brand, color }
       })
 
-      if(foundProduct) return res.send("This product already exist")
+      if(foundProduct) return res.send({msg:"This product already exist"})
       let product = await Product.create({
         model,
         brand,

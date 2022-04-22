@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     telephoneNum: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
     },
   })
 }

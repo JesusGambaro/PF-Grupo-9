@@ -164,6 +164,12 @@ module.exports = {
         addedImages,
         stock,
       } = req.body
+
+      const foundProduct = await Product.findOne({
+        where: {model, brand, color }
+      })
+
+      if(foundProduct) return res.send({msg:"This product already exist"})
       let product = await Product.create({
         model,
         brand,
@@ -189,7 +195,7 @@ module.exports = {
           })
           await product.addStock(stockProduct)
         })
-      res.send("Product with its images created!")
+      return res.send("Product with its images created!")
     } catch (error) {
       sendError(res, error)
     }
@@ -260,7 +266,7 @@ module.exports = {
         })
       }
       if (images) {
-        //definir con el front cómo va a ser el form para editar.
+        //definir con el front como va a ser el form para editar.
       }
 
       res.send("calzado editado")

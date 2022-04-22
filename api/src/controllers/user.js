@@ -10,8 +10,8 @@ module.exports = {
     try {
       const { body } = req
       const { userName, email, password } = body
-      if(password.length < 8){
-        throw new Error("Paasword must have more than 8 characters")
+      if(password.length < 4){
+        throw new Error("Paasword must have more than 4 characters")
       }
       const saltRounds = 10
       const passwordHash = await bcrypt.hash(password, saltRounds)

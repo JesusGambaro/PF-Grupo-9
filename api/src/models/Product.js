@@ -70,5 +70,17 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM("Urban", "Sport", "Elegant", "Running", "Others"),
       allowNull: false,
     },
+    finalPrice: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        const tempPrice = this.getDataValue("price");
+        const tempDiscount = this.getDataValue('sale');
+        if(tempDiscount === 0){
+          return tempPrice;
+        }else{
+          return tempPrice * (100 - tempDiscount) / 100;
+        }
+      }
+    },
   })
 }

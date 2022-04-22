@@ -956,19 +956,19 @@ conn.sync({ force: true }).then(async () => {
   cartAdmin.setProduct(NikeKyrieInfinityBeige)
   admin.addShoppingCartItem(cartAdmin)
   const orderRodolfo1 = await Order.create({
-    delivered: false,
+    delivered: "undelivered",
     address: "AvenidaSiempreViva 123",
     telephoneNum: 12345678,
   })
   orderRodolfo1.addShoppingCartItems([cartRodolfo1, cartRodolfo2, cartRodolfo3])
   const orderRodolfo2 = await Order.create({
-    delivered: true,
+    delivered: "delivered",
     address: "Argentina 123",
     telephoneNum: 1283214,
   })
   orderRodolfo2.addShoppingCartItem(cartRodolfo4)
   const orderAdmin = await Order.create({
-    delivered: false,
+    delivered: "completed",
     address: "Colombia 123",
     telephoneNum: 123678,
     createdAt: "2021-04-21 19:52:24.029-03",

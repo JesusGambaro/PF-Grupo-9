@@ -24,12 +24,12 @@ module.exports = {
       sendError(res, error)
     }
   },
-
+  getOrdersUser: async (req, res) => {}, // falta de hacer?
   postOrder: async (req, res) => {
     try {
-      const { telephoneNum, delivered, address, userId } = req.body
+      const { telephoneNum, delivered, address, userId } = req.body // para qué pasa delivered?. No sería false por default?.
       const allShoppingCarts = await ShoppingCartItem.findAll({
-        where: { userId },
+        where: { userId, ordered: false }, // Le agregué ordered:false.
       })
       const orderCreated = await Order.create({
         telephoneNum,
@@ -37,20 +37,21 @@ module.exports = {
         address,
       })
       await orderCreated.addShoppingCartItems(allShoppingCarts)
-      const order = await Order.findOne({
+      const order = await Order.findOne({  
         where: orderCreated,
         include: {
           model: ShoppingCartItem,
         },
       })
-      return res.send({ msg: "Order created" })
+      return res.send({ msg: "Order created" }) //no debería responder con "order"?. Sino para qué hace el includ?
     } catch (error) {
       console.log(error)
     }
   },
 
   putOrder: async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params //debería recibir por query me parece..
+    const { delivered } = req.body //
     try {
       const order = await Order.findOne({
         where: {
@@ -66,7 +67,8 @@ module.exports = {
   },
 
   deleteOrder: async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params //debería ser por query me parece.
+    //deberíamos buscar todos los cartItems relacionados a esta order y pasarles el estado a ordered:false.
     try {
       await Order.destroy({
         where: { id },
@@ -83,10 +85,10 @@ module.exports = {
         where: {
           createdAt: {
             [Op.gte]: moment().subtract(7, "days").toDate(),
-          }
+          },
         },
         include: {
-          model: ShoppingCartItem
+          model: ShoppingCartItem,
         },
       })
       res.send(lastOrders)

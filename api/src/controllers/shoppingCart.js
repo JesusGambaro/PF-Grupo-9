@@ -30,19 +30,18 @@ module.exports = {
       sendError(res, error)
     }
   },
+  
   deleteAllCart: async (req, res) => {
-    
-    // IMPORTANTE: NO DEBEMOS BORAR TODOS LOS CART ITEMS, SINO PASARLOS A ORDERED:TRUE
 
-    // const { userId } = req.body
-    // try {
-    //   await ShoppingCartItem.destroy({
-    //     where: { userId },
-    //   })
-    //   res.send({ msg: "All Products removed" })
-    // } catch (error) {
-    //   sendError(res, error)
-    // }
+    const { userId } = req.body
+    try {
+      await ShoppingCartItem.destroy({
+        where: { userId, ordered: false },
+      })
+      res.send({ msg: "All Products removed" })
+    } catch (error) {
+      sendError(res, error)
+    }
   },
 
   putCart: async (req, res) => {

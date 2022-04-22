@@ -45,7 +45,7 @@ module.exports = {
       })
       return res.send({ msg: "Order created" })
     } catch (error) {
-      sendError(res, error)
+      console.log(error)
     }
   },
 

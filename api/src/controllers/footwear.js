@@ -260,7 +260,7 @@ module.exports = {
         })
       }
       if (images) {
-        //definir con el front cómo va a ser el form para editar.
+        //definir con el front como va a ser el form para editar.
       }
 
       res.send("calzado editado")

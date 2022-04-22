@@ -9,6 +9,10 @@ module.exports = (sequelize) => {
     size: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    }
+    },
+    ordered: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   })
 }

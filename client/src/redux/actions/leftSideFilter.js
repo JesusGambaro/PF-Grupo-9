@@ -73,8 +73,11 @@ const leftSideFilter = (filtroAgregar = null, valor = null) => {
       data = data.filter((e) => {
         switch (nombre) {
           case "sale":
-            console.log("sale");
+            //console.log("sale");
             return e.sale > 0;
+          case "price":
+            //console.log(filtro);
+            return filtro.value.maxValue > e.price && e.price > filtro.value.minValue;
           case "size":
             let mandar = false;
             e.stocks.forEach((element) => {
@@ -84,6 +87,7 @@ const leftSideFilter = (filtroAgregar = null, valor = null) => {
               }
             })
             if(mandar) return e;
+            break;
           default:
             return e[nombre] === filtro.value;
             

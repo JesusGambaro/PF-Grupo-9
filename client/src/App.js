@@ -11,7 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import AdminDashboard from "./Components/Admin/AdminDashboard";
 import AdminPandO from "./Components/Admin/AdminPandO";
 import AdminProducts from "./Components/Admin/AdminProducts";
-import AdminUsers from "./Components/Admin/AdminUsers";
+import AdminCustomers from "./Components/Admin/AdminCustomers";
 import AdminOrderDetail from "./Components/Admin/AdminOrderDetail";
 
 
@@ -42,12 +42,15 @@ function App() {
         ]}
       />
 
-
       <Route exact path="home/admin/dashboard" element={<AdminDashboard />} />
       <Route exact path="home/admin/products" element={<AdminProducts />} />
-      <Route exact path="home/admin/users" element={<AdminUsers />} />
+      <Route exact path="home/admin/customers" element={<AdminCustomers />} />
       <Route exact path="home/admin/orders" element={<AdminPandO />} />
-      <Route exact  path="home/admin/order/detail" element={<AdminOrderDetail/>}/>
+      <Route
+        exact
+        path="home/admin/order/detail"
+        element={<AdminOrderDetail />}
+      />
 
       <Route
         exact

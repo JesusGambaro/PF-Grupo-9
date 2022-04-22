@@ -10,29 +10,30 @@ const CreateNew = () => {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
   const [data, setData] = useState({
-    name: "",
-    hp: "",
-    attack: "",
-    defense: "",
-    speed: "",
-    height: "",
-    weight: "",
-    types: [],
-    sprites: "",
+    brand: "",
+    category: "",
+    color: "",
+    gender: "",
+    images: "",
+    model: "",
+    price: 0,
+    sale: 0,
+    stocks: [], //{amount:0, id:#,productId:#id,size:0}
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({
       ...errors,
-      name: validation(data.name, "name"),
-      hp: validation(data.hp),
-      attack: validation(data.attack),
-      defense: validation(data.defense),
-      speed: validation(data.speed),
-      height: validation(data.height),
-      weight: validation(data.weight),
-      types: data.types.length < 1 ? "Almost 1 needed" : "",
+      model: validation(data.model, "model"),
+      brand: validation(data.brand),
+      category: validation(data.category),
+      color: validation(data.color),
+      gender: validation(data.gender),
+      price: validation(data.price),
+      sale: validation(data.sale),
+      images: validation(data.images),
+      stocks: data.stocks.length < 1 ? "Almost 1 needed" : "",
     });
 
     if (
@@ -44,31 +45,37 @@ const CreateNew = () => {
       return;
 
     dispatch(addPokemon(data));
-    navigate("/home");
+    navigate("/home/admin/products");
   };
 
   const validation = (param, type) => {
-    if (!param) return type !== "sprites" ? "Is required" : "";
+    if (!param) return type !== "images" ? "Is required" : "";
 
     switch (type) {
-      case "sprites":
+      case "images":
         return !/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(
           param
         )
           ? "Insert a valid URL"
           : "";
-      case "name":
+      case "price":
+        if (!/^[0-9]+$/.test(param)) {
+          return "Must be just digits";
+        } else if (param > 100000) return "Can't exceeds 100000";
+        break;
+      case "sale":
+        if (!/^[0-9]+$/.test(param)) {
+          return "Must be just digits";
+        } else if (param > 99) return "Can't exceeds 99%";
+        break;
+      default:
         return !/^[a-zA-Zs]*$/.test(param)
           ? "Must be just characters"
           : param.length < 3
           ? "Minimum length 3"
-          : param.length > 10
-          ? "Maximum length 10"
+          : param.length > 20
+          ? "Maximum length 20"
           : "";
-      default:
-        if (!/^[0-9]+$/.test(param)) {
-          return "Must be just digits";
-        } else if (param > 150) return "Can't exceeds 150";
     }
     return "";
   };
@@ -81,7 +88,7 @@ const CreateNew = () => {
     });
   };
   //-------------TYPES-------------//
-  const handleTypesChange = (e) => {
+/*   const handleTypesChange = (e) => {
     if (data.types.length < 2 && data.types.indexOf(e.target.value) < 0)
       setData({...data, types: [...data.types, e.target.value]});
   };
@@ -89,7 +96,7 @@ const CreateNew = () => {
   const handleDeleteType = (type) => {
     setData({...data, types: data.types.filter((t) => t !== type)});
   };
-
+ */
   const initialMount = useRef(true);
   useEffect(() => {
     if (initialMount.current) initialMount.current = false;
@@ -116,33 +123,6 @@ const CreateNew = () => {
               />
             );
           })}
-          <div className="types">
-            <Types
-              handleChange={handleTypesChange}
-              disable={data.types.length >= 2}
-            />
-            <div className="selected-types">
-              {data.types.map((type, i) => {
-                return (
-                  <span
-                    key={i}
-                    className="type"
-                    style={{"--i": typesColors[type]}}
-                  >
-                    {type.charAt(0).toUpperCase() + type.substring(1)}
-                    <button
-                      className="delete-type"
-                      type="button"
-                      onClick={() => handleDeleteType(type)}
-                    >
-                      X
-                    </button>
-                  </span>
-                );
-              })}
-              {errors.types && <p>&#9888; {errors.types}</p>}
-            </div>
-          </div>
           <button type="submit">Save</button>
         </form>
       </div>

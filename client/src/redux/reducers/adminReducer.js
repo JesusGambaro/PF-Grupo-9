@@ -4,7 +4,6 @@ import {
   REGISTER_USER,
   LOGIN_USER,
   GET_ROLE,
-
 } from "../actions/actions";
 
 import {
@@ -22,6 +21,7 @@ const initialState = {
   registerUser: {},
   loginUser: {},
   role: {},
+  users: [],
 };
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -29,28 +29,22 @@ const adminReducer = (state = initialState, action) => {
       return {...state, allData: action.payload, allDataCopy: action.payload};
     case GET_ALL_USERS:
       return {...state, users: action.payload};
+    case POST_NEW_SHOE:
+      return {...state, allData: [action.payload, ...state.allData]};
     case DELETE_SHOE:
       return {...state, allData: action.payload, allDataCopy: action.payload};
     case DELETE_USER:
       return {...state, users: action.payload};
     case LOADING:
-      return { ...state, loading: action.payload };
-    case DETAIL:
-      return { ...state, detail: action.payload };
-    case RESET:
-      return { ...state, allData: action.payload };
-    case DETAILCOLOR:
-      return { ...state, detailColor: action.payload };
-    case CLEARDETAIL:
-      return { ...state, detailColor: action.payload, detail: {} };
+      return {...state, loading: action.payload};
     case GET_ALL_SALES:
-      return { ...state, sales: action.payload };
+      return {...state, sales: action.payload};
     case REGISTER_USER:
-      return { ...state, registerUser: action.payload };
+      return {...state, registerUser: action.payload};
     case LOGIN_USER:
-      return { ...state, loginUser: action.payload };
+      return {...state, loginUser: action.payload};
     case GET_ROLE:
-      return { ...state, role: action.payload };
+      return {...state, role: action.payload};
     default:
       return state;
   }

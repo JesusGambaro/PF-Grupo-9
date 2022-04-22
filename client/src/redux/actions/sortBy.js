@@ -1,7 +1,7 @@
 import {SORT_BY, RESET} from "./actions";
 const sortByPrice = (order) => {
   return async (dispatch, getState) => {
-    let filtered = [...getState().root.allDataCopy];
+    let filtered = [...getState().root.allData];
     if (order === "asc") {
       filtered.sort((a, b) => {
         return a.price - b.price;

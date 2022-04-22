@@ -44,6 +44,9 @@
     border-radius: 1rem;
     p {
       padding: 0 0.5rem;
+    }p:hover{
+      cursor: pointer;
+      text-decoration: underline;
     }
     select {
       width: 60%;

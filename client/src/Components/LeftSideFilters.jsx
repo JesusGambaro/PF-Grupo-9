@@ -36,11 +36,11 @@ const brands = [
 ];
 const size = [9, 10, 11, 12, 13, 14, 15, 16, 44];
 const LeftSideFilters = () => {
-  const {categories, genders, filters, genderActual} = useSelector(
+  const {categories, genders, filters} = useSelector(
     (state) => state.root
   );
   const dispatch = useDispatch();
-  const [range, setRange] = useState({minValue: 2500, maxValue: 75000});
+  const [range, setRange] = useState({minValue: 10000, maxValue: 75000});
   useEffect(() => {
     dispatch(getAllCategories());
     dispatch(getAllGenders());
@@ -60,7 +60,7 @@ const LeftSideFilters = () => {
   };
 
   const handlePrice = (e) => {
-    dispatch(range);
+    dispatch(leftSideFilter("price",range));
   };
   return (
     <div className="left-side-container">
@@ -74,7 +74,7 @@ const LeftSideFilters = () => {
       <div className="price-filter">
         <h4>Price</h4>
         <MultiRangeSlider
-          min={0}
+          min={10000}
           max={75000}
           step={10000}
           ruler={false}

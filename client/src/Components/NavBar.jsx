@@ -1,32 +1,50 @@
 import "../Css/navbar.scss";
 import logo from "../Images/logo2.png";
-import {useState} from "react";
-import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
-import {NavLink, useNavigate} from "react-router-dom";
-import {sortByGender, resetState} from "../redux/actions/sortBy";
-import {resetFilters, genderFilter} from "../redux/actions/leftSideFilter";
-import {useDispatch} from "react-redux";
+import { useEffect, useState } from "react";
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
+import { NavLink, useNavigate } from "react-router-dom";
+import { sortByGender, resetState } from "../redux/actions/sortBy";
+import { resetFilters, genderFilter } from "../redux/actions/leftSideFilter";
+import { useDispatch } from "react-redux";
 import search from "../redux/actions/search";
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [dropDown, setDropDown] = useState(false);
+  const [logueado, setLogueado] = useState(false)
   const [searchParam, setSearchParam] = useState("");
   function abrirYcerrar() {
     setDropDown(!dropDown);
   }
+  const token=window.localStorage.getItem("token")
   const handleSearch = (e) => {
     e.preventDefault();
     console.log(searchParam);
     dispatch(search(searchParam));
   };
+
+  const handleRegister = () => {
+    window.localStorage.removeItem("token")
+    setLogueado(false)
+    navigate("/")
+  }
+
+  useEffect(() => {
+    if (token) {
+      setLogueado(true)
+    }
+    else {
+      setLogueado(false)
+    }
+  }, [logueado,token])
+
   return (
     <div className="navbarOwn">
       <NavLink to={"/"}>
         <img className="logoOwn" src={logo} alt="logo" />
       </NavLink>
       <ul className="sectionsOwn">
-        <li onClick={() => {}}>
+        <li onClick={() => { }}>
           <NavLink
             onClick={() => {
               dispatch(resetState());
@@ -98,15 +116,21 @@ const NavBar = () => {
           <i className="bi bi-bag"></i>
         </li>
         <li>
-          <Dropdown isOpen={dropDown} toggle={abrirYcerrar}>
-            <DropdownToggle className="drop">
-              <i className="bi bi-person"></i>
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem>Profile</DropdownItem>
-              <DropdownItem>Log out</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
+          {logueado
+            ? (<Dropdown isOpen={dropDown} toggle={abrirYcerrar}>
+              <DropdownToggle className="drop">
+                <i className="bi bi-person"></i>
+              </DropdownToggle>
+              <DropdownMenu title="My count">
+                <DropdownItem>Profile</DropdownItem>
+                <DropdownItem onClick={handleRegister}>Log out</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            )
+            : <NavLink to="/home/login" className="text-dark">
+              LogIn
+            </NavLink>
+          }
         </li>
       </ul>
     </div>

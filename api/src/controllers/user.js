@@ -47,7 +47,6 @@ module.exports = {
   getRole: async (req, res) => {
     try {
       const decodedToken = await verifyToken(req, res)
-      console.log(decodedToken)
       if (decodedToken) res.status(200).send({ admin: decodedToken.isAdmin })
     } catch (error) {
       sendError(res, error)

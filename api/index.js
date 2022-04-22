@@ -10,7 +10,7 @@ const {
   User,
 } = require("./src/db.js") 
 
-conn.sync({ force: false }).then(async () => {
+conn.sync({ force: true }).then(async () => {
   const NikeKyrieInfinityPurple = await Product.create({
     model: "Kyrie Infinity",
     brand: "Nike",

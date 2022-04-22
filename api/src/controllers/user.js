@@ -10,6 +10,9 @@ module.exports = {
     try {
       const { body } = req
       const { userName, email, password } = body
+      if(password.length < 8){
+        throw new Error("Paasword must have more than 8 characters")
+      }
       const saltRounds = 10
       const passwordHash = await bcrypt.hash(password, saltRounds)
       const user = await User.findOne({
@@ -47,7 +50,6 @@ module.exports = {
   getRole: async (req, res) => {
     try {
       const decodedToken = await verifyToken(req, res)
-      console.log(decodedToken)
       if (decodedToken) res.status(200).send({ admin: decodedToken.isAdmin })
     } catch (error) {
       sendError(res, error)

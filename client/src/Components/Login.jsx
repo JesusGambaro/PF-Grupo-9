@@ -3,15 +3,19 @@ import "../Css/Login.css"
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { registerUsers, loginUsers, clearUser } from "../redux/actions/Loginregister"
+import { registerUsers, loginUsers, clearUser, roleUser } from "../redux/actions/Loginregister"
 import Swal from "sweetalert2"
 
 function Login() {
-  const { registerUser, loginUser } = useSelector(store => store)
+  const { registerUser, loginUser, role } = useSelector(store => store.root)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [validation, setValidation] = useState(true)
   const [signUp, setSignUp] = useState(false)
+  const [loading, setLoading] = useState({
+    login: false,
+    register: false
+  })
   const [SigInUp, setSignInUp] = useState({
     login: false,
     register: false
@@ -47,12 +51,19 @@ function Login() {
       }
     }
 
-    return ()=> dispatch(clearUser())
+    return () => dispatch(clearUser())
   }, [error, state])
 
   useEffect(() => {
     if (window.localStorage.getItem("token")) {
-      navigate("/home")
+      const token = window.localStorage.getItem("token")
+      dispatch(roleUser(token))
+      if (role.admin) {
+        navigate("/home/admin/dashboard")
+      }
+      else if (role.admin===false) {
+        navigate("/home")
+      }
     }
     else {
       if (loginUser.error) {
@@ -60,10 +71,18 @@ function Login() {
           ...SigInUp,
           login: true
         })
+        setLoading({
+          ...loading,
+          login: false
+        })
         setValidation(true)
       }
       else if (loginUser.token) {
         window.localStorage.setItem("token", loginUser.token)
+        setLoading({
+          ...loading,
+          login: false
+        })
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -71,14 +90,18 @@ function Login() {
           showConfirmButton: false,
           timer: 1200
         })
-        if(loginUser.admin){
+        if (loginUser.admin) {
           navigate("/home/admin/dashboard")
         }
-        else{
+        else {
           navigate("/home")
         }
       }
       else if (registerUser.status) {
+        setLoading({
+          ...loading,
+          register: false
+        })
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -89,6 +112,10 @@ function Login() {
         handleSignUp()
       }
       else if (registerUser.status === false) {
+        setLoading({
+          ...loading,
+          register: false
+        })
         setSignInUp({
           ...SigInUp,
           register: true
@@ -100,7 +127,7 @@ function Login() {
         })
       }
     }
-  }, [registerUser, loginUser])
+  }, [registerUser, loginUser, role])
 
   const handleSignUp = () => {
     signUp ? setSignUp(false) : setSignUp(true)
@@ -113,6 +140,10 @@ function Login() {
       email: false,
       password: false,
       user: signUp
+    })
+    setSignInUp({
+      login: false,
+      register: false
     })
     setValidation(true)
   }
@@ -146,6 +177,10 @@ function Login() {
           ...state,
           [name]: value
         })
+        SigInUp.login && setSignInUp({
+          login: false,
+          register: false
+        })
         if (value.length > 4) {
           setError({
             ...error,
@@ -165,6 +200,11 @@ function Login() {
           ...state,
           [name]: value.trim()
         })
+        setSignInUp({
+          login: false,
+          register: false
+        })
+
         if (regexEmail.test(value.trim())) {
           setError({
             ...error,
@@ -190,15 +230,24 @@ function Login() {
         email: state.email,
         password: state.password,
       }))
+      setLoading({
+        ...loading,
+        login: true
+      })
     }
     else if (e.nativeEvent.submitter.name === "signUp") {
       dispatch(registerUsers({
         email: state.email,
         password: state.password,
-        user: state.user.trim()
+        userName: state.user.trim()
       }))
+      setLoading({
+        ...loading,
+        register: true
+      })
     }
   }
+  console.log(loginUser)
 
   return (
     <div className="container d-flex justify-content-center" style={{ "marginTop": "7rem", "marginBottom": "3rem" }}>
@@ -241,7 +290,7 @@ function Login() {
               <input type="email" value={state.email} name="email" autoFocus className="form-control" onChange={handleValidationInputs}
               />
             </div>
-            <div className="mb-5">
+            <div className={SigInUp.register || SigInUp.login ? "mb-2" : "mb-4"}>
               <div className="row">
                 <label htmlFor="password" className="col form-label">Password:</label>
                 {error.password
@@ -253,7 +302,7 @@ function Login() {
               />
             </div>
 
-            <div className="mb-5">
+            <div className="mb-2">
               {signUp
                 ? SigInUp.register
                   ? <label htmlFor="register" className="col form-label text-warning fw-bold text-start">This email already exists, please put another email or login</label>
@@ -265,8 +314,18 @@ function Login() {
             </div>
             <div className="d-grid">
               {signUp
-                ? <button type="submit" className="btn btn-primary" name="signUp" disabled={validation}>Sign Up</button>
-                : <button type="submit" className="btn btn-primary" name="login" disabled={validation}>Login</button>
+                ? <button type="submit" className="btn btn-primary" name="signUp" disabled={validation}>
+                  {loading.register
+                    ? <span className="spinner-border text-info" role="status"></span>
+                    : "Sign Up"
+                  }
+                </button>
+                : <button type="submit" className="btn btn-primary" name="login" disabled={validation}>
+                  {loading.login
+                    ? <span className="spinner-border text-info" role="status"></span>
+                    : "Login"
+                  }
+                </button>
               }
 
             </div>

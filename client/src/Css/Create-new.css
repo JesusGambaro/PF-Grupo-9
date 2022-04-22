@@ -1,0 +1,144 @@
+.create-container {
+    width: 100%;
+    height: 100vh;
+    background: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    width: 50%;
+    margin-top: 4rem;
+    height: 80%;
+    background-color: #e63947;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+.form-container form {
+    height: 100%;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    justify-content: space-evenly;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.form-container form .input-container,
+.form-container form button[type="submit"] {
+    display: flex;
+    align-items: center;
+    min-width: 60%;
+    height: 10%;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+
+.form-container form button[type="submit"] {
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.form-container form .input-container input {
+    height: 100%;
+    border: none;
+    width: 100%;
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-size: 1rem;
+    padding: 0 0.2rem;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-container form input.error::placeholder {
+    color: rgb(255, 145, 0);
+    font-weight: 500;
+}
+
+.form-container form .input-container .input-field {
+    height: 100%;
+    border-right: 1px solid #9992;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+    min-width: 20%;
+}
+
+.form-container form .input-container .input-field p {
+    color: red;
+}
+
+.form-container form .input-container .input-error {
+    color: rgb(255, 145, 0);
+    white-space: nowrap;
+    padding: 0 .5rem;
+}
+
+.types {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+}
+
+.types select {
+    height: 100%;
+    font-size: 1rem;
+    max-width: 40%;
+    border-radius: 0.5rem;
+    padding: 0 0.5rem;
+    position: relative;
+}
+
+.types select:focus {
+    outline: none;
+}
+
+.types select:invalid {
+    color: #999;
+}
+
+.types .selected-types {
+    height: 100%;
+    display: flex;
+    width: 60%;
+    justify-content: space-evenly;
+    gap: 1rem;
+    align-items: center;
+}
+
+.types .selected-types p {
+    color: rgb(252, 182, 92);
+    font-weight: 500;
+}
+
+.types .selected-types .type {
+    height: 100%;
+    background: var(--i);
+    border-radius: 0.5rem;
+    width: 40%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+}
+
+.types .selected-types .type .delete-type {
+    border: none;
+    color: white;
+    cursor: pointer;
+    height: 100%;
+    width: 10%;
+    background: transparent;
+}

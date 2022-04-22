@@ -1,19 +1,16 @@
 import ClosedSideBarAdmin from "./ClosedSideBarAdmin";
 import AdminNav from "./AdminNav";
-const AdminProducts = () => {
+const AdminCustomers = () => {
   return (
-    /*Hola bro, todo bien pa */
     <div className="container-fluid admin-container">
       <ClosedSideBarAdmin />
       <div className="adminNav">
-        <AdminNav section="Purchases and Orders" />
+        <AdminNav section="Customers" />
       </div>
 
-      <div className="products-section-container">
-        
-      </div>
+      <div className="customers-section-container"></div>
     </div>
   );
 };
 
-export default AdminProducts;
+export default AdminCustomers;

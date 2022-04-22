@@ -53,7 +53,7 @@ export default function OpenSideBarAdmin() {
     overlay={renderTooltip('Dashboard')}
   >
    <li className="nav-item itemL itemL-admin">
-    <a className={splitLocation[3] === "dashboard" ?'nav-link nLink': 'nav-link '}/*  nLink */  href="dashboard"> <i className="bi bi-clipboard-data data" ></i></a>
+    <Link to='/home/admin/dashboard' className={splitLocation[3] === "dashboard" ?'nav-link nLink': 'nav-link '}> <i className="bi bi-clipboard-data data" ></i></Link>
   </li>
   </OverlayTrigger>
 
@@ -63,7 +63,7 @@ export default function OpenSideBarAdmin() {
     overlay={renderTooltip('purchases and orders')}
   >
   <li className="nav-item itemL itemL-admin">
-    <a className={splitLocation[3] === "orders" ?'nav-link nLink': 'nav-link '} href="orders"><i className="bi bi-currency-dollar dollar" onClick={handleShow}></i></a>
+    <Link to='/home/admin/orders' className={splitLocation[3] === "orders" || splitLocation[3] === "order" ?'nav-link nLink': 'nav-link '} ><i className="bi bi-currency-dollar dollar" onClick={handleShow}></i></Link>
   </li>
   </OverlayTrigger>
   <OverlayTrigger
@@ -72,7 +72,7 @@ export default function OpenSideBarAdmin() {
     overlay={renderTooltip('Products')}
   >
   <li className="nav-item itemL itemL-admin">
-    <a className={splitLocation[3] === "products" ?'nav-link nLink': 'nav-link '}href="products"><i className="bi bi-bag bag"></i></a>
+    <Link to='/home/admin/products' className={splitLocation[3] === "products" ?'nav-link nLink': 'nav-link '}><i className="bi bi-bag bag"></i></Link>
   </li>
   </OverlayTrigger>
   <OverlayTrigger
@@ -81,7 +81,7 @@ export default function OpenSideBarAdmin() {
     overlay={renderTooltip('Customers')}
   >
   <li className="nav-item itemL itemL-admin">
-    <a className={splitLocation[3] === "customers" ?'nav-link nLink': 'nav-link '} href="customers"><i className="bi bi-person account"></i></a>
+    <Link to='/home/admin/customers' className={splitLocation[3] === "customers" ?'nav-link nLink': 'nav-link '} href="customers"><i className="bi bi-person account"></i></Link>
     </li> 
     </OverlayTrigger>
   

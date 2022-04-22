@@ -50,7 +50,7 @@ export default function AdminPandO() {
           			<td><span class="badge rounded-pill alert-success">status</span></td>
           			<td>07.05.2020</td>
           			<td className="text-end">
-          				<a href="#" class="btn btn-light">Detail</a>
+          				<a href="order/detail" class="btn btn-light">Detail</a>
           			</td>
           		</tr>
               </tbody>

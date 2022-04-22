@@ -247,6 +247,7 @@ function Login() {
       })
     }
   }
+  console.log(loginUser)
 
   return (
     <div className="container d-flex justify-content-center" style={{ "marginTop": "7rem", "marginBottom": "3rem" }}>

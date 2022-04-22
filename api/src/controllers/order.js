@@ -58,8 +58,9 @@ module.exports = {
   },
   postOrder: async (req, res) => {
     try {
-      const { telephoneNum, delivered, address, userId } = req.body
+      const { telephoneNum, delivered, address, userId } = req.body // para qué pasa delivered?. No sería false por default?.
       const allShoppingCarts = await ShoppingCartItem.findAll({
+
         where: { userId, ordered: false },
         include: [{ model: Product, attributes: ["price"] }],
         //   [Sequelize.fn("SUM", Sequelize.col("Product.price")), "total"],
@@ -81,15 +82,15 @@ module.exports = {
         { ordered: true },
         { where: { userId, ordered: false } }
       )
-      return res.send({ msg: "Order created" })
+      return res.send({ msg: "Order created" }
     } catch (error) {
       sendError(res, error)
     }
   },
 
   putOrder: async (req, res) => {
-    const { id } = req.params
-    const { delivered } = req.body
+    const { id } = req.params //debería recibir por query me parece..
+    const { delivered } = req.body //
     try {
       const order = await Order.findOne({
         where: {
@@ -105,7 +106,8 @@ module.exports = {
   },
 
   deleteOrder: async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params //debería ser por query me parece.
+    //deberíamos buscar todos los cartItems relacionados a esta order y pasarles el estado a ordered:false.
     try {
       await Order.destroy({
         where: { id },

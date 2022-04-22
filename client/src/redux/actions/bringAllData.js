@@ -15,7 +15,7 @@ const bringAllData = (isAdmin) => {
     return async (dispatch) => {
       dispatch({type: LOADING, payload: true});
       const {data} = await axios.get(URL);
-      console.log(data);
+    
       let filtered = data;
       let female = filtered.filter((shoe) => shoe.gender === "Female");
       let male = filtered.filter((shoe) => shoe.gender === "Male");

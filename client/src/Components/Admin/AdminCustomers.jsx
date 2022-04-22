@@ -50,12 +50,7 @@ const AdminCustomers = () => {
     if (!users.length) dispatch(getAllUsers());
   }, []);
   return (
-    <div className="container-fluid admin-container">
-      <ClosedSideBarAdmin />
-      <div className="adminNav">
-        <AdminNav section="Customers" />
-      </div>
-
+    <div className="admin-container">
       <div className="customers-section-container">
         <div className="add-section">
           <h1>Products list</h1>

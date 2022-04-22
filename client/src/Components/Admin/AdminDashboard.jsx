@@ -14,14 +14,7 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <div className="container-fluid admin-container">
-      <div>
-        <ClosedSideBarAdmin />
-      </div>
-      <div className="adminNav">
-        <AdminNav section="Dashboard" />
-      </div>
-
+    <div className="admin-container">
       <div className="totals">
         <div className="total-card">
           <i className="bi bi-piggy-bank itemL-dash"></i>

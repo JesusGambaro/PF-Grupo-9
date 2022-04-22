@@ -1,9 +1,11 @@
 .admin-navbar {
   display: flex;
-  width: 100%;
+  width: calc(100% - 7rem);
   height: 5rem;
   justify-content: space-around;
+  position: fixed;
   top: 0;
+  right: 0;
   background: #fff;
   border-bottom: 2px solid rgb(105, 105, 105);
   justify-content: space-between;
@@ -13,7 +15,7 @@
   font-style: normal;
   font-size: medium;
   color: #000;
-  z-index: 9999;
+  z-index: 200;
 }
 
 .logo-admin {

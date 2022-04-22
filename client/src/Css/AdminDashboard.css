@@ -1,9 +1,7 @@
 .admin-container{
     display: flex;
     width: 100%;
-    margin-top: 0 !important;
     padding: 0;
-    height: 1000px;
 }
 
 .totals{
@@ -49,14 +47,13 @@
 }
 
 .lastest-orders-card{
-    position: absolute;
+    position: absolute; 
     display: flex;
     align-self: center;
     top: 500px;
     left: 12%;
     right: 100px;
     justify-self: center;
-    
     background-color: rgb(250, 250, 250);
     border-radius: 5px ;
     border: 2px solid rgb(145, 145, 145);

@@ -14,6 +14,7 @@ const REGISTER_USER = "@shoes/registerUser";
 const LOGIN_USER = "@shoes/loginUser";
 const CLEAR_USER = "@shoes/clearUser";
 const SEARCH = "@shoes/search";
+const GET_ROLE= "@shoes/getRole"
 
 export {
   BRING_ALL_DATA,
@@ -32,4 +33,5 @@ export {
   LOGIN_USER,
   CLEAR_USER,
   SEARCH,
+  GET_ROLE
 };

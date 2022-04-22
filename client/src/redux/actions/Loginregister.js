@@ -1,4 +1,4 @@
-import {LOGIN_USER,REGISTER_USER, CLEAR_USER} from "./actions"
+import {LOGIN_USER,REGISTER_USER, CLEAR_USER, GET_ROLE} from "./actions"
 import axios from "axios"
 const URL="http://localhost:3001/user"
  
@@ -22,6 +22,17 @@ export const loginUsers=(datos)=>{
   }
 }
 
+export const roleUser=(token)=>{
+  return async (dispatch)=>{
+    const {data}=await axios.get(`${URL}/role`,{
+      headers: {'Authorization':`bearer ${token}`}
+    })
+    dispatch({
+      type:GET_ROLE,
+      payload:data
+    })
+  }
+}
 export const clearUser=()=>{
   return {
       type:CLEAR_USER,

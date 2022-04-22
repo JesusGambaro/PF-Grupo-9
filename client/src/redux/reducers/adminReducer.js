@@ -14,6 +14,7 @@ import {
   REGISTER_USER,
   LOGIN_USER,
   SEARCH,
+  GET_ROLE,
 } from "../actions/actions";
 
 const initialState = {
@@ -31,45 +32,48 @@ const initialState = {
   genderActual: "all",
   registerUser: {},
   loginUser: {},
+  role: {},
 };
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case BRING_ALL_DATA:
-      return {...state, allData: action.payload, allDataCopy: action.payload};
+      return { ...state, allData: action.payload, allDataCopy: action.payload };
     case LOAD_GENDERS:
-      return {...state, genderData: action.payload};
+      return { ...state, genderData: action.payload };
     case "@shoes/agregarFiltro":
-      return {...state, filters: [...state.filters, action.payload]};
+      return { ...state, filters: [...state.filters, action.payload] };
     case "@shoes/borrarFiltros":
-      return {...state, filters: action.payload};
+      return { ...state, filters: action.payload };
     case "@shoes/genderActual":
-      return {...state, genderActual: action.payload};
+      return { ...state, genderActual: action.payload };
     case GET_ALL_CATEGORIES:
-      return {...state, categories: action.payload};
+      return { ...state, categories: action.payload };
     case GET_ALL_GENDERS:
-      return {...state, genders: action.payload};
+      return { ...state, genders: action.payload };
     case SORT_BY:
-      return {...state, allData: action.payload};
+      return { ...state, allData: action.payload };
     case LEFT_SIDE_FILTERS:
-      return {...state, allData: action.payload};
+      return { ...state, allData: action.payload };
     case SEARCH:
-      return {...state, allData: action.payload};
+      return { ...state, allData: action.payload };
     case LOADING:
-      return {...state, loading: action.payload};
+      return { ...state, loading: action.payload };
     case DETAIL:
-      return {...state, detail: action.payload};
+      return { ...state, detail: action.payload };
     case RESET:
-      return {...state, allData: action.payload};
+      return { ...state, allData: action.payload };
     case DETAILCOLOR:
-      return {...state, detailColor: action.payload};
+      return { ...state, detailColor: action.payload };
     case CLEARDETAIL:
-      return {...state, detailColor: action.payload, detail: {}};
+      return { ...state, detailColor: action.payload, detail: {} };
     case GET_ALL_SALES:
-      return {...state, sales: action.payload};
+      return { ...state, sales: action.payload };
     case REGISTER_USER:
-      return {...state, registerUser: action.payload};
+      return { ...state, registerUser: action.payload };
     case LOGIN_USER:
-      return {...state, loginUser: action.payload};
+      return { ...state, loginUser: action.payload };
+    case GET_ROLE:
+      return { ...state, role: action.payload };
     default:
       return state;
   }

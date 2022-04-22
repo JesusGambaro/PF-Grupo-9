@@ -3,6 +3,8 @@ import {
   GET_ALL_SALES,
   REGISTER_USER,
   LOGIN_USER,
+  GET_ROLE,
+
 } from "../actions/actions";
 
 import {
@@ -19,7 +21,7 @@ const initialState = {
   loading: false,
   registerUser: {},
   loginUser: {},
-  users: [],
+  role: {},
 };
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -32,15 +34,23 @@ const adminReducer = (state = initialState, action) => {
     case DELETE_USER:
       return {...state, users: action.payload};
     case LOADING:
-      return {...state, loading: action.payload};
+      return { ...state, loading: action.payload };
+    case DETAIL:
+      return { ...state, detail: action.payload };
+    case RESET:
+      return { ...state, allData: action.payload };
+    case DETAILCOLOR:
+      return { ...state, detailColor: action.payload };
+    case CLEARDETAIL:
+      return { ...state, detailColor: action.payload, detail: {} };
     case GET_ALL_SALES:
-      return {...state, sales: action.payload};
+      return { ...state, sales: action.payload };
     case REGISTER_USER:
-      return {...state, registerUser: action.payload};
+      return { ...state, registerUser: action.payload };
     case LOGIN_USER:
-      return {...state, loginUser: action.payload};
-    case POST_NEW_SHOE:
-      return {...state, allData: [action.payload, ...state.allData]};
+      return { ...state, loginUser: action.payload };
+    case GET_ROLE:
+      return { ...state, role: action.payload };
     default:
       return state;
   }

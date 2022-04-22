@@ -1,6 +1,14 @@
 const server = require("./src/app.js")
+const bcrypt = require("bcryptjs")
 const { conn } = require("./src/db.js")
-const { Stock, Product, Image } = require("./src/db.js")
+const {
+  Stock,
+  Product,
+  Image,
+  Order,
+  ShoppingCartItem,
+  User,
+} = require("./src/db.js")
 
 conn.sync({ force: true }).then(async () => {
   const NikeKyrieInfinityPurple = await Product.create({
@@ -881,6 +889,91 @@ conn.sync({ force: true }).then(async () => {
     stockNikeZoomXVaporfly11,
     stockNikeZoomXVaporfly12,
   ])
+  const saltRounds = 10
+  const passwordHashadmin = await bcrypt.hash("adminpass", saltRounds)
+  const passwordHashRodolfo = await bcrypt.hash("rodolfopass", saltRounds)
+  const admin = await User.create({
+    userName: "admin",
+    email: "admin@gmail.com",
+    password: passwordHashadmin,
+    isAdmin: true,
+  })
+  const Rodolfo = await User.create({
+    userName: "Rodolfo",
+    email: "rodolfo@gmail.com",
+    password: passwordHashRodolfo,
+    isAdmin: false,
+  })
+  const cartRodolfo1 = await ShoppingCartItem.create({
+    amount: 5,
+    size: 10,
+    ordered: false,
+  })
+  cartRodolfo1.setProduct(NikeKyrieInfinityPurple)
+  const cartRodolfo2 = await ShoppingCartItem.create({
+    amount: 1,
+    size: 11,
+    ordered: false,
+  })
+  cartRodolfo2.setProduct(NikeKyrieInfinityPurple)
+  const cartRodolfo3 = await ShoppingCartItem.create({
+    amount: 2,
+    size: 11,
+    ordered: false,
+  })
+  cartRodolfo3.setProduct(NikeKyrieInfinityBeige)
+  const cartRodolfo4 = await ShoppingCartItem.create({
+    amount: 5,
+    size: 12,
+    ordered: true,
+  })
+  cartRodolfo4.setProduct(nikeZoomXVaporfly)
+  const cartRodolfo5 = await ShoppingCartItem.create({
+    amount: 3,
+    size: 11,
+    ordered: false,
+  })
+  cartRodolfo5.setProduct(NikeDownshifterBlack)
+  const cartRodolfo6 = await ShoppingCartItem.create({
+    amount: 1,
+    size: 10,
+    ordered: false,
+  })
+  cartRodolfo6.setProduct(converseChuckTaylorBlack)
+  Rodolfo.addShoppingCartItems([
+    cartRodolfo1,
+    cartRodolfo2,
+    cartRodolfo3,
+    cartRodolfo4,
+    cartRodolfo5,
+    cartRodolfo6,
+  ])
+  const cartAdmin = await ShoppingCartItem.create({
+    amount: 1,
+    size: 12,
+    ordered: false,
+  })
+  cartAdmin.setProduct(NikeKyrieInfinityBeige)
+  admin.addShoppingCartItem(cartAdmin)
+  const orderRodolfo1 = await Order.create({
+    delivered: false,
+    address: "AvenidaSiempreViva 123",
+    telephoneNum: 12345678,
+  })
+  orderRodolfo1.addShoppingCartItems([cartRodolfo1, cartRodolfo2, cartRodolfo3])
+  const orderRodolfo2 = await Order.create({
+    delivered: true,
+    address: "Argentina 123",
+    telephoneNum: 1283214,
+  })
+  orderRodolfo2.addShoppingCartItem(cartRodolfo4)
+  const orderAdmin = await Order.create({
+    delivered: false,
+    address: "Colombia 123",
+    telephoneNum: 123678,
+    createdAt: "2021-04-21 19:52:24.029-03",
+  })
+  orderAdmin.addShoppingCartItem(cartAdmin)
 
   server.listen(3001, () => {
     console.log("%s listening at 3001")

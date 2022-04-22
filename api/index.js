@@ -899,7 +899,7 @@ conn.sync({ force: true }).then(async () => {
     isAdmin: true,
   })
   const Rodolfo = await User.create({
-    userName: "Rodolfo",
+    userName: "Rodolfo Altamira",
     email: "rodolfo@gmail.com",
     password: passwordHashRodolfo,
     isAdmin: false,
@@ -959,22 +959,30 @@ conn.sync({ force: true }).then(async () => {
     delivered: "undelivered",
     address: "AvenidaSiempreViva 123",
     telephoneNum: 12345678,
+    total: 500000,
   })
-  orderRodolfo1.addShoppingCartItems([cartRodolfo1, cartRodolfo2, cartRodolfo3])
+  await orderRodolfo1.addShoppingCartItems([
+    cartRodolfo1,
+    cartRodolfo2,
+    cartRodolfo3,
+  ])
+  await orderRodolfo1.setUser(Rodolfo)
   const orderRodolfo2 = await Order.create({
     delivered: "delivered",
     address: "Argentina 123",
     telephoneNum: 1283214,
+    total: 10000,
   })
-  orderRodolfo2.addShoppingCartItem(cartRodolfo4)
+  await orderRodolfo2.addShoppingCartItem(cartRodolfo4)
+  await orderRodolfo2.setUser(Rodolfo)
   const orderAdmin = await Order.create({
     delivered: "completed",
     address: "Colombia 123",
     telephoneNum: 123678,
     createdAt: "2021-04-21 19:52:24.029-03",
   })
-  orderAdmin.addShoppingCartItem(cartAdmin)
-
+  await orderAdmin.addShoppingCartItem(cartAdmin)
+  await orderAdmin.setUser(admin)
   server.listen(3001, () => {
     console.log("%s listening at 3001")
   })

@@ -247,7 +247,6 @@ function Login() {
       })
     }
   }
-  console.log(loginUser)
 
   return (
     <div className="container d-flex justify-content-center" style={{ "marginTop": "7rem", "marginBottom": "3rem" }}>
@@ -305,10 +304,10 @@ function Login() {
             <div className="mb-2">
               {signUp
                 ? SigInUp.register
-                  ? <label htmlFor="register" className="col form-label text-warning fw-bold text-start">This email already exists, please put another email or login</label>
+                  ? <label htmlFor="register" className="col form-label text-warning fw-bold text-start fs-5">This email already exists, please put another email or login</label>
                   : null
                 : SigInUp.login
-                  ? <label htmlFor="login" className="col form-label text-warning fw-bold text-end">Invalid email or password</label>
+                  ? <label htmlFor="login" className="col form-label text-warning fw-bold text-end fs-5">Invalid email or password</label>
                   : null
               }
             </div>

@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import bringAllData from "../redux/actions/bringAllData";
 import { getDetail, getDetailColor, clearDetail } from "../redux/actions/getDetail";
+import Swal from "sweetalert2";
 
 function Details() {
 
@@ -52,6 +53,34 @@ function Details() {
     setReload(true)
   }
 
+  const handleAddingCart=()=>{
+    if(window.localStorage.getItem("token")){
+      Swal.fire({
+        position: 'bottom-end',
+        icon: 'success',
+        title: 'Product added successfully',
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    }
+    else{
+      Swal.fire({
+        title: 'You must login to add products to cart',
+        text: "Do you want to login?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, I want',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/home/login")
+        }
+      })
+    }
+  }
+
+
   useEffect(() => {
     setReload(false)
     setImages([])
@@ -94,6 +123,7 @@ function Details() {
                       className="border-0 bg-transparent"
                       id="fav"
                       title="Add to favorites"
+                      onClick={handleAddingCart}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +224,7 @@ function Details() {
                     </div>
                   </div>
                   <div className="row mt-5 mb-4 d-flex justify-content-center mt-xl-4 pt-xl-4 mt-lg-3 pt-lg-3">
-                    <button className="w-50 btn btn-outline-info fs-4 fw-bold">
+                    <button className="w-50 btn btn-outline-info fs-4 fw-bold" onClick={handleAddingCart}>
                       ADD TO CART
                     </button>
                   </div>

@@ -1,20 +1,36 @@
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Card = ({e, horizontal}) => {
-  /* const colors = [
-       "Black",
-        "White",
-        "Brown",
-        "Purple",
-        "Orange",
-        "Red",
-        "Blue",
-        "Green",
-        "Yellow",
-        "Gray",
-        "Beige",
-        "Pink"
-  ]; */
+  const navigate=useNavigate()
+
+  const handleAddingCart=()=>{
+    if(window.localStorage.getItem("token")){
+      Swal.fire({
+        position: 'bottom-end',
+        icon: 'success',
+        title: 'Product added successfully',
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    }
+    else{
+      Swal.fire({
+        title: 'You must login to add products',
+        text: "Do you want to login?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, I want',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/home/login")
+        }
+      })
+    }
+  }
+
   const colors = [
     "RGB(239, 145, 155)",
     "RGB(248, 179, 146)",
@@ -70,7 +86,7 @@ const Card = ({e, horizontal}) => {
           </span>
         </div>
         <div className="appear">
-          <i className="bi bi-bag" title="Add to cart">
+          <i className="bi bi-bag" title="Add to cart" onClick={handleAddingCart}>
             &nbsp;
             <p>{horizontal ? "Add to cart" : ""}</p>
           </i>
@@ -80,7 +96,7 @@ const Card = ({e, horizontal}) => {
           >
             <i className="bi bi-toggles2" title="View details"></i>
           </NavLink>
-          <i className="bi bi-heart" title="Add to favorites"></i>
+          <i className="bi bi-heart" title="Add to favorites" onClick={handleAddingCart}></i>
         </div>
       </div>
     </div>

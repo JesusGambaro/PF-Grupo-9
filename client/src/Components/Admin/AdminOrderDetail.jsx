@@ -1,11 +1,37 @@
 import '../../Css/AdminOrderDetail.css'
 import React from "react"; 
+import { useEffect } from 'react';
+import { useNavigate, NavLink, useParams} from "react-router-dom"
 import ClosedSideBarAdmin from "./ClosedSideBarAdmin";
 import AdminNav from './AdminNav';
-import {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
+import { getOrderDetail } from '../../redux/actions/ordersAdmin';
+import { roleUser } from "../../redux/actions/Loginregister";
 
 export default function AdminOrderDetail(){
+  const { role } = useSelector(store => store.root)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {order} = useParams()
+  
+  
+  useEffect(() => {
+    
+    if (window.localStorage.getItem("token")) {
+      const token = window.localStorage.getItem("token")
+      dispatch(roleUser(token))
+      if (role.admin) {
+        
+        dispatch(getOrderDetail(token,order))
+      }
+      else if (role.admin===false) {
+        navigate("/home")
+      }
+    }
+
+  }, []);
+  const orderDetail = useSelector(state=>state.admin.orderDetail)
+  console.log(orderDetail)
 
 
     return(
@@ -19,59 +45,61 @@ export default function AdminOrderDetail(){
                 <AdminNav section='Dashboard'/>
             </div>
             
-         <div className="card-order-detail">
+        
 
-            <header class="card-header">
+            
+                <div className="card-order-detail">
+                <header class="card-header">
               
                 <span>
-                   <b>Wed, Aug 13, 2020, 4:34PM</b>  
-                </span> 
-                <small class="">Order ID: 3453012</small>
+                   <b>{orderDetail.updatedAt?.slice(0,10)}</b>  
+                   
+                </span> <b>{orderDetail.updatedAt?.slice(11,16)}</b>
+                <small class="">Order ID: {orderDetail.id}</small>
               
             </header>
-
- <div class="card-order-detail-body">
+            <div class="card-order-detail-body">
 
 
   
-    <article class="order-data"> 
-    <i class="bi bi-person icon-detail-order"></i>
-      <div class="order-data-container">
-      <h5 class="">Customer</h5> 
-        <p class="detail-text-data">
-          John Alexander <br/> alex@example.com <br/> +998 99 22123456
-        </p>
-        <a href="#">View profile</a>
-      </div>
-    </article> 
- 
-
-    <article class="order-data">
-    <i class="bi bi-truck icon-detail-order"></i>
-      <div class="order-data-container">
-        <h5 class="">Order info</h5> 
-        <p class=" detail-text-data">
-          Shipping: Fargo express <br/> Pay method: card  <br/>Status: new
-        </p>
-       
-      </div>
-    </article> 
-  
-  
-    <article class="order-data">
-    <i class="bi bi-geo-alt icon-detail-order"></i>
-      <div class="order-data-container">
-        <h5 class="">Deliver to</h5> 
-        <p class="detail-text-data">
-          City: Tashkent, Uzbekistan <br/>Block A, House 123, Floor 2 <br/> Po Box 10000
-        </p>
-        <a href="#">View profile</a>
-      </div>
-    </article> 
-  
-
-</div>
-<div class="table-container-detail">
+            <article class="order-data"> 
+            <i class="bi bi-person icon-detail-order"></i>
+              <div class="order-data-container">
+              <h5 class="">Customer</h5> 
+                <p class="detail-text-data">
+                  John Alexander <br/> alex@example.com <br/> {'+'+orderDetail.telephoneNum}
+                </p>
+                <a href="#">View profile</a>
+              </div>
+            </article> 
+         
+        
+            <article class="order-data">
+            <i class="bi bi-truck icon-detail-order"></i>
+              <div class="order-data-container">
+                <h5 class="">Order info</h5> 
+                <p class=" detail-text-data">
+                  Shipping: Fargo express <br/> Pay method: card  <br/>Status: {orderDetail.delivered ===true?'Delivered':'Undelivered'}
+                </p>
+               
+              </div>
+            </article> 
+          
+          
+            <article class="order-data">
+            <i class="bi bi-geo-alt icon-detail-order"></i>
+              <div class="order-data-container">
+                <h5 class="">Deliver to</h5> 
+                <p class="detail-text-data">
+                  {orderDetail.address}<br/>data <br/> more data
+                </p>
+                <a href="#">View profile</a>
+              </div>
+            </article> 
+          
+        
+        </div>
+        <div class="table-container-detail">
               
                 <div class="table-responsive">
                 <table class="table border">
@@ -135,8 +163,9 @@ export default function AdminOrderDetail(){
                     Phone: +1 (800) 555-154-52
                    </p>
                 </div>
- </div>
+        </div>
 
+            
 
 </div>
     )

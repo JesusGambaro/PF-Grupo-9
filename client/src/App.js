@@ -48,7 +48,7 @@ function App() {
       <Route exact path="home/admin/orders" element={<AdminPandO />} />
       <Route
         exact
-        path="home/admin/order/detail"
+        path="home/admin/order/:order"
         element={<AdminOrderDetail />}
       />
 

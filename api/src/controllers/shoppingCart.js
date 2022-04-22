@@ -1,4 +1,4 @@
-const { ShoppingCartItem, Product } = require("../db.js")
+const { ShoppingCartItem, Product, Stock } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
 
 module.exports = {
@@ -25,16 +25,18 @@ module.exports = {
       await ShoppingCartItem.destroy({
         where: { productId, userId, size },
       })
-      res.send({ msg: "Product removed" })
+      res.send({ msg: "Cart item deleted" })
     } catch (error) {
       sendError(res, error)
     }
   },
+  
   deleteAllCart: async (req, res) => {
+
     const { userId } = req.body
     try {
       await ShoppingCartItem.destroy({
-        where: { userId },
+        where: { userId, ordered: false },
       })
       res.send({ msg: "All Products removed" })
     } catch (error) {
@@ -56,9 +58,9 @@ module.exports = {
         })
         cartItem.amount = amount
         await cartItem.save()
-        res.send({ msg: "Product modified" })
+        res.send({ msg: "Cart item amount was modified" })
       } else {
-        res.send({ msg: "No Stock" })
+        res.send({ msg: `Not enough stock, only ${productSelected?.stocks[0].amount} units` })
       }
     } catch (error) {
       sendError(res, error)

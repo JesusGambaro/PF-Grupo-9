@@ -129,13 +129,8 @@ export default function LandingPage() {
       <div className="cards-container">
         {sales.length > 0 &&
           sales.map((shoe, i) => (
-            <div className="landing-card col col-3">
-              <NavLink
-                to={`/home/${shoe.id}/${shoe.model}`}
-                style={{textDecoration: "none"}}
-              >
+            <div className="landing-card col col-3" key={i}>
                 <Card e={shoe} key={i} />
-              </NavLink>
             </div>
           ))}
       </div>

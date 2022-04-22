@@ -2,7 +2,7 @@ import {deleteFilter, leftSideFilter} from "../redux/actions/leftSideFilter";
 import {useDispatch} from "react-redux";
 const Filters = ({filters}) => {
   const dispatch = useDispatch();
-  console.log(filters.length > 1? filters : "");
+  
   return (
     <div className="filtrosContainer">
       {filters.map((el, i) => {

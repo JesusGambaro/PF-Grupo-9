@@ -61,7 +61,7 @@ function Login() {
       if (role.admin) {
         navigate("/home/admin/dashboard")
       }
-      else if (role.admin===false) {
+      else if (role.admin === false) {
         navigate("/home")
       }
     }
@@ -173,25 +173,28 @@ function Login() {
         }
         break
       case "password":
+        const regexPass = /^(?=\w*[a-z])\S{5,8}$/
         setState({
           ...state,
           [name]: value
         })
-        SigInUp.login && setSignInUp({
+        setSignInUp({
           login: false,
           register: false
         })
-        if (value.length > 4) {
-          setError({
-            ...error,
-            [name]: false
-          })
-        }
-        else {
-          setError({
-            ...error,
-            [name]: true
-          })
+        if (signUp) {
+          if (regexPass.test(value)) {
+            setError({
+              ...error,
+              [name]: false
+            })
+          }
+          else {
+            setError({
+              ...error,
+              [name]: true
+            })
+          }
         }
         break;
 
@@ -247,7 +250,6 @@ function Login() {
       })
     }
   }
-  console.log(loginUser)
 
   return (
     <div className="container d-flex justify-content-center" style={{ "marginTop": "7rem", "marginBottom": "3rem" }}>
@@ -269,7 +271,7 @@ function Login() {
                   <div className="row">
                     <label htmlFor="user" className="col form-label">User name:</label>
                     {error.user
-                      ? <label htmlFor="user" className="col form-label text-warning fw-bold text-end">Invalid User Name</label>
+                      ? <label htmlFor="user" className="col form-label text-danger fw-bold text-end">Invalid User Name</label>
                       : null
                     }
                   </div>
@@ -283,32 +285,37 @@ function Login() {
               <div className="row">
                 <label htmlFor="email" className="col form-label">Email:</label>
                 {error.email
-                  ? <label htmlFor="email" className="col form-label text-warning fw-bold text-end">Invalid Email</label>
+                  ? <label htmlFor="email" className="col form-label text-danger fw-bold text-end">Invalid Email</label>
                   : null
                 }
               </div>
               <input type="email" value={state.email} name="email" autoFocus className="form-control" onChange={handleValidationInputs}
               />
             </div>
-            <div className={SigInUp.register || SigInUp.login ? "mb-2" : "mb-4"}>
+            <div className={SigInUp.register || SigInUp.login || error.password ? "mb-2" : "mb-4"}>
               <div className="row">
                 <label htmlFor="password" className="col form-label">Password:</label>
                 {error.password
-                  ? <label htmlFor="email" className="col form-label text-warning fw-bold text-end">Invalid Password</label>
+                  ? <label htmlFor="email" className="col form-label text-danger fw-bold text-end">Invalid Password</label>
                   : null
                 }
               </div>
               <input type="password" name="password" value={state.password} className="form-control" onChange={handleValidationInputs}
               />
             </div>
-
+            {error.password
+              ? <div className="mb-2">
+                <label htmlFor="register" className="col form-label text-danger fw-bold text-start">The password must have a minimum of 5 characters and a maximum of 8 characters and at least one lowercase.</label>
+              </div>
+              : null
+            }
             <div className="mb-2">
               {signUp
                 ? SigInUp.register
-                  ? <label htmlFor="register" className="col form-label text-warning fw-bold text-start">This email already exists, please put another email or login</label>
+                  ? <label htmlFor="register" className="col form-label text-danger fw-bold text-start fs-5">This email already exists, please put another email or login</label>
                   : null
                 : SigInUp.login
-                  ? <label htmlFor="login" className="col form-label text-warning fw-bold text-end">Invalid email or password</label>
+                  ? <label htmlFor="login" className="col form-label text-danger fw-bold text-end fs-5">Invalid email or password</label>
                   : null
               }
             </div>

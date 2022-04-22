@@ -10,10 +10,12 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      validate: { isEmail: true },
     },
     password: {
       type: DataTypes.TEXT,
       allowNull: false,
+      notEmpty: true,
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,

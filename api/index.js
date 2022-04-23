@@ -979,6 +979,7 @@ conn.sync({ force: true }).then(async () => {
     delivered: "completed",
     address: "Colombia 123",
     telephoneNum: 123678,
+    total: 1000000,
     createdAt: "2021-04-21 19:52:24.029-03",
   })
   await orderAdmin.addShoppingCartItem(cartAdmin)

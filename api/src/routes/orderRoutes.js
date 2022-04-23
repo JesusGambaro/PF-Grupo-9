@@ -8,6 +8,7 @@ const {
   getOrdersUser,
   getTotalGain,
   getTotalOrders,
+  getOrderById,
 } = require("../controllers/order.js")
 const {
   verifyTokenUserOrAdmin,

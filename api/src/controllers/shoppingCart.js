@@ -23,11 +23,12 @@ module.exports = {
 
   deleteCart: async (req, res) => {
     try {
-      const { productId, size } = req.body
+      const { id, size } = req.body
+      console.log(id, size)
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
       await ShoppingCartItem.destroy({
-        where: { productId, userId, size },
+        where: { id, userId, size },
       })
       res.send({ msg: "Cart item deleted" })
     } catch (error) {

@@ -1,18 +1,19 @@
-const { ShoppingCartItem, Product, Stock } = require("../db.js")
+const { ShoppingCartItem, Product, Stock, Image } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
 const jwt = require("jsonwebtoken")
+const { verifyToken } = require("../helpers/verify.js")
 
 module.exports = {
   getCart: async (req, res) => {
-    const { token } = req.body
-    const decodedToken = jwt.verify(token, process.env.SECRET)
     try {
+      const decodedToken = await verifyToken(req, res)
       const sameUserCartItems = await ShoppingCartItem.findAll({
         where: {
           userId: decodedToken.id,
         },
         include: {
           model: Product,
+          include: { model: Image },
         },
       })
       res.send(sameUserCartItems)
@@ -24,7 +25,7 @@ module.exports = {
   deleteCart: async (req, res) => {
     const { productId, token, size } = req.body
     const decodedToken = jwt.verify(token, process.env.SECRET)
-    const userId = decodedToken.id;
+    const userId = decodedToken.id
     try {
       await ShoppingCartItem.destroy({
         where: { productId, userId, size },
@@ -34,11 +35,11 @@ module.exports = {
       sendError(res, error)
     }
   },
-  
+
   deleteAllCart: async (req, res) => {
-    const { token } = req.body;
-    const decodedToken = jwt.verify(token, process.env.SECRET);
-    const userId = decodedToken.id;
+    const { token } = req.body
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    const userId = decodedToken.id
     try {
       await ShoppingCartItem.destroy({
         where: { userId, ordered: false },
@@ -51,8 +52,8 @@ module.exports = {
 
   putCart: async (req, res) => {
     const { productId, token, amount, size } = req.body
-    const decodedToken = jwt.verify(token, process.env.SECRET);
-    const userId = decodedToken.id;
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    const userId = decodedToken.id
     try {
       const productSelected = await Product.findOne({
         where: { id: productId },
@@ -67,7 +68,9 @@ module.exports = {
         await cartItem.save()
         res.send({ msg: "Cart item amount was modified" })
       } else {
-        res.send({ msg: `Not enough stock, only ${productSelected?.stocks[0].amount} units` })
+        res.send({
+          msg: `Not enough stock, only ${productSelected?.stocks[0].amount} units`,
+        })
       }
     } catch (error) {
       sendError(res, error)
@@ -75,10 +78,10 @@ module.exports = {
   },
 
   postCart: async (req, res) => {
-    const { productId, token, size } = req.body;
-    const decodedToken = jwt.verify(token, process.env.SECRET);
-    const userId = decodedToken.id;
-    
+    const { productId, token, size } = req.body
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    const userId = decodedToken.id
+
     try {
       const productSelected = await Product.findOne({
         where: { id: productId },

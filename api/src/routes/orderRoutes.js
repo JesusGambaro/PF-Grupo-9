@@ -20,7 +20,7 @@ router
   .route("/")
   .get(verifyTokenUserOrAdmin, getOrders)
   .post(verifyTokenUserOrAdmin, postOrder)
-router.get("/userOrders/:userId", verifyTokenUserOrAdmin, getOrdersUser)
+router.get("/userOrders/", verifyTokenUserOrAdmin, getOrdersUser)
 router.put("/:id", verifyTokenAdmin, putOrder)
 router.delete("/:id", verifyTokenAdmin, deleteOrder)
 router.get("/ByDate", verifyTokenAdmin, getLastSevenDaysOrders)

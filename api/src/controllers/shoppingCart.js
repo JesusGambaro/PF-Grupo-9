@@ -1,13 +1,15 @@
 const { ShoppingCartItem, Product, Stock } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
+const jwt = require("jsonwebtoken")
 
 module.exports = {
   getCart: async (req, res) => {
-    const { userId } = req.body
+    const { token } = req.body
+    const decodedToken = jwt.verify(token, process.env.SECRET)
     try {
       const sameUserCartItems = await ShoppingCartItem.findAll({
         where: {
-          userId,
+          userId: decodedToken.id,
         },
         include: {
           model: Product,
@@ -20,7 +22,9 @@ module.exports = {
   },
 
   deleteCart: async (req, res) => {
-    const { productId, userId, size } = req.body
+    const { productId, token, size } = req.body
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    const userId = decodedToken.id;
     try {
       await ShoppingCartItem.destroy({
         where: { productId, userId, size },
@@ -32,8 +36,9 @@ module.exports = {
   },
   
   deleteAllCart: async (req, res) => {
-
-    const { userId } = req.body
+    const { token } = req.body;
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    const userId = decodedToken.id;
     try {
       await ShoppingCartItem.destroy({
         where: { userId, ordered: false },
@@ -45,7 +50,9 @@ module.exports = {
   },
 
   putCart: async (req, res) => {
-    const { productId, userId, amount, size } = req.body
+    const { productId, token, amount, size } = req.body
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    const userId = decodedToken.id;
     try {
       const productSelected = await Product.findOne({
         where: { id: productId },
@@ -68,7 +75,10 @@ module.exports = {
   },
 
   postCart: async (req, res) => {
-    const { productId, userId, size } = req.body
+    const { productId, token, size } = req.body;
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    const userId = decodedToken.id;
+    
     try {
       const productSelected = await Product.findOne({
         where: { id: productId },

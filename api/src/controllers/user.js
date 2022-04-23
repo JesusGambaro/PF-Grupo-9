@@ -118,16 +118,19 @@ module.exports = {
   },
   changeUsersRole: async (req, res) => {
     try {
-      // const { id } = req.body
-      // const removedUser = await User.destroy({
-      //   where: { id },
-      // })
-      // if (removedUser) return res.send({ msg: `User ${id} removed` })
-      // return res.status(400).send({
-      //   error: `User ${id} doesnt exist`,
-      // })
+      const { email, adminState } = req.body
+      const foundUser = await User.findOne({
+        where: { email },
+      });
+      if(foundUser){
+        foundUser.isAdmin = adminState;
+        foundUser.save();
+        return res.send(`${email} was changed to ${adminState?"Admin":"User"}`);
+      }else{
+        return res.send("The email passed was not found");
+      }
     } catch (error) {
-      // sendError(res, error)
+      return sendError(res, error);
     }
   },
 }

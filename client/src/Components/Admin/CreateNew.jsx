@@ -2,10 +2,10 @@ import {useState, useEffect, useRef} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {postProduct} from "../../redux/actions/productsAdmin";
-import "../css/Create-new.css";
+import "../../Css/Create-new.css";
 import Input from "./Input";
 
-const CreateNew = () => {
+const CreateNew = ({funcEnviar}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
@@ -14,7 +14,7 @@ const CreateNew = () => {
     category: "",
     color: "",
     gender: "",
-    images: "",
+    images: "http://",
     model: "",
     price: 0,
     sale: 0,
@@ -26,30 +26,23 @@ const CreateNew = () => {
     setErrors({
       ...errors,
       model: validation(data.model, "model"),
-      brand: validation(data.brand),
-      category: validation(data.category),
-      color: validation(data.color),
-      gender: validation(data.gender),
-      price: validation(data.price),
-      sale: validation(data.sale),
-      images: validation(data.images),
+      brand: validation(data.brand, "brand"),
+      category: validation(data.category, "category"),
+      color: validation(data.color, "color"),
+      gender: validation(data.gender, "gender"),
+      price: validation(data.price, "price"),
+      sale: validation(data.sale, "sale"),
+      images: validation(data.images, "images"),
       stocks: data.stocks.length < 1 ? "Almost 1 needed" : "",
     });
-
-    if (
-      Object.values(errors).some((e) => e.length) ||
-      Object.values(data)
-        .slice(0, 8)
-        .some((d) => d === "" || !d.length)
-    )
-      return;
-
-    dispatch(addPokemon(data));
-    navigate("/home/admin/products");
+    if ( Object.values(errors).some((e) => e.length && e !== "Can be Null") || Object.values(data).some((d) => d === ""))return;
+    //dispatch(addPokemon(data));
+    //navigate("/home");
+    funcEnviar("Desactive");
   };
 
   const validation = (param, type) => {
-    if (!param) return type !== "images" ? "Is required" : "";
+    if (!param) return type !== "images" ? "Is required" : "Can be Null";
 
     switch (type) {
       case "images":
@@ -57,7 +50,7 @@ const CreateNew = () => {
           param
         )
           ? "Insert a valid URL"
-          : "";
+          : "Can be Null";
       case "price":
         if (!/^[0-9]+$/.test(param)) {
           return "Must be just digits";
@@ -79,33 +72,28 @@ const CreateNew = () => {
     }
     return "";
   };
+  //Number(string)
   const handleInputChange = (e) => {
-    setData({...data, [e.target.name]: e.target.value});
-    // if (e.target.name === "sprites") return;
+    if (e.target.name === "price" || e.target.name === "sale") {
+      setData({...data, [e.target.name]: Number(e.target.value)});
+    }
+    if (e.target.name === "stocks")
+      setData({...data, stocks: [...data.stocks, e.target.value]});
+    else setData({...data, [e.target.name]: e.target.value});
     setErrors({
       ...errors,
       [e.target.name]: validation(e.target.value, e.target.name),
     });
   };
-  //-------------TYPES-------------//
-/*   const handleTypesChange = (e) => {
-    if (data.types.length < 2 && data.types.indexOf(e.target.value) < 0)
-      setData({...data, types: [...data.types, e.target.value]});
-  };
-
-  const handleDeleteType = (type) => {
-    setData({...data, types: data.types.filter((t) => t !== type)});
-  };
- */
   const initialMount = useRef(true);
   useEffect(() => {
     if (initialMount.current) initialMount.current = false;
     else
       setErrors({
         ...errors,
-        types: data.types.length < 1 ? "Almost 1 needed" : "",
+        stock: data.stocks.length < 1 ? "Almost 1 needed" : "",
       });
-  }, [data.types]);
+  }, [data.stocks]);
 
   return (
     <div className="create-container">
@@ -113,7 +101,6 @@ const CreateNew = () => {
         {/*  <h1 style={{color: "white"}}>Create new pokemon</h1>*/}
         <form onSubmit={handleSubmit}>
           {Object.keys(data).map((input, i) => {
-            if (input === "types") return null;
             return (
               <Input
                 key={i}

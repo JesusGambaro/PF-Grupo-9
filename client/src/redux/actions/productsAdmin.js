@@ -24,7 +24,11 @@ const editShoe = (editedShoe) => {
 const deleteShoe = (id) => {
   return async (dispatch, getState) => {
     dispatch({type: LOADING, payload: true});
-    //await axios.delete(`http://localhost:3001/allFootwear/${id}`);
+    await axios.delete(`http://localhost:3001/allFootwear/${id}`, {
+      headers: {
+        Authorization: `bearer ${window.localStorage.getItem("token")}`,
+      },
+    });
     let oldData = getState().admin.allDataCopy;
     console.log(oldData);
     let newData = oldData.filter((el) => {

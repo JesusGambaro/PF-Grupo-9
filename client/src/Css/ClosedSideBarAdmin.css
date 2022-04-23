@@ -11,13 +11,14 @@
 .container-admin {
   display: flex;
   position: fixed;
-  border-right: 2px solid rgb(218, 218, 218);
-  align-content: space-between;
+  border-right: 0.2rem solid #efefef;
+  align-content: center;
+  justify-content: center;
   text-align: left;
   background: #fff;
   left: 0;
+  top: 0;
   width: 7rem;
-  margin-right: 10px;
   height: 100vh;
   box-shadow: 0 0 0.25rem 0 rgba(0, 0, 0, 0.251);
   z-index: 100;
@@ -39,7 +40,8 @@
 .icons-container-admin {
   display: flex;
   margin-top: 0;
-  align-content: space-between;
+  align-items: center;
+  justify-content: space-evenly;
   width: 110px;
 }
 

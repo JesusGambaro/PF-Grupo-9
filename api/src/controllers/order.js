@@ -68,7 +68,7 @@ module.exports = {
         },
         include: [{
           model: ShoppingCartItem,
-          include: { model: Product}
+          include: { model: Product, include: { model: Image, limit: 1 } }
           }],
       })
       res.send(userOrders)

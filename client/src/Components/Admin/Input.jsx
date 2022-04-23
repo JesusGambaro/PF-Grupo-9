@@ -9,13 +9,7 @@ const Input = ({name, setData, error}) => {
       </span>
       <input
         className={error ? "error" : ""}
-        type={
-          name === "price" || name === "sale"
-            ? "number"
-            : name === "images"
-            ? "url"
-            : "text"
-        }
+        type={name === "price" || name === "sale" ? "number" : "text"}
         name={name}
         onChange={setData}
         max={150}

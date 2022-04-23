@@ -46,7 +46,7 @@ export default function AdminDashboard() {
                   <th scope="col">Total</th>
                   <th scope="col">Status</th>
                   <th scope="col">Date</th>
-                  <th scope="col" class="text-end">
+                  <th scope="col" className="text-end">
                     {" "}
                     Action{" "}
                   </th>
@@ -67,7 +67,7 @@ export default function AdminDashboard() {
                   </td>
                   <td>07.05.2020</td>
                   <td className="text-end">
-                    <a href="#" class="btn btn-light">
+                    <a href="#" className="btn btn-light">
                       Detail
                     </a>
                   </td>

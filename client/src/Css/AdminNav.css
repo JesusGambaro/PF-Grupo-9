@@ -1,7 +1,7 @@
 .admin-navbar {
   display: flex;
-  width: calc(100% - 7rem);
-  height: 5rem;
+  width: calc(100% - 5rem);
+  height: 4rem;
   justify-content: space-around;
   position: fixed;
   top: 0;
@@ -20,7 +20,7 @@
 }
 
 .logo-admin {
-  width: 4rem;
+  width: 5rem;
 }
 
 .goHome-admin {
@@ -32,6 +32,8 @@
 .admin-title {
   position: absolute;
   justify-self: flex-start;
+  font-size: x-large;
+  margin-bottom: 0;
   left: 200px;
 }
 
@@ -47,7 +49,9 @@
   font-size: large;
   width: 300px;
 }
-
+.icons-nav-admin li:first-child {
+  font-size: medium;
+}
 .admin-drop {
   color: rgb(0, 0, 0);
   background-color: rgba(255, 255, 255, 0);

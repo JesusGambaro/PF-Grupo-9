@@ -39,7 +39,7 @@ export default function OpenSideBarAdmin() {
       
     <ul className="nav flex-column icons-container-admin"> 
      {/* <Button variant="primary" className='boton-a' onClick={handleShow} >
-    <i class="bi bi-list"></i>
+    <i className="bi bi-list"></i>
       </Button>
 
       <Offcanvas show={show} onHide={handleClose} >

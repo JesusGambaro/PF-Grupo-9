@@ -4,6 +4,7 @@ import React from "react";
 import Footer from "./Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "./Card";
+import {agregarFiltros} from "../redux/actions/leftSideFilter";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import bringAllData from "../redux/actions/bringAllData";
@@ -34,19 +35,22 @@ export default function LandingPage() {
   // Sample items for Carousel
   const items = [
     {
-      /* caption: 'Sample Caption One', */ src: require("../Images/calzado al mejor precio fondo morado.jpg"),
+      /* caption: 'Sample Caption One', */ src: require("../Images/LandingCarruselKyrieInfinity.png"),
       altText: "Slide One",
       red: "/home",
+      filtros: [{name: "namebrand", value: "kyrie"}],
     },
     {
       /* caption: 'Sample Caption Two', */ src: "https://http2.mlstatic.com/D_NQ_993577-MLA49602953344_042022-OO.webp",
       altText: "Slide Two",
       red: "/home",
+      filtros: [{name: "sale", value: ""}],
     },
     {
-      /* caption: 'Sample Caption Two', */ src: require("../Images/zapatos fondo gris.png"),
+      /* caption: 'Sample Caption Two', */ src: require("../Images/LandingCarruselRunningShoes.png"),
       altText: "Slide Two",
       red: "/home",
+      filtros: [{name: "category", value: "Running"}],
     },
   ];
   useEffect(() => {
@@ -80,7 +84,12 @@ export default function LandingPage() {
         onExited={() => setAnimating(false)}
         onExiting={() => setAnimating(true)}
       >
-        <NavLink to={item.red}>
+        <NavLink
+          to={item.red}
+          onClick={() => {
+            dispatch(agregarFiltros(item.filtros));
+          }}
+        >
           <img src={item.src} alt={item.altText} width="100%" height="200%" />
         </NavLink>
       </CarouselItem>
@@ -130,7 +139,7 @@ export default function LandingPage() {
         {sales.length > 0 &&
           sales.map((shoe, i) => (
             <div className="landing-card col col-3" key={i}>
-                <Card e={shoe} key={i} />
+              <Card e={shoe} key={i} />
             </div>
           ))}
       </div>

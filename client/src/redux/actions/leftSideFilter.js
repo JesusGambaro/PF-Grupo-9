@@ -69,7 +69,7 @@ const leftSideFilter = (filtroAgregar = null, valor = null) => {
     //console.log("ORDENO");
     filtros.forEach((filtro) => {
       let nombre = filtro.name;
-      console.log(filtro);
+      console.log(nombre , (nombre === "nameBrand" ? " == " : " != ") , "namebrand");
       data = data.filter((e) => {
         switch (nombre) {
           case "sale":
@@ -77,20 +77,24 @@ const leftSideFilter = (filtroAgregar = null, valor = null) => {
             return e.sale > 0;
           case "price":
             //console.log(filtro);
-            return filtro.value.maxValue > e.price && e.price > filtro.value.minValue;
+            return (
+              filtro.value.maxValue > e.price && e.price > filtro.value.minValue
+            );
           case "size":
             let mandar = false;
             e.stocks.forEach((element) => {
-              if(element.size === filtro.value) {
+              if (element.size === filtro.value) {
                 mandar = true;
                 console.log("Encontro Size");
               }
-            })
-            if(mandar) return e;
+            });
+            if (mandar) return e;
             break;
+          case "namebrand":
+            let filtroVal = filtro.value.toLowerCase();
+            return (e.brand.toLowerCase() === filtroVal || (e.model.toLowerCase()).includes(filtroVal));
           default:
             return e[nombre] === filtro.value;
-            
         }
       });
     });
@@ -100,6 +104,15 @@ const leftSideFilter = (filtroAgregar = null, valor = null) => {
     });
   };
 };
+const agregarFiltros = (arrayFiltros) => {
+
+  return async (dispatch, getState) => {
+    dispatch({
+      type: "@shoes/agregarFiltros",
+      payload: arrayFiltros,
+    });
+  };
+}
 const resetFilters = () => {
   return async (dispatch, getState) => {
     dispatch({
@@ -108,4 +121,4 @@ const resetFilters = () => {
     });
   };
 };
-export { leftSideFilter, resetFilters, genderFilter, deleteFilter };
+export { leftSideFilter, resetFilters, genderFilter, deleteFilter,agregarFiltros };

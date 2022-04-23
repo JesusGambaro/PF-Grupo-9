@@ -18,17 +18,16 @@
   background: #fff;
   left: 0;
   top: 0;
-  width: 7rem;
+  width: 5rem;
   height: 100vh;
   box-shadow: 0 0 0.25rem 0 rgba(0, 0, 0, 0.251);
   z-index: 100;
 }
-
 .dollar,
 .account,
 .bag,
 .data {
-  color: rgb(91, 90, 90);
+  color: rgb(0, 0, 0);
 }
 
 .nLink {
@@ -47,6 +46,9 @@
 
 .itemL-admin {
   display: flex;
-  font-size: 40px;
+  font-size: 2rem;
   cursor: pointer;
+}
+.fade .show{
+  background: #000;
 }

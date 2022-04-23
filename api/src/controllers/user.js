@@ -104,13 +104,13 @@ module.exports = {
   },
   deleteUser: async (req, res) => {
     try {
-      const { id } = req.body
+      const { email } = req.body
       const removedUser = await User.destroy({
-        where: { id },
+        where: { email },
       })
-      if (removedUser) return res.send({ msg: `User ${id} removed` })
+      if (removedUser) return res.send({ msg: `User ${email} removed` })
       return res.status(400).send({
-        error: `User ${id} doesnt exist`,
+        error: `User ${email} doesnt exist`,
       })
     } catch (error) {
       sendError(res, error)

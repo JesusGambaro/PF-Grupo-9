@@ -116,4 +116,21 @@ module.exports = {
       sendError(res, error)
     }
   },
+  changeUsersRole: async (req, res) => {
+    try {
+      const { email, adminState } = req.body
+      const foundUser = await User.findOne({
+        where: { email },
+      });
+      if(foundUser){
+        foundUser.isAdmin = adminState;
+        foundUser.save();
+        return res.send(`${email} was changed to ${adminState?"Admin":"User"}`);
+      }else{
+        return res.send("The email passed was not found");
+      }
+    } catch (error) {
+      return sendError(res, error);
+    }
+  },
 }

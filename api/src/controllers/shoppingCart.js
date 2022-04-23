@@ -1,6 +1,5 @@
 const { ShoppingCartItem, Product, Stock, Image } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
-const jwt = require("jsonwebtoken")
 const { verifyToken } = require("../helpers/verify.js")
 
 module.exports = {
@@ -23,10 +22,10 @@ module.exports = {
   },
 
   deleteCart: async (req, res) => {
-    const { productId, token, size } = req.body
-    const decodedToken = jwt.verify(token, process.env.SECRET)
-    const userId = decodedToken.id
     try {
+      const { productId, size } = req.body
+      const decodedToken = await verifyToken(req, res)
+      const userId = decodedToken.id
       await ShoppingCartItem.destroy({
         where: { productId, userId, size },
       })
@@ -37,10 +36,9 @@ module.exports = {
   },
 
   deleteAllCart: async (req, res) => {
-    const { token } = req.body
-    const decodedToken = jwt.verify(token, process.env.SECRET)
-    const userId = decodedToken.id
     try {
+      const decodedToken = await verifyToken(req, res)
+      const userId = decodedToken.id
       await ShoppingCartItem.destroy({
         where: { userId, ordered: false },
       })
@@ -51,10 +49,10 @@ module.exports = {
   },
 
   putCart: async (req, res) => {
-    const { productId, token, amount, size } = req.body
-    const decodedToken = jwt.verify(token, process.env.SECRET)
-    const userId = decodedToken.id
     try {
+      const { productId, amount, size } = req.body
+      const decodedToken = await verifyToken(req, res)
+      const userId = decodedToken.id
       const productSelected = await Product.findOne({
         where: { id: productId },
         include: { model: Stock, where: { size } },
@@ -78,11 +76,10 @@ module.exports = {
   },
 
   postCart: async (req, res) => {
-    const { productId, token, size } = req.body
-    const decodedToken = jwt.verify(token, process.env.SECRET)
-    const userId = decodedToken.id
-
     try {
+      const { productId, size } = req.body
+      const decodedToken = await verifyToken(req, res)
+      const userId = decodedToken.id
       const productSelected = await Product.findOne({
         where: { id: productId },
         include: { model: Stock, where: { size } },

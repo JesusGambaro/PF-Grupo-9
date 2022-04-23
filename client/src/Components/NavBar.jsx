@@ -7,6 +7,7 @@ import { sortByGender, resetState } from "../redux/actions/sortBy";
 import { resetFilters, genderFilter } from "../redux/actions/leftSideFilter";
 import { useDispatch } from "react-redux";
 import search from "../redux/actions/search";
+import Swal from "sweetalert2";
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,6 +28,23 @@ const NavBar = () => {
     window.localStorage.removeItem("token")
     setLogueado(false)
     navigate("/")
+  }
+
+  const handleCart = () => {
+    if(logueado) return navigate("/home/cart")
+    Swal.fire({
+      title: 'You must login to see your cart',
+      text: "Do you want to login?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, I want',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/home/login")
+      }
+    })
   }
 
   useEffect(() => {
@@ -113,7 +131,7 @@ const NavBar = () => {
           <i className="bi bi-heart"></i>
         </li>
         <li>
-          <i className="bi bi-bag"></i>
+          <i onClick={handleCart} className="bi bi-bag"></i>
         </li>
         <li>
           {logueado

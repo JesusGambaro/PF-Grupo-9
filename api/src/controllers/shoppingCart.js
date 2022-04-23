@@ -9,6 +9,7 @@ module.exports = {
       const sameUserCartItems = await ShoppingCartItem.findAll({
         where: {
           userId: decodedToken.id,
+          ordered: false,
         },
         include: {
           model: Product,
@@ -23,14 +24,11 @@ module.exports = {
 
   deleteCart: async (req, res) => {
     try {
-      const { id, size } = req.body
-      console.log(id, size)
-      const decodedToken = await verifyToken(req, res)
-      const userId = decodedToken.id
+      const { id } = req.params
       await ShoppingCartItem.destroy({
-        where: { id, userId, size },
+        where: { id },
       })
-      res.send({ msg: "Cart item deleted" })
+      return res.send({ msg: "Cart item deleted" })
     } catch (error) {
       sendError(res, error)
     }

@@ -66,7 +66,10 @@ module.exports = {
         where: {
           userId: decodedToken.id,
         },
-        orderInclude,
+        include: [{
+          model: ShoppingCartItem,
+          include: { model: Product}
+          }],
       })
       res.send(userOrders)
     } catch (error) {

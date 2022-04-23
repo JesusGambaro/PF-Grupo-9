@@ -22,7 +22,7 @@ export default function AdminDashboard() {
       if (role.admin) {
         navigate("/home/admin/dashboard")
         dispatch(getLastSevenDaysOrders(token))
-        dispatch(getAllOrders())
+        dispatch(getAllOrders(token))
       }
       else if (role.admin===false) {
         navigate("/home")
@@ -84,21 +84,21 @@ export default function AdminDashboard() {
                 /* {id: 1, delivered: false, address: 'AvenidaSiempreViva 123', telephoneNum: 12345678, createdAt: '2022-04-22T19:10:45.570Z', …}
 */
                 return(
-                <tr>
+                <tr key={e.id}>
                 <td>{e.id} {/* ID order */}</td>
                 <td>
-                  <b>Customer name</b>
+                  <b> {e.user.userName} {/* Customer name */}</b>
                 </td>
-                <td>email@example.com</td>
-                <td>$778.35</td>
+                <td>{e.user.email}{/* email@example.com */}</td>
+                <td>${e.total} {/* total */}</td>
                 <td>
                   <span className="badge rounded-pill alert-success">
-                   {e.delivered === true? 'Delivered':'Pending'} {/* status */}
+                   {e.delivered} {/* status */}
                   </span>
                 </td>
                 <td>{e.createdAt.slice(0,10)} {/* date */}</td>
                 <td className="text-end">
-                <NavLink exact to={`/home/admin/order/${e.id}`} className="btn btn-light detalle" >
+                <NavLink  to={`/home/admin/order/${e.id}`} className="btn btn-light detalle" >
                   Detail
                 </NavLink>
                 </td>

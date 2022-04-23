@@ -82,7 +82,7 @@ module.exports = {
         { ordered: true },
         { where: { userId, ordered: false } }
       )
-      return res.send({ msg: "Order created" }
+      return res.send({ msg: "Order created" })
     } catch (error) {
       sendError(res, error)
     }

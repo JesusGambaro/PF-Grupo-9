@@ -92,8 +92,8 @@ const NavBar = () => {
         className="searchOwn"
         onSubmit={handleSearch}
         onClick={() => {
-          dispatch(resetState());
-          dispatch(resetFilters());
+          //dispatch(resetState());
+          //dispatch(resetFilters());
           navigate("/home");
         }}
       >

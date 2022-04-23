@@ -1,81 +1,69 @@
-.admin-container{
-    display: flex;
-    width: 100%;
-    margin-top: 0 !important;
-    padding: 0;
-    height: 1000px;
+.admin-container {
+  display: flex;
+  width: calc(100% - 7rem);
+  padding: 0;
+  min-height: calc(100vh - 5rem);
+  margin-top: 5rem;
+  margin-left: 7rem;
+  justify-content: center;
+}
+.dashboard-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  justify-content: space-evenly;
+  align-items: center;
+  min-height: calc(100%);
+}
+.totals {
+  display: flex;
+  justify-content: space-between;
+  width: 900px;
+  height: 150px;
 }
 
-.totals{
-    display: flex;
-   left: 400px;
-   top:200px;
-    position: absolute;
-    align-self:center;
-    justify-content: space-between;
-    width: 900px;
-    height: 150px;
+.total-card {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  background-color: rgba(232, 232, 233, 0.281);
+  border-radius: 5px;
+  border: 2px solid rgb(145, 145, 145);
+  padding: 1.3rem;
+  box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.45);
+  width: 250px;
+  height: 130px;
 }
 
+.card-text {
+  margin-top: -35px !important;
+  margin-bottom: 10px !important;
 
-
-.total-card{
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    background-color: rgba(232, 232, 233, 0.281);
-    border-radius: 5px ;
-    border: 2px solid rgb(145, 145, 145);
-    padding: 1.3rem;
-    box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.45);
-    width: 250px;
-    height: 130px;
-    
+  align-self: flex-end;
+  justify-self: flex-start;
 }
 
-.card-text{
-    margin-top: -35px !important;
-    margin-bottom: 10px !important;
-  
-   align-self:flex-end;
-   justify-self: flex-start;
-   
-  
+.itemL-dash {
+  font-size: 30px;
+  width: 30px;
 }
 
-.itemL-dash{
-    font-size: 30px;
-    width: 30px;
+.lastest-orders-card {
+  display: flex;
+  padding: 1.3rem;
 }
 
-.lastest-orders-card{
-    position: absolute;
-    display: flex;
-    align-self: center;
-    top: 500px;
-    left: 12%;
-    right: 100px;
-    justify-self: center;
-    
-    background-color: rgb(250, 250, 250);
-    border-radius: 5px ;
-    border: 2px solid rgb(145, 145, 145);
-    padding: 1.3rem;
-    box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.45);
-
+td {
+  font-size: x-large;
+  margin: 30px;
+  width: 200px;
 }
 
-td{
-    font-size: x-large;
-    margin: 30px;
-    width: 200px;
+.t-title {
+  margin: 20px 5px;
 }
 
-.t-title{
-    margin: 20px 5px;
+.adminNav {
+  width: 100%;
 }
-
-.adminNav{
-    width: 100%;
-}
-

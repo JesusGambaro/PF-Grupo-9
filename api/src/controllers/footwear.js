@@ -298,15 +298,6 @@ module.exports = {
             await stockItem.destroy()
           })
 
-        // eliminar todas las ordenes relacionadas al producto.
-        // const orderProduct = await Order.findAll({
-        //   where: { productId: id },
-        // })
-        // orderProduct &&
-        //   orderProduct.map(async (oderItem) => {
-        //     await oderItem.destroy()
-        //   })
-
         // eliminar todos los cart items relacionados al producto.
         const cartProduct = await ShoppingCartItem.findAll({
           where: { productId: id },

@@ -5,6 +5,9 @@
   background-size: cover;
 
 }
+.imagen{
+  width: 100%;
+}
 
 .con{
   border-radius: 30px;
@@ -12,6 +15,9 @@
 .datos{
   background-color: #E5E8E8;
   border-radius: 30px;
+}
+.perfil{
+  width: 12%;
 }
 .pedido {
   background-color: #E5E8E8;
@@ -24,4 +30,27 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+}
+@media (max-width:1200px){
+  .pedido {
+    width: 45%;
+  }
+}
+
+@media (max-width:1000px){
+  .pedido {
+    width: 45%;
+  }
+}
+
+@media (max-width:770px){
+  .pedido {
+    width: 100%;
+  }
+  .imagen{
+    width: 40%;
+  }
+  .perfil{
+    width: 30%;
+  }
 }

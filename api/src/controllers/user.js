@@ -4,6 +4,8 @@ const { generateToken } = require("../helpers/token.js")
 const { Op } = require("sequelize")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
+const { simpleToken } = require("../helpers/simpleToken.js")
+const { emailForgotPassword } = require("../helpers/emailForgotPassword.js")
 
 module.exports = {
   userSingUp: async (req, res) => {
@@ -47,6 +49,64 @@ module.exports = {
     } catch (error) {
       sendError(res, error)
     }
+  },
+
+  forgotPassword: async (req, res) => {
+    const {email} = req.body;
+
+    try {
+      const userExists = await User.findOne({where: {email}});
+      if(!userExists){
+        throw new Error("User does not exist");
+      }
+
+      userExists.token = simpleToken();  // Agregar token al modelo User? y una funcion que genere un Token
+      await userExists.save(); 
+
+      emailForgotPassword({
+        email,
+        name: userExists.userName,
+        token: userExists.token 
+      });
+
+      res.send({status: true});
+    } catch (error) {
+      sendError(res, error)
+    }    
+  },
+
+  changeForgottenPassword: async (req, res) => {
+    console.log(req.params);
+    console.log('toy aki');
+    const {token} = req.params;
+    const {password} = req.body;
+
+
+    try {
+      const user = await User.findOne({where: {token}});
+
+      if(!user){
+        throw new Error("User does not exist");
+      }
+
+      if(password.length < 4){
+        throw new Error("Password must have more than 4 characters")
+      }
+
+      user.token = null;
+      user.password = password;
+
+      const saltRounds = 10
+      const passwordHash = await bcrypt.hash(password, saltRounds)
+
+      user.password = passwordHash;
+      user.save();
+
+      return res.status(201).send({ status: true });
+
+    } catch (error) {
+      sendError(res, error)
+    }    
   },
 
   changePassword: async(req,res) => {
@@ -104,16 +164,33 @@ module.exports = {
   },
   deleteUser: async (req, res) => {
     try {
-      const { id } = req.body
+      const { email } = req.body
       const removedUser = await User.destroy({
-        where: { id },
+        where: { email },
       })
-      if (removedUser) return res.send({ msg: `User ${id} removed` })
+      if (removedUser) return res.send({ msg: `User ${email} removed` })
       return res.status(400).send({
-        error: `User ${id} doesnt exist`,
+        error: `User ${email} doesnt exist`,
       })
     } catch (error) {
       sendError(res, error)
+    }
+  },
+  changeUsersRole: async (req, res) => {
+    try {
+      const { email, adminState } = req.body
+      const foundUser = await User.findOne({
+        where: { email },
+      });
+      if(foundUser){
+        foundUser.isAdmin = adminState;
+        foundUser.save();
+        return res.send(`${email} was changed to ${adminState?"Admin":"User"}`);
+      }else{
+        return res.send("The email passed was not found");
+      }
+    } catch (error) {
+      return sendError(res, error);
     }
   },
 }

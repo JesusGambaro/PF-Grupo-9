@@ -15,7 +15,9 @@ import AdminCustomers from "./Components/Admin/AdminCustomers";
 import AdminOrderDetail from "./Components/Admin/AdminOrderDetail";
 import ClosedSideBarAdmin from "./Components/Admin/ClosedSideBarAdmin";
 import AdminNav from "./Components/Admin/AdminNav";
-import UserProfile from "./Components/UserProfile";
+import Cart from "./Components/Cart"
+import UserProfile from "./Components/UserProfile"
+
 
 function App() {
   return (
@@ -40,6 +42,15 @@ function App() {
         element={[
           <NavBar key={"nav"} />,
           <Details key={"details"} />,
+          <Footer key={"footer"} />,
+        ]}
+      />
+      <Route
+        exact
+        path="home/cart"
+        element={[
+          <NavBar key={"nav"} />,
+          <Cart key={"cart"} />,
           <Footer key={"footer"} />,
         ]}
       />
@@ -108,7 +119,7 @@ function App() {
 
       <Route path="*" exact={true} element={<NotFound />} />
     </Routes>
-  );
+  )
 }
 
-export default App;
+export default App

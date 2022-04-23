@@ -30,3 +30,11 @@ export const deleteAllCart = (token) => {
     })
   }
 }
+
+export const addCart = (token, product) => {
+  return async () => {
+    await axios.post(`${URL}`, product, {
+      headers: { Authorization: `bearer ${token}` },
+    })
+  }
+}

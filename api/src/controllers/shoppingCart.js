@@ -56,7 +56,6 @@ module.exports = {
         where: { id: productId },
         include: { model: Stock, where: { size } },
       })
-
       if (productSelected?.stocks[0].amount >= amount) {
         const cartItem = await ShoppingCartItem.findOne({
           where: { productId, userId, size },
@@ -79,6 +78,7 @@ module.exports = {
       const { productId, size } = req.body
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
+      console.log(userId, productId, size)
       const productSelected = await Product.findOne({
         where: { id: productId },
         include: { model: Stock, where: { size } },

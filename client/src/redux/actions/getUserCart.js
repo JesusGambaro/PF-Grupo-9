@@ -14,3 +14,19 @@ export const getUserCart = (token) => {
     })
   }
 }
+
+export const deleteCartItem = (id, token) => {
+  return async () => {
+    await axios.delete(`${URL}/deleteCart/${id}`, {
+      headers: { Authorization: `bearer ${token}` },
+    })
+  }
+}
+
+export const deleteAllCart = (token) => {
+  return async () => {
+    await axios.delete(`${URL}/deleteAllCart`, {
+      headers: { Authorization: `bearer ${token}` },
+    })
+  }
+}

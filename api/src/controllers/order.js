@@ -1,8 +1,8 @@
-const { Order, ShoppingCartItem, User, Product, Image } = require("../db.js")
-const { Op, Sequelize } = require("sequelize")
-const moment = require("moment")
-const { sendError } = require("../helpers/error.js")
-const jwt = require('jsonwebtoken')
+const { Order, ShoppingCartItem, User, Product, Image } = require("../db.js");
+const { Op, Sequelize } = require("sequelize");
+const moment = require("moment");
+const { sendError } = require("../helpers/error.js");
+const { verifyToken } = require("../helpers/verify.js");
 
 const orderInclude = {
   include: [
@@ -61,8 +61,7 @@ module.exports = {
   },
   getOrdersUser: async (req, res) => {
     try {
-      const { token } = req.body
-      const decodedToken = jwt.verify(token, process.env.SECRET)
+      const decodedToken = await verifyToken(req, res)
       const userOrders = await Order.findAll({
         where: {
           userId: decodedToken.id,

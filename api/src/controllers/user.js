@@ -116,4 +116,18 @@ module.exports = {
       sendError(res, error)
     }
   },
+  changeUsersRole: async (req, res) => {
+    try {
+      // const { id } = req.body
+      // const removedUser = await User.destroy({
+      //   where: { id },
+      // })
+      // if (removedUser) return res.send({ msg: `User ${id} removed` })
+      // return res.status(400).send({
+      //   error: `User ${id} doesnt exist`,
+      // })
+    } catch (error) {
+      // sendError(res, error)
+    }
+  },
 }

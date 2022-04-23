@@ -31,6 +31,7 @@ module.exports = {
       sendError(res, error)
     }
   },
+
   userSingIn: async (req, res) => {
     try {
       const { email, password } = req.body
@@ -47,6 +48,34 @@ module.exports = {
       sendError(res, error)
     }
   },
+
+  changePassword: async(req,res) => {
+    try {
+      const { email, password, newPassword } = req.body;
+      const user = await User.findOne({
+        where: { email },
+      })
+      const correctPassword =
+        user === null ? false : await bcrypt.compare(password, user.password)
+      if (!correctPassword)
+        return res.status(200).send({ error: "Invalid password" });
+
+      if(newPassword.length < 4){
+        throw new Error("Password must have more than 4 characters")
+      }
+      const saltRounds = 10;
+      const passwordHash = await bcrypt.hash(password, saltRounds);
+
+      user.password = passwordHash;
+      user.save();
+
+      return res.status(201).send({ status: true })
+
+    } catch (error) {
+      sendError(res, error)
+    }
+  },
+
   getRole: async (req, res) => {
     try {
       const decodedToken = await verifyToken(req, res)

@@ -2,6 +2,7 @@ const { Order, ShoppingCartItem, User, Product, Image } = require("../db.js")
 const { Op, Sequelize } = require("sequelize")
 const moment = require("moment")
 const { sendError } = require("../helpers/error.js")
+const jwt = require('jsonwebtoken')
 
 const orderInclude = {
   include: [
@@ -59,11 +60,12 @@ module.exports = {
     }
   },
   getOrdersUser: async (req, res) => {
-    const { userId } = req.params
     try {
+      const { token } = req.body
+      const decodedToken = jwt.verify(token, process.env.SECRET)
       const userOrders = await Order.findAll({
         where: {
-          userId,
+          userId: decodedToken.id,
         },
         orderInclude,
       })

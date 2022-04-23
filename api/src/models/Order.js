@@ -1,5 +1,4 @@
 const { DataTypes } = require("sequelize")
-
 module.exports = (sequelize) => {
   sequelize.define("order", {
     delivered: {
@@ -12,6 +11,9 @@ module.exports = (sequelize) => {
     },
     telephoneNum: {
       type: DataTypes.BIGINT,
+    },
+    total: {
+      type: DataTypes.INTEGER,
     },
   })
 }

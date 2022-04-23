@@ -70,7 +70,10 @@ module.exports = {
         where: {
           userId: decodedToken.id,
         },
-        orderInclude,
+        include: [{
+          model: ShoppingCartItem,
+          include: { model: Product, include: { model: Image, limit: 1 } }
+          }],
       })
       res.send(userOrders)
     } catch (error) {

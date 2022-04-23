@@ -1,5 +1,3 @@
-import ClosedSideBarAdmin from "./ClosedSideBarAdmin";
-import AdminNav from "./AdminNav";
 import "../../Css/AdminCustomers.scss";
 import {useSelector} from "react-redux";
 import {useDispatch} from "react-redux";
@@ -8,9 +6,9 @@ import {useEffect} from "react";
 
 const UserCard = ({user}) => {
   const dispatch = useDispatch();
-  const DeleteUser = async (id) => {
+  const DeleteUser = async (userName) => {
     //await axios.delete(`http://localhost:3001/allFootwear/${id}`);
-    dispatch(deleteUser(id));
+    dispatch(deleteUser(userName));
   };
   return (
     <div className="user-card">
@@ -25,7 +23,7 @@ const UserCard = ({user}) => {
         {user.isAdmin ? "Is admin" : "Not admin"}
       </p>
       <p>{user.email}</p>
-      <p>{user.password.replace(/./g, "*")}</p>
+      <p>{user.password.replace(/./g, "*").substring(0, 10)}</p>
       <div className="actions">
         <button>
           <i class="bi bi-pen"></i>
@@ -33,7 +31,7 @@ const UserCard = ({user}) => {
         </button>
         <button
           onClick={() => {
-            DeleteUser(user.id);
+            DeleteUser(user.userName);
           }}
         >
           <i class="bi bi-trash"></i> Delete
@@ -50,15 +48,10 @@ const AdminCustomers = () => {
     if (!users.length) dispatch(getAllUsers());
   }, []);
   return (
-    <div className="container-fluid admin-container">
-      <ClosedSideBarAdmin />
-      <div className="adminNav">
-        <AdminNav section="Customers" />
-      </div>
-
+    <div className="admin-container">
       <div className="customers-section-container">
         <div className="add-section">
-          <h1>Products list</h1>
+          <h1>Customers list</h1>
         </div>
         <div className="customers-cards-container">
           {users.map((user, id) => (

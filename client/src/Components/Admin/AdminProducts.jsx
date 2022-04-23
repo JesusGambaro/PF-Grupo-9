@@ -1,17 +1,18 @@
 import ClosedSideBarAdmin from "./ClosedSideBarAdmin";
 import AdminNav from "./AdminNav";
+import ConfirmPanel from "./ConfirmPanel";
+import CreateNew from "./CreateNew";
+import {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import bringAllData from "../../redux/actions/bringAllData";
 import {deleteShoe} from "../../redux/actions/productsAdmin";
 import axios from "axios";
+import {roleUser} from "../../redux/actions/Loginregister";
 import "../../Css/AdminProducts.scss";
-const CardProduct = ({shoe}) => {
+import {useNavigate} from "react-router-dom";
+const CardProduct = ({shoe, func}) => {
   //console.log(shoe);
-  const dispatch = useDispatch();
-  const DeleteItem = async (id) => {
-    //await axios.delete(`http://localhost:3001/allFootwear/${id}`);
-    dispatch(deleteShoe(id));
-  };
+
   return (
     <div className="product-card">
       <img src={shoe.images[0].url} alt="" />
@@ -24,7 +25,8 @@ const CardProduct = ({shoe}) => {
         </button>
         <button
           onClick={() => {
-            DeleteItem(shoe.id);
+            //DeleteItem(shoe.id);
+            func("Active", shoe.id);
           }}
         >
           <i class="bi bi-trash"></i> Delete
@@ -35,25 +37,80 @@ const CardProduct = ({shoe}) => {
 };
 
 const AdminProducts = () => {
+  const dispatch = useDispatch();
   const shoes = useSelector((state) => state.admin.allData);
-  //console.log(shoes);
+  useEffect(() => {
+    if (!shoes.length) dispatch(bringAllData(true));
+  }, []);
+  const [confirmState, setConfirmState] = useState("Desactive");
+  const [createState, setCreateState] = useState("Desactive");
+  const [idToDelete, setidToDelete] = useState();
+  const navigate = useNavigate();
+  const DeleteItem = async () => {
+    //await axios.delete(`http://localhost:3001/allFootwear/${id}`);
+    dispatch(deleteShoe(idToDelete));
+  };
+  const HandleConfirmState = (estado) => {
+    setConfirmState(estado);
+  };
+  const HandlecreateState = (estado) => {
+    setCreateState(estado);
+  };
+  const HandleidToDelete = (id) => {
+    setidToDelete(id);
+  };
+  const role = useSelector((state) => state.root.role);
+
+  useEffect(() => {
+    if (window.localStorage.getItem("token")) {
+      const token = window.localStorage.getItem("token");
+      dispatch(roleUser(token));
+      /*    if (role.admin) {
+        navigate("/home/admin/dashboard");
+      } else */ if (role.admin === false) {
+        navigate("/home");
+      }
+    }
+  }, []);
 
   return (
-    <div className="container-fluid admin-container">
+    <div className="admin-container">
       <ClosedSideBarAdmin />
-      <div className="adminNav">
-        <AdminNav section="Purchases and Orders" />
-      </div>
+      <AdminNav section="Purchases and Orders" />
+
+      {confirmState === "Active" && (
+        <ConfirmPanel
+          textoDisplay={"Are You Sure You Want To Delete It Permanently?"}
+          cancelFunc={() => {
+            HandleConfirmState();
+          }}
+          deleteFunc={() => {
+            DeleteItem();
+          }}
+        />
+      )}
+      {createState === "Active" && <CreateNew funcEnviar={() => {
+        HandlecreateState();
+      }}/>}
       <div className="products-section-container">
         <div className="add-section">
           <h1>Products list</h1>
-          <button>
+          <button onClick={() => {
+            HandlecreateState("Active")
+          }}>
             <i className="bi bi-plus"></i> Add New Shoe
           </button>
         </div>
         <div className="products-cards-container">
           {shoes.map((shoe, id) => (
-            <CardProduct key={id} shoe={shoe} />
+            <CardProduct
+              key={id}
+              shoe={shoe}
+              func={(estado, idShoe) => {
+                HandleConfirmState(estado);
+                HandleidToDelete(idShoe);
+              }}
+            />
           ))}
         </div>
       </div>

@@ -1,8 +1,8 @@
-const { Order, ShoppingCartItem, User, Product, Image } = require("../db.js");
-const { Op, Sequelize } = require("sequelize");
-const moment = require("moment");
-const { sendError } = require("../helpers/error.js");
-const { verifyToken } = require("../helpers/verify.js");
+const { Order, ShoppingCartItem, User, Product, Image } = require("../db.js")
+const { Op, Sequelize, where } = require("sequelize")
+const moment = require("moment")
+const { sendError } = require("../helpers/error.js")
+const { verifyToken } = require("../helpers/verify.js")
 
 const orderInclude = {
   include: [
@@ -16,8 +16,12 @@ const orderInclude = {
 
 module.exports = {
   getOrders: async (req, res) => {
-    const { email = "", delivered } = req.query
+    const { email = "", delivered, order } = req.query
     try {
+      if (order) {
+        const orderById = await Order.findByPk(order, orderInclude)
+        return res.send(orderById)
+      }
       if (delivered) {
         console.log(delivered)
         const orderSearched = await Order.findAll({

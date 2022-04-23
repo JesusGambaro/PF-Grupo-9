@@ -4,6 +4,7 @@ const {
   getAllUsers,
   deleteUser,
   getRole,
+  changeUsersRole
 } = require("../controllers/user")
 const {
   verifyTokenAdmin,
@@ -17,5 +18,6 @@ router.post("/signIn", userSingIn)
 router.get("/allUsers", verifyTokenAdmin, getAllUsers)
 router.delete("/deleteUser", verifyTokenAdmin, deleteUser)
 router.get("/role", verifyTokenUserOrAdmin, getRole)
+router.put("/changeAdminState",verifyTokenAdmin, changeUsersRole)
 
 module.exports = router

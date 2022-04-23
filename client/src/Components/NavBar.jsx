@@ -122,7 +122,7 @@ const NavBar = () => {
                 <i className="bi bi-person"></i>
               </DropdownToggle>
               <DropdownMenu title="My count">
-                <DropdownItem>Profile</DropdownItem>
+                <DropdownItem onClick={()=>navigate("/home/profile")}>Profile</DropdownItem>
                 <DropdownItem onClick={handleRegister}>Log out</DropdownItem>
               </DropdownMenu>
             </Dropdown>

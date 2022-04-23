@@ -1,0 +1,27 @@
+.muro{
+  background-image: url("https://as01.epimg.net/baloncesto/imagenes/2022/02/28/fotorrelato/1646065025_541428_1646065882_album_normal.jpg");
+  background-repeat: no-repeat;
+  background-position:center;
+  background-size: cover;
+
+}
+
+.con{
+  border-radius: 30px;
+}
+.datos{
+  background-color: #E5E8E8;
+  border-radius: 30px;
+}
+.pedido {
+  background-color: #E5E8E8;
+  border-radius: 30px;
+  width: 30%;
+}
+
+.cards{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}

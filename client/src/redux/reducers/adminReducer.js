@@ -12,6 +12,11 @@ import {
   EDIT_SHOE,
   GET_ALL_USERS,
   DELETE_SHOE,
+  GET_LAST_SEVEN_DAYS_ORDERS,
+  GET_ALL_ORDERS,
+  GET_ORDER_DETAIL,
+  GET_ORDER_BY_EMAIL,
+  GET_ORDER_BY_STATUS,
 } from "../actions/actionsAdmin";
 const initialState = {
   allData: [],
@@ -22,6 +27,8 @@ const initialState = {
   loginUser: {},
   role: {},
   users: [],
+  allOrders: [],
+  lastOrders: [],
 };
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -45,6 +52,19 @@ const adminReducer = (state = initialState, action) => {
       return {...state, loginUser: action.payload};
     case GET_ROLE:
       return {...state, role: action.payload};
+    case GET_LAST_SEVEN_DAYS_ORDERS:
+      return {...state, lastOrders: action.payload};
+    case GET_ALL_ORDERS:
+      return {...state, allOrders: action.payload};
+
+    case GET_ORDER_DETAIL:
+      return {...state, orderDetail: action.payload};
+
+    case GET_ORDER_BY_EMAIL:
+      return {...state, allOrders: action.payload};
+
+    case GET_ORDER_BY_STATUS:
+      return {...state, allOrders: action.payload};
     default:
       return state;
   }

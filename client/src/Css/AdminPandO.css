@@ -4,14 +4,12 @@
   background-color: rgb(250, 250, 250);
   border-radius: 5px;
   padding: 1.3rem;
-  box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.45);
 }
 
 .title-and-search {
   display: flex;
   justify-content: space-between;
 }
-
 .admin-search {
   display: flex;
   justify-content: center;

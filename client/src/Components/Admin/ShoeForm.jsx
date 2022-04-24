@@ -6,7 +6,6 @@ import "../../Css/ShoeForm.scss";
 import Input from "./Input";
 import Selection from "./Selection";
 import {useSelector} from "react-redux";
-import {getAllCategories, getAllGenders} from "../../redux/actions/getAllUtils";
 import {brands, colors, sizes} from "../data";
 
 const ShoeForm = ({funcEnviar}) => {
@@ -22,7 +21,7 @@ const ShoeForm = ({funcEnviar}) => {
     description: "", //textarea
     price: 0, //input
     sale: 0, //input
-    stock: {}, //size -> select | amount -> input
+    stock: [], //size -> select | amount -> input
     images: [], //input
   });
 
@@ -100,17 +99,13 @@ const ShoeForm = ({funcEnviar}) => {
       });
   }, [data.stocks]);
   const {categories, genders} = useSelector((state) => state.root);
-  useEffect(() => {
-    if (!categories.length || !genders.length) dispatch(getAllCategories());
-    dispatch(getAllGenders());
-  }, [dispatch]);
-
   const handleSelectChange = (e) => {
     if (!data.gender.length || data.category.length)
       setData({
         ...data,
         [e.target.name]: e.target.value,
       });
+    setColor(e.target.value);
   };
   const [ImageURL, setImageURL] = useState("");
   const deleteImage = (img) => {
@@ -125,7 +120,7 @@ const ShoeForm = ({funcEnviar}) => {
       images: validation(img, "images"),
     });
   };
-
+  const [color, setColor] = useState("white");
   return (
     <div className="create-container">
       <div className="form-container">
@@ -138,27 +133,35 @@ const ShoeForm = ({funcEnviar}) => {
             <div className="model">
               <h4>Model</h4>
               <Input
-                name={data.model}
+                name={"model"}
                 error={errors[data.model]}
                 setData={setData}
               />
             </div>
             <div className="category-gender">
-              <h4>Category</h4>
-              <Selection
-                options={categories}
-                type={"category"}
-                handleChange={handleSelectChange}
-              />
-              <h4>Gender</h4>
-              <Selection
-                options={genders}
-                type={"gender"}
-                handleChange={handleSelectChange}
-              />
+              <span>
+                <h4>Category</h4>
+                {categories.length && (
+                  <Selection
+                    options={categories.map((e) => Object.values(e)[0])}
+                    type={"category"}
+                    handleChange={handleSelectChange}
+                  />
+                )}
+              </span>
+              <span>
+                <h4>Gender</h4>
+                {genders.length && (
+                  <Selection
+                    options={genders.map((e) => Object.values(e)[0])}
+                    type={"gender"}
+                    handleChange={handleSelectChange}
+                  />
+                )}
+              </span>
             </div>
             <div className="brands">
-              <h4>Brands</h4>
+              <h4>Brand</h4>
               <Selection
                 options={brands}
                 type={"brand"}
@@ -167,7 +170,7 @@ const ShoeForm = ({funcEnviar}) => {
             </div>
             <div className="description">
               <h4>Description</h4>
-              <textarea name="" id="" cols="30" rows="10"></textarea>
+              <textarea className="txtarea" cols="30" rows="10"></textarea>
             </div>
           </div>
           <div className="rightside">
@@ -175,6 +178,7 @@ const ShoeForm = ({funcEnviar}) => {
               <h4>Images</h4>
               <div className="images-container">
                 {data.images.map((img, i) => {
+                  console.log(img)
                   if (!img) {
                     return <div className="imagent"></div>;
                   }
@@ -199,40 +203,64 @@ const ShoeForm = ({funcEnviar}) => {
               </div>
             </div>
             <div className="stock">
-              <h4>Size</h4>
-              <Selection
-                options={sizes}
-                type={"size"}
-                handleChange={handleSelectChange}
-              />
-              <h4>Amount</h4>
-              <Input
-                name={data.stock.amount}
-                error={errors[data.stock.amount]}
-                setData={setData}
-              />
+              <span>
+                <h4>Size</h4>
+                <Selection
+                  options={sizes}
+                  type={"size"}
+                  handleChange={handleSelectChange}
+                />
+              </span>
+              <span>
+                <h4>Amount</h4>
+                <Input
+                  name={"amount"}
+                  error={errors[data.stock.amount]}
+                  setData={setData}
+                />
+              </span>
             </div>
             <div className="color">
               <h4>Color</h4>
-              <Selection
-                options={colors}
-                type={"color"}
-                handleChange={handleSelectChange}
-              />
+              <span>
+                <Selection
+                  options={colors}
+                  type={"color"}
+                  handleChange={handleSelectChange}
+                />
+                <div className="color-show" style={{"--c": color}}></div>
+              </span>
+              {!data.stock.length && (
+                <span className="stock-container">
+                  {data.stock.map((stock) => {
+                    return (
+                      <div className="stock-card">
+                        <p>{stock.size}</p>
+                        <p>{stock.amount}</p>
+                        <button>X</button>
+                      </div>
+                    );
+                  })}
+                </span>
+              )}
             </div>
             <div className="price-sale">
-              <h4>Price</h4>
-              <Input
-                name={data.price}
-                error={errors[data.price]}
-                setData={setData}
-              />
-              <h4>Sale</h4>
-              <Input
-                name={data.sale}
-                error={errors[data.sale]}
-                setData={setData}
-              />
+              <span>
+                <h4>Price</h4>
+                <Input
+                  name={"price"}
+                  error={errors[data.price]}
+                  setData={setData}
+                />
+              </span>
+              <span>
+                <h4>Sale</h4>
+                <Input
+                  name={"sale"}
+                  error={errors[data.sale]}
+                  setData={setData}
+                />
+              </span>
             </div>
           </div>
         </form>

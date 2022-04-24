@@ -66,6 +66,20 @@ const adminReducer = (state = initialState, action) => {
 
     case GET_ORDER_BY_STATUS:
       return {...state, allOrders: action.payload};
+    case GET_LAST_SEVEN_DAYS_ORDERS:
+      return{...state, lastOrders:action.payload}
+
+    case GET_ALL_ORDERS:
+      return{...state, allOrders:action.payload}
+
+    case GET_ORDER_DETAIL:
+      return{...state, orderDetail:action.payload}
+
+    case GET_ORDER_BY_EMAIL:
+      return{...state, allOrders:action.payload}
+
+    case GET_ORDER_BY_STATUS:
+      return{...state, allOrders:action.payload}
     default:
       return state;
   }

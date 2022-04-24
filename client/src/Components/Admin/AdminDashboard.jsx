@@ -2,6 +2,7 @@ import "../../Css/AdminDashboard.css";
 import React from "react";
 import bringAllData from "../../redux/actions/bringAllData";
 import {useEffect} from "react";
+import { useNavigate, NavLink } from "react-router-dom"
 import {useSelector, useDispatch} from "react-redux";
 import "../../Css/AdminDashboard.css";
 import {useNavigate, NavLink} from "react-router-dom";
@@ -11,7 +12,9 @@ import {
 } from "../../redux/actions/ordersAdmin";
 import {roleUser} from "../../redux/actions/Loginregister";
 
+
 export default function AdminDashboard() {
+  const { role } = useSelector(store => store.root)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const shoes = useSelector((state) => state.admin.allData.length);
@@ -53,7 +56,6 @@ export default function AdminDashboard() {
             <p>{shoes}</p>
           </div>
         </div>
-
         <div className="lastest-orders-card">
           <div className="lastest-orders-body-card">
             <h3 className="t-title">Latest orders</h3>

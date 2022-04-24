@@ -1,20 +1,11 @@
-/* <<<<<<< HEAD */
 import "../../Css/AdminOrderDetail.css";
 import React from "react";
 import {useEffect} from "react";
 import {useNavigate, NavLink, useParams} from "react-router-dom";
-/* =======
-import "../../Css/AdminOrderDetail.css";
-import React from "react";
-import ClosedSideBarAdmin from "./ClosedSideBarAdmin";
-import AdminNav from "./AdminNav";
-import {useEffect} from "react";
->>>>>>> 634c6e1122b12ed7853b50ecf2282795ceaac81b */
 import {useSelector, useDispatch} from "react-redux";
 import {getOrderDetail} from "../../redux/actions/ordersAdmin";
 import {roleUser} from "../../redux/actions/Loginregister";
 
-/* <<<<<<< HEAD */
 export default function AdminOrderDetail() {
   const {role} = useSelector((store) => store.root);
   const dispatch = useDispatch();

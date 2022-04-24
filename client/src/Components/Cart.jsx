@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getUserCart, deleteCartItem, deleteAllCart, putCart} from "../redux/actions/getUserCart"
+import { getUserCart, deleteCartItem, deleteAllCart, putCart} from "../redux/actions/userCart"
 import "../Css/AdminProducts.scss";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -43,7 +43,7 @@ export default function Cart () {
     }
     const handleDeleteCartItem = (id) =>{
         Swal.fire({
-            text: "Do you want to delete all?",
+            text: "Do you want to delete it?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

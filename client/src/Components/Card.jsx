@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import {NavLink, useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
-import { addCart } from "../redux/actions/getUserCart";
+import { addCart } from "../redux/actions/userCart";
 
 const Card = ({e, horizontal}) => {
   const navigate=useNavigate()

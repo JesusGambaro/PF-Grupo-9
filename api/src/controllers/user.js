@@ -4,6 +4,8 @@ const { generateToken } = require("../helpers/token.js")
 const { Op } = require("sequelize")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
+const { simpleToken } = require("../helpers/simpleToken.js")
+const { emailForgotPassword } = require("../helpers/emailForgotPassword.js")
 
 module.exports = {
   userSingUp: async (req, res) => {
@@ -47,6 +49,64 @@ module.exports = {
     } catch (error) {
       sendError(res, error)
     }
+  },
+
+  forgotPassword: async (req, res) => {
+    const {email} = req.body;
+
+    try {
+      const userExists = await User.findOne({where: {email}});
+      if(!userExists){
+        throw new Error("User does not exist");
+      }
+
+      userExists.token = simpleToken();  // Agregar token al modelo User? y una funcion que genere un Token
+      await userExists.save(); 
+
+      emailForgotPassword({
+        email,
+        name: userExists.userName,
+        token: userExists.token 
+      });
+
+      res.send({status: true});
+    } catch (error) {
+      sendError(res, error)
+    }    
+  },
+
+  changeForgottenPassword: async (req, res) => {
+    console.log(req.params);
+    console.log('toy aki');
+    const {token} = req.params;
+    const {password} = req.body;
+
+
+    try {
+      const user = await User.findOne({where: {token}});
+
+      if(!user){
+        throw new Error("User does not exist");
+      }
+
+      if(password.length < 4){
+        throw new Error("Password must have more than 4 characters")
+      }
+
+      user.token = null;
+      user.password = password;
+
+      const saltRounds = 10
+      const passwordHash = await bcrypt.hash(password, saltRounds)
+
+      user.password = passwordHash;
+      user.save();
+
+      return res.status(201).send({ status: true });
+
+    } catch (error) {
+      sendError(res, error)
+    }    
   },
 
   changePassword: async(req,res) => {

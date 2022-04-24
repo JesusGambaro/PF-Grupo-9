@@ -30,3 +30,27 @@ export const deleteAllCart = (token) => {
     })
   }
 }
+
+export const addCart = (token, product) => {
+  return async () => {
+    await axios.post(`${URL}`, product, {
+      headers: { Authorization: `bearer ${token}` },
+    })
+  }
+}
+
+export const putCart = (token, product) => {
+  return async () => {
+    await axios.put(`${URL}`, product, {
+      headers: { Authorization: `bearer ${token}` },
+    })
+  }
+}
+
+export const postOrder = (token, order) => {
+  return async () => {
+    await axios.post(`${URL}`, order, {
+      headers: { Authorization: `bearer ${token}` },
+    })
+  }
+}

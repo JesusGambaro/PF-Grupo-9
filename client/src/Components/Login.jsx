@@ -33,7 +33,7 @@ function Login() {
   })
 
   useEffect(() => {
-
+    window.scroll({ top: 0, behavior: 'smooth' })
     if (signUp) {
       if (!error.email && !error.password && !error.user && state.email && state.password && state.user) {
         setValidation(false)
@@ -338,7 +338,7 @@ function Login() {
             </div>
             <div className="mt-4">
               {!signUp
-                ? <span>You do not have an account? <button onClick={handleSignUp}
+                ? <span>You don't have an account? <button onClick={handleSignUp}
                   className="bg-transparent border-0 mb-3 text-primary text-decoration-underline">Sign up</button></span>
                 : <span>You have an account? <button onClick={handleSignUp}
                   className="bg-transparent border-0 text-primary text-decoration-underline">Login</button></span>

@@ -1,32 +1,52 @@
+import { useDispatch } from "react-redux";
 import {NavLink, useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
+import { addCart } from "../redux/actions/getUserCart";
 
 const Card = ({e, horizontal}) => {
-    const navigate = useNavigate()
-
-    const handleAddingCart = () => {
-        if (window.localStorage.getItem("token")) {
-            Swal.fire({
-                position: 'bottom-end',
-                icon: 'success',
-                title: 'Product added successfully',
-                showConfirmButton: false,
-                timer: 1500,
-            })
-        } else {
-            Swal.fire({
-                title: 'You must login to add products',
-                text: "Do you want to login?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, I want',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    navigate("/home/login")
-                }
-            })
+  const navigate=useNavigate()
+  const dispatch = useDispatch()
+  const token = window.localStorage.getItem("token")
+  const handleAddingCart=(e)=>{
+    const sizes = {}
+    e.stocks.forEach(element => {
+      sizes[element.size] = element.size
+    });
+    if(token){
+      Swal.fire({
+        title: 'Select a size',
+        input:"select",
+        inputOptions:sizes,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Add',
+      }).then((result) => {
+        if (result.isConfirmed) {
+        const product = { productId: e.id, size: result.value }
+        dispatch(addCart(token,product))
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'success',
+          title: 'Product added successfully',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+        }
+      })
+    }
+    else{
+      Swal.fire({
+        title: 'You must login to add products',
+        text: "Do you want to login?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, I want',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/home/login")
         }
     }
 
@@ -99,7 +119,23 @@ const Card = ({e, horizontal}) => {
                 </div>
             </div>
         </div>
-    );
+        <div className="appear">
+          <i className="bi bi-bag" title="Add to cart" onClick={() => handleAddingCart(e)}>
+            &nbsp;
+            <p>{horizontal ? "Add to cart" : ""}</p>
+          </i>
+          <NavLink
+            to={`/home/${e.id}/${e.model}`}
+            style={{color: "black", textDecoration: "none"}}
+          >
+            <i className="bi bi-toggles2" title="View details"></i>
+          </NavLink>
+          <i className="bi bi-heart" title="Add to favorites" onClick={handleAddingCart}></i>
+        </div>
+      </div>
+    </div>
+  );
+
 };
 
 export default Card;

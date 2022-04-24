@@ -1,6 +1,6 @@
 import "./Css/app.scss";
 import Shoes from "./Components/Shoes";
-import {Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import NotFound from "./Components/NotFound";
 import NavBar from "./Components/NavBar";
 import LandingPage from "./Components/LandingPage";
@@ -15,34 +15,45 @@ import AdminCustomers from "./Components/Admin/AdminCustomers";
 import AdminOrderDetail from "./Components/Admin/AdminOrderDetail";
 import ClosedSideBarAdmin from "./Components/Admin/ClosedSideBarAdmin";
 import AdminNav from "./Components/Admin/AdminNav";
+import Cart from "./Components/Cart"
+import UserProfile from "./Components/UserProfile"
+
 
 function App() {
-    return (
-        <Routes>
-            <Route
-                exact
-                path="/"
-                element={[<NavBar key={"nav"}/>, <LandingPage key={"landing"}/>]}
-            />
-            <Route
-                exact
-                path="/home"
-                element={[
-                    <NavBar key={"nav"}/>,
-                    <Shoes key={"shoes"}/>,
-                    <Footer key={"footer"}/>,
-                ]}
-            />
-            <Route
-                exact
-                path="home/:id/:model"
-                element={[
-                    <NavBar key={"nav"}/>,
-                    <Details key={"details"}/>,
-                    <Footer key={"footer"}/>,
-                ]}
-            />
-
+  return (
+    <Routes>
+      <Route
+        exact
+        path="/"
+        element={[<NavBar key={"nav"} />, <LandingPage key={"landing"} />]}
+      />
+      <Route
+        exact
+        path="/home"
+        element={[
+          <NavBar key={"nav"} />,
+          <Shoes key={"shoes"} />,
+          <Footer key={"footer"} />,
+        ]}
+      />
+      <Route
+        exact
+        path="home/:id/:model"
+        element={[
+          <NavBar key={"nav"} />,
+          <Details key={"details"} />,
+          <Footer key={"footer"} />,
+        ]}
+      />
+      <Route
+        exact
+        path="home/cart"
+        element={[
+          <NavBar key={"nav"} />,
+          <Cart key={"cart"} />,
+          <Footer key={"footer"} />,
+        ]}
+      />
             <Route
                 exact
                 path="home/admin/dashboard"
@@ -95,9 +106,19 @@ function App() {
                 ]}
             />
 
-            <Route path="*" exact={true} element={<NotFound/>}/>
-        </Routes>
-    );
+      <Route
+        exact
+        path="home/profile"
+        element={[
+          <NavBar key={"nav"} />,
+          <UserProfile key={"profile"} />,
+          <Footer key={"footer"} />,
+        ]}
+      />
+
+      <Route path="*" exact={true} element={<NotFound />} />
+    </Routes>
+  )
 }
 
-export default App;
+export default App

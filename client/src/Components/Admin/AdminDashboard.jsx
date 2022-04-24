@@ -18,11 +18,11 @@ export default function AdminDashboard() {
   const shoes = useSelector((state) => state.admin.allData.length);
 
   useEffect(() => {
-    if (!shoes.length) dispatch(bringAllData(true));
     if (window.localStorage.getItem("token")) {
       const token = window.localStorage.getItem("token");
       dispatch(roleUser(token));
       if (role.admin) {
+        if (!shoes.length) dispatch(bringAllData(true));
         dispatch(getLastSevenDaysOrders(token));
         dispatch(getAllOrders(token));
         navigate("/home/admin/dashboard");

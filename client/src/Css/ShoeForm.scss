@@ -59,6 +59,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      .input-name {
+        gap: 1rem;
+        display: flex;
+        align-items: center;
+        p {
+          color: rgb(255, 145, 0);
+          margin-bottom: 0;
+          //background: red;
+          font-size: medium;
+        }
+      }
       .leftside {
         width: 40%;
         height: 100%;
@@ -69,6 +80,7 @@
         gap: 1rem;
         flex-direction: column;
         padding: 0 1rem;
+
         .model {
           height: 20%;
           width: 100%;
@@ -129,21 +141,6 @@
         justify-content: space-between;
         padding: 0 1rem;
         gap: 1rem;
-        .color {
-          height: 20%;
-          span {
-            display: flex;
-            .selectOwn {
-              width: calc(50% - 2rem);
-            }
-            .color-show {
-              width: 2rem;
-              height: 2rem;
-              background: var(--c);
-              border-radius: 0 0.3rem 0.3rem 0;
-            }
-          }
-        }
         .price-sale {
           height: 20%;
           display: flex;
@@ -160,21 +157,101 @@
             }
           }
         }
-        .stock {
-          display: flex;
+        .stock-color-section {
+          height: 40%;
           width: 100%;
-          gap: 1rem;
-          height: 20%;
-          justify-content: space-between;
-          span {
+          display: flex;
+          .stock-container {
+            height: 100%;
             width: 50%;
-            .selectOwn {
-              width: 100%;
+            .color {
+              height: 100%;
+              span {
+                display: flex;
+                .selectOwn {
+                  width: 100%;
+                }
+                .color-show {
+                  width: 2rem;
+                  height: 2rem;
+                  background: var(--c);
+                  border-radius: 0 0.3rem 0.3rem 0;
+                }
+              }
             }
-            .input-container {
+            .stock {
+              display: flex;
               width: 100%;
-              input {
-                width: 100%;
+              height: 50%;
+              justify-content: start;
+              gap: 1rem;
+              span {
+                &:first-child {
+                  width: 40%;
+                }
+                .selectOwn {
+                  width: 100%;
+                }
+                button {
+                  height: 2rem;
+                  padding: 0 0.5rem;
+                  border: none;
+                  color: #fff;
+                  background: #000;
+                  border-radius: 0.3rem;
+                }
+                span {
+                  gap: 1rem;
+                  width: 100%;
+                  display: flex;
+                  .input-container {
+                    width: 100%;
+                    input {
+                      width: 100%;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          .stocks-container {
+            border: 0.1rem solid red;
+            width: 50%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0 1rem;
+            .stock-card {
+              height: 30%;
+              width: 4rem;
+              display: flex;
+              color: #fff;
+              flex-direction: column;
+              background: #000;
+              border-radius: 0.3rem;
+              border: 0.1rem solid blue;
+              position: relative;
+              p {
+                margin-bottom: 0;
+                display: flex;
+                flex-direction: column;
+              }
+              button {
+                position: absolute;
+                top: -0.2rem;
+                right: -0.2rem;
+                border-radius: 50%;
+                background-color: #fff;
+                border: none;
+                height: 0.8rem;
+                width: 0.8rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                i {
+                  font-size: large;
+                }
               }
             }
           }

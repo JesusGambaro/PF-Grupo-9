@@ -4,14 +4,35 @@ import bringAllData from "../../redux/actions/bringAllData";
 import ClosedSideBarAdmin from "./ClosedSideBarAdmin";
 import AdminNav from "./AdminNav";
 import {useEffect} from "react";
+import { useNavigate, NavLink } from "react-router-dom"
 import {useSelector, useDispatch} from "react-redux";
+import { getAllOrders, getLastSevenDaysOrders } from "../../redux/actions/ordersAdmin";
+import { roleUser } from "../../redux/actions/Loginregister";
 
 export default function AdminDashboard() {
+  const { role } = useSelector(store => store.root)
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const shoes = useSelector((state) => state.admin.allData.length);
   useEffect(() => {
     if (!shoes.length) dispatch(bringAllData(true));
+    if (window.localStorage.getItem("token")) {
+      const token = window.localStorage.getItem("token")
+      dispatch(roleUser(token))
+      if (role.admin) {
+        navigate("/home/admin/dashboard")
+        dispatch(getLastSevenDaysOrders(token))
+        dispatch(getAllOrders(token))
+      }
+      else if (role.admin===false) {
+        navigate("/home")
+      }
+    }
+
   }, []);
+  const allOrders = useSelector(state=>state.admin.allOrders.length)
+  const lastestOrders = useSelector((state)=> state.admin.lastOrders)
+  console.log('aqui',lastestOrders)
 
   return (
     <div className="admin-container">
@@ -33,7 +54,6 @@ export default function AdminDashboard() {
             <p>{shoes}</p>
           </div>
         </div>
-
         <div className="lastest-orders-card">
           <div className="lastest-orders-body-card">
             <h3 className="t-title">Latest orders</h3>

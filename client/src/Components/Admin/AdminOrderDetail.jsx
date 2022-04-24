@@ -4,7 +4,8 @@ import ClosedSideBarAdmin from "./ClosedSideBarAdmin";
 import AdminNav from "./AdminNav";
 import {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
-
+import { getOrderDetail } from '../../redux/actions/ordersAdmin';
+import { roleUser } from "../../redux/actions/Loginregister";
 export default function AdminOrderDetail() {
     return (
         <div className="admin-container">

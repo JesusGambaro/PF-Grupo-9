@@ -43,7 +43,6 @@
   align-self: flex-end;
   justify-self: flex-start;
 }
-
 .itemL-dash {
   font-size: 30px;
   width: 30px;
@@ -63,7 +62,6 @@ td {
 .t-title {
   margin: 20px 5px;
 }
-
 .adminNav {
   width: 100%;
 }

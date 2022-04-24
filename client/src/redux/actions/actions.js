@@ -16,6 +16,7 @@ const CLEAR_USER = "@shoes/clearUser"
 const SEARCH = "@shoes/search"
 const GET_ROLE = "@shoes/getRole"
 const GET_CART = "@user/getCart"
+const GET_PROFILE= "@user/profile"
 
 export {
   GET_CART,
@@ -36,4 +37,5 @@ export {
   CLEAR_USER,
   SEARCH,
   GET_ROLE,
+  GET_PROFILE
 }

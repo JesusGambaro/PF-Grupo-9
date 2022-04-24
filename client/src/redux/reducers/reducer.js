@@ -17,6 +17,7 @@ import {
   SEARCH,
   GET_ROLE,
   GET_CART,
+  GET_PROFILE
 } from "../actions/actions"
 
 const initialState = {
@@ -36,6 +37,7 @@ const initialState = {
   loginUser: {},
   role: {},
   cartUser: [],
+  orderUser:[]
 }
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -91,6 +93,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cartUser: action.payload,
+      }
+    case GET_PROFILE:
+      return {
+        ...state,
+        orderUser: action.payload
       }
     default:
       return state

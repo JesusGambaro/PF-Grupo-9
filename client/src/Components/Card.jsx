@@ -1,17 +1,38 @@
+import { useDispatch } from "react-redux";
 import {NavLink, useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
+import { addCart } from "../redux/actions/getUserCart";
 
 const Card = ({e, horizontal}) => {
   const navigate=useNavigate()
-
-  const handleAddingCart=()=>{
-    if(window.localStorage.getItem("token")){
+  const dispatch = useDispatch()
+  const token = window.localStorage.getItem("token")
+  const handleAddingCart=(e)=>{
+    const sizes = {}
+    e.stocks.forEach(element => {
+      sizes[element.size] = element.size
+    });
+    if(token){
       Swal.fire({
-        position: 'bottom-end',
-        icon: 'success',
-        title: 'Product added successfully',
-        showConfirmButton: false,
-        timer: 1500,
+        title: 'Select a size',
+        input:"select",
+        inputOptions:sizes,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Add',
+      }).then((result) => {
+        if (result.isConfirmed) {
+        const product = { productId: e.id, size: result.value }
+        dispatch(addCart(token,product))
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'success',
+          title: 'Product added successfully',
+          showConfirmButton: false,
+          timer: 1500,
+        })
+        }
       })
     }
     else{
@@ -86,7 +107,7 @@ const Card = ({e, horizontal}) => {
           </span>
         </div>
         <div className="appear">
-          <i className="bi bi-bag" title="Add to cart" onClick={handleAddingCart}>
+          <i className="bi bi-bag" title="Add to cart" onClick={() => handleAddingCart(e)}>
             &nbsp;
             <p>{horizontal ? "Add to cart" : ""}</p>
           </i>

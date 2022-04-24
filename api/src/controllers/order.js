@@ -19,7 +19,15 @@ module.exports = {
     const { email = "", delivered, order } = req.query
     try {
       if (order) {
-        const orderById = await Order.findByPk(order, orderInclude)
+        const orderById = await Order.findByPk(order, {
+          include: [
+            {
+              model: ShoppingCartItem,
+              include: { model: Product, include: { model: Image, limit: 1 } },
+            },
+            { model: User },
+          ],
+        })
         return res.send(orderById)
       }
       if (delivered) {
@@ -30,7 +38,7 @@ module.exports = {
               Sequelize.where(
                 Sequelize.cast(Sequelize.col("delivered"), "varchar"),
                 {
-                  [Op.iLike]: `%${delivered}%`,
+                  [Op.iLike]: `${delivered}`,
                 }
               ),
             ],

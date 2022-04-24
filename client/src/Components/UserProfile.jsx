@@ -40,8 +40,8 @@ function UserProfile() {
             className="col-12 rounded-circle p-0 border border-5 border-secondary perfil"
           />
           <div className="col-12 ms-sm-4 text-center mt-4">
-            <p className="col-12 fs-5 fw-bold m-0">UserName: Camilo  </p>
-            <p className="col-12 fs-5 fw-bold m-0">Email: Camilo@gmail.com  </p>
+            <p className="col-12 fs-5 m-0"><strong>UserName:</strong> {orderUser[0].user.userName}</p>
+            <p className="col-12 fs-5 m-0"><strong>Email:</strong> {orderUser[0].user.email}</p>
           </div>
         </div>
       </div>

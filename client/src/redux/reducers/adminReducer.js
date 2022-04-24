@@ -29,6 +29,7 @@ const initialState = {
   users: [],
   allOrders: [],
   lastOrders: [],
+  orderDetail:[]
 };
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {

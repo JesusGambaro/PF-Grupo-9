@@ -1,11 +1,7 @@
 .card-order-detail{
-    position: absolute;
     display: flex;
     flex-wrap: wrap;
     width: 80%;
-    top: 100px;
-    margin: 100px;
-    left: 100px;
     border-radius: 5px ;
     border: 2px solid rgb(145, 145, 145);
     padding: 1rem;

@@ -30,10 +30,9 @@ export default function AdminDashboard() {
         navigate("/home");
       }
     }
-  }, []);
+  }, [dispatch, navigate, role.admin, shoes.length]);
   /*   const allOrders = useSelector((state) => state.admin.allOrders.length);*/
-  const lastestOrders = useSelector((state) => state.admin.allOrders);
-  console.log(lastestOrders);
+  const lastestOrders = useSelector((state) => state.admin.lastOrders);
   return (
     <div className="admin-container">
       <div className="dashboard-container">

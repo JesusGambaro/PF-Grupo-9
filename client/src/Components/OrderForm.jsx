@@ -59,9 +59,9 @@ export default function OrderForm () {
         <div style={{width:"70%",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",marginTop:"60px"}}>
             <h1>Purchase</h1>
             <form onSubmit={(e) => handleSubmit(e)} style={{display:"flex",flexDirection:"column",alignItems:"flex-start",justifyContent:"flex-start"}}>
-                <label htmlFor="">Telephone number<mark>*</mark> <input type="number" name="telephoneNumber" value={order.telephoneNumber} onChange={e => handleOnChangeForm(e)}/></label>
+                <label className="prueba" >Telephone number<mark>*</mark> <input placeholder="3447423612" type="number" name="telephoneNumber" value={order.telephoneNumber} onChange={e => handleOnChangeForm(e)}/></label>
                 {error.telephoneNumber && <label>{error.telephoneNumber}</label>}
-                <label htmlFor="">Address<mark>*</mark><input name="address" value={order.address} onChange={e => handleOnChangeForm(e)}/></label>
+                <label className="prueba">Address<mark>*</mark><input name="address" placeholder="San Martin 35" value={order.address} onChange={e => handleOnChangeForm(e)}/></label>
                 {error.address && <label>{error.address}</label>}
                 <button disabled={validation()}>Place the order!</button>
             </form>

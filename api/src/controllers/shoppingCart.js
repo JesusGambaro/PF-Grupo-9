@@ -85,7 +85,6 @@ module.exports = {
       const { productId, size } = req.body
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
-      console.log(userId, productId, size)
       const productSelected = await Product.findOne({
         where: { id: productId },
         include: { model: Stock, where: { size } },

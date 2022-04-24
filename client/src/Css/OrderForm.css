@@ -1,10 +1,9 @@
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
+.Prueba > ::-webkit-outer-spin-button,
+.Prueba > ::-webkit-inner-spin-button {
     -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    margin: 0; 
 }
 
-input[type=number] {
-    -moz-appearance:textfield; /* Firefox */
+.Prueba > [type=number] {
+    -moz-appearance:textfield; 
 }

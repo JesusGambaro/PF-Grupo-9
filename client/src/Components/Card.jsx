@@ -30,7 +30,7 @@ const Card = ({e, horizontal}) => {
           icon: 'success',
           title: 'Product added successfully',
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1250,
         })
         }
       })

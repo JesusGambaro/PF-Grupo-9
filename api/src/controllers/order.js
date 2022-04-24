@@ -30,7 +30,7 @@ module.exports = {
               Sequelize.where(
                 Sequelize.cast(Sequelize.col("delivered"), "varchar"),
                 {
-                  [Op.iLike]: `%${delivered}%`,
+                  [Op.iLike]: `${delivered}`,
                 }
               ),
             ],

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { sortByGender, resetState } from "../redux/actions/sortBy";
-import { resetFilters, genderFilter } from "../redux/actions/leftSideFilter";
+import { resetFilters, genderFilter,leftSideFilter } from "../redux/actions/leftSideFilter";
 import { useDispatch } from "react-redux";
 import search from "../redux/actions/search";
 import Swal from "sweetalert2";
@@ -20,8 +20,8 @@ const NavBar = () => {
   const token=window.localStorage.getItem("token")
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log(searchParam);
-    dispatch(search(searchParam));
+    console.log("Search param:",searchParam);
+    dispatch(leftSideFilter("nameBrand",searchParam));
   };
 
   const handleRegister = () => {

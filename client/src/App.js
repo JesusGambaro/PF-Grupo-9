@@ -54,58 +54,57 @@ function App() {
           <Footer key={"footer"} />,
         ]}
       />
+            <Route
+                exact
+                path="home/admin/dashboard"
+                element={[
+                    <AdminNav section="Dashboard" key={"adminNav"}/>,
+                    <ClosedSideBarAdmin key={"adminCloseSide"}/>,
+                    <AdminDashboard key={"adminDashboard"}/>,
+                ]}
+            />
+            <Route
+                exact
+                path="home/admin/products"
+                element={[
+                    <AdminNav section="Products" key={"adminNav"}/>,
+                    <ClosedSideBarAdmin key={"adminCloseSide"}/>,
+                    <AdminProducts key={"adminProducts"}/>,
+                ]}
+            />
+            <Route
+                exact
+                path="home/admin/customers"
+                element={[
+                    <AdminNav section="Customers" key={"adminNav"}/>,
+                    <ClosedSideBarAdmin key={"adminDashboard"}/>,
+                    <AdminCustomers key={"adminCustomers"}/>,
+                ]}
+            />
+            <Route
+                exact
+                path="home/admin/orders"
+                element={[
+                    <AdminPandO key={"adminPando"}/>,
+                    <ClosedSideBarAdmin key={"adminDashboard"}/>,
+                    <AdminNav section="Purchases and Orders" key={"adminNav"}/>,
+                ]}
+            />
+            <Route
+                exact
+                path="home/admin/order/detail"
+                element={<AdminOrderDetail key={"adminOrderDetail"}/>}
+            />
 
-      <Route
-        exact
-        path="home/admin/dashboard"
-        element={[
-          <AdminNav section="Dashboard" />,
-          <ClosedSideBarAdmin />,
-          <AdminDashboard />,
-        ]}
-      />
-      <Route
-        exact
-        path="home/admin/products"
-        element={[
-          <AdminNav section="Products" />,
-          <ClosedSideBarAdmin />,
-          <AdminProducts />,
-        ]}
-      />
-      <Route
-        exact
-        path="home/admin/customers"
-        element={[
-          <AdminNav section="Customers" />,
-          <ClosedSideBarAdmin />,
-          <AdminCustomers />,
-        ]}
-      />
-      <Route
-        exact
-        path="home/admin/orders"
-        element={[
-          <AdminPandO />,
-          <ClosedSideBarAdmin />,
-          <AdminNav section="Purchases and Orders" />,
-        ]}
-      />
-      <Route
-        exact
-        path="home/admin/order/detail"
-        element={<AdminOrderDetail />}
-      />
-
-      <Route
-        exact
-        path="home/login"
-        element={[
-          <NavBar key={"nav"} />,
-          <Login key={"login"} />,
-          <Footer key={"footer"} />,
-        ]}
-      />
+            <Route
+                exact
+                path="home/login"
+                element={[
+                    <NavBar key={"nav"}/>,
+                    <Login key={"login"}/>,
+                    <Footer key={"footer"}/>,
+                ]}
+            />
 
       <Route
         exact

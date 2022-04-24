@@ -28,7 +28,7 @@ const AdminNav = ({section}) => {
         </li>
 
         <li>
-          <i class="bi bi-bell bell-admin"></i>
+          <i className="bi bi-bell bell-admin"></i>
         </li>
         <li>
           <Dropdown isOpen={dropDown} toggle={abrirYcerrar}>

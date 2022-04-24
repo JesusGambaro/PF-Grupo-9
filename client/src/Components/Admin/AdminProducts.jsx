@@ -1,7 +1,7 @@
 import ClosedSideBarAdmin from "./ClosedSideBarAdmin";
 import AdminNav from "./AdminNav";
 import ConfirmPanel from "./ConfirmPanel";
-import CreateNew from "./CreateNew";
+import ShoeForm from "./ShoeForm";
 import {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import bringAllData from "../../redux/actions/bringAllData";
@@ -10,6 +10,7 @@ import axios from "axios";
 import {roleUser} from "../../redux/actions/Loginregister";
 import "../../Css/AdminProducts.scss";
 import {useNavigate} from "react-router-dom";
+
 const CardProduct = ({shoe, func}) => {
   //console.log(shoe);
 
@@ -21,7 +22,7 @@ const CardProduct = ({shoe, func}) => {
       <p>{shoe.createdAt.substring(0, shoe.createdAt.indexOf("T"))}</p>
       <div className="actions">
         <button>
-          <i class="bi bi-pen"></i>Edit
+          <i className="bi bi-pen"></i>Edit
         </button>
         <button
           onClick={() => {
@@ -29,7 +30,7 @@ const CardProduct = ({shoe, func}) => {
             func("Active", shoe.id);
           }}
         >
-          <i class="bi bi-trash"></i> Delete
+          <i className="bi bi-trash"></i> Delete
         </button>
       </div>
     </div>
@@ -66,8 +67,9 @@ const AdminProducts = () => {
       const token = window.localStorage.getItem("token");
       dispatch(roleUser(token));
       /*    if (role.admin) {
-        navigate("/home/admin/dashboard");
-      } else */ if (role.admin === false) {
+              navigate("/home/admin/dashboard");
+            } else */
+      if (role.admin === false) {
         navigate("/home");
       }
     }
@@ -89,15 +91,21 @@ const AdminProducts = () => {
           }}
         />
       )}
-      {createState === "Active" && <CreateNew funcEnviar={() => {
-        HandlecreateState();
-      }}/>}
+      {createState === "Active" && (
+        <ShoeForm
+          funcEnviar={() => {
+            HandlecreateState();
+          }}
+        />
+      )}
       <div className="products-section-container">
         <div className="add-section">
           <h1>Products list</h1>
-          <button onClick={() => {
-            HandlecreateState("Active")
-          }}>
+          <button
+            onClick={() => {
+              HandlecreateState("Active");
+            }}
+          >
             <i className="bi bi-plus"></i> Add New Shoe
           </button>
         </div>

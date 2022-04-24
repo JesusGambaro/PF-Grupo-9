@@ -46,7 +46,9 @@ const rootReducer = (state = initialState, action) => {
     case LOAD_GENDERS:
       return { ...state, genderData: action.payload }
     case "@shoes/agregarFiltro":
-      return { ...state, filters: [...state.filters, action.payload] }
+      return {...state, filters: [...state.filters, action.payload]};
+    case "@shoes/agregarFiltros":
+      return {...state, filters: action.payload};
     case "@shoes/borrarFiltros":
       return { ...state, filters: action.payload }
     case "@shoes/genderActual":

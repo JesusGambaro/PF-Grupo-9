@@ -1,5 +1,5 @@
 const { Order, ShoppingCartItem, User, Product, Image } = require("../db.js")
-const { Op, Sequelize, where } = require("sequelize")
+const { Op, Sequelize } = require("sequelize")
 const moment = require("moment")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
@@ -155,7 +155,13 @@ module.exports = {
             [Op.gte]: moment().subtract(7, "days").toDate(),
           },
         },
-        orderInclude,
+        include: [
+          {
+            model: ShoppingCartItem,
+            include: { model: Product, include: { model: Image, limit: 1 } },
+          },
+          { model: User },
+        ],
       })
       res.send(lastOrders)
     } catch (error) {

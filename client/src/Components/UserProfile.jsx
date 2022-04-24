@@ -22,13 +22,12 @@ function UserProfile() {
       else if (role.admin === false) {
         dispatch(getOrderProfile(token))
       }
-      else if (role.admin===undefined){
+      else if (role.admin === undefined) {
         dispatch(roleUser(token))
       }
     }
   }, [role])
 
-  console.log(orderUser)
   return (
 
     <div className="container p-0 bg-light shadow-lg con" style={{ "marginTop": "7rem", "marginBottom": "3rem" }}>
@@ -41,76 +40,57 @@ function UserProfile() {
             className="col-12 rounded-circle p-0 border border-5 border-secondary perfil"
           />
           <div className="col-12 ms-sm-4 text-center mt-4">
-            <p className="col-12 fw-bold m-0 fs-sm-4">UserName: Camilo  </p>
-            <p className="col-12 fw-bold m-0 fs-sm-4">Email: Camilo@gmail.com  </p>
+            <p className="col-12 fs-5 fw-bold m-0">UserName: Camilo  </p>
+            <p className="col-12 fs-5 fw-bold m-0">Email: Camilo@gmail.com  </p>
           </div>
         </div>
       </div>
       <hr className="border border-2 border-secondary" />
 
       <div className="w-100">
-        <h1 className="text-center">Pedidos</h1>
+        <h1 className="text-center">My orders</h1>
 
-        <div className="row w-100 m-0 shadow-lg bg-light pt-5 p-2 p-md-4 mt-5 con">
-          <div className="shadow  datos">
-            <h3 className="col-12 text-center mb-2 pt-3">Datos del pedido</h3>
-            <div className="col-12 d-flex flex-column flex-lg-row gap-2 gap-lg-5 justify-content-center m-0 fs-5 align-items-center pt-4 pb-4 rounded rounded-5">
-              <p className="m-0">Order number: 121212</p>
-              <p className="m-0">Addres: cra 61 D</p>
-              <p className="m-0">Phone Number:12343213</p>
-              <p className="m-0">Date: 12/1/1999</p>
-              <p className="m-0">Total: $121212</p>
-              <p className="m-0">Status: entregado</p>
-            </div>
-          </div>
+        {
+          orderUser.length > 0
+            ? orderUser.map((order) => (
+              <div className="row w-100 m-0 shadow-lg bg-light pt-5 p-2 p-md-4 mt-5 con" key={order.id}>
+                <div className="shadow  datos">
+                  <h3 className="col-12 fw-bold text-center mb-2 pt-3">Order data</h3>
+                  <div className="col-12 d-flex flex-column flex-xl-row gap-2 gap-xl-4 justify-content-center m-0 align-items-center pt-4 pb-4 rounded rounded-5">
+                    <p className="m-0"><strong>Order number: </strong>{order.id}</p>
+                    <p className="m-0"><strong>Addres:</strong> {order.address}</p>
+                    <p className="m-0"><strong>Phone Number:</strong> {order.telephoneNum} </p>
+                    <p className="m-0"><strong>Date:</strong> {order.createdAt}</p>
+                    <p className="m-0"><strong>Total:</strong> ${order.total}</p>
+                    <p className="m-0"><strong>Status:</strong> {order.delivered}</p>
+                  </div>
+                </div>
 
-          <div className="mt-5 mb-3 gap-5 cards">
+                <div className="mt-5 mb-3 gap-5 cards">
 
-            <div className="d-flex flex-column flex-md-row align-items-center gap-3 pt-3 pb-2 shadow pedido">
-              <div className="imagen">
-                <img src="../Images/logo2.png" className="card-img-top" alt="..." />
+                  {order.shoppingCartItems.length > 0
+                    ? order.shoppingCartItems.map((item) => (
+                      <div className="d-flex flex-column flex-md-row align-items-center gap-0 pt-3 pb-2 shadow pedido" key={item.id}>
+                        <div className="imagen">
+                          <img src={item.product.images[0].url} className="card-img-top" alt="..." />
+                        </div>
+                        <div className="text-center text-md-start m-0 p-0 w-100">
+                          <h5 className="fw-bold fs-4 mb-3">{item.product.brand}-{item.product.model}</h5>
+                          <p className="fs-5 m-0"><strong>Color:</strong> {item.product.color}</p>
+                          <p className="fs-5 m-0"><strong>Size:</strong> {item.size}</p>
+                          <p className="fs-5 m-0"><strong>Price:</strong> ${item.product.finalPrice}</p>
+                          <p className="fs-5 m-0"><strong>Amount:</strong> {item.amount}</p>
+                        </div>
+                      </div>
+                    ))
+                    : <h1>No hay productos</h1>
+                  }
+                </div>
               </div>
-              <div className="text-center text-md-start m-0 p-0 w-100">
-                <h5 className="fw-bold fs-2 mb-3">Adidas</h5>
-                <p className="fs-5">Color: Black</p>
-                <p className="fs-5">Size: 21</p>
-                <p className="fs-5">Precio: $2000</p>
-                <p className="fs-5">Cantidad: 20</p>
-              </div>
-            </div>
-
-            <div className="d-flex flex-column flex-md-row align-items-center gap-3 pt-3 pb-2 shadow pedido">
-              <div className="imagen">
-                <img src="../Images/logo2.png" className="card-img-top" alt="..." />
-              </div>
-              <div className="text-center text-md-start m-0 p-0 w-100">
-                <h5 className="fw-bold fs-2 mb-3">Adidas</h5>
-                <p className="fs-5">Color: Black</p>
-                <p className="fs-5">Size: 21</p>
-                <p className="fs-5">Precio: $2000</p>
-                <p className="fs-5">Cantidad: 20</p>
-              </div>
-            </div>
-
-            <div className="d-flex flex-column flex-md-row align-items-center gap-3 pt-3 pb-2  shadow pedido">
-              <div className="imagen">
-                <img src="../Images/logo2.png" className="card-img-top" alt="..." />
-              </div>
-              <div className="text-center text-md-start m-0 p-0 w-100">
-                <h5 className="fw-bold fs-2 mb-3">Adidas</h5>
-                <p className="fs-5">Color: Black</p>
-                <p className="fs-5">Size: 21</p>
-                <p className="fs-5">Precio: $2000</p>
-                <p className="fs-5">Cantidad: 20</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
+            ))
+            : <h1>No tienes pedidos aun</h1>
+        }
       </div>
-
-
     </div>
   );
 }

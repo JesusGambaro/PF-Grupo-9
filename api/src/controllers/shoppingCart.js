@@ -1,3 +1,4 @@
+const { Op } = require("sequelize")
 const { ShoppingCartItem, Product, Stock, Image } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
@@ -13,9 +14,15 @@ module.exports = {
         },
         include: {
           model: Product,
-          include: { model: Image },
+          include: [
+            { model: Image },
+            {
+              model: Stock,
+            },
+          ],
         },
       })
+
       res.send(sameUserCartItems)
     } catch (error) {
       sendError(res, error)

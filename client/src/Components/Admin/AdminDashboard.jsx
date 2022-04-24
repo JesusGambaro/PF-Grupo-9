@@ -2,7 +2,7 @@ import "../../Css/AdminDashboard.css";
 import React from "react";
 import bringAllData from "../../redux/actions/bringAllData";
 import {useEffect} from "react";
-import { useNavigate, NavLink } from "react-router-dom"
+import {useNavigate, NavLink} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
 import {
   getAllOrders,
@@ -10,14 +10,11 @@ import {
 } from "../../redux/actions/ordersAdmin";
 import {roleUser} from "../../redux/actions/Loginregister";
 
-
 export default function AdminDashboard() {
-  const { role } = useSelector(store => store.root)
+  const {role} = useSelector((store) => store.root);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const shoes = useSelector((state) => state.admin.allData.length);
-
-
   useEffect(() => {
     if (!shoes.length) dispatch(bringAllData(true));
     if (window.localStorage.getItem("token")) {
@@ -31,7 +28,7 @@ export default function AdminDashboard() {
         navigate("/home");
       }
     }
-  }, [dispatch, navigate, role.admin, shoes.length]);
+  }, [dispatch, navigate, role.admin, shoes.length])
   /*   const allOrders = useSelector((state) => state.admin.allOrders.length);*/
   const lastestOrders = useSelector((state) => state.admin.lastOrders);
   return (

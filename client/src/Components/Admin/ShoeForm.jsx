@@ -8,7 +8,7 @@ import Selection from "./Selection";
 import {useSelector} from "react-redux";
 import {brands, colors, sizes} from "../data";
 
-const ShoeForm = ({funcEnviar}) => {
+const ShoeForm = ({handleShoeDialog}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
@@ -22,7 +22,7 @@ const ShoeForm = ({funcEnviar}) => {
     price: 0, //input
     sale: 0, //input
     stock: [], //size -> select | amount -> input
-    images: [], //input
+    images: ["", "", "", ""], //input
   });
 
   const handleSubmit = (e) => {
@@ -46,7 +46,7 @@ const ShoeForm = ({funcEnviar}) => {
       return;
     //dispatch(addPokemon(data));
     //navigate("/home");
-    funcEnviar("Desactive");
+    handleShoeDialog();
   };
   const validation = (param, type) => {
     if (!param) return type !== "images" ? "Is required" : "Can be Null";
@@ -107,25 +107,50 @@ const ShoeForm = ({funcEnviar}) => {
       });
     setColor(e.target.value);
   };
-  const [ImageURL, setImageURL] = useState("");
+  const [addImgDialog, setAddImgDialog] = useState({
+    on: false,
+    pos: 0,
+    url: "",
+  });
   const deleteImage = (img) => {
     setData({...data, images: data.images.filter((i) => i !== img)});
   };
 
-  const handleImagesChange = (img) => {
-    if (data.images.length < 4 && data.images.indexOf(img) < 0)
-      setData({...data, images: [...data.images, img]});
+  const handleImagesChange = () => {
+    if (
+      (data.images.some((e) => !e) || data.images.length < 4) &&
+      data.images.indexOf(addImgDialog.url) < 0
+    ) {
+      console.log("They call me");
+      setData({
+        ...data,
+        images: data.images.map((e, i) => {
+          return i === addImgDialog.pos ? addImgDialog.url : e;
+        }),
+      });
+    }
     setErrors({
       ...errors,
-      images: validation(img, "images"),
+      images: validation(addImgDialog.url, "images"),
     });
+    if (addImgDialog.url) {
+      setAddImgDialog({...addImgDialog, on: false});
+    }
   };
   const [color, setColor] = useState("white");
   return (
     <div className="create-container">
       <div className="form-container">
         <h2>
-          Add new shoe <button className="save-btn">Save</button>
+          Add new shoe
+          <span>
+            <button onClick={() => handleShoeDialog()}>
+              <i className="bi bi-x-circle-fill"></i>Cancel
+            </button>
+            <button className="save-btn">
+              <i className="bi bi-upload"></i>Save
+            </button>
+          </span>
         </h2>
 
         <form action="">
@@ -174,34 +199,56 @@ const ShoeForm = ({funcEnviar}) => {
             </div>
           </div>
           <div className="rightside">
+            {/* --------------------------------- IMAGES --------------------------------- */}
             <div className="images">
               <h4>Images</h4>
               <div className="images-container">
                 {data.images.map((img, i) => {
-                  console.log(img)
-                  if (!img) {
-                    return <div className="imagent"></div>;
-                  }
+                  console.log(img);
                   return (
-                    <div className="image">
-                      <img src={img} alt={"Img N°" + i} />
-                      <button onClick={() => deleteImage(img)}>X</button>
+                    <div
+                      className={img ? "imagent show" : "imagent"}
+                      key={i}
+                      style={img ? {backgroundImage: `url(${img})`} : {}}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setAddImgDialog({on: true, pos: i})}
+                      >
+                        <i className="bi bi-plus-circle-fill"></i>Add image
+                      </button>
                     </div>
                   );
                 })}
               </div>
-              <button>Add image</button>
-              <div className="add-images">
-                <input
-                  type="text"
-                  placeholder="Image URL"
-                  onChange={(e) => setImageURL(e.target.value)}
-                />
-                <button onClick={() => handleImagesChange(ImageURL)}>
-                  Add image
-                </button>
-              </div>
+              {addImgDialog.on && (
+                <div className="add-images">
+                  <button
+                    onClick={() =>
+                      setAddImgDialog({...addImgDialog, on: false})
+                    }
+                  >
+                    <i className="bi bi-x-circle-fill"></i>
+                  </button>
+                  <span>
+                    <input
+                      type="text"
+                      placeholder="Image URL"
+                      onChange={(e) =>
+                        setAddImgDialog({...addImgDialog, url: e.target.value})
+                      }
+                    />
+                    <button type="button" onClick={() => handleImagesChange()}>
+                      Add image
+                    </button>
+                  </span>
+                  {errors.images && (
+                    <p className="error-msg">{errors.images}</p>
+                  )}
+                </div>
+              )}
             </div>
+            {/* --------------------------------- IMAGES --------------------------------- */}
             <div className="stock">
               <span>
                 <h4>Size</h4>
@@ -232,9 +279,9 @@ const ShoeForm = ({funcEnviar}) => {
               </span>
               {!data.stock.length && (
                 <span className="stock-container">
-                  {data.stock.map((stock) => {
+                  {data.stock.map((stock, i) => {
                     return (
-                      <div className="stock-card">
+                      <div className="stock-card" key={i}>
                         <p>{stock.size}</p>
                         <p>{stock.amount}</p>
                         <button>X</button>

@@ -164,7 +164,7 @@ module.exports = {
   },
   deleteUser: async (req, res) => {
     try {
-      const { email } = req.body
+      const { email } = req.params;
       const removedUser = await User.destroy({
         where: { email },
       })

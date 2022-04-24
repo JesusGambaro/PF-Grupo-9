@@ -1,19 +1,53 @@
-const { Order, ShoppingCartItem, User, Product } = require("../db.js")
+const { Order, ShoppingCartItem, User, Product, Image } = require("../db.js")
 const { Op, Sequelize } = require("sequelize")
 const moment = require("moment")
 const { sendError } = require("../helpers/error.js")
+const { verifyToken } = require("../helpers/verify.js")
+
+const orderInclude = {
+  include: [
+    {
+      model: ShoppingCartItem,
+      include: { model: Product, include: { model: Image, limit: 1 } },
+    },
+    { model: User },
+  ],
+}
 
 module.exports = {
   getOrders: async (req, res) => {
-    const { email, delivered } = req.query
+    const { email = "", delivered, order } = req.query
     try {
+      if (order) {
+        const orderById = await Order.findByPk(order, {
+          include: [
+            {
+              model: ShoppingCartItem,
+              include: { model: Product, include: { model: Image, limit: 1 } },
+            },
+            { model: User },
+          ],
+        })
+        return res.send(orderById)
+      }
       if (delivered) {
+        console.log(delivered)
         const orderSearched = await Order.findAll({
           where: {
-            delivered,
+            [Op.or]: [
+              Sequelize.where(
+                Sequelize.cast(Sequelize.col("delivered"), "varchar"),
+                {
+                  [Op.iLike]: `${delivered}`,
+                }
+              ),
+            ],
           },
           include: [
-            { model: ShoppingCartItem, include: { model: Product } },
+            {
+              model: ShoppingCartItem,
+              include: { model: Product, include: { model: Image, limit: 1 } },
+            },
             { model: User, where: { email: { [Op.iLike]: `${email}%` } } },
           ],
         })
@@ -22,35 +56,37 @@ module.exports = {
       if (email) {
         const orderSearchedEmail = await Order.findAll({
           include: [
-            { model: ShoppingCartItem, include: { model: Product } },
+            {
+              model: ShoppingCartItem,
+              include: { model: Product, include: { model: Image, limit: 1 } },
+            },
             { model: User, where: { email: { [Op.iLike]: `${email}%` } } },
           ],
         })
         return res.send(orderSearchedEmail)
       }
-      const allOrders = await Order.findAll({
-        include: [
-          { model: ShoppingCartItem, include: { model: Product } },
-          { model: User },
-        ],
-      })
+      const allOrders = await Order.findAll(orderInclude)
       res.send(allOrders)
     } catch (error) {
       sendError(res, error)
     }
   },
   getOrdersUser: async (req, res) => {
-    const { userId } = req.params
     try {
+      const decodedToken = await verifyToken(req, res)
       const userOrders = await Order.findAll({
         where: {
-          userId,
+          userId: decodedToken.id,
         },
         include: [
-          { model: ShoppingCartItem, include: { model: Product } },
+          {
+            model: ShoppingCartItem,
+            include: { model: Product, include: { model: Image, limit: 1 } },
+          },
           { model: User },
         ],
       })
+
       res.send(userOrders)
     } catch (error) {
       sendError(res, error)
@@ -60,7 +96,6 @@ module.exports = {
     try {
       const { telephoneNum, delivered, address, userId } = req.body // para qué pasa delivered?. No sería false por default?.
       const allShoppingCarts = await ShoppingCartItem.findAll({
-
         where: { userId, ordered: false },
         include: [{ model: Product, attributes: ["price"] }],
         //   [Sequelize.fn("SUM", Sequelize.col("Product.price")), "total"],
@@ -92,13 +127,15 @@ module.exports = {
     const { id } = req.params //debería recibir por query me parece..
     const { delivered } = req.body //
     try {
-      const order = await Order.findOne({
-        where: {
-          id,
-        },
-      })
-      order.delivered = req.body.delivered
-      await order.save()
+      const order = await Order.update(
+        { delivered },
+        {
+          where: {
+            id,
+          },
+        }
+      )
+
       res.send({ msg: "Order updated" })
     } catch (error) {
       sendError(res, error)
@@ -127,7 +164,10 @@ module.exports = {
           },
         },
         include: [
-          { model: ShoppingCartItem, include: { model: Product } },
+          {
+            model: ShoppingCartItem,
+            include: { model: Product, include: { model: Image, limit: 1 } },
+          },
           { model: User },
         ],
       })

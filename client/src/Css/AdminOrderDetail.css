@@ -1,8 +1,6 @@
 .card-order-detail{
     position: absolute;
-    
     display: flex;
-    
     flex-wrap: wrap;
     width: 80%;
     top: 100px;

@@ -27,8 +27,8 @@ const initialState = {
   loginUser: {},
   role: {},
   users: [],
-  lastOrders:[],
-  allOrders:[],
+  allOrders: [],
+  lastOrders: [],
   orderDetail:[]
 };
 const adminReducer = (state = initialState, action) => {
@@ -53,7 +53,19 @@ const adminReducer = (state = initialState, action) => {
       return {...state, loginUser: action.payload};
     case GET_ROLE:
       return {...state, role: action.payload};
+    case GET_LAST_SEVEN_DAYS_ORDERS:
+      return {...state, lastOrders: action.payload};
+    case GET_ALL_ORDERS:
+      return {...state, allOrders: action.payload};
 
+    case GET_ORDER_DETAIL:
+      return {...state, orderDetail: action.payload};
+
+    case GET_ORDER_BY_EMAIL:
+      return {...state, allOrders: action.payload};
+
+    case GET_ORDER_BY_STATUS:
+      return {...state, allOrders: action.payload};
     case GET_LAST_SEVEN_DAYS_ORDERS:
       return{...state, lastOrders:action.payload}
 

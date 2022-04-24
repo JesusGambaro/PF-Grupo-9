@@ -51,6 +51,7 @@
 .lastest-orders-card {
   display: flex;
   padding: 1.3rem;
+  box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.45);
 }
 
 td {

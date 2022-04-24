@@ -10,6 +10,7 @@ import axios from "axios";
 import {roleUser} from "../../redux/actions/Loginregister";
 import "../../Css/AdminProducts.scss";
 import {useNavigate} from "react-router-dom";
+import {getAllCategories, getAllGenders} from "../../redux/actions/getAllUtils";
 
 const CardProduct = ({shoe, func}) => {
   //console.log(shoe);
@@ -40,8 +41,14 @@ const CardProduct = ({shoe, func}) => {
 const AdminProducts = () => {
   const dispatch = useDispatch();
   const shoes = useSelector((state) => state.admin.allData);
+  const {categories, genders} = useSelector((state) => state.root);
+
   useEffect(() => {
     if (!shoes.length) dispatch(bringAllData(true));
+    if (!categories.length || !genders.length) {
+      dispatch(getAllGenders());
+      dispatch(getAllCategories());
+    }
   }, []);
   const [confirmState, setConfirmState] = useState("Desactive");
   const [createState, setCreateState] = useState("Desactive");

@@ -1,4 +1,4 @@
-import React from "react";
+import {useState} from "react";
 
 const Selection = ({options, type, handleChange}) => {
   return (
@@ -6,7 +6,8 @@ const Selection = ({options, type, handleChange}) => {
       //disabled={disable || false}
       name={type}
       onChange={(e) => handleChange(e)}
-      //defaultValue={filter ? "Filter by type" : "Select type/s"}
+      defaultValue={"Select " + type}
+      className="selectOwn"
     >
       <option disabled={true}>Select {type}</option>
       {options.map((opt, i) => (

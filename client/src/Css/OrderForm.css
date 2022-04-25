@@ -1,0 +1,9 @@
+.Prueba > ::-webkit-outer-spin-button,
+.Prueba > ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; 
+}
+
+.Prueba > [type=number] {
+    -moz-appearance:textfield; 
+}

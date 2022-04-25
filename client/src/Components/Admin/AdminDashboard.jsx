@@ -4,7 +4,6 @@ import bringAllData from "../../redux/actions/bringAllData";
 import {useEffect} from "react";
 import {useNavigate, NavLink} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
-import "../../Css/AdminDashboard.css";
 import {
   getAllOrders,
   getLastSevenDaysOrders,
@@ -16,7 +15,6 @@ export default function AdminDashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const shoes = useSelector((state) => state.admin.allData.length);
-
   useEffect(() => {
     if (window.localStorage.getItem("token")) {
       const token = window.localStorage.getItem("token");
@@ -30,7 +28,7 @@ export default function AdminDashboard() {
         navigate("/home");
       }
     }
-  }, [dispatch, navigate, role.admin, shoes.length]);
+  }, [dispatch, navigate, role.admin, shoes.length])
   /*   const allOrders = useSelector((state) => state.admin.allOrders.length);*/
   const lastestOrders = useSelector((state) => state.admin.lastOrders);
   return (

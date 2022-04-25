@@ -46,11 +46,3 @@ export const putCart = (token, product) => {
     })
   }
 }
-
-export const postOrder = (token, order) => {
-  return async () => {
-    await axios.post(`${URL}`, order, {
-      headers: { Authorization: `bearer ${token}` },
-    })
-  }
-}

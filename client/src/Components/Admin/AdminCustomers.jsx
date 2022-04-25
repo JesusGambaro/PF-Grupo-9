@@ -1,6 +1,8 @@
 import "../../Css/AdminCustomers.scss";
 import {useSelector, useDispatch} from "react-redux";
+import ConfirmPanel from "./ConfirmPanel";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 import {
   deleteUser,
   getAllUsers,
@@ -9,9 +11,20 @@ import {
 import {useEffect} from "react";
 import {roleUser} from "../../redux/actions/Loginregister";
 
-const UserCard = ({user, handleDeleteUser, handleUpdateUser}) => {
+const UserCard = ({user, handleDeleteUser, handleUpdateUser, disabled}) => {
+  const [confirmState, setConfirmState] = useState(false);
   return (
     <div className="user-card">
+      {confirmState && (
+        <ConfirmPanel
+          textoDisplay={"Are You Sure You Want To Delete The User?"}
+          handleDelete={() => {
+            handleDeleteUser(user.email);
+            setConfirmState(false);
+          }}
+          cancelDelete={() => setConfirmState(false)}
+        />
+      )}
       <div className="user-profile">
         <i className="bi bi-person-circle"></i>
       </div>
@@ -31,7 +44,9 @@ const UserCard = ({user, handleDeleteUser, handleUpdateUser}) => {
           <i className="bi bi-pen"></i>
           {user.isAdmin ? "Remove admin" : "Make admin"}
         </button>
-        <button onClick={() => handleDeleteUser(user.email)}>
+        <button
+          onClick={() => setConfirmState(true) /*handleDeleteUser(user.email)*/}
+        >
           <i className="bi bi-trash"></i> Delete
         </button>
       </div>
@@ -57,10 +72,11 @@ const AdminCustomers = () => {
       }
     }
   }, [dispatch, navigate, role.admin, users.length]);
-  
+
   const handleDeleteUser = (email) => {
     if (role.admin) {
-      dispatch(deleteUser(window.localStorage.getItem("token"), {email}));
+      if (users.length > 1)
+        dispatch(deleteUser(window.localStorage.getItem("token"), {email}));
     } else if (role.admin === false) {
       navigate("/home");
     }
@@ -92,6 +108,7 @@ const AdminCustomers = () => {
               handleUpdateUser={(email, state) =>
                 handleUpdateUser(email, state)
               }
+              disabled={users.length < 2 || user.isAdmin}
             />
           ))}
         </div>

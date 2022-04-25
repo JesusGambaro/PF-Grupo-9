@@ -39,6 +39,7 @@
           align-items: center;
           gap: 1rem;
           padding: 0.5rem;
+          padding-top: 0.7rem;
           font-size: large;
           &:first-child {
             background: #564a4a;
@@ -68,6 +69,7 @@
           margin-bottom: 0;
           //background: red;
           font-size: medium;
+          white-space: nowrap;
         }
       }
       .leftside {
@@ -161,6 +163,8 @@
           height: 40%;
           width: 100%;
           display: flex;
+          align-items: center;
+          justify-content: space-between;
           .stock-container {
             height: 100%;
             width: 50%;
@@ -174,6 +178,8 @@
                 .color-show {
                   width: 2rem;
                   height: 2rem;
+                  border: 1px solid #555;
+                  border-left: transparent;
                   background: var(--c);
                   border-radius: 0 0.3rem 0.3rem 0;
                 }
@@ -187,7 +193,7 @@
               gap: 1rem;
               span {
                 &:first-child {
-                  width: 40%;
+                  width: 50%;
                 }
                 .selectOwn {
                   width: 100%;
@@ -214,43 +220,60 @@
               }
             }
           }
-          .stocks-container {
-            border: 0.1rem solid red;
+          .stock-cards-container {
             width: 50%;
+            height: 100%;
             display: flex;
-            flex-wrap: wrap;
-            align-items: center;
             justify-content: center;
-            gap: 0 1rem;
-            .stock-card {
-              height: 30%;
-              width: 4rem;
+            align-items: center;
+            p {
+              margin-bottom: 0;
+              font-weight: 500;
+            }
+            .stocks-container {
+              width: 100%;
               display: flex;
-              color: #fff;
-              flex-direction: column;
-              background: #000;
-              border-radius: 0.3rem;
-              border: 0.1rem solid blue;
-              position: relative;
-              p {
-                margin-bottom: 0;
+              max-height: 100%;
+              flex-wrap: wrap;
+              align-items: center;
+              justify-content: space-evenly;
+              gap: 1rem;
+              .stock-card {
+                font-weight: 500;
                 display: flex;
+                color: #fff;
                 flex-direction: column;
-              }
-              button {
-                position: absolute;
-                top: -0.2rem;
-                right: -0.2rem;
-                border-radius: 50%;
-                background-color: #fff;
-                border: none;
-                height: 0.8rem;
-                width: 0.8rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                i {
-                  font-size: large;
+                background: #000;
+                border-radius: 0.3rem;
+                position: relative;
+                padding: 0.2rem;
+                p {
+                  margin-bottom: 0;
+                  display: flex;
+                  flex-wrap: nowrap;
+                  align-items: center;
+                  justify-content: center;
+                }
+                .line-divisor {
+                  width: 100%;
+                  height: 0.1rem;
+                  background: #fff;
+                }
+                button {
+                  position: absolute;
+                  top: -0.2rem;
+                  right: -0.2rem;
+                  border-radius: 50%;
+                  background-color: #fff;
+                  border: none;
+                  height: 0.8rem;
+                  width: 0.8rem;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  i {
+                    font-size: large;
+                  }
                 }
               }
             }
@@ -290,9 +313,25 @@
                   font-size: xx-large;
                 }
               }
+              position: relative;
+              .delete-image-btn {
+                position: absolute;
+                top: -0.5rem;
+                width: 0.9rem;
+                height: 0.9rem;
+                background: #fff;
+                right: -0.5rem;
+                border-radius: 50%;
+                color: #000;
+                i {
+                  font-size: x-large;
+                }
+              }
               &.show {
                 button {
-                  color: transparent;
+                  &:last-child {
+                    color: transparent;
+                  }
                 }
                 border: none;
               }

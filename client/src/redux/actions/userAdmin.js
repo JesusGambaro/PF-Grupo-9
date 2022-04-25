@@ -33,7 +33,6 @@ const deleteUser = (token, user) => {
   };
 };
 const changeUserRole = (token, user) => {
-  console.log("=>>>>", user);
   return async (dispatch, getState) => {
     dispatch({type: LOADING, payload: true});
     await axios.put(`http://localhost:3001/user/changeAdminState`, user, {

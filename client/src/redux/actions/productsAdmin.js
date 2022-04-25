@@ -1,23 +1,28 @@
 import axios from "axios";
 import {POST_NEW_SHOE, EDIT_SHOE, DELETE_SHOE} from "./actionsAdmin";
 import {LOADING} from "./actions";
-const postProduct = (newShoe) => {
+const postProduct = (token, newShoe) => {
+  console.log("Soy el nuevo shoe=>>", newShoe);
   return async (dispatch) => {
     dispatch({type: LOADING, payload: true});
-    const data = axios.post("http://localhost:3001/allFootwear/", newShoe);
-    dispatch({type: POST_NEW_SHOE, payload: data});
+    await axios.post(`http://localhost:3001/allFootwear`, newShoe, {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    });
+    dispatch({type: POST_NEW_SHOE, payload: newShoe});
     dispatch({type: LOADING, payload: false});
   };
 };
-const editShoe = (editedShoe) => {
+const editShoe = (token, editedShoe) => {
   return async (dispatch) => {
     dispatch({type: LOADING, payload: true});
-    const data = axios.put(
-      `http://localhost:3001/allFootwear/:${editedShoe.id}`,
-      editedShoe
-    );
-
-    dispatch({type: EDIT_SHOE, payload: data});
+    axios.put(`http://localhost:3001/allFootwear/${editedShoe.id}`, editedShoe,{
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    });
+    dispatch({type: EDIT_SHOE, payload: editShoe});
     dispatch({type: LOADING, payload: false});
   };
 };

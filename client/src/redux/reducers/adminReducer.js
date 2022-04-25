@@ -39,6 +39,13 @@ const adminReducer = (state = initialState, action) => {
       return {...state, users: action.payload};
     case POST_NEW_SHOE:
       return {...state, allData: [action.payload, ...state.allData]};
+    case EDIT_SHOE:
+      return {
+        ...state,
+        allData: state.allData.map((el) =>
+          action.payload.id === el.id ? action.payload : el
+        ),
+      };
     case DELETE_SHOE:
       return {...state, allData: action.payload, allDataCopy: action.payload};
     case UPDATE_USERS:

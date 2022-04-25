@@ -20,7 +20,7 @@ const NavBar = () => {
   const token=window.localStorage.getItem("token")
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log("Search param:",searchParam);
+    navigate("/home");
     dispatch(leftSideFilter("nameBrand",searchParam));
   };
 
@@ -112,7 +112,7 @@ const NavBar = () => {
         onClick={() => {
           //dispatch(resetState());
           //dispatch(resetFilters());
-          navigate("/home");
+          
         }}
       >
         <button type="submit">

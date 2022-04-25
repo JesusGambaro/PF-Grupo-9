@@ -1,20 +1,20 @@
-import { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { editShoe, postProduct } from "../../redux/actions/productsAdmin";
+import {useState, useEffect, useRef} from "react";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {editShoe, postProduct} from "../../redux/actions/productsAdmin";
 import "../../Css/ShoeForm.scss";
 import Input from "./Input";
 import Selection from "./Selection";
-import { useSelector } from "react-redux";
-import { brands, colors, sizes } from "../data";
+import {useSelector} from "react-redux";
+import {brands, colors, sizes} from "../data";
 import bringAllData from "../../redux/actions/bringAllData";
 
-const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
-  const { role } = useSelector((state) => state.root);
+const ShoeForm = ({handleShoeDialog, shoeObject}) => {
+  const {role} = useSelector((state) => state.root);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
-  const [stock, setStock] = useState({ amount: 0, size: 0 });
+  const [stock, setStock] = useState({amount: 0, size: 0});
   const [data, setData] = useState(
     shoeObject
       ? shoeObject
@@ -28,7 +28,7 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
           price: 0, //input
           sale: 0, //input
           stock: [], //size -> select | amount -> input
-          images: [{ url: "" }, { url: "" }, { url: "" }, { url: "" }],
+          images: [{url: ""}, {url: ""}, {url: ""}, {url: ""}],
         }
   );
   const handleSubmit = () => {
@@ -46,7 +46,7 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
       stock: data.stock && data.stock.length < 1 ? "Almost 1 stock needed" : "",
     });
     if (
-      Object.values(errors).some((e) => e.length && e !== "Can't be Null") ||
+      Object.values(errors).some((e) => e.length) ||
       Object.values(data).some((d) => d === "")
     )
       return;
@@ -59,7 +59,10 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
           })
         );
         dispatch(bringAllData(true));
-      } else dispatch(postProduct(window.localStorage.getItem("token"), data));
+      } else {
+        console.log("Entre al add");
+        dispatch(postProduct(window.localStorage.getItem("token"), data));
+      }
     } else if (role.admin === false) {
       navigate("/home");
     }
@@ -67,13 +70,12 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
     handleShoeDialog();
   };
   const validation = (param, type) => {
-    console.log("sOY LOS PARAMS=>>>", param, "<====>", type);
     if (!param || param === "")
-      return type !== "images" ? "Is required" : "Can't be Null";
+      return type !== "sale" ? "Is required" : "";
     switch (type) {
       case "size":
         if (
-          Array.from({ length: 14 }, (_, i) => 7 + i).indexOf(Number(param)) < 0
+          Array.from({length: 14}, (_, i) => 7 + i).indexOf(Number(param)) < 0
         ) {
           return "Must be a size from 7 to 20";
         }
@@ -123,10 +125,10 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
   };
   const handleInputChange = (e) => {
     if (e.target.name === "price" || e.target.name === "sale") {
-      setData({ ...data, [e.target.name]: Number(e.target.value) });
+      setData({...data, [e.target.name]: Number(e.target.value)});
     } else if (e.target.name === "amount")
-      setStock({ ...stock, [e.target.name]: e.target.value });
-    else setData({ ...data, [e.target.name]: e.target.value });
+      setStock({...stock, [e.target.name]: e.target.value});
+    else setData({...data, [e.target.name]: e.target.value});
 
     setErrors({
       ...errors,
@@ -134,7 +136,7 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
     });
   };
 
-  const { categories, genders } = useSelector((state) => state.root);
+  const {categories, genders} = useSelector((state) => state.root);
   const handleSelectChange = (e) => {
     setData({
       ...data,
@@ -162,9 +164,7 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
   const handleImagesChange = () => {
     let repetido;
     if (!addImgDialog.error.length && addImgDialog.url.length) {
-      
       data.images.map((e) => {
-        
         if (e.url === addImgDialog.url) {
           //console.log("SOY LAS IMAGENES: ", data.images);
           repetido = true;
@@ -174,20 +174,24 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
         setData({
           ...data,
           images: data.images.map((e, i) => {
-            return i === addImgDialog.pos ? { url: addImgDialog.url } : e;
+            return i === addImgDialog.pos ? {url: addImgDialog.url} : e;
           }),
         });
     }
 
     if (!addImgDialog.error.length && addImgDialog.url.length && !repetido) {
-      setAddImgDialog({ ...addImgDialog, on: false, error: "" });
-    }else if(repetido){
-      setAddImgDialog({ ...addImgDialog,on: true, error: "Can't repeat images" });
+      setAddImgDialog({...addImgDialog, on: false, error: ""});
+    } else if (repetido) {
+      setAddImgDialog({
+        ...addImgDialog,
+        on: true,
+        error: "Can't repeat images",
+      });
     }
   };
   const [color, setColor] = useState(shoeObject ? shoeObject.color : "white");
   const deleteStock = (size) => {
-    setData({ ...data, stock: data.stock.filter((s) => s.size !== size) });
+    setData({...data, stock: data.stock.filter((s) => s.size !== size)});
   };
   const handleStock = () => {
     if (
@@ -198,7 +202,7 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
     ) {
       setData({
         ...data,
-        stock: [...data.stock, { amount: stock.amount, size: stock.size }],
+        stock: [...data.stock, {amount: stock.amount, size: stock.size}],
       });
     }
     setErrors({
@@ -297,7 +301,7 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
                 rows="10"
                 name="description"
                 onChange={(e) => {
-                  setData({ ...data, description: e.target.value });
+                  setData({...data, description: e.target.value});
                   setErrors({
                     ...errors,
                     description: validation(e.target.value, e.target.name),
@@ -320,7 +324,7 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
                       className={img.url ? "imagent show" : "imagent"}
                       key={i}
                       style={
-                        img.url ? { backgroundImage: `url(${img.url})` } : {}
+                        img.url ? {backgroundImage: `url(${img.url})`} : {}
                       }
                     >
                       {img.url && (
@@ -394,7 +398,7 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
                       options={sizes}
                       type={"size"}
                       handleChange={(e) =>
-                        setStock({ ...stock, size: e.target.value })
+                        setStock({...stock, size: e.target.value})
                       }
                     />
                   </span>
@@ -415,7 +419,7 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
                   </span>
                 </div>
                 <div className="color">
-                  <h4 className="input-name">Color</h4>
+                  <h4 className="input-name">Color<p>{errors.color}</p></h4>
                   <span>
                     <Selection
                       options={colors}
@@ -423,13 +427,13 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
                       handleChange={handleSelectChange}
                       value={data.color}
                     />
-                    <div className="color-show" style={{ "--c": color }}></div>
+                    <div className="color-show" style={{"--c": color}}></div>
                   </span>
                 </div>
               </div>
               <div className="stock-cards-container">
                 {errors.stock ? (
-                  <p style={{ color: "rgb(255, 145, 0)", fontSize: "large" }}>
+                  <p style={{color: "rgb(255, 145, 0)", fontSize: "large"}}>
                     {errors.stock}
                   </p>
                 ) : (

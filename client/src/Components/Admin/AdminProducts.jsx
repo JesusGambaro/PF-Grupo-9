@@ -112,12 +112,9 @@ const AdminProducts = () => {
   const {categories, genders, role} = useSelector((state) => state.root);
   const navigate = useNavigate();
   const [shoeDialog, setShoeDialog] = useState(false);
-  const initialMount = useRef(true);
   useEffect(() => {
-    if (initialMount.current) {
-      initialMount.current = false;
-      if (!allData.length) dispatch(bringAllData(true));
-    }
+    if (!allData.length) dispatch(bringAllData(true));
+
     if (!categories.length || !genders.length) {
       dispatch(getAllGenders());
       dispatch(getAllCategories());

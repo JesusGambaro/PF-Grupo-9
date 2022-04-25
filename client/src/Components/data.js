@@ -10,20 +10,15 @@ export const colors = [
   "Yellow",
   "Gray",
   "Beige",
-  "Pink",
+  "Pink"
 ];
 export const brands = [
-  "Adidas",
-  "Reebok",
-  "Salomon",
-  "Fila",
-  "Topper",
-  "Vans",
-  "Converse",
-  "Jaguar",
-  "Gucci",
-  "Puma",
-  "Jordan",
   "Nike",
+  "Adidas",
+  "Jordan",
+  "Puma",
+  "New Balance",
+  "Reebok",
+  "Converse"
 ];
 export const sizes = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];

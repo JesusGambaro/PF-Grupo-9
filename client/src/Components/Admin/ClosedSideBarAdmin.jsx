@@ -60,7 +60,7 @@ export default function OpenSideBarAdmin() {
   <OverlayTrigger
     placement="right"
     delay={{ show: 250, hide: 400 }}
-    overlay={renderTooltip('purchases and orders')}
+    overlay={renderTooltip('Purchases and orders')}
   >
   <li className="nav-item itemL itemL-admin">
     <Link to='/home/admin/orders' className={splitLocation[3] === "orders" || splitLocation[3] === "order" ?'nav-link nLink': 'nav-link '} ><i className="bi bi-currency-dollar dollar" onClick={handleShow}></i></Link>

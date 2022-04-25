@@ -1,4 +1,4 @@
-import { LEFT_SIDE_FILTERS } from "./actions";
+import {LEFT_SIDE_FILTERS} from "./actions";
 
 const genderFilter = (gender) => {
   return async (dispatch, getState) => {
@@ -32,51 +32,36 @@ const leftSideFilter = (filtroAgregar = null, valor = null) => {
 
     let filtros = [...getState().root.filters];
     let repetido = false;
-    if (filtroAgregar && valor) {
-      //console.log("ENTRE AL IF");
+    if (filtroAgregar) {
       filtroAgregar = filtroAgregar.toLowerCase();
-      payload = { name: filtroAgregar, value: valor };
-      //console.log(payload);
+      payload = {name: filtroAgregar, value: valor};
       filtros.length > 0
         ? filtros.forEach((el) => {
-            console.log(el.name);
             repetido = el.name === payload.name;
           })
         : (repetido = false);
       if (!repetido) {
-        //console.log("NO SE REPITIO");
         filtros = [...filtros, payload];
-        //console.log(filtros);
         dispatch({
           type: "@shoes/agregarFiltro",
           payload: payload,
         });
       } else {
-        //console.log("SE REPITIO");
         filtros = filtros.map((el) => {
           if (el.name === payload.name) {
             el.value = payload.value;
           }
           return el;
         });
-        //console.log(filtros);
       }
     }
-    /*
-      {name: 
-        value}
-      */
-    //console.log("ORDENO");
     filtros.forEach((filtro) => {
       let nombre = filtro.name;
-      console.log(nombre , (nombre === "nameBrand" ? " == " : " != ") , "namebrand");
       data = data.filter((e) => {
         switch (nombre) {
           case "sale":
-            //console.log("sale");
             return e.sale > 0;
           case "price":
-            //console.log(filtro);
             return (
               filtro.value.maxValue > e.price && e.price > filtro.value.minValue
             );
@@ -85,14 +70,19 @@ const leftSideFilter = (filtroAgregar = null, valor = null) => {
             e.stocks.forEach((element) => {
               if (element.size === filtro.value) {
                 mandar = true;
-                console.log("Encontro Size");
               }
             });
             if (mandar) return e;
             break;
           case "namebrand":
             let filtroVal = filtro.value.toLowerCase();
-            return (e.brand.toLowerCase() === filtroVal || (e.model.toLowerCase()).includes(filtroVal));
+            if (filtroVal === "") {
+              dispatch(deleteFilter("namebrand"));
+            }
+            return (
+              e.brand.toLowerCase().includes(filtroVal) ||
+              e.model.toLowerCase().includes(filtroVal)
+            );
           default:
             return e[nombre] === filtro.value;
         }
@@ -105,14 +95,13 @@ const leftSideFilter = (filtroAgregar = null, valor = null) => {
   };
 };
 const agregarFiltros = (arrayFiltros) => {
-
   return async (dispatch, getState) => {
     dispatch({
       type: "@shoes/agregarFiltros",
       payload: arrayFiltros,
     });
   };
-}
+};
 const resetFilters = () => {
   return async (dispatch, getState) => {
     dispatch({
@@ -121,4 +110,10 @@ const resetFilters = () => {
     });
   };
 };
-export { leftSideFilter, resetFilters, genderFilter, deleteFilter,agregarFiltros };
+export {
+  leftSideFilter,
+  resetFilters,
+  genderFilter,
+  deleteFilter,
+  agregarFiltros,
+};

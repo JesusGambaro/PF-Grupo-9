@@ -99,12 +99,12 @@ module.exports = {
       const userId = decodedToken.id
       const allShoppingCarts = await ShoppingCartItem.findAll({
         where: { userId, ordered: false },
-        include: [{ model: Product, attributes: ["price"] }],
+        include: [{ model: Product }],
         //   [Sequelize.fn("SUM", Sequelize.col("Product.price")), "total"],
       })
       let total = 0
       allShoppingCarts.forEach((item) => {
-        total += item.product.price
+        total += item.product.finalPrice
       })
       const owner = await User.findOne({ where: { id: userId } })
       const orderCreated = await Order.create({

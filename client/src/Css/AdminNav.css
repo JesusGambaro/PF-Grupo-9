@@ -1,23 +1,26 @@
 .admin-navbar {
   display: flex;
-  width: 100%;
-  height: 5rem;
+  width: calc(100% - 5rem);
+  height: 4rem;
   justify-content: space-around;
+  position: fixed;
   top: 0;
+  right: 0;
   background: #fff;
-  border-bottom: 2px solid rgb(105, 105, 105);
+  border-bottom: 0.2rem solid #efefef;
   justify-content: space-between;
+  box-shadow: 0.2rem 0 0.25rem 0 rgba(0, 0, 0, 0.25);
   align-items: center;
   font-family: "Gelion", sans-serif;
   font-weight: 700;
   font-style: normal;
   font-size: medium;
   color: #000;
-  z-index: 9999;
+  z-index: 200;
 }
 
 .logo-admin {
-  width: 4rem;
+  width: 5rem;
 }
 
 .goHome-admin {
@@ -29,6 +32,8 @@
 .admin-title {
   position: absolute;
   justify-self: flex-start;
+  font-size: x-large;
+  margin-bottom: 0;
   left: 200px;
 }
 
@@ -44,7 +49,9 @@
   font-size: large;
   width: 300px;
 }
-
+.icons-nav-admin li:first-child {
+  font-size: medium;
+}
 .admin-drop {
   color: rgb(0, 0, 0);
   background-color: rgba(255, 255, 255, 0);

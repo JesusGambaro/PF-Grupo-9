@@ -43,9 +43,11 @@ Stock.belongsTo(Product)
 
 User.hasMany(ShoppingCartItem)
 ShoppingCartItem.belongsTo(User)
+User.hasMany(Order)
+Order.belongsTo(User)
+
 Product.hasMany(ShoppingCartItem)
 ShoppingCartItem.belongsTo(Product)
-
 Order.hasMany(ShoppingCartItem)
 ShoppingCartItem.belongsTo(Order)
 

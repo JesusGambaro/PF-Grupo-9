@@ -5,6 +5,8 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import bringAllData from "../redux/actions/bringAllData";
 import { getDetail, getDetailColor, clearDetail } from "../redux/actions/getDetail";
+import Swal from "sweetalert2";
+import { addCart, deleteAllCart } from "../redux/actions/userCart";
 
 function Details() {
 
@@ -12,7 +14,7 @@ function Details() {
   const dispatch = useDispatch();
   const { id, model } = useParams();
   const { detail, loading, detailColor, allData } = useSelector((state) => state.root);
-
+  const token = window.localStorage.getItem("token")
   const [stock, setStock] = useState();
   const [size, setSize] = useState([]);
   const [Images, setImages] = useState([]);
@@ -52,6 +54,40 @@ function Details() {
     setReload(true)
   }
 
+  const handleAddingCart=()=>{
+    if(token){
+      const sizeCart = sizeSelect ? parseInt(sizeSelect) :size[0].size
+      const productFound = allData.find(p => p.color === colorSelect)
+      console.log(productFound)
+      const productId = productFound ? productFound.id : detail.id
+      const product = {productId, size: sizeCart}
+      dispatch(addCart(token,product))
+      Swal.fire({
+        position: 'bottom-end',
+        icon: 'success',
+        title: 'Product added successfully',
+        showConfirmButton: false,
+        timer: 1250,
+      })
+    }
+    else{
+      Swal.fire({
+        title: 'You must login to add products to cart',
+        text: "Do you want to login?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, I want',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/home/login")
+        }
+      })
+    }
+  }
+
+
   useEffect(() => {
     setReload(false)
     setImages([])
@@ -69,12 +105,12 @@ function Details() {
     }
     else if (allData.length === 0) dispatch(bringAllData())
 
-  }, [allData, reload, id]);
+  }, [allData, reload, id,dispatch,model]);
 
   useEffect(() => {
     window.scroll({ top: 0, behavior: 'smooth' })
     return () => dispatch(clearDetail())
-  }, [reload])
+  }, [reload,dispatch])
 
   return (
     <div style={{ marginTop: "4rem" }}>
@@ -194,7 +230,7 @@ function Details() {
                     </div>
                   </div>
                   <div className="row mt-5 mb-4 d-flex justify-content-center mt-xl-4 pt-xl-4 mt-lg-3 pt-lg-3">
-                    <button className="w-50 btn btn-outline-info fs-4 fw-bold">
+                    <button className="w-50 btn btn-outline-info fs-4 fw-bold" onClick={handleAddingCart}>
                       ADD TO CART
                     </button>
                   </div>

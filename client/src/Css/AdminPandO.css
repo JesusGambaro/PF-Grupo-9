@@ -1,44 +1,34 @@
-.orders-card{
-    position: absolute;
-    display: flex;
-    align-self: center;
-    
-    left: 12%;
-    right: 100px;
-    justify-self: center;
-    
-    background-color: rgb(250, 250, 250);
-    border-radius: 5px ;
-    border: 2px solid rgb(145, 145, 145);
-    padding: 1.3rem;
-    box-shadow: 0 0.1rem 0.25rem rgba(0, 0, 0, 0.45);
-
+.orders-card {
+  width: 100%;
+  display: flex;
+  background-color: rgb(250, 250, 250);
+  border-radius: 5px;
+  padding: 1.3rem;
 }
 
-.title-and-search{
-    display: flex;
+.title-and-search {
+  display: flex;
+  justify-content: space-between;
+}
+.admin-search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form-control-admin {
+  width: 400px;
+  height: 39px;
+  border: 2px solid rgb(208, 205, 205);
+  border-radius: 0.1rem;
+}
+.search-admin {
+  font-size: 20px;
 }
 
-.admin-search{
-    display: flex;
-    height: 60px;
-    margin: 15px 0 0 75px;
-}
-.form-control-admin{
-    width: 400px;
-    height: 39px;
-    border: 2px solid rgb(208, 205, 205);
-    border-radius: 0.1rem;
-}
-.search-admin{
-    font-size: 20px;
-}
-
-.submit-admin{
-    width: 33px;
-    height: 39px;
-    background-color: transparent;
-    border: 2px solid rgb(208, 205, 205);
-    border-radius: 0.1rem;
-
+.submit-admin {
+  width: 33px;
+  height: 39px;
+  background-color: transparent;
+  border: 2px solid rgb(208, 205, 205);
+  border-radius: 0.1rem;
 }

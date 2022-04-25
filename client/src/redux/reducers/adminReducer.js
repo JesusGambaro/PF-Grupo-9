@@ -8,10 +8,17 @@ import {
 
 import {
   POST_NEW_SHOE,
-  DELETE_USER,
+  UPDATE_USERS,
   EDIT_SHOE,
   GET_ALL_USERS,
   DELETE_SHOE,
+  GET_LAST_SEVEN_DAYS_ORDERS,
+  GET_ALL_ORDERS,
+  GET_ORDER_DETAIL,
+  GET_ORDER_BY_EMAIL,
+  GET_ORDER_BY_STATUS,
+  SEARCH_A,
+  GET_ALL_GAIN,
 } from "../actions/actionsAdmin";
 const initialState = {
   allData: [],
@@ -22,6 +29,10 @@ const initialState = {
   loginUser: {},
   role: {},
   users: [],
+  allOrders: [],
+  lastOrders: [],
+  orderDetail: {},
+  gain: [],
 };
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -31,9 +42,19 @@ const adminReducer = (state = initialState, action) => {
       return {...state, users: action.payload};
     case POST_NEW_SHOE:
       return {...state, allData: [action.payload, ...state.allData]};
+    case EDIT_SHOE:
+      return {
+        ...state,
+        allData: state.allData.map((el) =>
+          action.payload.id === el.id ? action.payload : el
+        ),
+      };
     case DELETE_SHOE:
       return {...state, allData: action.payload, allDataCopy: action.payload};
-    case DELETE_USER:
+    case SEARCH_A:
+      console.log("Soy el reducet=>>>", action.payload);
+      return {...state, allData: action.payload};
+    case UPDATE_USERS:
       return {...state, users: action.payload};
     case LOADING:
       return {...state, loading: action.payload};
@@ -45,6 +66,18 @@ const adminReducer = (state = initialState, action) => {
       return {...state, loginUser: action.payload};
     case GET_ROLE:
       return {...state, role: action.payload};
+    case GET_LAST_SEVEN_DAYS_ORDERS:
+      return {...state, lastOrders: action.payload};
+    case GET_ALL_ORDERS:
+      return {...state, allOrders: action.payload};
+    case GET_ORDER_DETAIL:
+      return {...state, orderDetail: action.payload};
+    case GET_ORDER_BY_EMAIL:
+      return {...state, allOrders: action.payload};
+    case GET_ORDER_BY_STATUS:
+      return {...state, allOrders: action.payload};
+    case GET_ALL_GAIN:
+      return {...state, gain: action.payload};
     default:
       return state;
   }

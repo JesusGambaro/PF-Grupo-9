@@ -161,7 +161,7 @@ module.exports = {
         description,
         sale,
         color,
-        addedImages,
+        images,
         stock,
       } = req.body
 
@@ -181,10 +181,12 @@ module.exports = {
         color,
       })
 
-      addedImages.length > 0 &&
-        addedImages.map(async (image) => {
-          let imageProduct = await Image.create({ url: image })
-          await product.addImage(imageProduct)
+      images.length > 0 &&
+        images.map(async (im) => {
+          if(im.url.length > 0){
+            let imageProduct = await Image.create({ url: im.url })
+            await product.addImage(imageProduct)
+          }
         })
 
       stock.length > 0 &&
@@ -215,6 +217,7 @@ module.exports = {
         size,
         amount,
         images,
+      
       } = req.body
       const { id } = req.params
 
@@ -266,7 +269,15 @@ module.exports = {
         })
       }
       if (images) {
-        //definir con el front como va a ser el form para editar.
+        const productImages = await Image.destroy({
+          where: {productId: id}
+        });
+        images.map(async (im) => {
+          if(im.url.length > 0){
+            let imageProduct = await Image.create({ url: im.url })
+            await product.addImage(imageProduct)
+          }
+        })
       }
 
       res.send("calzado editado")
@@ -297,15 +308,6 @@ module.exports = {
           stockProduct.map(async (stockItem) => {
             await stockItem.destroy()
           })
-
-        // eliminar todas las ordenes relacionadas al producto.
-        // const orderProduct = await Order.findAll({
-        //   where: { productId: id },
-        // })
-        // orderProduct &&
-        //   orderProduct.map(async (oderItem) => {
-        //     await oderItem.destroy()
-        //   })
 
         // eliminar todos los cart items relacionados al producto.
         const cartProduct = await ShoppingCartItem.findAll({

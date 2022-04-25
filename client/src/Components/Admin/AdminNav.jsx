@@ -1,18 +1,40 @@
 import "../../Css/AdminNav.css";
 import logo from "../../Images/logo2.png";
-import {useState} from "react";
-import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
-import {NavLink, useNavigate} from "react-router-dom";
-import {sortByGender, resetState} from "../../redux/actions/sortBy";
-import {useDispatch} from "react-redux";
+import {useEffect, useState } from "react";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+} from "reactstrap";
 
-const AdminNav = ({section}) => {
+import { NavLink, useNavigate } from "react-router-dom";
+import { sortByGender, resetState } from "../../redux/actions/sortBy";
+import { useDispatch,useSelector } from "react-redux";
+import {roleUser} from "../../redux/actions/Loginregister";
+const AdminNav = ({ section }) => {
+  const [profileName, setProfileName] = useState("Profile");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [dropDown, setDropDown] = useState(false);
+  const {role} = useSelector((store) => store.root);
+  const token = window.localStorage.getItem("token");
   function abrirYcerrar() {
     setDropDown(!dropDown);
   }
+  const handleRegister = () => {
+    window.localStorage.removeItem("token");
+    navigate("/");
+  };
+  useEffect(() => {
+    /*    if (!window.localStorage.getItem("token")) {
+         navigate("/home/login");
+       } else { */
+         if (role.admin) setProfileName("Dashboard");
+         else if (role.admin === undefined) dispatch(roleUser(token));
+         else setProfileName("Profile");
+       
+     }, [dispatch, navigate, role.admin, token]);
   return (
     <div className="admin-navbar">
       <NavLink to={"/"}>
@@ -28,16 +50,18 @@ const AdminNav = ({section}) => {
         </li>
 
         <li>
-          <i class="bi bi-bell bell-admin"></i>
+          <i className="bi bi-bell bell-admin"></i>
         </li>
         <li>
           <Dropdown isOpen={dropDown} toggle={abrirYcerrar}>
-            <DropdownToggle caret className="admin-drop">
-              <i className="bi bi-person person-admin" width="40px"></i>
+            <DropdownToggle className="drop">
+              <i className="bi bi-person"></i>
             </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem>Profile</DropdownItem>
-              <DropdownItem>Log out</DropdownItem>
+            <DropdownMenu title="My count">
+              <DropdownItem onClick={() => navigate("/home/profile")}>
+                {profileName}
+              </DropdownItem>
+              <DropdownItem onClick={handleRegister}>Log out</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </li>

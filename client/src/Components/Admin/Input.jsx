@@ -1,24 +1,21 @@
 import React from "react";
 
-const Input = ({model, setData, error}) => {
+const Input = ({name, setData, error,value}) => {
   return (
     <div className="input-container">
-      <span className="input-field">
-        {model.charAt(0).toUpperCase() + model.slice(1)}
-        <p>{model !== "images" ? "*" : ""}</p>
-      </span>
       <input
         className={error ? "error" : ""}
         type={
-          model === "model" ? "text" : model === "images" ? "url" : "number"
+          name === "price" || name === "sale" || name === "amount"
+            ? "number"
+            : "text"
         }
-        model={model}
+        name={name}
         onChange={setData}
         max={150}
-        maxLength={model === "images" ? "" : 10}
         placeholder={error === "Is required" ? error : ""}
+        value={value}
       />
-
       {error && error !== "Is required" && (
         <span className="input-error"> &#9888; {error}</span>
       )}

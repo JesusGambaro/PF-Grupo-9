@@ -1,0 +1,78 @@
+.order-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3.5rem;
+    font-family: "Gelion", sans-serif;
+    font-weight: bold;
+    gap: 30px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    padding: 2rem;
+}
+.order-container .form{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 30px;
+    font-size: 1.3rem;
+}
+
+.order-container .form > label ::-webkit-outer-spin-button,
+.order-container .form > label ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+.order-container .form label {
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+/* .order-container .form label + label {
+margin-top: 10px;
+} */
+
+.order-container .form label .asterisco {
+    color: orangered;
+}
+.order-container .form > label [type=number] {
+    -moz-appearance:textfield; 
+}
+.order-container .form input {
+    margin-left: 10px;
+    align-self: flex-end;
+}
+.order-container button:disabled{
+    opacity: 0.6;
+}
+.order-container button {
+        align-self: center;
+        text-transform: uppercase;
+        border: none;
+        border-radius: 0.5rem;
+        background: #6ecb63;
+        font-weight: 500;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.5rem;
+}
+
+.order-container button :active {
+    background: #5daa55;
+}
+.order-container .totals {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-align: left;
+    opacity: 0.8;
+}

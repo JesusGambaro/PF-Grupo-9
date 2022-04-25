@@ -2,6 +2,7 @@
   p {
     margin-bottom: 0;
   }
+
   width: 100%;
   position: fixed;
   top: 4rem;
@@ -16,6 +17,7 @@
   font-family: "Gelion", sans-serif;
   font-weight: 700;
   padding: 1rem;
+
   .titulo {
     text-transform: uppercase;
     color: black;
@@ -24,6 +26,7 @@
     width: calc(20% - 0.5rem);
     justify-content: center;
   }
+
   .view {
     display: flex;
 
@@ -31,27 +34,31 @@
     align-items: center;
     gap: 1rem;
     font-size: large;
+
     i {
       cursor: pointer;
     }
   }
+
   .quantity {
   }
+
   .simple-filters {
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 1rem;
+
     p {
       padding: 0 0.5rem;
-    }p:hover{
       cursor: pointer;
-      text-decoration: underline;
     }
+
     select {
       width: 60%;
       cursor: pointer;
-      &:active{
+
+      &:active {
         outline: none;
         box-shadow: none;
       }

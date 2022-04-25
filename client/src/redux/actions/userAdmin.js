@@ -1,52 +1,54 @@
 import axios from "axios";
-import {DELETE_USER, GET_ALL_USERS} from "./actionsAdmin";
+import {UPDATE_USERS, GET_ALL_USERS} from "./actionsAdmin";
 import {LOADING} from "./actions";
 
 const URL = "http://localhost:3001/user/";
-
-const users = [
-  {
-    userName: "pepe123",
-    email: "manolino@hayo.com",
-    password: "elmosquito",
-    isAdmin: false,
-    id: 1,
-  },
-  {
-    userName: "manrint123#",
-    email: "pepo@gmail.com",
-    password: "armandoVanquitos32",
-    isAdmin: true,
-    id: 2,
-  },
-  {
-    userName: "julioCesar",
-    email: "caligula@tryoa.com",
-    password: "gendarmes9293",
-    isAdmin: false,
-    id: 3,
-  },
-];
-
-const getAllUsers = () => {
+const getAllUsers = (token) => {
   return async (dispatch) => {
     dispatch({type: LOADING, payload: true});
-    //const {data} = await axios.get(URL + "allUsers");
-    dispatch({type: GET_ALL_USERS, payload: users});
+    const {data} = await axios.get(URL + "allUsers", {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    });
+    dispatch({type: GET_ALL_USERS, payload: data});
     dispatch({type: LOADING, payload: false});
   };
 };
 
-const deleteUser = (id) => {
+const deleteUser = (token, user) => {
   return async (dispatch, getState) => {
+    console.log(user);
     dispatch({type: LOADING, payload: true});
-    //await axios.delete(URL${id}`);
-    let oldData = getState().admin.users;
-    let newData = oldData.filter((el) => {
-      return el.id !== id;
+    await axios.delete(`http://localhost:3001/user/deleteUser/${user.email}`, {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
     });
-    dispatch({type: DELETE_USER, payload: newData});
+    let oldData = getState().admin.users;
+    console.log("Soy el old Data: ",oldData);
+    let newData = oldData.filter((el) => {
+      return el.email !== user.email;
+    });
+    console.log("Soy el new Data: ",newData);
+    dispatch({type: UPDATE_USERS, payload: newData});
     dispatch({type: LOADING, payload: false});
   };
 };
-export {deleteUser, getAllUsers};
+const changeUserRole = (token, user) => {
+  return async (dispatch, getState) => {
+    dispatch({type: LOADING, payload: true});
+    await axios.put(`http://localhost:3001/user/changeAdminState`, user, {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    });
+    let oldData = getState().admin.users;
+    let newData = oldData.map((el) =>
+      user.email === el.email ? {...el, isAdmin: user.adminState} : el
+    );
+    dispatch({type: UPDATE_USERS, payload: newData});
+    dispatch({type: LOADING, payload: false});
+  };
+};
+export {deleteUser, getAllUsers, changeUserRole};

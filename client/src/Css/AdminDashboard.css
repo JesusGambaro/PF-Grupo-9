@@ -46,7 +46,11 @@
 }
 .itemL-dash {
   font-size: 30px;
-  width: 30px;
+  height: min-content;
+    width: max-content;
+  background-color: rgb(217, 220, 220);
+    border-radius: 25px;
+    padding: 0 8px;
 }
 
 .lastest-orders-card {

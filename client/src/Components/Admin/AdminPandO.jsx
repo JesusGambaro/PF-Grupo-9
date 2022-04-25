@@ -69,9 +69,15 @@ export default function AdminPandO() {
             </form>
             <Dropdown isOpen={dropDown} toggle={abrirYcerrar}>
               <DropdownToggle caret className="admin-drop">
-                <i className="bi bi-person person-admin" width="40px"></i>
+                Status
               </DropdownToggle>
               <DropdownMenu>
+              <DropdownItem
+                  value=""
+                  onClick={(e) => handleStatusFilter(e)}
+                >
+                  All
+                </DropdownItem>
                 <DropdownItem
                   value="undelivered"
                   onClick={(e) => handleStatusFilter(e)}

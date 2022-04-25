@@ -26,6 +26,7 @@ export default function AdminOrderDetail() {
     }
   }, [dispatch, navigate, order, role.admin]);
   const orderDetail = useSelector((state) => state.admin.orderDetail);
+  console.log(orderDetail)
   return (
     <>
       {!Object.keys(orderDetail).every((e) => !e) && (
@@ -76,16 +77,17 @@ export default function AdminOrderDetail() {
                 <table className="table border">
                   <thead>
                     <tr>
-                      <th width="40%">Product</th>
-                      <th width="20%">Unit Price</th>
-                      <th width="20%">Quantity</th>
+                      <th width="20%">Product</th>
+                      <th width="75%">Unit Price</th>
+                      {/* <th width="20%">Quantity</th>
                       <th width="20%" className="text-end">
                         Total
-                      </th>
+                      </th> */}
                     </tr>
                   </thead>
                   <tbody>
                     {orderDetail.shoppingCartItems.map((e, i) => {
+                     
                       return (
                         <tr key={i}>
                           <td className="product">
@@ -102,13 +104,13 @@ export default function AdminOrderDetail() {
                               {e.product.model} {/* model */}{" "}
                             </div>
                           </td>
-                          <td> ${e.product.price}</td>
-                          <td> 2 </td>
-                          <td className="text-end"> $99.50 </td>
+                          <td > ${e.product.price}</td>
+                          {/* <td> 2 </td>
+                          <td className="text-end"> $99.50 </td> */}
                         </tr>
                       );
                     })}
-                    <tr>
+                    {/* <tr>
                       <td className="product">
                         <div className="left">
                           <img
@@ -124,29 +126,31 @@ export default function AdminOrderDetail() {
                       <td> $44.25 </td>
                       <td> 2 </td>
                       <td className="text-end"> $99.50 </td>
-                    </tr>
+                    </tr> */}
                     <td colSpan="4">
                       <article className="float-end">
-                        <dl className="dlist">
+                        {/* <dl className="dlist">
                           <dt>Subtotal:</dt> <dd>$973.35</dd>
-                        </dl>
-                        <dl className="dlist">
+                        </dl> */}
+                        {/* <dl className="dlist">
                           <dt>Shipping cost:</dt> <dd>$10.00</dd>
-                        </dl>
+                        </dl> */}
+                        <tfoot >
                         <dl className="dlist">
-                          <dt>Grand total:</dt>{" "}
+                          <dt>Grand total:</dt>
                           <dd>
-                            <b className="h5">$983.00</b>{" "}
+                            <b className="h5">${orderDetail.total}</b>
                           </dd>
                         </dl>
-                        <dl className="dlist">
+                    </tfoot>
+                        {/* <dl className="dlist">
                           <dt className="text-muted">Status:</dt>
                           <dd>
                             <span className="badge rounded-pill alert-success text-success">
                               Payment done
                             </span>
                           </dd>
-                        </dl>
+                        </dl> */}
                       </article>
                     </td>
                   </tbody>

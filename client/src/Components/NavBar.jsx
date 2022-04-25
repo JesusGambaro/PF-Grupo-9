@@ -1,60 +1,76 @@
 import "../Css/navbar.scss";
 import logo from "../Images/logo2.png";
-import { useEffect, useState } from "react";
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
-import { NavLink, useNavigate } from "react-router-dom";
-import { sortByGender, resetState } from "../redux/actions/sortBy";
-import { resetFilters, genderFilter,leftSideFilter } from "../redux/actions/leftSideFilter";
-import { useDispatch } from "react-redux";
-import search from "../redux/actions/search";
+import {useEffect, useState} from "react";
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
+import {NavLink, useNavigate} from "react-router-dom";
+import {sortByGender, resetState} from "../redux/actions/sortBy";
+import {
+  resetFilters,
+  genderFilter,
+  leftSideFilter,
+} from "../redux/actions/leftSideFilter";
+import {roleUser} from "../redux/actions/Loginregister";
+import {useDispatch, useSelector} from "react-redux";
 import Swal from "sweetalert2";
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [dropDown, setDropDown] = useState(false);
-  const [logueado, setLogueado] = useState(false)
+  const [logueado, setLogueado] = useState(false);
   const [searchParam, setSearchParam] = useState("");
+  const [profileName, setProfileName] = useState("Profile");
+  const {role} = useSelector((store) => store.root);
+  const token = window.localStorage.getItem("token");
+  useEffect(() => {
+ /*    if (!window.localStorage.getItem("token")) {
+      navigate("/home/login");
+    } else { */
+      if (role.admin) setProfileName("Dashboard");
+      else if (role.admin === undefined) dispatch(roleUser(token));
+      else setProfileName("Profile");
+    
+  }, [dispatch, navigate, role.admin, token]);
+
   function abrirYcerrar() {
     setDropDown(!dropDown);
   }
-  const token=window.localStorage.getItem("token")
+
   const handleSearch = (e) => {
     e.preventDefault();
     navigate("/home");
-    dispatch(leftSideFilter("nameBrand",searchParam));
+    dispatch(leftSideFilter("nameBrand", searchParam));
   };
 
   const handleRegister = () => {
-    window.localStorage.removeItem("token")
-    setLogueado(false)
-    navigate("/")
-  }
+    window.localStorage.removeItem("token");
+    setLogueado(false);
+    navigate("/");
+  };
 
   const handleCart = () => {
-    if(logueado) return navigate("/home/cart")
+    if (logueado) return navigate("/home/cart");
     Swal.fire({
-      title: 'You must login to see your cart',
+      title: "You must login to see your cart",
       text: "Do you want to login?",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, I want',
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, I want",
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate("/home/login")
+        navigate("/home/login");
       }
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     if (token) {
-      setLogueado(true)
+      setLogueado(true);
+    } else {
+      setLogueado(false);
     }
-    else {
-      setLogueado(false)
-    }
-  }, [logueado,token])
+  }, [logueado, token]);
 
   return (
     <div className="navbarOwn">
@@ -62,7 +78,7 @@ const NavBar = () => {
         <img className="logoOwn" src={logo} alt="logo" />
       </NavLink>
       <ul className="sectionsOwn">
-        <li onClick={() => { }}>
+        <li onClick={() => {}}>
           <NavLink
             onClick={() => {
               dispatch(resetState());
@@ -112,7 +128,6 @@ const NavBar = () => {
         onClick={() => {
           //dispatch(resetState());
           //dispatch(resetFilters());
-          
         }}
       >
         <button type="submit">
@@ -134,21 +149,23 @@ const NavBar = () => {
           <i onClick={handleCart} className="bi bi-bag"></i>
         </li>
         <li>
-          {logueado
-            ? (<Dropdown isOpen={dropDown} toggle={abrirYcerrar}>
+          {logueado ? (
+            <Dropdown isOpen={dropDown} toggle={abrirYcerrar}>
               <DropdownToggle className="drop">
                 <i className="bi bi-person"></i>
               </DropdownToggle>
               <DropdownMenu title="My count">
-                <DropdownItem onClick={()=>navigate("/home/profile")}>Profile</DropdownItem>
+                <DropdownItem onClick={() => navigate("/home/profile")}>
+                  {profileName}
+                </DropdownItem>
                 <DropdownItem onClick={handleRegister}>Log out</DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            )
-            : <NavLink to="/home/login" className="text-dark">
-              LogIn
+          ) : (
+            <NavLink to="/home/login" className="text-dark" style={{textDecoration:"none"}}>
+              Log In
             </NavLink>
-          }
+          )}
         </li>
       </ul>
     </div>

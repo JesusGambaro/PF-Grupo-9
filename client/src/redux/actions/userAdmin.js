@@ -18,6 +18,7 @@ const getAllUsers = (token) => {
 
 const deleteUser = (token, user) => {
   return async (dispatch, getState) => {
+    console.log(user);
     dispatch({type: LOADING, payload: true});
     await axios.delete(`http://localhost:3001/user/deleteUser/${user.email}`, {
       headers: {
@@ -25,9 +26,11 @@ const deleteUser = (token, user) => {
       },
     });
     let oldData = getState().admin.users;
+    console.log("Soy el old Data: ",oldData);
     let newData = oldData.filter((el) => {
-      return el.email !== user.mail;
+      return el.email !== user.email;
     });
+    console.log("Soy el new Data: ",newData);
     dispatch({type: UPDATE_USERS, payload: newData});
     dispatch({type: LOADING, payload: false});
   };

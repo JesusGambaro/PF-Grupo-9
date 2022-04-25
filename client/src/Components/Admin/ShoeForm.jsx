@@ -7,6 +7,7 @@ import Input from "./Input";
 import Selection from "./Selection";
 import { useSelector } from "react-redux";
 import { brands, colors, sizes } from "../data";
+import bringAllData from "../../redux/actions/bringAllData";
 
 const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
   const { role } = useSelector((state) => state.root);
@@ -27,7 +28,7 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
           price: 0, //input
           sale: 0, //input
           stock: [], //size -> select | amount -> input
-          images: ["", "", "", ""], //input
+          images: [{ url: "" }, { url: "" }, { url: "" }, { url: "" }],
         }
   );
   const handleSubmit = () => {
@@ -50,14 +51,15 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
     )
       return;
     if (role.admin) {
-      shoeObject
-        ? dispatch(
-            editShoe(window.localStorage.getItem("token"), {
-              ...data,
-              id: shoeObject.id,
-            })
-          )
-        : dispatch(postProduct(window.localStorage.getItem("token"), data));
+      if (shoeObject) {
+        dispatch(
+          editShoe(window.localStorage.getItem("token"), {
+            ...data,
+            id: shoeObject.id,
+          })
+        );
+        dispatch(bringAllData(true));
+      } else dispatch(postProduct(window.localStorage.getItem("token"), data));
     } else if (role.admin === false) {
       navigate("/home");
     }
@@ -65,6 +67,7 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
     handleShoeDialog();
   };
   const validation = (param, type) => {
+    console.log("sOY LOS PARAMS=>>>", param, "<====>", type);
     if (!param || param === "")
       return type !== "images" ? "Is required" : "Can't be Null";
     switch (type) {
@@ -76,19 +79,14 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
         }
         break;
       case "amount":
-        console.log("Soy el amount===>>", param);
         if (!/^[0-9]+$/.test(param)) {
           return "Must be just digits";
         } else if (param > 1000) return "Can't exceeds 1000";
         break;
       case "images":
-        let notNull = false;
-        //console.log("Soy Las Imagenes: ", param);
-        param.forEach((e) => {
-          if (e.length > 1) {
-            notNull = true;
-          }
-        });
+        let notNull = true;
+        if (param.every((e) => e.url === "" || param.length < 1))
+          notNull = false;
         return notNull ? "" : "Can't be Null";
       case "imageUrl":
         return !/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(
@@ -113,7 +111,7 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
           ? "Maximum length 200"
           : "";
       default:
-        return !/^[a-zA-Zs]*$/.test(param)
+        return !/^[A-Za-z0-9\s]+$/g.test(param)
           ? "Must be just characters"
           : param.length < 3
           ? "Minimum length 3"
@@ -155,25 +153,36 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
     error: "",
   });
   const deleteImage = (img) => {
-    setData({ ...data, images: data.images.map((i) => (i === img ? "" : i)) });
+    setData({
+      ...data,
+      images: data.images.map((i) => (i.url === img ? "" : i)),
+    });
   };
 
   const handleImagesChange = () => {
-    if (
-      (data.images.some((e) => !e) || data.images.length < 4) &&
-      data.images.indexOf(addImgDialog.url) < 0
-    ) {
-      if (!addImgDialog.error.length && addImgDialog.url.length) {
+    let repetido;
+    if (!addImgDialog.error.length && addImgDialog.url.length) {
+      
+      data.images.map((e) => {
+        
+        if (e.url === addImgDialog.url) {
+          //console.log("SOY LAS IMAGENES: ", data.images);
+          repetido = true;
+        }
+      });
+      !repetido &&
         setData({
           ...data,
           images: data.images.map((e, i) => {
-            return i === addImgDialog.pos ? addImgDialog.url : e;
+            return i === addImgDialog.pos ? { url: addImgDialog.url } : e;
           }),
         });
-      }
     }
-    if (!addImgDialog.error.length && addImgDialog.url.length) {
+
+    if (!addImgDialog.error.length && addImgDialog.url.length && !repetido) {
       setAddImgDialog({ ...addImgDialog, on: false, error: "" });
+    }else if(repetido){
+      setAddImgDialog({ ...addImgDialog,on: true, error: "Can't repeat images" });
     }
   };
   const [color, setColor] = useState(shoeObject ? shoeObject.color : "white");
@@ -295,8 +304,7 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
                   });
                 }}
                 defaultValue={data.description}
-              >
-              </textarea>
+              ></textarea>
             </div>
           </div>
           <div className="rightside">
@@ -309,15 +317,17 @@ const ShoeForm = ({ handleShoeDialog, shoeObject }) => {
                 {data.images.map((img, i) => {
                   return (
                     <div
-                      className={img ? "imagent show" : "imagent"}
+                      className={img.url ? "imagent show" : "imagent"}
                       key={i}
-                      style={img ? { backgroundImage: `url(${img})` } : {}}
+                      style={
+                        img.url ? { backgroundImage: `url(${img.url})` } : {}
+                      }
                     >
-                      {img && (
+                      {img.url && (
                         <button
                           type="button"
                           className="delete-image-btn"
-                          onClick={() => deleteImage(img)}
+                          onClick={() => deleteImage(img.url)}
                         >
                           <i className="bi bi-x-circle-fill"></i>
                         </button>

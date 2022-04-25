@@ -124,7 +124,6 @@ export default function AdminPandO() {
                     </td>
                     <td>
                       <b>
-                        {" "}
                         {e.user.userName} {/* Customer name */}
                       </b>
                     </td>

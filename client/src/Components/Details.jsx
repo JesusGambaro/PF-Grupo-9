@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import bringAllData from "../redux/actions/bringAllData";
 import { getDetail, getDetailColor, clearDetail } from "../redux/actions/getDetail";
 import Swal from "sweetalert2";
+import { addCart, deleteAllCart } from "../redux/actions/userCart";
 
 function Details() {
 
@@ -13,7 +14,7 @@ function Details() {
   const dispatch = useDispatch();
   const { id, model } = useParams();
   const { detail, loading, detailColor, allData } = useSelector((state) => state.root);
-
+  const token = window.localStorage.getItem("token")
   const [stock, setStock] = useState();
   const [size, setSize] = useState([]);
   const [Images, setImages] = useState([]);
@@ -54,13 +55,19 @@ function Details() {
   }
 
   const handleAddingCart=()=>{
-    if(window.localStorage.getItem("token")){
+    if(token){
+      const sizeCart = sizeSelect ? parseInt(sizeSelect) :size[0].size
+      const productFound = allData.find(p => p.color === colorSelect)
+      console.log(productFound)
+      const productId = productFound ? productFound.id : detail.id
+      const product = {productId, size: sizeCart}
+      dispatch(addCart(token,product))
       Swal.fire({
         position: 'bottom-end',
         icon: 'success',
         title: 'Product added successfully',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1250,
       })
     }
     else{
@@ -98,12 +105,12 @@ function Details() {
     }
     else if (allData.length === 0) dispatch(bringAllData())
 
-  }, [allData, reload, id]);
+  }, [allData, reload, id,dispatch,model]);
 
   useEffect(() => {
     window.scroll({ top: 0, behavior: 'smooth' })
     return () => dispatch(clearDetail())
-  }, [reload])
+  }, [reload,dispatch])
 
   return (
     <div style={{ marginTop: "4rem" }}>
@@ -123,7 +130,6 @@ function Details() {
                       className="border-0 bg-transparent"
                       id="fav"
                       title="Add to favorites"
-                      onClick={handleAddingCart}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

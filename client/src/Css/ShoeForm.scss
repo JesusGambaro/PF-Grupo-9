@@ -8,8 +8,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 200;
+  z-index: 50;
   padding: 1rem;
+
   .form-container {
     overflow: hidden;
     background: #fff;
@@ -24,39 +25,52 @@
       justify-content: space-between;
       align-items: center;
       background: #fff;
-      button {
-        border: none;
-        border-radius: 0.5rem;
-        background: #4b7be5;
-        color: #fff;
+      span {
         display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.2rem 1rem;
-        font-size: x-large;
-        &:active {
-          background: #416bc5;
+        gap: 1rem;
+        button {
+          text-transform: uppercase;
+          border: none;
+          border-radius: 0.5rem;
+          background: #6ecb63;
+          font-weight: 500;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          padding: 0.5rem;
+          font-size: large;
+          &:first-child {
+            background: #564a4a;
+            &:active {
+              background: #3d3737;
+            }
+          }
+          &:active {
+            background: #5daa55;
+          }
         }
       }
     }
     form {
       width: 100%;
+      height: 100%;
       background: #fff;
       display: flex;
-      max-height: calc(100vh - 4rem);
       justify-content: center;
       align-items: center;
       .leftside {
         width: 40%;
         height: 100%;
+        max-height: calc(100vh - 12rem);
         background: #fff;
         display: flex;
         align-items: flex-start;
         gap: 1rem;
         flex-direction: column;
-        padding: 1rem;
-        padding-top: 0;
+        padding: 0 1rem;
         .model {
+          height: 20%;
           width: 100%;
           .input-container {
             input {
@@ -67,6 +81,7 @@
         .category-gender {
           display: flex;
           width: 100%;
+          height: 20%;
           gap: 1rem;
           justify-content: space-between;
           span {
@@ -77,18 +92,25 @@
           }
         }
         .brands {
+          height: 20%;
           width: 100%;
           .selectOwn {
             width: 100%;
           }
         }
         .description {
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          flex-direction: column;
           width: 100%;
-          height: 50%;
+          height: 40%;
           .txtarea {
             width: 100%;
-            max-height: 10rem;
             resize: none;
+            font-weight: 500;
+
+            max-height: 100%;
             border-radius: 0.3rem;
             padding: 0.5rem;
             &:focus {
@@ -100,13 +122,15 @@
       .rightside {
         width: 60%;
         height: 100%;
-        background: #dd9;
+        max-height: calc(100vh - 12rem);
+        background: #fff;
         display: flex;
         flex-direction: column;
-        padding: 1rem;
+        justify-content: space-between;
+        padding: 0 1rem;
         gap: 1rem;
-        padding-top: 0;
         .color {
+          height: 20%;
           span {
             display: flex;
             .selectOwn {
@@ -121,6 +145,7 @@
           }
         }
         .price-sale {
+          height: 20%;
           display: flex;
           width: 100%;
           gap: 1rem;
@@ -139,6 +164,7 @@
           display: flex;
           width: 100%;
           gap: 1rem;
+          height: 20%;
           justify-content: space-between;
           span {
             width: 50%;
@@ -154,11 +180,98 @@
           }
         }
         .images {
-          background: #000;
-          .imagent {
-            height: 5rem;
-            width: 5rem;
-            background: red;
+          display: flex;
+          justify-content: space-evenly;
+          flex-direction: column;
+          align-items: flex-start;
+          width: 100%;
+          height: 40%;
+          position: relative;
+          .images-container {
+            width: 100%;
+            display: flex;
+            gap: 1rem;
+            height: 100%;
+            align-items: center;
+            justify-content: space-evenly;
+            .imagent {
+              flex: 1 0 calc(25% - 1rem);
+              height: 100%;
+              border: #3d3737 dashed 0.1rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              background-size: cover;
+              button {
+                font-weight: 500;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border: none;
+                background-color: transparent;
+                i {
+                  font-size: xx-large;
+                }
+              }
+              &.show {
+                button {
+                  color: transparent;
+                }
+                border: none;
+              }
+            }
+          }
+          .add-images {
+            position: absolute;
+            background: #fff;
+            border: 0.1rem solid #555;
+            border-top: none;
+            width: 100%;
+            height: 60%;
+            bottom: -60%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            z-index: 200;
+            border-radius: 0 0 0.5rem 0.5rem;
+            padding: 0 1rem;
+            gap: 1rem;
+            button {
+              &:first-child {
+                position: absolute;
+                top: 0.4rem;
+                right: 0.4rem;
+                background: transparent;
+                border: none;
+                color: black;
+                font-size: large;
+              }
+            }
+            .error-msg {
+              margin-bottom: 0;
+            }
+            span {
+              display: flex;
+              height: 2rem;
+              width: 80%;
+              button {
+                background: #000;
+                color: white;
+                font-weight: 500;
+                border: 1px solid #555;
+                border-left: transparent;
+                border-radius: 0 0.3rem 0.3rem 0;
+                white-space: nowrap;
+              }
+              input {
+                width: 80%;
+                border: 1px solid #555;
+                font-weight: 500;
+                padding-left: 0.5rem;
+                border-radius: 0.3rem 0 0 0.3rem;
+              }
+            }
           }
         }
       }
@@ -168,8 +281,9 @@
 .input-container {
   display: flex;
   position: relative;
-  /* height: 2rem; */
+  height: 2rem;
   input {
+    font-weight: 500;
     padding-left: 0.5rem;
     border-radius: 0.2rem;
     border: 1px solid #555;
@@ -177,14 +291,16 @@
 }
 .selectOwn {
   cursor: pointer;
-  /*  height: 2rem; */
+  height: 2rem;
   padding: 0 0 0 0.5rem;
   border-radius: 0.2rem;
   border: 1px solid #555;
+  font-weight: 500;
   &:focus {
     outline: none;
   }
   option {
     cursor: pointer;
+    font-weight: 500;
   }
 }

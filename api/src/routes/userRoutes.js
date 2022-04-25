@@ -22,7 +22,7 @@ router.post("/forgot-password", forgotPassword)
 router.post("/forgot-password/:token", changeForgottenPassword)
 router.post("/change-password", changePassword)
 router.get("/allUsers", verifyTokenAdmin, getAllUsers)
-router.delete("/deleteUser", verifyTokenAdmin, deleteUser)
+router.delete("/deleteUser/:email", verifyTokenAdmin, deleteUser)
 router.get("/role", verifyTokenUserOrAdmin, getRole)
 router.put("/changeAdminState",verifyTokenAdmin, changeUsersRole)
 

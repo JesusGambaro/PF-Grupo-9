@@ -1,3 +1,4 @@
+const { Op } = require("sequelize")
 const { ShoppingCartItem, Product, Stock, Image } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
@@ -13,9 +14,15 @@ module.exports = {
         },
         include: {
           model: Product,
-          include: { model: Image },
+          include: [
+            { model: Image },
+            {
+              model: Stock,
+            },
+          ],
         },
       })
+
       res.send(sameUserCartItems)
     } catch (error) {
       sendError(res, error)
@@ -78,7 +85,6 @@ module.exports = {
       const { productId, size } = req.body
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
-      console.log(userId, productId, size)
       const productSelected = await Product.findOne({
         where: { id: productId },
         include: { model: Stock, where: { size } },

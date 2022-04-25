@@ -86,8 +86,10 @@
 }
 .backGroundPanel {
   position: fixed;
-  width: 100%;
-  height: 100%;
+  width: calc(100% - 5rem);
+  height: calc(100% - 4rem);
+  right: 0;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;

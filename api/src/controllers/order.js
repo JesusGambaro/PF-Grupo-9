@@ -94,7 +94,9 @@ module.exports = {
   },
   postOrder: async (req, res) => {
     try {
-      const { telephoneNum, delivered, address, userId } = req.body // para qué pasa delivered?. No sería false por default?.
+      const { telephoneNum, address } = req.body
+      const decodedToken = await verifyToken(req, res)
+      const userId = decodedToken.id
       const allShoppingCarts = await ShoppingCartItem.findAll({
         where: { userId, ordered: false },
         include: [{ model: Product, attributes: ["price"] }],
@@ -107,7 +109,6 @@ module.exports = {
       const owner = await User.findOne({ where: { id: userId } })
       const orderCreated = await Order.create({
         telephoneNum,
-        delivered,
         address,
         total,
       })

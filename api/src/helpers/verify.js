@@ -15,7 +15,7 @@ module.exports = {
       })
       return userOrAdmin
     } catch (error) {
-      sendError(res, error)
+      console.log(error)
     }
   },
 }

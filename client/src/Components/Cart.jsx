@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getUserCart, deleteCartItem, deleteAllCart, putCart} from "../redux/actions/userCart"
+import { getUserCart, deleteCartItem, deleteAllCart, putCart, addCart} from "../redux/actions/userCart"
 import "../Css/AdminProducts.scss";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -34,8 +34,23 @@ export default function Cart () {
     const navigate = useNavigate()
     const cartUser = useSelector(state => state.root.cartUser)
     useEffect(() => {
-        dispatch(getUserCart(token))
-    },[dispatch,token])
+      if(!token || (token && !token.length)) {
+        Swal.fire({
+        title: 'You must login to see your cart',
+        text: "Do you want to login?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, I want',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          return navigate("/home/login")
+        }
+        return navigate("/home")
+      })}
+      dispatch(getUserCart(token))
+    },[dispatch,token,navigate])
     const handlePut = (e,productId,size) => {
         const product = {amount:  e.target.value, productId,size}
         dispatch(putCart(token,product))
@@ -81,6 +96,7 @@ export default function Cart () {
         })
         return total
     }
+    console.log(cartUser)
     return (
     <div style={{width:"70%",display:"flex",justifyContent:"center",boxSizing:"content-box",marginTop:"50px"}}>
         {cartUser.length?

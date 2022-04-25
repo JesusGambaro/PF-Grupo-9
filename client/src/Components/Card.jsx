@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { addCart } from "../redux/actions/userCart";
 
 const Card = ({e, horizontal}) => {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const token = window.localStorage.getItem("token")
   const handleAddingCart=(e)=>{

@@ -1,10 +1,11 @@
 import { useEffect,useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { addCart, getUserCart } from "../redux/actions/userCart"
+import { addCart, getUserCart, putCart } from "../redux/actions/userCart"
 import "../Css/OrderForm.css"
 import { useNavigate } from "react-router-dom"
 import { postOrder } from "../redux/actions/order"
 import Swal from "sweetalert2"
+import { totalPrice } from "./Cart"
 export default function OrderForm () {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -16,16 +17,9 @@ export default function OrderForm () {
     })
     const [error, setError] = useState({})
     useEffect(() => {
-        dispatch(getUserCart(token))
         if(!cart || !cart.length) navigate("/home")
-    },[dispatch,token,navigate,addCart])
-    const totalPrice = () => {
-        let total = 0
-        cart.forEach((item) => {
-            total += item.product.finalPrice
-        })
-        return total
-    }
+    },[dispatch,token,navigate,addCart,cart,getUserCart,putCart,totalPrice])
+
     const totalFootwear = () => {
         let total = 0
         cart.forEach((item) =>{ 
@@ -65,6 +59,7 @@ export default function OrderForm () {
           })
           
     }
+    console.log(cart)
     return (
         <div >
             { cart &&
@@ -77,7 +72,7 @@ export default function OrderForm () {
                     {error.address && <label className="col form-label text-danger fw-bold text-end">{error.address}</label>}
                     <div className="totals">
                         <span>Total footwears: {totalFootwear()}</span>
-                        <span>Order total: ${totalPrice()}</span>
+                        <span>Order total: ${totalPrice(cart)}</span>
                     </div>
                     <button className="submit-button" disabled={validation()}><i class="bi bi-bag-fill"></i>Place the order!</button>
                 </form>

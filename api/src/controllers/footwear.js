@@ -215,6 +215,7 @@ module.exports = {
         size,
         amount,
         images,
+      
       } = req.body
       const { id } = req.params
 
@@ -266,7 +267,15 @@ module.exports = {
         })
       }
       if (images) {
-        //definir con el front como va a ser el form para editar.
+        const productImages = await Image.destroy({
+          where: {productId: id}
+        });
+        images.map(async (im) => {
+          if(im.url.length > 0){
+            let imageProduct = await Image.create({ url: im.url })
+            await product.addImage(imageProduct)
+          }
+        })
       }
 
       res.send("calzado editado")

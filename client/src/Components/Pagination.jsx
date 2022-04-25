@@ -55,10 +55,13 @@ const Pagination = ({shoes, pageLimit, cardsPerPage}) => {
       ) : (
         <div className="allContainer">
           <div className={"shoes-container" + (toggle ? "" : " h")}>
-            {allData.length > 0 &&
+            {allData.length > 0 ? (
               dataPerPage().map((e, i) => (
                 <Card e={e} key={i} horizontal={!toggle} />
-              ))}
+              ))
+            ) : (
+              <h2>No results</h2>
+            )}
           </div>
           {allData.length > 1 && (
             <div className="pagination-container">

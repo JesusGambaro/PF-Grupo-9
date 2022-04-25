@@ -7,6 +7,7 @@ import "../../Css/AdminDashboard.css";
 import {useNavigate, NavLink} from "react-router-dom";
 
 import {
+  getAllGain,
   getAllOrders,
   getLastSevenDaysOrders,
 } from "../../redux/actions/ordersAdmin";
@@ -26,14 +27,17 @@ export default function AdminDashboard() {
       if (role.admin) {
         dispatch(getLastSevenDaysOrders(token));
         dispatch(getAllOrders(token));
+        dispatch(getAllGain(token));
         navigate("/home/admin/dashboard");
       } else if (role.admin === false) {
         navigate("/home");
       }
     }
-  }, [dispatch, navigate, role.admin, shoes.length])
-  /*   const allOrders = useSelector((state) => state.admin.allOrders.length);*/
+  }, [dispatch, navigate, role.admin, shoes.length]);
+  const allOrders = useSelector((state) => state.admin.allOrders.length);
   const lastestOrders = useSelector((state) => state.admin.lastOrders);
+  const gain = useSelector((state) => state.admin.gain[0]);
+
   return (
     <div className="admin-container">
       <div className="dashboard-container">
@@ -41,12 +45,12 @@ export default function AdminDashboard() {
           <div className="total-card">
             <i className="bi bi-piggy-bank itemL-dash"></i>
             <h5 className="card-text">Total Sales</h5>
-            <p>$0</p>
+            <p>$ {gain && gain.totalGain}</p>
           </div>
           <div className="total-card">
             <i className="bi bi-truck itemL-dash"></i>
             <h5 className="card-text">Total Orders</h5>
-            <p>0</p>
+            <p>{allOrders}</p>
           </div>
           <div className="total-card">
             <i className="bi bi-cart2 itemL-dash"></i>

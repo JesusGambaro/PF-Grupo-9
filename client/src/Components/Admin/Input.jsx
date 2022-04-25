@@ -1,6 +1,6 @@
 import React from "react";
 
-const Input = ({name, setData, error}) => {
+const Input = ({name, setData, error,value}) => {
   return (
     <div className="input-container">
       <input
@@ -14,6 +14,7 @@ const Input = ({name, setData, error}) => {
         onChange={setData}
         max={150}
         placeholder={error === "Is required" ? error : ""}
+        value={value}
       />
       {error && error !== "Is required" && (
         <span className="input-error"> &#9888; {error}</span>

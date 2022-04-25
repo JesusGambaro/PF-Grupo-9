@@ -1,5 +1,5 @@
 import axios from "axios"
-import { GET_CART } from "./actions"
+import { GET_CART, LOADING_CART } from "./actions"
 
 const URL = "http://localhost:3001/cart"
 
@@ -12,6 +12,13 @@ export const getUserCart = (token) => {
       type: GET_CART,
       payload: data,
     })
+  }
+}
+
+export const loadingCartBoolean = (payload) => {
+  return {
+    type: LOADING_CART,
+    payload,
   }
 }
 

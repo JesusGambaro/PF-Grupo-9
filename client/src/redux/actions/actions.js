@@ -16,9 +16,11 @@ const CLEAR_USER = "@shoes/clearUser"
 const SEARCH = "@shoes/search"
 const GET_ROLE = "@shoes/getRole"
 const GET_CART = "@user/getCart"
-const GET_PROFILE= "@user/profile"
+const GET_PROFILE = "@user/profile"
+const LOADING_CART = "loadingcart"
 
 export {
+  LOADING_CART,
   GET_CART,
   BRING_ALL_DATA,
   LOAD_GENDERS,
@@ -37,5 +39,5 @@ export {
   CLEAR_USER,
   SEARCH,
   GET_ROLE,
-  GET_PROFILE
+  GET_PROFILE,
 }

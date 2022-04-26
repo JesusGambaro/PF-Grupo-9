@@ -33,6 +33,13 @@ export const roleUser=(token)=>{
     })
   }
 }
+
+export const loginGoogle=(data)=>{
+  return async (dispatch)=>{
+    const {data}=await axios.post(`${URL}/SingUpOrSingInGoogle`,data)
+  }
+}
+
 export const clearUser=()=>{
   return {
       type:CLEAR_USER,

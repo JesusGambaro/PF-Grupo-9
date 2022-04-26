@@ -17,7 +17,8 @@ import {
   SEARCH,
   GET_ROLE,
   GET_CART,
-  GET_PROFILE
+  GET_PROFILE,
+  LOADING_CART,
 } from "../actions/actions"
 
 const initialState = {
@@ -37,7 +38,8 @@ const initialState = {
   loginUser: {},
   role: {},
   cartUser: [],
-  orderUser:[]
+  orderUser: [],
+  loadingCart: true,
 }
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -46,9 +48,9 @@ const rootReducer = (state = initialState, action) => {
     case LOAD_GENDERS:
       return { ...state, genderData: action.payload }
     case "@shoes/agregarFiltro":
-      return {...state, filters: [...state.filters, action.payload]};
+      return { ...state, filters: [...state.filters, action.payload] }
     case "@shoes/agregarFiltros":
-      return {...state, filters: action.payload};
+      return { ...state, filters: action.payload }
     case "@shoes/borrarFiltros":
       return { ...state, filters: action.payload }
     case "@shoes/genderActual":
@@ -95,12 +97,19 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cartUser: action.payload,
+        loadingCart: false,
       }
     case GET_PROFILE:
       return {
         ...state,
-        orderUser: action.payload
+        orderUser: action.payload,
       }
+    case LOADING_CART:
+      return {
+        ...state,
+        loadingCart: action.payload,
+      }
+
     default:
       return state
   }

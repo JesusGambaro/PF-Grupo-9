@@ -1,14 +1,23 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
+import { loginGoogle } from "../redux/actions/Loginregister"
+import { useDispatch } from "react-redux"
+import Swal from "sweetalert2"
 
 function LoginGoogle() {
+  const dispatch = useDispatch()
 
-  const onSuccess = (response) => {
-    console.log(response);
-  }
+  const onSuccess = (response) => dispatch(loginGoogle({
+    email: response.profileObj.email,
+    username: response.profileObj.name
+  }))
 
-  const onFailure = (response) => {
-    console.log(response);
+  const onFailure = () => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong!',
+    })
   }
 
   return (
@@ -18,6 +27,7 @@ function LoginGoogle() {
         buttonText="Login"
         onSuccess={onSuccess}
         onFailure={onFailure}
+        isSignedIn={false}
         cookiePolicy={'single_host_origin'}
       />
     </div>

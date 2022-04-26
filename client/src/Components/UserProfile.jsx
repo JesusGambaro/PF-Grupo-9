@@ -40,7 +40,7 @@ function UserProfile() {
             className="col-12 rounded-circle p-0 border border-5 border-secondary perfil"
           />
           <div className="col-12 ms-sm-4 text-center mt-4">
-            {orderUser.length && (
+            {orderUser.length>0 && (
               <>
                 <p className="col-12 fs-5 m-0"><strong>Email:</strong> {orderUser[0].user.email}</p>
                 <p className="col-12 fs-5 m-0"><strong>UserName:</strong> {orderUser[0].user.userName}</p>
@@ -92,7 +92,7 @@ function UserProfile() {
                 </div>
               </div>
             ))
-            : <h1>No tienes pedidos aun</h1>
+            : <h1 className="text-center mt-5 pt-5 mb-5 pb-5 text-danger">You don't have orders</h1>
         }
       </div>
     </div>

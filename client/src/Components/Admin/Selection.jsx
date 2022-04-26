@@ -1,12 +1,10 @@
-import {useState} from "react";
-
-const Selection = ({options, type, handleChange}) => {
+const Selection = ({options, type, handleChange,value}) => {
   return (
     <select
       //disabled={disable || false}
       name={type}
       onChange={(e) => handleChange(e)}
-      defaultValue={"Select " + type}
+      defaultValue={value ? value : "Select " + type}
       className="selectOwn"
     >
       <option disabled={true}>Select {type}</option>

@@ -11,6 +11,47 @@
   gap: 2rem;
   .add-section {
     display: flex;
+    align-items: center;
+    .searchOwn {
+      height: 100%;
+      border-radius: 0.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f1f1f1;
+      padding: 0.5rem 0.2rem;
+      input {
+        border: none;
+        background: transparent;
+        height: 100%;
+        border-radius: 0 0.5rem 0.5rem 0;
+        outline: none;
+        font-family: "Gelion", sans-serif;
+        font-weight: 700;
+        font-size: medium;
+        &::placeholder {
+          font-family: "Gelion", sans-serif;
+          font-weight: 700;
+          font-size: medium;
+          color: #000;
+        }
+      }
+      button {
+        padding-left: 1rem;
+        display: flex;
+        font-size: medium;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        background: transparent;
+        height: 100%;
+        i {
+          color: #000;
+          font-size: larger;
+        }
+      }
+    }
+    display: flex;
     color: #000;
     width: 90%;
     padding: 1rem 0;
@@ -28,7 +69,7 @@
       i {
         font-size: x-large;
       }
-      &:active {
+      &:last-child {
         background: #416bc5;
       }
     }
@@ -41,19 +82,32 @@
     gap: 1rem;
     .product-card {
       display: flex;
-      justify-content: space-evenly;
+      justify-content: space-between;
       align-items: center;
       flex: 1 0 100%;
+      padding: 0 1rem;
       width: 90%;
       background: #f6f6f6;
       box-shadow: 0.2rem 0.2rem 0.5rem rgba($color: #000, $alpha: 0.2);
       border-radius: 1rem;
       overflow: hidden;
-      max-height: 10rem;
+      max-height: 8rem;
+      min-height: 8rem;
       font-weight: 500;
       font-size: large;
+      p {
+        margin-bottom: 0;
+        width: 20%;
+        &:nth-child(3),
+        &:nth-child(4) {
+          width: 10%;
+        }
+        &:nth-child(5) {
+          width: 15%;
+        }
+      }
       img {
-        max-width: 10rem;
+        max-width: 10%;
       }
       .actions {
         display: flex;

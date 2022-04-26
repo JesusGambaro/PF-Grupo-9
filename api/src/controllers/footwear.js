@@ -161,7 +161,7 @@ module.exports = {
         description,
         sale,
         color,
-        addedImages,
+        images,
         stock,
       } = req.body
 
@@ -181,8 +181,8 @@ module.exports = {
         color,
       })
 
-      addedImages.length > 0 &&
-        addedImages.map(async (im) => {
+      images.length > 0 &&
+        images.map(async (im) => {
           if(im.url.length > 0){
             let imageProduct = await Image.create({ url: im.url })
             await product.addImage(imageProduct)

@@ -173,7 +173,7 @@ function Login() {
         }
         break
       case "password":
-        const regexPass = /^(?=\w*[a-z])\S{5,8}$/
+        const regexPass = /^(?=\w*[a-z])\S{5,15}$/
         setState({
           ...state,
           [name]: value
@@ -305,7 +305,7 @@ function Login() {
             </div>
             {error.password
               ? <div className="mb-2">
-                <label htmlFor="register" className="col form-label text-danger fw-bold text-start">The password must have a minimum of 5 characters and a maximum of 8 characters and at least one lowercase.</label>
+                <label htmlFor="register" className="col form-label text-danger fw-bold text-start">The password must have a minimum of 5 characters and a maximum of 15 characters and at least one lowercase.</label>
               </div>
               : null
             }

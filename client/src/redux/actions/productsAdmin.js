@@ -1,26 +1,40 @@
 import axios from "axios";
 import {POST_NEW_SHOE, EDIT_SHOE, DELETE_SHOE} from "./actionsAdmin";
 import {LOADING} from "./actions";
-const postProduct = (newShoe) => {
+import bringAllData from "./bringAllData";
+const postProduct = (token, newShoe) => {
+  console.log("Soy el nuevo shoe=>>", newShoe);
   return async (dispatch) => {
     dispatch({type: LOADING, payload: true});
-    const data = axios.post("http://localhost:3001/allFootwear/", newShoe);
-    dispatch({type: POST_NEW_SHOE, payload: data});
+    await axios.post(`http://localhost:3001/allFootwear`, newShoe, {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    });
+    dispatch({type: POST_NEW_SHOE, payload: newShoe});
+    dispatch(bringAllData(true));
     dispatch({type: LOADING, payload: false});
   };
 };
-const editShoe = (editedShoe) => {
-  return async (dispatch) => {
-    dispatch({type: LOADING, payload: true});
-    const data = axios.put(
-      `http://localhost:3001/allFootwear/:${editedShoe.id}`,
-      editedShoe
-    );
 
-    dispatch({type: EDIT_SHOE, payload: data});
+const editShoe = (token, editedShoe) => {
+  return async (dispatch) => {
+    dispatch({type: LOADING, payload: true});
+    axios.put(
+      `http://localhost:3001/allFootwear/${editedShoe.id}`,
+      editedShoe,
+      {
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      }
+    );
+    dispatch({type: EDIT_SHOE, payload: editShoe});
+    dispatch(bringAllData(true));
     dispatch({type: LOADING, payload: false});
   };
 };
+
 const deleteShoe = (id) => {
   return async (dispatch, getState) => {
     dispatch({type: LOADING, payload: true});
@@ -36,6 +50,7 @@ const deleteShoe = (id) => {
     });
     console.log(newData);
     dispatch({type: DELETE_SHOE, payload: newData});
+    dispatch(bringAllData(true));
     dispatch({type: LOADING, payload: false});
   };
 };

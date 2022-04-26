@@ -1,9 +1,11 @@
 import { useEffect,useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getUserCart } from "../redux/actions/userCart"
+import { addCart, getUserCart, putCart } from "../redux/actions/userCart"
 import "../Css/OrderForm.css"
 import { useNavigate } from "react-router-dom"
 import { postOrder } from "../redux/actions/order"
+import Swal from "sweetalert2"
+import { totalPrice } from "./Cart"
 export default function OrderForm () {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -15,16 +17,9 @@ export default function OrderForm () {
     })
     const [error, setError] = useState({})
     useEffect(() => {
-        dispatch(getUserCart(token))
-        if(!cart.length) navigate("/home")
-    },[dispatch,token,cart.length,navigate])
-    const totalPrice = () => {
-        let total = 0
-        cart.forEach((item) => {
-            total += item.product.finalPrice
-        })
-        return total
-    }
+        if(!cart || !cart.length) navigate("/home")
+    },[dispatch,token,navigate,addCart,cart,getUserCart,putCart,totalPrice])
+
     const totalFootwear = () => {
         let total = 0
         cart.forEach((item) =>{ 
@@ -39,7 +34,7 @@ export default function OrderForm () {
     const handleErrorForm = (e) => {
         if(e.target.name === "telephoneNumber"){
             if(!e.target.value.length) return setError({...error,telephoneNumber: "Telephone number is required"})
-            if(e.target.value.length > 15) return setError({...error,telephoneNumber: "Invalid telephone number"})
+            if(e.target.value.length > 15 || e.target.value.length < 4) return setError({...error,telephoneNumber: "Invalid telephone number"})
         }
         if(e.target.name === "address"){
             if(!e.target.value.length) return setError({...error,address: "Address is required"})
@@ -54,19 +49,34 @@ export default function OrderForm () {
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(postOrder(token,order))
+        Swal.fire({
+            icon: 'success',
+            title: 'The order has been placed',
+            showConfirmButton: false,
+            timer: 1250,
+          }).then( () => {
+            navigate("/home/profile")
+          })
+          
     }
+    console.log(cart)
     return (
-        <div style={{width:"70%",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",marginTop:"60px"}}>
-            <h1>Purchase</h1>
-            <form onSubmit={(e) => handleSubmit(e)} style={{display:"flex",flexDirection:"column",alignItems:"flex-start",justifyContent:"flex-start"}}>
-                <label className="prueba" >Telephone number<mark>*</mark> <input placeholder="3447423612" type="number" name="telephoneNumber" value={order.telephoneNumber} onChange={e => handleOnChangeForm(e)}/></label>
-                {error.telephoneNumber && <label>{error.telephoneNumber}</label>}
-                <label className="prueba">Address<mark>*</mark><input name="address" placeholder="San Martin 35" value={order.address} onChange={e => handleOnChangeForm(e)}/></label>
-                {error.address && <label>{error.address}</label>}
-                <button disabled={validation()}>Place the order!</button>
-            </form>
-            <p>Total footwears:{totalFootwear()}</p>
-            <p>TOTAL: ${totalPrice()}</p>
+        <div >
+            { cart &&
+             <section className="order-container">
+                <h1 className="fw-bold text-center mb-3">Purchase</h1>
+                <form onSubmit={(e) => handleSubmit(e)} className="form">
+                    <label className="input-number" ><span>Telephone number<i className="asterisco">*</i></span><input placeholder="3447423612" type="number" name="telephoneNumber" value={order.telephoneNumber} onChange={e => handleOnChangeForm(e)}/></label>
+                    {error.telephoneNumber && <label className="col form-label text-danger fw-bold text-end">{error.telephoneNumber}</label>}
+                    <label><span>Address<i className="asterisco">*</i></span><input name="address" placeholder="San Martin 35" value={order.address} onChange={e => handleOnChangeForm(e)}/></label>
+                    {error.address && <label className="col form-label text-danger fw-bold text-end">{error.address}</label>}
+                    <div className="totals">
+                        <span>Total footwears: {totalFootwear()}</span>
+                        <span>Order total: ${totalPrice(cart)}</span>
+                    </div>
+                    <button className="submit-button" disabled={validation()}><i class="bi bi-bag-fill"></i>Place the order!</button>
+                </form>
+            </section>}
         </div>
     )
 }

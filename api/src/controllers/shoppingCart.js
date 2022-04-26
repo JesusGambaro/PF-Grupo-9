@@ -65,7 +65,7 @@ module.exports = {
       })
       if (productSelected?.stocks[0].amount >= amount) {
         const cartItem = await ShoppingCartItem.findOne({
-          where: { productId, userId, size },
+          where: { productId, userId, size, ordered: false },
         })
         cartItem.amount = amount
         await cartItem.save()
@@ -92,7 +92,7 @@ module.exports = {
 
       if (productSelected?.stocks[0].amount > 0) {
         let [cartItem] = await ShoppingCartItem.findOrCreate({
-          where: { productId, userId, size },
+          where: { productId, userId, size, ordered: false },
         })
 
         cartItem.amount++

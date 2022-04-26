@@ -1,6 +1,6 @@
 import React from "react";
 import "../../Css/AdminProducts.scss";
-const ConfirmPanel = ({textoDisplay, cancelDelete, handleDeleteShoe}) => {
+const ConfirmPanel = ({textoDisplay, cancelDelete, handleDelete}) => {
   return (
     <div className={"backGroundPanel"}>
       <div className={"confirmPanel"}>
@@ -8,7 +8,7 @@ const ConfirmPanel = ({textoDisplay, cancelDelete, handleDeleteShoe}) => {
         <div className="confirmPanelButtons">
           <h4>This action cannot be reversed</h4>
           <span>
-            <button onClick={() => handleDeleteShoe()}>Delete</button>
+            <button onClick={() => handleDelete()}>Delete</button>
             <button onClick={() => cancelDelete()}>Cancel</button>
           </span>
         </div>

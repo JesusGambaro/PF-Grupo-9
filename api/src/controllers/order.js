@@ -98,7 +98,18 @@ module.exports = {
   },
   postOrder: async (req, res) => {
     try {
-      const { telephoneNum, address } = req.body
+      const {
+        telephoneNum,
+        address,
+        name,
+        surname,
+        country,
+        city,
+        postalCode,
+        floor,
+        apartment,
+        notes,
+      } = req.body
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
       const allShoppingCarts = await ShoppingCartItem.findAll({
@@ -114,6 +125,14 @@ module.exports = {
       const orderCreated = await Order.create({
         telephoneNum,
         address,
+        name,
+        surname,
+        country,
+        city,
+        postalCode,
+        floor,
+        apartment,
+        notes,
         total,
       })
       await orderCreated.addShoppingCartItems(allShoppingCarts)

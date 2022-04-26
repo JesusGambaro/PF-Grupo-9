@@ -5,6 +5,7 @@ const { Op } = require("sequelize")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
 const { simpleToken } = require("../helpers/simpleToken.js")
+const { generatePassword } = require("../helpers/generatePassword.js")
 const { emailForgotPassword } = require("../helpers/emailForgotPassword.js")
 
 module.exports = {
@@ -48,6 +49,29 @@ module.exports = {
       return res.status(200).send({ token, admin: user.isAdmin })
     } catch (error) {
       sendError(res, error)
+    }
+  },
+
+  userSingUpOrSingInGoogle: async (req, res) => {
+    const {email, username} = req.body;
+    try {
+      const user = await User.findOne({
+        where: {email}
+      });
+      if(user){
+        const token = generateToken({ id: user.id, isAdmin: user.isAdmin })
+        return res.status(200).send({ token, admin: user.isAdmin })
+      }
+      const passwordHash = await bcrypt.hash(generatePassword(), 10)
+      const newUser = await User.create({
+        email,
+        userName: username,
+        password: passwordHash,
+      })
+      const token = generateToken({ id: newUser.id, isAdmin: newUser.isAdmin })
+      return res.status(200).send({ token, admin: newUser.isAdmin })
+    } catch (error) {
+      
     }
   },
 

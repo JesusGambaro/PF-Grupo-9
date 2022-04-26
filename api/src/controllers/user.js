@@ -140,11 +140,27 @@ module.exports = {
   },
   getAllUsers: async (req, res) => {
     try {
-      const { email } = req.query
-      if (email) {
+      const { search = "", isAdmin } = req.query
+      if (isAdmin) {
         const usuarioSearched = await User.findAll({
           where: {
-            email: { [Op.iLike]: `%${email}%` },
+            [Op.or]: {
+              email: { [Op.iLike]: `${search}%` },
+              userName: { [Op.iLike]: `${search}%` },
+            },
+            isAdmin,
+          },
+        })
+
+        return res.status(302).send(usuarioSearched)
+      }
+      if (search.length) {
+        const usuarioSearched = await User.findAll({
+          where: {
+            [Op.or]: {
+              email: { [Op.iLike]: `${search}%` },
+              userName: { [Op.iLike]: `${search}%` },
+            },
           },
         })
 
@@ -187,6 +203,16 @@ module.exports = {
       }
     } catch (error) {
       return sendError(res, error)
+    }
+  },
+  getUserName: async (req, res) => {
+    try {
+      const decodedToken = await verifyToken(req, res)
+      const id = decodedToken.id
+      const userName = await User.findByPk(id, { attributes: ["userName"] })
+      res.send(userName)
+    } catch (error) {
+      sendError(res, error)
     }
   },
 }

@@ -957,7 +957,15 @@ conn.sync({ force: true }).then(async () => {
   admin.addShoppingCartItem(cartAdmin)
   const orderRodolfo1 = await Order.create({
     delivered: "undelivered",
+    name: "Rodolfo",
+    surname: "Rodriguez",
+    country: "Colombia",
+    city: "Bogota",
+    postalCode: 11011,
     address: "AvenidaSiempreViva 123",
+    floor: 2,
+    apartment: "B",
+    notes: "My brother pick up the order",
     telephoneNum: 12345678,
     total: 500000,
   })
@@ -970,6 +978,15 @@ conn.sync({ force: true }).then(async () => {
   const orderRodolfo2 = await Order.create({
     delivered: "delivered",
     address: "Argentina 123",
+    name: "Rodolfo",
+    surname: "Rodriguez",
+    country: "Colombia",
+    city: "Bogota",
+    postalCode: 11011,
+    address: "AvenidaSiempreViva 123",
+    floor: 2,
+    apartment: "B",
+    notes: "My brother pick up the order",
     telephoneNum: 1283214,
     total: 10000,
   })
@@ -978,6 +995,12 @@ conn.sync({ force: true }).then(async () => {
   const orderAdmin = await Order.create({
     delivered: "completed",
     address: "Colombia 123",
+    name: "Admin",
+    surname: "Baes",
+    country: "United States",
+    city: "Washington DC",
+    postalCode: 20001,
+    address: "AvenidaSiempreViva 123",
     telephoneNum: 123678,
     total: 1000000,
     createdAt: "2021-04-21 19:52:24.029-03",

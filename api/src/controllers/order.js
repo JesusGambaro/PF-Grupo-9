@@ -86,8 +86,12 @@ module.exports = {
           { model: User },
         ],
       })
-
-      res.send(userOrders)
+      if (userOrders.length) {
+        return res.send(userOrders)
+      }
+      const user = await User.findOne({ where: { id: decodedToken.id } })
+      console.log(user)
+      return res.send(user)
     } catch (error) {
       sendError(res, error)
     }
@@ -126,7 +130,7 @@ module.exports = {
 
   putOrder: async (req, res) => {
     const { id } = req.params //debería recibir por query me parece..
-    const { delivered } = req.body //
+    const { delivered } = req.query
     try {
       const order = await Order.update(
         { delivered },

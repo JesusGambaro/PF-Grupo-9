@@ -274,7 +274,7 @@ module.exports = {
         });
         images.map(async (im) => {
           if(im.url.length > 0){
-            let imageProduct = await Image.create({ url: im })
+            let imageProduct = await Image.create({ url: im.url })
             await product.addImage(imageProduct)
           }
         })

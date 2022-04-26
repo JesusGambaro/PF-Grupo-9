@@ -1,5 +1,5 @@
 const { Op, Sequelize } = require("sequelize")
-const { Product, Image, Stock, Order, ShoppingCartItem } = require("../db.js")
+const { Product, Image, Stock, Order, ShoppingCartItem, FavoriteItem } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
 
 module.exports = {
@@ -317,6 +317,17 @@ module.exports = {
           cartProduct.map(async (cartItem) => {
             await cartItem.destroy()
           })
+
+        // eliminar todos los favorite items relacionados al producto.
+        const favoriteItem = await FavoriteItem.findAll({
+          where: { productId: id },
+        })
+        favoriteItem &&
+        favoriteItem.map(async (favItem) => {
+            await favItem.destroy()
+          })
+
+        // Finalmente elimimnar el producto.  
         product.destroy()
       }
       res.send("product destroyed")

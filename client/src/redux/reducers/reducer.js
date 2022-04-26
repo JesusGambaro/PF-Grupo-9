@@ -19,6 +19,7 @@ import {
   GET_CART,
   GET_PROFILE,
   LOADING_CART,
+  USER_INFO
 } from "../actions/actions"
 
 const initialState = {
@@ -40,6 +41,7 @@ const initialState = {
   cartUser: [],
   orderUser: [],
   loadingCart: true,
+  user:{}
 }
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -109,7 +111,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         loadingCart: action.payload,
       }
-
+    case USER_INFO:
+      return {
+        ...state,
+        user:action.payload
+      }
     default:
       return state
   }

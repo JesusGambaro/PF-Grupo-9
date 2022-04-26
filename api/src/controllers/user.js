@@ -233,7 +233,7 @@ module.exports = {
     try {
       const decodedToken = await verifyToken(req, res)
       const id = decodedToken.id
-      const userName = await User.findByPk(id, { attributes: ["userName"] })
+      const userName = await User.findByPk(id, { attributes: ["userName","email"] })
       res.send(userName)
     } catch (error) {
       sendError(res, error)

@@ -1,12 +1,12 @@
 import "../Css/UserProfile.css"
 import { useDispatch, useSelector } from "react-redux"
-import { getOrderProfile } from "../redux/actions/getOrdersUser";
+import { getOrderProfile, userInfo } from "../redux/actions/getOrdersUser";
 import { roleUser } from "../redux/actions/Loginregister";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function UserProfile() {
-  const { orderUser, role } = useSelector(store => store.root)
+  const { orderUser, role, user } = useSelector(store => store.root)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -21,6 +21,7 @@ function UserProfile() {
       }
       else if (role.admin === false) {
         dispatch(getOrderProfile(token))
+        dispatch(userInfo(token))
       }
       else if (role.admin === undefined) {
         dispatch(roleUser(token))
@@ -40,10 +41,10 @@ function UserProfile() {
             className="col-12 rounded-circle p-0 border border-5 border-secondary perfil"
           />
           <div className="col-12 ms-sm-4 text-center mt-4">
-            {orderUser.length && (
+            {user.userName && (
               <>
-                <p className="col-12 fs-5 m-0"><strong>Email:</strong> {orderUser[0].user.email}</p>
-                <p className="col-12 fs-5 m-0"><strong>UserName:</strong> {orderUser[0].user.userName}</p>
+                <p className="col-12 fs-5 m-0"><strong>UserName:</strong> {user.userName}</p>
+                <p className="col-12 fs-5 m-0"><strong>Email:</strong> {user.email}</p>
               </>
             )}
           </div>
@@ -92,7 +93,7 @@ function UserProfile() {
                 </div>
               </div>
             ))
-            : <h1>No tienes pedidos aun</h1>
+            : <h1 className="text-center mt-5 pt-5 mb-5 pb-5 text-danger">You don't have orders</h1>
         }
       </div>
     </div>

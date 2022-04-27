@@ -19,6 +19,9 @@ const GET_CART = "@user/getCart"
 const GET_PROFILE = "@user/profile"
 const LOADING_CART = "loadingcart"
 const USER_INFO = "userInfo"
+const CHANGE_PASSWORD= "changePassword"
+const FORGOTTEN_PASSWORD="forgottenPassword"
+const CHANGE_FORGOTTEN_PASSWORD="changeForgottenPassword"
 
 export {
   LOADING_CART,
@@ -41,5 +44,8 @@ export {
   SEARCH,
   GET_ROLE,
   GET_PROFILE,
-  USER_INFO
+  USER_INFO,
+  CHANGE_PASSWORD,
+  FORGOTTEN_PASSWORD,
+  CHANGE_FORGOTTEN_PASSWORD
 }

@@ -14,7 +14,7 @@ const Filters = ({filters}) => {
                 dispatch(leftSideFilter());
               }}
             >
-             <i class="bi bi-x-circle-fill"></i>
+             <i className="bi bi-x-circle-fill"></i>
             </button>
           </div>
         );

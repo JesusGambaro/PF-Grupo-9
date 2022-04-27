@@ -98,6 +98,7 @@ module.exports = {
   },
   postOrder: async (req, res) => {
     try {
+      const { order, paymentMethod } = req.body
       const {
         telephoneNum,
         address,
@@ -109,13 +110,12 @@ module.exports = {
         floor,
         apartment,
         notes,
-      } = req.body
+      } = order
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
       const allShoppingCarts = await ShoppingCartItem.findAll({
         where: { userId, ordered: false },
         include: [{ model: Product }],
-        //   [Sequelize.fn("SUM", Sequelize.col("Product.price")), "total"],
       })
       let total = 0
       allShoppingCarts.forEach((item) => {
@@ -141,6 +141,7 @@ module.exports = {
         { ordered: true },
         { where: { userId, ordered: false } }
       )
+
       return res.send({ msg: "Order created" })
     } catch (error) {
       sendError(res, error)

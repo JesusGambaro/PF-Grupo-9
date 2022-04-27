@@ -18,6 +18,7 @@ const GET_ROLE = "@shoes/getRole"
 const GET_CART = "@user/getCart"
 const GET_PROFILE = "@user/profile"
 const LOADING_CART = "loadingcart"
+const USER_INFO = "userInfo"
 
 export {
   LOADING_CART,
@@ -40,4 +41,5 @@ export {
   SEARCH,
   GET_ROLE,
   GET_PROFILE,
+  USER_INFO
 }

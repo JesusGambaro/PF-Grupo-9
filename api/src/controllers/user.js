@@ -85,7 +85,7 @@ module.exports = {
       userExists.token = simpleToken(); // Agregar token al modelo User? y una funcion que genere un Token
       await userExists.save();
 
-      emailForgotPassword({
+      await emailForgotPassword({
         email,
         name: userExists.userName,
         token: userExists.token,
@@ -229,10 +229,10 @@ module.exports = {
   },
   getUserName: async (req, res) => {
     try {
-      const decodedToken = await verifyToken(req, res);
-      const id = decodedToken.id;
-      const userName = await User.findByPk(id, { attributes: ["userName"] });
-      res.send(userName);
+      const decodedToken = await verifyToken(req, res)
+      const id = decodedToken.id
+      const userName = await User.findByPk(id, { attributes: ["userName","email"] })
+      res.send(userName)
     } catch (error) {
       sendError(res, error);
     }

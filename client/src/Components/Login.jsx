@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { registerUsers, loginUsers, clearUser, roleUser } from "../redux/actions/Loginregister"
 import Swal from "sweetalert2"
+import LoginGoogle from "./LoginGoogle"
 
 function Login() {
   const { registerUser, loginUser, role } = useSelector(store => store.root)
@@ -351,6 +352,8 @@ function Login() {
               }
             </div>
           </form>
+          
+          <LoginGoogle/>
         </div>
 
       </div>

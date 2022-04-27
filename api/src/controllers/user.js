@@ -5,6 +5,7 @@ const { Op } = require("sequelize")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
 const { simpleToken } = require("../helpers/simpleToken.js")
+const { generatePassword } = require("../helpers/generatePassword.js")
 const { emailForgotPassword } = require("../helpers/emailForgotPassword.js")
 
 module.exports = {
@@ -51,9 +52,31 @@ module.exports = {
     }
   },
 
+  userSingUpOrSingInGoogle: async (req, res) => {
+    const {email, username} = req.body;
+    try {
+      const user = await User.findOne({
+        where: {email}
+      });
+      if(user){
+        const token = generateToken({ id: user.id, isAdmin: user.isAdmin })
+        return res.status(200).send({ token, admin: user.isAdmin })
+      }
+      const passwordHash = await bcrypt.hash(generatePassword(), 10)
+      const newUser = await User.create({
+        email,
+        userName: username,
+        password: passwordHash,
+      })
+      const token = generateToken({ id: newUser.id, isAdmin: newUser.isAdmin })
+      return res.status(200).send({ token, admin: newUser.isAdmin })
+    } catch (error) {
+      
+    }
+  },
+
   forgotPassword: async (req, res) => {
     const { email } = req.body
-
     try {
       const userExists = await User.findOne({ where: { email } })
       if (!userExists) {
@@ -63,7 +86,7 @@ module.exports = {
       userExists.token = simpleToken() // Agregar token al modelo User? y una funcion que genere un Token
       await userExists.save()
 
-      emailForgotPassword({
+      await emailForgotPassword({
         email,
         name: userExists.userName,
         token: userExists.token,
@@ -140,11 +163,27 @@ module.exports = {
   },
   getAllUsers: async (req, res) => {
     try {
-      const { email } = req.query
-      if (email) {
+      const { search = "", isAdmin } = req.query
+      if (isAdmin) {
         const usuarioSearched = await User.findAll({
           where: {
-            email: { [Op.iLike]: `%${email}%` },
+            [Op.or]: {
+              email: { [Op.iLike]: `${search}%` },
+              userName: { [Op.iLike]: `${search}%` },
+            },
+            isAdmin,
+          },
+        })
+
+        return res.status(302).send(usuarioSearched)
+      }
+      if (search.length) {
+        const usuarioSearched = await User.findAll({
+          where: {
+            [Op.or]: {
+              email: { [Op.iLike]: `${search}%` },
+              userName: { [Op.iLike]: `${search}%` },
+            },
           },
         })
 
@@ -187,6 +226,16 @@ module.exports = {
       }
     } catch (error) {
       return sendError(res, error)
+    }
+  },
+  getUserName: async (req, res) => {
+    try {
+      const decodedToken = await verifyToken(req, res)
+      const id = decodedToken.id
+      const userName = await User.findByPk(id, { attributes: ["userName","email"] })
+      res.send(userName)
+    } catch (error) {
+      sendError(res, error)
     }
   },
 }

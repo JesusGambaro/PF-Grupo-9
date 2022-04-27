@@ -3,7 +3,7 @@ import "../../Css/AdminPandO.css";
 import {useEffect, useState} from "react";
 import {useNavigate, NavLink} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
-import {getAllOrders, getOrderByStatus} from "../../redux/actions/ordersAdmin";
+import {getAllOrders, getOrderByStatus, updateOrder} from "../../redux/actions/ordersAdmin";
 import {roleUser} from "../../redux/actions/Loginregister";
 import {getOrderByEmail} from "../../redux/actions/ordersAdmin";
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
@@ -42,10 +42,10 @@ export default function AdminPandO() {
   }
   function handleStatusFilter(e) {
     e.preventDefault();
-    dispatch(getOrderByStatus(token1, e.target.value));
+    dispatch(updateOrder(token1, e.target.value));
   }
   const allOrders = useSelector((state) => state.admin.allOrders);
-
+console.log(allOrders)
   return (
     <div className="admin-container">
       <div className="orders-card">
@@ -130,11 +130,11 @@ export default function AdminPandO() {
                     </td>
                     <td>
                       <b>
-                        {e.user.userName} {/* Customer name */}
+                        {e.name} {e.surname} {/* Customer name */}
                       </b>
                     </td>
                     <td>
-                      {e.user.email}
+                      {e.user.email?e.user.email:'No ha sido suministrado'}
                       {/* email@example.com */}
                     </td>
                     <td>

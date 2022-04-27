@@ -14,8 +14,18 @@ small {
 }
 .card-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
+}
+
+.change-status{
+justify-self: end;
+
+  
+}
+.date{
+  display: flex;
+  flex-direction: column;
 }
 
 .card-order-detail-body {

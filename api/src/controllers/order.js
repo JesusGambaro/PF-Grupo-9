@@ -86,15 +86,30 @@ module.exports = {
           { model: User },
         ],
       })
-
-      res.send(userOrders)
+      if (userOrders.length) {
+        return res.send(userOrders)
+      }
+      const user = await User.findOne({ where: { id: decodedToken.id } })
+      console.log(user)
+      return res.send(user)
     } catch (error) {
       sendError(res, error)
     }
   },
   postOrder: async (req, res) => {
     try {
-      const { telephoneNum, address } = req.body
+      const {
+        telephoneNum,
+        address,
+        name,
+        surname,
+        country,
+        city,
+        postalCode,
+        floor,
+        apartment,
+        notes,
+      } = req.body
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
       const allShoppingCarts = await ShoppingCartItem.findAll({
@@ -110,6 +125,14 @@ module.exports = {
       const orderCreated = await Order.create({
         telephoneNum,
         address,
+        name,
+        surname,
+        country,
+        city,
+        postalCode,
+        floor,
+        apartment,
+        notes,
         total,
       })
       await orderCreated.addShoppingCartItems(allShoppingCarts)
@@ -125,8 +148,7 @@ module.exports = {
   },
 
   putOrder: async (req, res) => {
-    const { id } = req.params //debería recibir por query me parece..
-    const { delivered } = req.body //
+    const { delivered, id } = req.body
     try {
       const order = await Order.update(
         { delivered },

@@ -5,6 +5,7 @@ import {
   GET_ORDER_BY_EMAIL,
   GET_ORDER_DETAIL,
   GET_ALL_GAIN,
+  UPDATE_ORDER,
 } from "./actionsAdmin";
 
 export const getLastSevenDaysOrders = (token) => {
@@ -59,7 +60,7 @@ export const getOrderByStatus = (token, delivered) => {
         headers: {Authorization: `bearer ${token}`},
       }
     );
-    console.log(data);
+    
 
     dispatch({type: GET_ORDER_BY_EMAIL, payload: data.data});
   };
@@ -69,8 +70,20 @@ export const getAllGain = (token) => {
     const data = await axios.get(`http://localhost:3001/orders/totalGain`, {
       headers: {Authorization: `bearer ${token}`},
     });
-    console.log(data);
+    
 
     dispatch({type: GET_ALL_GAIN, payload: data.data});
   };
 };
+
+export const updateOrder=(token, id, delivered)=>{
+ 
+  return async () => {
+     /* const data =  */ await axios.put(`http://localhost:3001/orders`,{delivered, id}, {
+      headers: {Authorization: `bearer ${token}`},
+    });
+    /* console.log('?',data);
+
+    dispatch({type: UPDATE_ORDER, payload: data});  */
+  };
+}

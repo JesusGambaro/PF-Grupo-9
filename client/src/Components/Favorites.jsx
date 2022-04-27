@@ -1,6 +1,5 @@
 import React from 'react'
 import "../Css/Favorities.scss"
-import Card from "./Card"
 const Favorites = () => {
   return (
     <div className='favorites'>

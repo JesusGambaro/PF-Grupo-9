@@ -9,6 +9,7 @@ const {
   getRole,
   changeUsersRole,
   getUserName,
+  userSingUpOrSingInGoogle
 } = require("../controllers/user")
 const {
   verifyTokenAdmin,
@@ -19,6 +20,7 @@ const router = require("express").Router()
 
 router.post("/signUp", userSingUp)
 router.post("/signIn", userSingIn)
+router.post("/SingUpOrSingInGoogle", userSingUpOrSingInGoogle)
 router.post("/forgot-password", forgotPassword)
 router.post("/forgot-password/:token", changeForgottenPassword)
 router.post("/change-password", verifyTokenUserOrAdmin, changePassword)

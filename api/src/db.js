@@ -33,7 +33,7 @@ let capsEntries = entries.map((entry) => [
 ])
 sequelize.models = Object.fromEntries(capsEntries)
 
-const { Product, Image, Stock, Order, ShoppingCartItem, User } =
+const { Product, Image, Stock, Order, ShoppingCartItem, User, FavoriteItem } =
   sequelize.models
 
 Product.hasMany(Image)
@@ -50,6 +50,11 @@ Product.hasMany(ShoppingCartItem)
 ShoppingCartItem.belongsTo(Product)
 Order.hasMany(ShoppingCartItem)
 ShoppingCartItem.belongsTo(Order)
+
+User.hasMany(FavoriteItem)
+FavoriteItem.belongsTo(User)
+Product.hasMany(FavoriteItem)
+FavoriteItem.belongsTo(Product)
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

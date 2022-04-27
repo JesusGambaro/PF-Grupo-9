@@ -4,6 +4,7 @@ import ConfirmPanel from "./ConfirmPanel";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import Loading from "../Loading";
+import search from "../../redux/actions/search";
 import {
   deleteUser,
   getAllUsers,
@@ -11,7 +12,9 @@ import {
 } from "../../redux/actions/userAdmin";
 import {useEffect} from "react";
 import {roleUser} from "../../redux/actions/Loginregister";
-
+import usePagination from "../../hooks/usePagination";
+import Selection from "./Selection";
+import Checkbox from "../Checkbox";
 const UserCard = ({user, handleDeleteUser, handleUpdateUser, disabled}) => {
   const [confirmState, setConfirmState] = useState(false);
   return (
@@ -58,6 +61,7 @@ const UserCard = ({user, handleDeleteUser, handleUpdateUser, disabled}) => {
 const AdminCustomers = () => {
   const {users, loading} = useSelector((state) => state.admin);
   const {role} = useSelector((store) => store.root);
+  const {Pagination, dataPerPage} = usePagination(users, 12, 4);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -95,44 +99,14 @@ const AdminCustomers = () => {
     }
   };
 
-  /* ------------------------------- PAGINATION ------------------------------- */
-  const pageLimit = 4,
-    cardsPerPage = 12;
-  const [currentPage, setCurrentPage] = useState(1);
-  const pages = Math.ceil(users.length / cardsPerPage);
-
-  const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);
-
-  const prevPage = () => setCurrentPage((currentPage) => currentPage - 1);
-
-  const goPage = (e) => setCurrentPage(Number(e.target.textContent));
-
-  useEffect(() => {
-    if (users.length < 40) setCurrentPage(1);
-  }, [users.length]);
-
-  const dataPerPage = () => {
-    const start = currentPage * cardsPerPage - cardsPerPage,
-      end = start + cardsPerPage;
-    return users.slice(start, end);
+  const [searchParam, setSearchParam] = useState("");
+  const handleSearch = (e) => {
+    e.preventDefault();
+    dispatch(search(searchParam, true));
   };
-
-  const dividedGroups = () => {
-    const start = Math.floor((currentPage - 1) / pageLimit) * pageLimit;
-    return new Array(pageLimit).fill().map((_, i) => {
-      let limit = start + i + 1;
-      return limit <= pages && limit;
-    });
+  const handleChange = (e) => {
+    console.log(e.target.value);
   };
-
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [currentPage]);
-  /* ------------------------------- PAGINATION ------------------------------- */
-
   return (
     <div className="admin-container">
       {loading ? <Loading /> : false}
@@ -140,6 +114,32 @@ const AdminCustomers = () => {
       <div className="customers-section-container">
         <div className="add-section">
           <h1>Customers list</h1>
+          <form
+            className="searchOwn"
+            onSubmit={handleSearch}
+            onClick={() => {
+              //dispatch(resetState());
+              //dispatch(resetFilters());
+            }}
+          >
+            <button type="submit">
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <input
+              type="text"
+              placeholder="SEARCH"
+              value={searchParam}
+              onChange={(e) => setSearchParam(e.target.value)}
+            />
+          </form>
+          <div className="filter-sortby">
+            <Checkbox data={"Is admin"} />
+            <Selection
+              options={["A-Z", "Z-A"]}
+              type="Sort By"
+              handleChange={handleChange}
+            />
+          </div>
         </div>
         <div className="customers-cards-container">
           {users.length > 0 &&
@@ -155,40 +155,7 @@ const AdminCustomers = () => {
               />
             ))}
         </div>
-        {users.length > 1 && (
-          <div className="pagination-container">
-            <div className="selectionOwn">
-              <button
-                className="btnOwn prev"
-                onClick={prevPage}
-                disabled={currentPage === 1}
-              >
-                <i className="fa-solid fa-angle-left"></i>
-              </button>
-              {dividedGroups().map((e, i) => {
-                return (
-                  e && (
-                    <button
-                      className={currentPage === e ? "btnOwn active" : "btnOwn"}
-                      key={i}
-                      onClick={goPage}
-                    >
-                      {e}
-                    </button>
-                  )
-                );
-              })}
-
-              <button
-                className="btnOwn next"
-                onClick={nextPage}
-                disabled={currentPage === pages}
-              >
-                <i className="fa-solid fa-angle-right"></i>
-              </button>
-            </div>
-          </div>
-        )}
+        <Pagination />
       </div>
     </div>
   );

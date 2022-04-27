@@ -1,0 +1,32 @@
+.favorites{
+    width: 60%;
+    margin-top:5%;
+    
+    .favoritesContainer{
+        display: flex;
+        justify-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        gap:20px;
+        .cardFavs{
+            border: 1px solid black;
+            background-color: white
+        }
+    }.fav-buttons{
+        margin-top: 5%;
+        .deleteAll-button{
+            align-self: center;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 0.5rem;
+            background: #df0902;
+            font-weight: 500;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem;
+        }
+    }
+}

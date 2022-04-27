@@ -31,7 +31,7 @@ const max = maxStock.size
       </div>
       <div className="actions">
         <button onClick={e => deleteCartItem(id)}>
-          <i class="bi bi-trash"></i> Delete
+          <i className="bi bi-trash"></i> Delete
         </button>
       </div>
     </div>
@@ -124,11 +124,11 @@ export default function Cart () {
                 {cartUser && cartUser.map(cartItem => {return <CardProduct key={cartItem.id} id={cartItem.id} product={cartItem.product} amount={cartItem.amount} size={cartItem.size} handlePut={handlePut} deleteCartItem={handleDeleteCartItem}/>})}
             <div className="cart-actions">
                 <button className="trash" onClick={e => deleteAll()}>
-                <i class="bi bi-trash"></i> Delete all
+                <i className="bi bi-trash"></i> Delete all
                 </button>
                 <label className="totalprice">Total:${totalPrice(cartUser)}</label>
                 <button className="purchase" onClick={e => makeOrder(e)}>
-                <i class="bi bi-bag-fill"></i> Purchase
+                <i className="bi bi-bag-fill"></i> Purchase
                 </button>
             </div>
             </div>

@@ -27,7 +27,7 @@
     height: calc(100% + 8rem);
     margin-top: -8rem;
     background: #efefef;
-    z-index: 10000;
+    z-index: 100;
   }
 
   .filters-container {
@@ -41,8 +41,9 @@
       align-items: center;
       flex-direction: column;
       flex: 1 0 40%;
+      min-height: 3rem;
       max-width: 6rem;
-      justify-content: space-between;
+      justify-content: center;
       text-transform: uppercase;
       color: #fff;
       background: #000;

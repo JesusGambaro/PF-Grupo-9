@@ -6,14 +6,18 @@ import { useNavigate } from "react-router-dom"
 import { postOrder } from "../redux/actions/order"
 import Swal from "sweetalert2"
 import { totalPrice } from "./Cart"
-import PaymentCheckout from "./PaymentCheckout"
+import {CardElement, useStripe, useElements,Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js"
+const stripePromise = loadStripe("pk_test_51KtCmaEyrMDgVNEx9jvaVUbtUuGmXVXmnhrtCnNdsQdVxna17PhfnQ08NrXMMs94GPIyQpOp3RI70VjlNBwHE3ZN00oJfjWvbj");
 
 
-export default function OrderForm () {
+const PaymentCheckout = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const token = window.localStorage.getItem("token")
     const cart = useSelector(state => state.root.cartUser)
+    const stripe = useStripe();
+    const elements = useElements();
     const [order, setOrder] = useState({
     telephoneNumber:"",
     address:"",
@@ -49,18 +53,23 @@ export default function OrderForm () {
         if(!order.address.length || !order.telephoneNumber.length) return true
         return Object.keys(error).length
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        dispatch(postOrder(token,order))
+        // const { error, paymentMethod } = await stripe.createPaymentMethod({
+        //     type: "card",
+        //     card: elements.getElement(CardElement),
+        //   });
+        //   console.log({paymentMethod})
+        // if(error){return console.log(error)}
+        // // dispatch(postOrder(token,{order, paymentMethod}))
         Swal.fire({
             icon: 'success',
             title: 'The order has been placed',
             showConfirmButton: false,
             timer: 1250,
           }).then( () => {
-            navigate("/home/profile")
+            // navigate("/home/profile")
           })
-          
     }
     return (
         <div >
@@ -72,7 +81,9 @@ export default function OrderForm () {
                     {error.telephoneNumber && <label className="col form-label text-danger fw-bold text-end">{error.telephoneNumber}</label>}
                     <label><span>Address<i className="asterisco">*</i></span><input name="address" placeholder="San Martin 35" value={order.address} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.address && <label className="col form-label text-danger fw-bold text-end">{error.address}</label>}
-                    <PaymentCheckout/>
+                    <div style={{width:"100%"}}>
+                    <CardElement />
+                    </div>
                     <div className="totals">
                         <span>Total footwears: {totalFootwear()}</span>
                         <span>Order total: ${totalPrice(cart)}</span>
@@ -81,5 +92,13 @@ export default function OrderForm () {
                 </form>
             </section>}
         </div>
+    )
+}
+
+export default function OrderForm(){
+    return(
+        <Elements stripe={stripePromise}>
+            <PaymentCheckout/>
+        </Elements>
     )
 }

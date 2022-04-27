@@ -86,21 +86,36 @@ module.exports = {
           { model: User },
         ],
       })
-
-      res.send(userOrders)
+      if (userOrders.length) {
+        return res.send(userOrders)
+      }
+      const user = await User.findOne({ where: { id: decodedToken.id } })
+      console.log(user)
+      return res.send(user)
     } catch (error) {
       sendError(res, error)
     }
   },
   postOrder: async (req, res) => {
     try {
-      const { telephoneNum, address } = req.body
+      const { order, paymentMethod } = req.body
+      const {
+        telephoneNum,
+        address,
+        name,
+        surname,
+        country,
+        city,
+        postalCode,
+        floor,
+        apartment,
+        notes,
+      } = order
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
       const allShoppingCarts = await ShoppingCartItem.findAll({
         where: { userId, ordered: false },
         include: [{ model: Product }],
-        //   [Sequelize.fn("SUM", Sequelize.col("Product.price")), "total"],
       })
       let total = 0
       allShoppingCarts.forEach((item) => {
@@ -110,6 +125,14 @@ module.exports = {
       const orderCreated = await Order.create({
         telephoneNum,
         address,
+        name,
+        surname,
+        country,
+        city,
+        postalCode,
+        floor,
+        apartment,
+        notes,
         total,
       })
       await orderCreated.addShoppingCartItems(allShoppingCarts)
@@ -118,6 +141,7 @@ module.exports = {
         { ordered: true },
         { where: { userId, ordered: false } }
       )
+
       return res.send({ msg: "Order created" })
     } catch (error) {
       sendError(res, error)
@@ -125,8 +149,7 @@ module.exports = {
   },
 
   putOrder: async (req, res) => {
-    const { id } = req.params //debería recibir por query me parece..
-    const { delivered } = req.body //
+    const { delivered, id } = req.query
     try {
       const order = await Order.update(
         { delivered },
@@ -136,8 +159,9 @@ module.exports = {
           },
         }
       )
-
-      res.send({ msg: "Order updated" })
+      const prueba = await Order.findByPk(id)
+      res.send(prueba)
+      // res.send({ msg: "Order updated" })
     } catch (error) {
       sendError(res, error)
     }

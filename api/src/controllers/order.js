@@ -148,8 +148,7 @@ module.exports = {
   },
 
   putOrder: async (req, res) => {
-    const { id } = req.params //debería recibir por query me parece..
-    const { delivered } = req.query
+    const { delivered, id } = req.query
     try {
       const order = await Order.update(
         { delivered },
@@ -159,8 +158,9 @@ module.exports = {
           },
         }
       )
-
-      res.send({ msg: "Order updated" })
+      const prueba = await Order.findByPk(id)
+      res.send(prueba)
+      // res.send({ msg: "Order updated" })
     } catch (error) {
       sendError(res, error)
     }

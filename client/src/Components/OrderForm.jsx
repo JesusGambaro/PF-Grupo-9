@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom"
 import { postOrder } from "../redux/actions/order"
 import Swal from "sweetalert2"
 import { totalPrice } from "./Cart"
+import PaymentCheckout from "./PaymentCheckout"
+
+
 export default function OrderForm () {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -59,7 +62,6 @@ export default function OrderForm () {
           })
           
     }
-    console.log(cart)
     return (
         <div >
             { cart &&
@@ -70,6 +72,7 @@ export default function OrderForm () {
                     {error.telephoneNumber && <label className="col form-label text-danger fw-bold text-end">{error.telephoneNumber}</label>}
                     <label><span>Address<i className="asterisco">*</i></span><input name="address" placeholder="San Martin 35" value={order.address} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.address && <label className="col form-label text-danger fw-bold text-end">{error.address}</label>}
+                    <PaymentCheckout/>
                     <div className="totals">
                         <span>Total footwears: {totalFootwear()}</span>
                         <span>Order total: ${totalPrice(cart)}</span>

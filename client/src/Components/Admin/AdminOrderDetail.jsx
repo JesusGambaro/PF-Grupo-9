@@ -31,15 +31,15 @@ export default function AdminOrderDetail() {
         navigate("/home");
       }
     }
-  }, [dispatch, navigate, order, role.admin]);
+  }, [dispatch, navigate, order, role.admin, ]);
   const orderDetail = useSelector((state) => state.admin.orderDetail);
   console.log(orderDetail)
 
 
   function handleStatusChange(e){
     e.preventDefault();
-   dispatch( updateOrder(token1,order, e.target.value))
-   /*  updateOrder(token, order, ) */
+   dispatch(updateOrder(token1, order, e.target.value))
+   
   }
   return (
     <>

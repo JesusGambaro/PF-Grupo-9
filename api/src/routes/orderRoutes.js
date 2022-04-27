@@ -22,7 +22,7 @@ router
   .get(verifyTokenUserOrAdmin, getOrders)
   .post(verifyTokenUserOrAdmin, postOrder)
 router.get("/userOrders/", verifyTokenUserOrAdmin, getOrdersUser)
-router.put("/:id", verifyTokenAdmin, putOrder)
+router.put("/", verifyTokenAdmin, putOrder)
 router.delete("/:id", verifyTokenAdmin, deleteOrder)
 router.get("/ByDate", verifyTokenAdmin, getLastSevenDaysOrders)
 router.get("/totalGain", verifyTokenAdmin, getTotalGain)

@@ -77,13 +77,13 @@ export const getAllGain = (token) => {
 };
 
 export const updateOrder=(token, id, delivered)=>{
-  console.log(delivered)
-  return async (dispatch) => {
-    const data = await axios.put(`http://localhost:3001/orders?delivered=${delivered}/${id}`, {
+ 
+  return async () => {
+     /* const data =  */ await axios.put(`http://localhost:3001/orders`,{delivered, id}, {
       headers: {Authorization: `bearer ${token}`},
     });
-    console.log('?',data);
+    /* console.log('?',data);
 
-    dispatch({type: UPDATE_ORDER, payload: data.data});
+    dispatch({type: UPDATE_ORDER, payload: data});  */
   };
 }

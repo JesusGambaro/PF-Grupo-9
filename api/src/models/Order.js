@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM("undelivered", "delivered", "canceled", "completed"),
       defaultValue: "undelivered",
     },
-    telephoneNum: {
+    telephoneNumber: {
       type: DataTypes.BIGINT,
     },
     total: {
@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     postalCode: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     floor: {

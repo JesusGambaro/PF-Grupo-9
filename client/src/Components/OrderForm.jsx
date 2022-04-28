@@ -16,6 +16,8 @@ const PaymentCheckout = () => {
     const dispatch = useDispatch()
     const token = window.localStorage.getItem("token")
     const cart = useSelector(state => state.root.cartUser)
+    const paymentInfo = useSelector(state => state.root.paymentInfo)
+    console.log ('a',paymentInfo)
     const {totalFootwear,total} = cart
     const stripe = useStripe();
     const elements = useElements();
@@ -24,7 +26,7 @@ const PaymentCheckout = () => {
     address:"",
     name:"",
     surname:"",
-    country:"",
+    country:"Argentina",
     city:"",
     floor:"",
     apartment:"",
@@ -41,11 +43,11 @@ const PaymentCheckout = () => {
         setOrder({...order,[e.target.name]: e.target.value})
     }
     const handleErrorForm = (e) => {
-        if(e.target.name === "telephoneNumber"){
+       /*  if(e.target.name === "telephoneNumber"){
             console.log(e.target.value.length)
             if(e.target.value.length === 0) { console.log('a')
              setError({...error,telephoneNumber: "Telephone number is required"})}
-            /* else if(e.target.value.length){setError({...error,telephoneNumber: ""})} */
+            /* else if(e.target.value.length){setError({...error,telephoneNumber: ""})} 
             if(e.target.value.length > 15 || e.target.value.length < 4) {console.log('e') 
             setError({...error,telephoneNumber: "Invalid telephone number"})}
             else if(!e.target.value.length > 15 || !e.target.value.length < 4){setError({...error,telephoneNumber: ""})}
@@ -83,7 +85,7 @@ const PaymentCheckout = () => {
             return setError({...error,floor: "The floor must be provided as an integer"})
         }}}
         
-        
+         */
     }
     const validation = () =>{
         if(!order.address.length || !order.telephoneNumber.length) return true
@@ -91,13 +93,17 @@ const PaymentCheckout = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // const { error, paymentMethod } = await stripe.createPaymentMethod({
-        //     type: "card",
-        //     card: elements.getElement(CardElement),
-        //   });
-        //   console.log({paymentMethod})
-        // if(error){return console.log(error)}
-        // // dispatch(postOrder(token,{order, paymentMethod}))
+        
+         const { error, paymentMethod } = await stripe.createPaymentMethod({
+             type: "card",
+             card: elements.getElement(CardElement),
+           });
+           console.log({paymentMethod})
+           console.log('datos de la orden',order)
+         if(error){return console.log(error)}
+          dispatch(postOrder(token,{order, paymentMethod}))
+
+
         Swal.fire({
             icon: 'success',
             title: 'The order has been placed',
@@ -113,11 +119,11 @@ const PaymentCheckout = () => {
              <section className="order-container">
                 <h1 className="fw-bold text-center mb-3">Purchase</h1>
                 <form onSubmit={(e) => handleSubmit(e)} className="form">
-                    <label className="input-number" ><span>Telephone number<i className="asterisco">*</i></span><input placeholder="3447423612" type="number" name="telephoneNumber" value={order.telephoneNumber} onChange={e => handleOnChangeForm(e)} onClick={e => handleOnChangeForm(e)}/></label>
+                    <label className="input-number" ><span>Telephone number<i className="asterisco">*</i></span><input placeholder="3447423612" type="number" name="telephoneNumber" value={order.telephoneNumber} onChange={e => handleOnChangeForm(e)} /></label>
                     {error.telephoneNumber && <label className="col form-label text-danger fw-bold text-end">{error.telephoneNumber}</label>}
-                    <label><span>Address<i className="asterisco">*</i></span><input name="address" placeholder="San Martin 35" value={order.address} onChange={e => handleOnChangeForm(e)} onClick={e => handleOnChangeForm(e)}/></label>
+                    <label><span>Address<i className="asterisco">*</i></span><input name="address" placeholder="San Martin 35" value={order.address} onChange={e => handleOnChangeForm(e)} /></label>
                     {error.address && <label className="col form-label text-danger fw-bold text-end">{error.address}</label>}
-                    <label><span>Name<i className="asterisco">*</i></span><input name="name" placeholder="Luis Eduardo" value={order.name} onChange={e => handleOnChangeForm(e)} onClick={e => handleOnChangeForm(e)}/></label>
+                    <label><span>Name<i className="asterisco">*</i></span><input name="name" placeholder="Luis Eduardo" value={order.name} onChange={e => handleOnChangeForm(e)} /></label>
                     {error.name && <label className="col form-label text-danger fw-bold text-end">{error.name}</label>}
                     <label><span>Surname<i className="asterisco">*</i></span><input name="surname" placeholder="Carrillo Rodríguez" value={order.surname} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.surname && <label className="col form-label text-danger fw-bold text-end">{error.surname}</label>}
@@ -382,7 +388,7 @@ const PaymentCheckout = () => {
                     {error.floor && <label className="col form-label text-danger fw-bold text-end">{error.floor}</label>}
                     <label><span>Apartment</span><input name="apartment" placeholder="B" value={order.apartment} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.apartment && <label className="col form-label text-danger fw-bold text-end">{error.apartment}</label>}
-                    <label><span>Notes</span><textarea name="apartment" placeholder="" value={order.notes} onChange={e => handleOnChangeForm(e)}/></label>
+                    <label><span>Notes</span><textarea name="notes" placeholder="" value={order.notes} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.notes && <label className="col form-label text-danger fw-bold text-end">{error.notes}</label>}
                     {/* </div> */}
                     <div style={{width:"100%"}}>

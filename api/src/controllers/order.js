@@ -107,7 +107,7 @@ module.exports = {
   postOrder: async (req, res) => {
     const { order, paymentMethod, total } = req.body
     const {
-      telephoneNum,
+      telephoneNumber,
       address,
       name,
       surname,
@@ -136,16 +136,16 @@ module.exports = {
         payment_method: id,
         confirm: true,
       })
-      if (payment.status === "succeded") {
+      if (payment) {
         const orderCreated = await Order.create({
-          telephoneNum,
+          telephoneNumber: parseInt(telephoneNumber),
           address,
           name,
           surname,
           country,
           city,
           postalCode,
-          floor,
+          floor: floor ? parseInt(floor) : null,
           apartment,
           notes,
           total,
@@ -167,7 +167,10 @@ module.exports = {
       }
     } catch (error) {
       console.log(error)
-      res.status(205).send({ error: error.raw.message || "Server failed" })
+      if (error.raw) {
+        return res.status(200).send({ error: error.raw.message })
+      }
+      return res.send(error)
     }
   },
 

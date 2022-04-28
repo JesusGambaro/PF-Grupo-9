@@ -6,24 +6,22 @@ const { verifyToken } = require("../helpers/verify.js")
 module.exports = {
   postFavoriteItem: async (req, res) => {
     try {
-        const { productId, size } = req.body
+        const { productId } = req.body
         const decodedToken = await verifyToken(req, res)
         const userId = decodedToken.id
         const productSelected = await Product.findOne({
           where: { id: productId },
-          include: { model: Stock, where: { size } },
+          include: { model: Stock },
         })
   
         if (productSelected?.stocks[0].amount > 0) {
           let [favoriteItem] = await FavoriteItem.findOrCreate({
-            where: { productId, userId, size },
+            where: { productId, userId },
           })
   
-        //   await cartItem.save()
-  
-          res.send(favoriteItem)
+          return res.send(favoriteItem)
         } else {
-          res.send({ Error: `The proctId (${productId}) or the size (${size}) where not found.` })
+          return res.send({ Error: `The proctId (${productId}) was not found or stock 0.` })
         }
       } catch (error) {
         sendError(res, error)

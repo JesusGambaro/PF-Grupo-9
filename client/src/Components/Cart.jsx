@@ -1,18 +1,30 @@
-import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { getUserCart, deleteCartItem, deleteAllCart, putCart, addCart, loadingCartBoolean} from "../redux/actions/userCart"
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getUserCart,
+  deleteCartItem,
+  deleteAllCart,
+  putCart,
+  addCart,
+  loadingCartBoolean,
+} from "../redux/actions/userCart";
 import "../Css/AdminProducts.scss";
 import "../Css/Cart.css";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 
-
-
-const CardProduct = ({id, product, amount, size, deleteCartItem,handlePut }) => {
-const { finalPrice, model, brand, images } = product
-const maxStock = product.stocks.find(stock => stock.size === size)
-const max = maxStock.size
+const CardProduct = ({
+  id,
+  product,
+  amount,
+  size,
+  deleteCartItem,
+  handlePut,
+}) => {
+  const { finalPrice, model, brand, images } = product;
+  const maxStock = product.stocks.find((stock) => stock.size === size);
+  const max = maxStock.size;
   return (
     <div className="product-card">
       <img src={images[0].url} alt="" />
@@ -22,16 +34,24 @@ const max = maxStock.size
         <p>{brand}</p>
       </div>
       <div className="amount">
-      <label>Amount<span>(max {max})</span></label>
-      <input type="number" defaultValue={amount} min={1} max={max} onClick={e => handlePut(e,product.id, size)} />
+        <label>
+          Amount<span>(max {max})</span>
+        </label>
+        <input
+          type="number"
+          defaultValue={amount}
+          min={1}
+          max={max}
+          onClick={(e) => handlePut(e, product.id, size)}
+        />
       </div>
-      <div className="size" >
+      <div className="size">
         <label htmlFor="">Size</label>
         <p>{size}</p>
       </div>
       <div className="actions">
-        <button onClick={e => deleteCartItem(id)}>
-          <i class="bi bi-trash"></i> Delete
+        <button onClick={(e) => deleteCartItem(id)}>
+          <i className="bi bi-trash"></i> Delete
         </button>
       </div>
     </div>
@@ -53,14 +73,14 @@ export default function Cart () {
         Swal.fire({
         title: 'You must login to see your cart',
         text: "Do you want to login?",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, I want',
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, I want",
       }).then((result) => {
         if (result.isConfirmed) {
-          return navigate("/home/login")
+          return navigate("/home/login");
         }
         return navigate("/home")
       })}
@@ -124,9 +144,11 @@ export default function Cart () {
                 <i class="bi bi-bag-fill"></i> Purchase
                 </button>
             </div>
-            </div>
-        </div> : <h1 style={{marginTop:"50px"}}>Your cart is empty</h1>}
+          </div>
+        </div>
+      ) : (
+        <h1 style={{ marginTop: "50px" }}>Your cart is empty</h1>
+      )}
     </div>
-    )
+  );
 }
-

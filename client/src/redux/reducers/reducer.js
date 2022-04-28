@@ -17,6 +17,9 @@ import {
   SEARCH,
   GET_ROLE,
   GET_CART,
+  DELETE_CART,
+  GET_FAV,
+  DELETE_FAV,
   GET_PROFILE,
   LOADING_CART,
   USER_INFO
@@ -39,6 +42,7 @@ const initialState = {
   loginUser: {},
   role: {},
   cartUser: [],
+  favUser: [],
   orderUser: [],
   loadingCart: true,
   user:{}
@@ -100,6 +104,21 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         cartUser: action.payload,
         loadingCart: false,
+      }
+    case DELETE_CART:
+      return {
+        ...state,
+        cartUser: action.payload,
+      }
+    case GET_FAV:
+      return {
+        ...state,
+        favUser: action.payload,
+      }
+    case DELETE_FAV:
+      return {
+        ...state,
+        favUser: action.payload,
       }
     case GET_PROFILE:
       return {

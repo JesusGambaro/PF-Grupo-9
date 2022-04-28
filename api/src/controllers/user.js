@@ -174,7 +174,7 @@ module.exports = {
           },
         });
 
-        return res.status(302).send(usuarioSearched);
+        return res.status(200).send(usuarioSearched);
       }
       if (search.length) {
         const usuarioSearched = await User.findAll({
@@ -186,7 +186,7 @@ module.exports = {
           },
         });
 
-        return res.status(302).send(usuarioSearched);
+        return res.status(200).send(usuarioSearched);
       }
       const allUsers = await User.findAll();
       return res.status(200).send(allUsers);

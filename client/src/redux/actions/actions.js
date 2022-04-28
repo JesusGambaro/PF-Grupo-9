@@ -20,8 +20,7 @@ const GET_PROFILE = "@user/profile"
 const LOADING_CART = "loadingcart"
 const USER_INFO = "userInfo"
 const CHANGE_PASSWORD= "changePassword"
-const FORGOTTEN_PASSWORD="forgottenPassword"
-const CHANGE_FORGOTTEN_PASSWORD="changeForgottenPassword"
+const CLEAR_PASSWORD="clearPassword"
 
 export {
   LOADING_CART,
@@ -46,6 +45,5 @@ export {
   GET_PROFILE,
   USER_INFO,
   CHANGE_PASSWORD,
-  FORGOTTEN_PASSWORD,
-  CHANGE_FORGOTTEN_PASSWORD
+  CLEAR_PASSWORD
 }

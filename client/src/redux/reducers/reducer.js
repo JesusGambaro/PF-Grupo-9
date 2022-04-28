@@ -22,7 +22,8 @@ import {
   DELETE_FAV,
   GET_PROFILE,
   LOADING_CART,
-  USER_INFO
+  USER_INFO,
+  POST_ORDER
 } from "../actions/actions"
 
 const initialState = {
@@ -45,7 +46,8 @@ const initialState = {
   favUser: [],
   orderUser: [],
   loadingCart: true,
-  user:{}
+  user:{},
+  paymentInfo:[]
 }
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -134,6 +136,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         user:action.payload
+      }
+
+    case POST_ORDER:
+      return{
+        ...state,
+        paymentInfo: action.payload
       }
     default:
       return state

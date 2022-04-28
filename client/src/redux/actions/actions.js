@@ -22,6 +22,7 @@ const DELETE_FAV = "@user/deleteFav"
 const GET_PROFILE = "@user/profile"
 const LOADING_CART = "loadingcart"
 const USER_INFO = "userInfo"
+const POST_ORDER = '@user/postOrder'
 
 export {
   LOADING_CART,
@@ -47,5 +48,6 @@ export {
   SEARCH,
   GET_ROLE,
   GET_PROFILE,
-  USER_INFO
+  USER_INFO,
+  POST_ORDER
 }

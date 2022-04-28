@@ -82,5 +82,15 @@ module.exports = (sequelize) => {
         }
       }
     },
+    rating: {
+      type: DataTypes.FLOAT,
+      validate: {
+        between1And5(value) {
+          if (parseInt(value) < 0 || parseInt(value) > 5) {
+            throw new Error("Only numbers between 0 and 5 are allowed.")
+          }
+        },
+      },
+    },
   })
 }

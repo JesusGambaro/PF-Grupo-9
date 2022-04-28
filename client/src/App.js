@@ -105,7 +105,7 @@ function App() {
         path="home/admin/order/:order"
         element={[
           <AdminOrderDetail key={"adminOrderDetail"} />,
-          <AdminNav section="Customers" key={"adminNav"} />,
+          <AdminNav section="Order Detail" key={"adminNav"} />,
           <ClosedSideBarAdmin key={"adminDashboard"} />,
         ]}
       />

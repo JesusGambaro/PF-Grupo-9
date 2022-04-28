@@ -5,11 +5,15 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM("undelivered", "delivered", "canceled", "completed"),
       defaultValue: "undelivered",
     },
-    telephoneNum: {
+    telephoneNumber: {
       type: DataTypes.BIGINT,
     },
     total: {
       type: DataTypes.INTEGER,
+    },
+    address: {
+      type: DataTypes.TEXT,
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
@@ -17,10 +21,6 @@ module.exports = (sequelize) => {
     },
     surname: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
-    address: {
-      type: DataTypes.TEXT,
       allowNull: false,
     },
     country: {
@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     postalCode: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     floor: {

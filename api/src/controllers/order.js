@@ -1,8 +1,16 @@
-const { Order, ShoppingCartItem, User, Product, Image } = require("../db.js")
+const {
+  Order,
+  ShoppingCartItem,
+  User,
+  Product,
+  Image,
+  Payment,
+} = require("../db.js")
 const { Op, Sequelize } = require("sequelize")
 const moment = require("moment")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
+const Stripe = require("stripe")
 
 const orderInclude = {
   include: [
@@ -97,53 +105,72 @@ module.exports = {
     }
   },
   postOrder: async (req, res) => {
+    const { order, paymentMethod, total } = req.body
+    const {
+      telephoneNumber,
+      address,
+      name,
+      surname,
+      country,
+      city,
+      postalCode,
+      floor,
+      apartment,
+      notes,
+    } = order
     try {
-      const {
-        telephoneNum,
-        address,
-        name,
-        surname,
-        country,
-        city,
-        postalCode,
-        floor,
-        apartment,
-        notes,
-      } = req.body
+      const { id, card } = paymentMethod
+      const { brand, funding } = card
+      const stripe = new Stripe(process.env.STRIPEKEY)
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
       const allShoppingCarts = await ShoppingCartItem.findAll({
         where: { userId, ordered: false },
         include: [{ model: Product }],
-        //   [Sequelize.fn("SUM", Sequelize.col("Product.price")), "total"],
-      })
-      let total = 0
-      allShoppingCarts.forEach((item) => {
-        total += item.product.finalPrice
       })
       const owner = await User.findOne({ where: { id: userId } })
-      const orderCreated = await Order.create({
-        telephoneNum,
-        address,
-        name,
-        surname,
-        country,
-        city,
-        postalCode,
-        floor,
-        apartment,
-        notes,
-        total,
+      const payment = await stripe.paymentIntents.create({
+        amount: total,
+        currency: "USD", //ARS? MEX?
+        description: "footwears",
+        payment_method: id,
+        confirm: true,
       })
-      await orderCreated.addShoppingCartItems(allShoppingCarts)
-      await orderCreated.setUser(owner)
-      await ShoppingCartItem.update(
-        { ordered: true },
-        { where: { userId, ordered: false } }
-      )
-      return res.send({ msg: "Order created" })
+      if (payment) {
+        const orderCreated = await Order.create({
+          telephoneNumber: parseInt(telephoneNumber),
+          address,
+          name,
+          surname,
+          country,
+          city,
+          postalCode,
+          floor: floor ? parseInt(floor) : null,
+          apartment,
+          notes,
+          total,
+        })
+        const orderPayment = await Payment.create({
+          status: payment.status,
+          paymentId: id,
+          cardBrand: brand,
+          funding,
+        })
+        await orderCreated.addShoppingCartItems(allShoppingCarts)
+        await orderCreated.setUser(owner)
+        await orderCreated.setPayment(orderPayment)
+        await ShoppingCartItem.update(
+          { ordered: true },
+          { where: { userId, ordered: false } }
+        )
+        return res.send({ msg: "Order created, succesfull payment" })
+      }
     } catch (error) {
-      sendError(res, error)
+      console.log(error)
+      if (error.raw) {
+        return res.status(200).send({ error: error.raw.message })
+      }
+      return res.send(error)
     }
   },
 

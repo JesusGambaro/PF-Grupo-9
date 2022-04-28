@@ -63,6 +63,22 @@ const NavBar = () => {
       }
     });
   };
+  const handleFav = () => {
+    if (logueado) return navigate("/home/favorites");
+    Swal.fire({
+      title: "You must login to see your favorites",
+      text: "Do you want to login?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, I want",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/home/login");
+      }
+    });
+  };
 
   useEffect(() => {
     if (token) {
@@ -143,7 +159,7 @@ const NavBar = () => {
 
       <ul className="shortcutOwn">
         <li>
-          <i className="bi bi-heart"></i>
+          <i onClick={handleFav} className="bi bi-heart"></i>
         </li>
         <li>
           <i onClick={handleCart} className="bi bi-bag"></i>

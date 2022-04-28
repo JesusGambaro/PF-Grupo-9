@@ -101,7 +101,7 @@ const PaymentCheckout = () => {
            console.log({paymentMethod})
            console.log('datos de la orden',order)
          if(error){return console.log(error)}
-          dispatch(postOrder(token,{order, paymentMethod}))
+          dispatch(postOrder(token,{order,paymentMethod,total}))
 
 
         Swal.fire({
@@ -112,6 +112,7 @@ const PaymentCheckout = () => {
           }).then( () => {
             // navigate("/home/profile")
           })
+          
     }
     return (
         <div >

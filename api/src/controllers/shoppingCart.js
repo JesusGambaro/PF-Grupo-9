@@ -22,8 +22,15 @@ module.exports = {
           ],
         },
       })
-
-      res.send(sameUserCartItems)
+      let totalFootwear = 0
+      sameUserCartItems.forEach((item) => {
+        totalFootwear += item.amount
+      })
+      let total = 0
+      sameUserCartItems.forEach((item) => {
+        total += item.product.finalPrice * item.amount
+      })
+      res.send({ sameUserCartItems, total, totalFootwear })
     } catch (error) {
       sendError(res, error)
     }

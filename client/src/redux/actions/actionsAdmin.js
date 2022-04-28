@@ -11,6 +11,7 @@ const GET_ORDER_BY_STATUS = "@admin/getOrderByStatus";
 const SEARCH_USER_A = "@admin/searchUser";
 const SEARCH_PRODUCT_A = "@admin/searchProduct";
 const GET_ALL_GAIN = "@admin/getAllGain";
+const UPDATE_ORDER = '@admin/updateOrder'
 
 export {
   POST_NEW_SHOE,
@@ -26,4 +27,5 @@ export {
   GET_ORDER_BY_EMAIL,
   GET_ORDER_BY_STATUS,
   GET_ALL_GAIN,
+  UPDATE_ORDER
 };

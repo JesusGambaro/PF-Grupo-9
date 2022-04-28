@@ -86,12 +86,12 @@ export default function AdminDashboard() {
                       </td>
                       <td>
                         <b>
-                          {" "}
-                          {e.user.userName} {/* Customer name */}
+                         
+                          {e.name} {e.surname} {/* Customer name */}
                         </b>
                       </td>
                       <td>
-                        {e.user.email}
+                      {e.user.email?e.user.email:'No ha sido suministrado'}
                         {/* email@example.com */}
                       </td>
                       <td>

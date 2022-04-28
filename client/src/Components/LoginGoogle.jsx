@@ -12,12 +12,11 @@ function LoginGoogle() {
     username: response.profileObj.name
   }))
 
-  const onFailure = (response) => {
-    console.log(response)
+  const onFailure = () => {
     Swal.fire({
       icon: 'error',
       title: 'Oops...',
-      text: 'Something went wrong!',
+      text: "We couldn't login!",
     })
   }
 

@@ -21,6 +21,7 @@ module.exports = {
             },
           ],
         },
+        order: [["id", "DESC"]],
       })
       let totalFootwear = 0
       sameUserCartItems.forEach((item) => {

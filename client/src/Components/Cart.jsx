@@ -37,18 +37,16 @@ const max = maxStock.size
     </div>
   )
 }
-export const totalPrice = (cartUser) => {
-  let total = 0
-  cartUser.forEach((item) => {
-      total += item.product.finalPrice * item.amount
-  })
-  return total}
 
 export default function Cart () {
     const token = window.localStorage.getItem("token")
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const {cartUser, loadingCart} = useSelector(state => state.root)
+    let {cartUser, loadingCart} = useSelector(state => state.root)
+    const {sameUserCartItems, total} = cartUser
+    const initLoad = ()=> {
+      dispatch(loadingCartBoolean(true))
+    }
     useEffect(() => {
       if(!token || (token && !token.length)) {
         dispatch(loadingCartBoolean(true))
@@ -67,18 +65,14 @@ export default function Cart () {
         return navigate("/home")
       })}
        dispatch(getUserCart(token))
-       return prueba
+       return initLoad
       },[dispatch,addCart,navigate,token])
-      const prueba = ()=> {
-        dispatch(loadingCartBoolean(true))
-      }
-      
-      const handlePut = (e,productId,size) => {
-        const product = {amount:  e.target.value, productId,size}
-        dispatch(putCart(token,product))
-        dispatch(getUserCart(token))
-      }
-      const handleDeleteCartItem = (id) =>{
+    const handlePut = (e,productId,size) => {
+      const product = {amount:  e.target.value, productId,size}
+      dispatch(putCart(token,product))
+      dispatch(getUserCart(token))
+    }
+    const handleDeleteCartItem = (id) =>{
         Swal.fire({
             text: "Do you want to delete it?",
             icon: 'warning',
@@ -110,23 +104,22 @@ export default function Cart () {
     }
     const makeOrder = (e) => {
     navigate("/home/cart/order")
-  }
+    }
 
-  
     return (
     <div className= "cart-container">
-        {loadingCart? <Loading/>: cartUser.length ?
+        {loadingCart? <Loading/>: sameUserCartItems.length ?
         <div className="products-section-container" >
             <div className="add-section">
                 <h1>Cart</h1>
             </div>
             <div className="products-cards-container">
-                {cartUser && cartUser.map(cartItem => {return <CardProduct key={cartItem.id} id={cartItem.id} product={cartItem.product} amount={cartItem.amount} size={cartItem.size} handlePut={handlePut} deleteCartItem={handleDeleteCartItem}/>})}
+                {sameUserCartItems && sameUserCartItems.map(cartItem => {return <CardProduct key={cartItem.id} id={cartItem.id} product={cartItem.product} amount={cartItem.amount} size={cartItem.size} handlePut={handlePut} deleteCartItem={handleDeleteCartItem}/>})}
             <div className="cart-actions">
                 <button className="trash" onClick={e => deleteAll()}>
                 <i class="bi bi-trash"></i> Delete all
                 </button>
-                <label className="totalprice">Total:${totalPrice(cartUser)}</label>
+                <label className="totalprice">Total:${total}</label>
                 <button className="purchase" onClick={e => makeOrder(e)}>
                 <i class="bi bi-bag-fill"></i> Purchase
                 </button>

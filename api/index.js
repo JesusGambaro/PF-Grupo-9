@@ -8,6 +8,7 @@ const {
   Order,
   ShoppingCartItem,
   User,
+  Payment,
 } = require("./src/db.js")
 
 conn.sync({ force: true }).then(async () => {
@@ -969,12 +970,19 @@ conn.sync({ force: true }).then(async () => {
     telephoneNum: 12345678,
     total: 500000,
   })
+  const paymentRodolfo1 = await Payment.create({
+    status: "succeeded",
+    paymentId: "123asdas123",
+    cardBrand: "visa",
+    funding: "credit",
+  })
   await orderRodolfo1.addShoppingCartItems([
     cartRodolfo1,
     cartRodolfo2,
     cartRodolfo3,
   ])
   await orderRodolfo1.setUser(Rodolfo)
+  await orderRodolfo1.setPayment(paymentRodolfo1)
   const orderRodolfo2 = await Order.create({
     delivered: "delivered",
     address: "Argentina 123",
@@ -990,8 +998,15 @@ conn.sync({ force: true }).then(async () => {
     telephoneNum: 1283214,
     total: 10000,
   })
+  const paymentRodolfo2 = await Payment.create({
+    status: "succeeded",
+    paymentId: "123asdas123asdasdas32131",
+    cardBrand: "mastercard",
+    funding: "debit",
+  })
   await orderRodolfo2.addShoppingCartItem(cartRodolfo4)
   await orderRodolfo2.setUser(Rodolfo)
+  await orderRodolfo2.setPayment(paymentRodolfo2)
   const orderAdmin = await Order.create({
     delivered: "completed",
     address: "Colombia 123",
@@ -1005,8 +1020,15 @@ conn.sync({ force: true }).then(async () => {
     total: 1000000,
     createdAt: "2021-04-21 19:52:24.029-03",
   })
+  const paymentAdmin = await Payment.create({
+    status: "succeeded",
+    paymentId: "1dsñlfjadslñfjdsalñfds123",
+    cardBrand: "visa",
+    funding: "debit",
+  })
   await orderAdmin.addShoppingCartItem(cartAdmin)
   await orderAdmin.setUser(admin)
+  await orderAdmin.setPayment(paymentAdmin)
   server.listen(3001, () => {
     console.log("%s listening at 3001")
   })

@@ -33,8 +33,16 @@ let capsEntries = entries.map((entry) => [
 ])
 sequelize.models = Object.fromEntries(capsEntries)
 
-const { Product, Image, Stock, Order, ShoppingCartItem, User, FavoriteItem } =
-  sequelize.models
+const {
+  Product,
+  Image,
+  Stock,
+  Order,
+  ShoppingCartItem,
+  User,
+  FavoriteItem,
+  Payment,
+} = sequelize.models
 
 Product.hasMany(Image)
 Image.belongsTo(Product)
@@ -45,6 +53,8 @@ User.hasMany(ShoppingCartItem)
 ShoppingCartItem.belongsTo(User)
 User.hasMany(Order)
 Order.belongsTo(User)
+Order.hasOne(Payment)
+Payment.belongsTo(Order)
 
 Product.hasMany(ShoppingCartItem)
 ShoppingCartItem.belongsTo(Product)

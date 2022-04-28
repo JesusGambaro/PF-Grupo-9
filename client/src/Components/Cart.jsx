@@ -146,9 +146,9 @@ export default function Cart () {
             </div>
           </div>
         </div>
-      ) : (
+       : 
         <h1 style={{ marginTop: "50px" }}>Your cart is empty</h1>
-      )}
+      }
     </div>
   );
 }

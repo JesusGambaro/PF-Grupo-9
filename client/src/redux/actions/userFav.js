@@ -22,10 +22,10 @@ export const deleteFavItem = (id, token) => {
       headers: { Authorization: `bearer ${token}` },
     })
 
-    dispatch({
+   /*  dispatch({
       type: GET_FAV,
       payload: data,
-    })
+    }) */
   }
 }
 

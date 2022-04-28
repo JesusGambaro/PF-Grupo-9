@@ -105,7 +105,9 @@ function UserProfile() {
                           className="card-img-top"
                           alt="..."
                           onClick={() =>
-                            navigate(`/home/${item.id}/${item.product.model}`)
+                            navigate(
+                              `/home/${item.productId}/${item.product.model}`
+                            )
                           }
                         />
                       </div>

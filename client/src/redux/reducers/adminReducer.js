@@ -17,8 +17,10 @@ import {
   GET_ORDER_DETAIL,
   GET_ORDER_BY_EMAIL,
   GET_ORDER_BY_STATUS,
-  SEARCH_A,
   GET_ALL_GAIN,
+  UPDATE_ORDER,
+  SEARCH_PRODUCT_A,
+  SEARCH_USER_A,
 } from "../actions/actionsAdmin";
 const initialState = {
   allData: [],
@@ -51,9 +53,10 @@ const adminReducer = (state = initialState, action) => {
       };
     case DELETE_SHOE:
       return {...state, allData: action.payload, allDataCopy: action.payload};
-    case SEARCH_A:
-      console.log("Soy el reducet=>>>", action.payload);
+    case SEARCH_PRODUCT_A:
       return {...state, allData: action.payload};
+    case SEARCH_USER_A:
+      return {...state, users: action.payload};
     case UPDATE_USERS:
       return {...state, users: action.payload};
     case LOADING:
@@ -78,6 +81,8 @@ const adminReducer = (state = initialState, action) => {
       return {...state, allOrders: action.payload};
     case GET_ALL_GAIN:
       return {...state, gain: action.payload};
+    case UPDATE_ORDER:
+      return {...state, orderDetail: action.payload}
     default:
       return state;
   }

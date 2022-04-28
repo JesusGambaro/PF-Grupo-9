@@ -10,6 +10,7 @@
     background: #f0f0f0;
     border-radius: 5px;
     padding: 2rem;
+    width: max-content;
 }
 .order-container .form{
     display: flex;
@@ -75,4 +76,17 @@ margin-top: 10px;
     gap: 5px;
     text-align: left;
     opacity: 0.8;
+}
+
+.country{
+    display: flex;
+    
+    
+    
+    
+}
+
+.country-select{
+    margin-left: 50px;
+    
 }

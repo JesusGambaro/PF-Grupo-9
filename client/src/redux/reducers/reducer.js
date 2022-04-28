@@ -17,11 +17,15 @@ import {
   SEARCH,
   GET_ROLE,
   GET_CART,
+  DELETE_CART,
+  GET_FAV,
+  DELETE_FAV,
   GET_PROFILE,
   LOADING_CART,
   USER_INFO,
   CHANGE_PASSWORD,
   CLEAR_PASSWORD,
+  POST_ORDER
 } from "../actions/actions";
 
 const initialState = {
@@ -41,11 +45,14 @@ const initialState = {
   loginUser: {},
   role: {},
   cartUser: [],
+  favUser: [],
   orderUser: [],
   loadingCart: true,
   user: {},
   changePasswort: {},
+  paymentInfo:[]
 };
+
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case BRING_ALL_DATA:
@@ -104,6 +111,21 @@ const rootReducer = (state = initialState, action) => {
         cartUser: action.payload,
         loadingCart: false,
       };
+    case DELETE_CART:
+      return {
+        ...state,
+        cartUser: action.payload,
+      }
+    case GET_FAV:
+      return {
+        ...state,
+        favUser: action.payload,
+      }
+    case DELETE_FAV:
+      return {
+        ...state,
+        favUser: action.payload,
+      }
     case GET_PROFILE:
       return {
         ...state,
@@ -128,6 +150,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         changePasswort: action.payload
+      }
+
+    case POST_ORDER:
+      return{
+        ...state,
+        paymentInfo: action.payload
       }
     default:
       return state;

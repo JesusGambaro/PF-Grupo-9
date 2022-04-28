@@ -19,6 +19,7 @@ import {
   GET_ORDER_BY_STATUS,
   SEARCH_A,
   GET_ALL_GAIN,
+  UPDATE_ORDER,
 } from "../actions/actionsAdmin";
 const initialState = {
   allData: [],
@@ -78,6 +79,8 @@ const adminReducer = (state = initialState, action) => {
       return {...state, allOrders: action.payload};
     case GET_ALL_GAIN:
       return {...state, gain: action.payload};
+    case UPDATE_ORDER:
+      return {...state, orderDetail: action.payload}
     default:
       return state;
   }

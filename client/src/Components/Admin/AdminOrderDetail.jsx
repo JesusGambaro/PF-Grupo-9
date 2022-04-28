@@ -1,19 +1,26 @@
 import "../../Css/AdminOrderDetail.css";
 import React from "react";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate, NavLink, useParams} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
-import {getOrderDetail} from "../../redux/actions/ordersAdmin";
+import {getOrderDetail, updateOrder} from "../../redux/actions/ordersAdmin";
 import {roleUser} from "../../redux/actions/Loginregister";
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
 
 export default function AdminOrderDetail() {
   const {role} = useSelector((store) => store.root);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {order} = useParams();
+  
+  const [dropDown, setDropDown] = useState(false);
+  function abrirYcerrar() {
+    setDropDown(!dropDown);
+  }
 
+  var token1 = window.localStorage.getItem("token");
   useEffect(() => {
-    console.log("Entre aca");
+   
     if (window.localStorage.getItem("token")) {
       const token = window.localStorage.getItem("token");
       dispatch(roleUser(token));
@@ -24,20 +31,61 @@ export default function AdminOrderDetail() {
         navigate("/home");
       }
     }
-  }, [dispatch, navigate, order, role.admin]);
+  }, [dispatch, navigate, order, role.admin, ]);
   const orderDetail = useSelector((state) => state.admin.orderDetail);
   console.log(orderDetail)
+
+
+  function handleStatusChange(e){
+    e.preventDefault();
+   dispatch(updateOrder(token1, order, e.target.value))
+   
+  }
   return (
     <>
       {!Object.keys(orderDetail).every((e) => !e) && (
         <div className="admin-container">
           <div className="card-order-detail">
             <header className="card-header">
-              <span>
+              <span className="date">
                 <b>{orderDetail.createdAt?.slice(0, 10)}</b>
-              </span>
-              <b>{orderDetail.createdAt?.slice(11, 16)}</b>
+                <b>{orderDetail.createdAt?.slice(11, 16)}</b>
               <small className="">Order ID: {orderDetail.id}</small>
+              </span>
+              
+              <span className="change-status">
+              <Dropdown isOpen={dropDown} toggle={abrirYcerrar}>
+              <DropdownToggle caret className="btn-lg">
+                Change Status
+              </DropdownToggle>
+              <DropdownMenu>
+             
+                <DropdownItem
+                  value="undelivered"
+                  onClick={(e) => handleStatusChange(e)}
+                >
+                  undelivered
+                </DropdownItem>
+                <DropdownItem
+                  value="delivered"
+                  onClick={(e) => handleStatusChange(e)}
+                >
+                  delivered
+                </DropdownItem>
+                <DropdownItem
+                  value="completed"
+                  onClick={(e) => handleStatusChange(e)}
+                >
+                  completed
+                </DropdownItem>
+                <DropdownItem
+                  value="canceled"
+                  onClick={(e) => handleStatusChange(e)}
+                >
+                  canceled
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown></span>
             </header>
             <div className="card-order-detail-body">
               <article className="order-data">
@@ -45,7 +93,7 @@ export default function AdminOrderDetail() {
                 <div className="order-data-container">
                   <h5 className="">Customer</h5>
                   <p className="detail-text-data">
-                    {orderDetail.user.userName} <br /> {orderDetail.user.email}{" "}
+                    {orderDetail.name} {orderDetail.surname} <br /> {orderDetail.user.email && orderDetail.user.email}{" "}
                     <br /> {"+" + orderDetail.telephoneNum}
                   </p>
                   {/*               <a href="#">View profile</a>
@@ -68,7 +116,11 @@ export default function AdminOrderDetail() {
                 <i className="bi bi-geo-alt icon-detail-order"></i>
                 <div className="order-data-container">
                   <h5 className="">Deliver to</h5>
-                  <p className="detail-text-data">{orderDetail.address}</p>
+                  <p className="detail-text-data">City: {orderDetail.city}, {orderDetail.country} </p>
+                  <p className="detail-text-data">{orderDetail.address}, 
+                   {orderDetail.apartment && '  ' +orderDetail.apartment},
+                   {orderDetail.floor && ' floor '+orderDetail.floor}</p>
+                  <p className="detail-text-data">Postalcode: {orderDetail.postalCode}</p>
                 </div>
               </article>
             </div>
@@ -78,7 +130,9 @@ export default function AdminOrderDetail() {
                   <thead>
                     <tr>
                       <th width="20%">Product</th>
-                      <th width="75%">Unit Price</th>
+                      <th width="20%">color</th>
+                      <th width="40%">Unit Price</th>
+                      
                       {/* <th width="20%">Quantity</th>
                       <th width="20%" className="text-end">
                         Total
@@ -104,8 +158,10 @@ export default function AdminOrderDetail() {
                               {e.product.model} {/* model */}{" "}
                             </div>
                           </td>
+                          <td> {e.product.color} </td>
                           <td > ${e.product.price}</td>
-                          {/* <td> 2 </td>
+                          
+                          {/* 
                           <td className="text-end"> $99.50 </td> */}
                         </tr>
                       );
@@ -128,7 +184,7 @@ export default function AdminOrderDetail() {
                       <td className="text-end"> $99.50 </td>
                     </tr> */}
                     <td colSpan="4">
-                      <article className="float-end">
+                      <div className="float-end">
                         {/* <dl className="dlist">
                           <dt>Subtotal:</dt> <dd>$973.35</dd>
                         </dl> */}
@@ -151,7 +207,7 @@ export default function AdminOrderDetail() {
                             </span>
                           </dd>
                         </dl> */}
-                      </article>
+                      </div>
                     </td>
                   </tbody>
                 </table>

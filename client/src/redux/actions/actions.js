@@ -16,6 +16,9 @@ const CLEAR_USER = "@shoes/clearUser"
 const SEARCH = "@shoes/search"
 const GET_ROLE = "@shoes/getRole"
 const GET_CART = "@user/getCart"
+const DELETE_CART= "@user/deleteCart"
+const GET_FAV = "@user/getFav"
+const DELETE_FAV = "@user/deleteFav"
 const GET_PROFILE = "@user/profile"
 const LOADING_CART = "loadingcart"
 const USER_INFO = "userInfo"
@@ -23,6 +26,9 @@ const USER_INFO = "userInfo"
 export {
   LOADING_CART,
   GET_CART,
+  DELETE_CART,
+  GET_FAV,
+  DELETE_FAV,
   BRING_ALL_DATA,
   LOAD_GENDERS,
   GET_ALL_CATEGORIES,

@@ -9,6 +9,9 @@ import {
   deleteUser,
   getAllUsers,
   changeUserRole,
+  searchUser,
+  filterUsers,
+  filterByName,
 } from "../../redux/actions/userAdmin";
 import {useEffect} from "react";
 import {roleUser} from "../../redux/actions/Loginregister";
@@ -102,61 +105,78 @@ const AdminCustomers = () => {
   const [searchParam, setSearchParam] = useState("");
   const handleSearch = (e) => {
     e.preventDefault();
-    dispatch(search(searchParam, true));
+    if (role.admin) {
+      dispatch(searchUser(window.localStorage.getItem("token"), searchParam));
+    } else if (role.admin === false) {
+      navigate("/home");
+    }
+  };
+  const handleIsAdminFilter = (e) => {
+    console.log(e);
+    if (role.admin) {
+      dispatch(
+        filterUsers(window.localStorage.getItem("token"), e.target.checked)
+      );
+    } else if (role.admin === false) {
+      navigate("/home");
+    }
   };
   const handleChange = (e) => {
-    console.log(e.target.value);
+    dispatch(filterByName(e.target.value));
   };
   return (
     <div className="admin-container">
-      {loading ? <Loading /> : false}
-
-      <div className="customers-section-container">
-        <div className="add-section">
-          <h1>Customers list</h1>
-          <form
-            className="searchOwn"
-            onSubmit={handleSearch}
-            onClick={() => {
-              //dispatch(resetState());
-              //dispatch(resetFilters());
-            }}
-          >
-            <button type="submit">
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </button>
-            <input
-              type="text"
-              placeholder="SEARCH"
-              value={searchParam}
-              onChange={(e) => setSearchParam(e.target.value)}
-            />
-          </form>
-          <div className="filter-sortby">
-            <Checkbox data={"Is admin"} />
-            <Selection
-              options={["A-Z", "Z-A"]}
-              type="Sort By"
-              handleChange={handleChange}
-            />
-          </div>
-        </div>
-        <div className="customers-cards-container">
-          {users.length > 0 &&
-            dataPerPage().map((user, id) => (
-              <UserCard
-                key={id}
-                user={user}
-                handleDeleteUser={(email) => handleDeleteUser(email)}
-                handleUpdateUser={(email, state) =>
-                  handleUpdateUser(email, state)
-                }
-                disabled={users.length < 2 || user.isAdmin}
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="customers-section-container">
+          <div className="add-section">
+            <h1>Customers list</h1>
+            <form
+              className="searchOwn"
+              onSubmit={handleSearch}
+              onClick={() => {
+                //dispatch(resetState());
+                //dispatch(resetFilters());
+              }}
+            >
+              <button type="submit">
+                <i className="fa-solid fa-magnifying-glass"></i>
+              </button>
+              <input
+                type="text"
+                placeholder="SEARCH"
+                value={searchParam}
+                onChange={(e) => setSearchParam(e.target.value)}
               />
-            ))}
+            </form>
+            <div className="filter-sortby">
+              <Checkbox data={"Admin"} change={(e)=>handleIsAdminFilter(e)} />
+              <Checkbox data={"Not admin"} change={(e)=>handleIsAdminFilter(e)} />
+              <Selection
+                options={["A-Z", "Z-A"]}
+                type="Sort By"
+                handleChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="customers-cards-container">
+            {users.length > 0 &&
+              dataPerPage().map((user, id) => (
+                <UserCard
+                  key={id}
+                  user={user}
+                  handleDeleteUser={(email) => handleDeleteUser(email)}
+                  handleUpdateUser={(email, state) =>
+                    handleUpdateUser(email, state)
+                  }
+                  disabled={users.length < 2 || user.isAdmin}
+                />
+              ))}
+          </div>
+          <Pagination />
         </div>
-        <Pagination />
-      </div>
+      )}
     </div>
   );
 };

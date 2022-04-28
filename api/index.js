@@ -44,15 +44,15 @@ conn.sync({ force: true }).then(async () => {
   ])
   const stockNikeKyrieInfinityPurple10 = await Stock.create({
     size: 10,
-    amount: 20,
+    amount: 0,
   })
   const stockNikeKyrieInfinityPurple11 = await Stock.create({
     size: 11,
-    amount: 21,
+    amount: 0,
   })
   const stockNikeKyrieInfinityPurple12 = await Stock.create({
     size: 12,
-    amount: 22,
+    amount: 0,
   })
   NikeKyrieInfinityPurple.addStock([
     stockNikeKyrieInfinityPurple10,

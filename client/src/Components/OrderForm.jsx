@@ -5,17 +5,18 @@ import "../Css/OrderForm.css"
 import { useNavigate } from "react-router-dom"
 import { postOrder } from "../redux/actions/order"
 import Swal from "sweetalert2"
-import { totalPrice } from "./Cart"
+
 import {CardElement, useStripe, useElements,Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js"
-const stripePromise = loadStripe("pk_test_51KtCmaEyrMDgVNEx9jvaVUbtUuGmXVXmnhrtCnNdsQdVxna17PhfnQ08NrXMMs94GPIyQpOp3RI70VjlNBwHE3ZN00oJfjWvbj");
 
+const stripePromise = loadStripe("pk_test_51KtCmaEyrMDgVNEx9jvaVUbtUuGmXVXmnhrtCnNdsQdVxna17PhfnQ08NrXMMs94GPIyQpOp3RI70VjlNBwHE3ZN00oJfjWvbj");
 
 const PaymentCheckout = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const token = window.localStorage.getItem("token")
     const cart = useSelector(state => state.root.cartUser)
+    const {totalFootwear,total} = cart
     const stripe = useStripe();
     const elements = useElements();
     const [order, setOrder] = useState({
@@ -32,17 +33,9 @@ const PaymentCheckout = () => {
     })
     const [error, setError] = useState({})
     useEffect(() => {
-        if(!cart || !cart.length) navigate("/home")
-        setOrder({...order, country:"Argentina" })
-    },[dispatch,token,navigate,addCart,cart,getUserCart,putCart,totalPrice])
+        if(!totalFootwear || !total) {navigate("/home")}
+    },[dispatch,token,navigate,addCart,cart,getUserCart,putCart])
 
-    const totalFootwear = () => {
-        let total = 0
-        cart.forEach((item) =>{ 
-            total += item.amount
-        })
-        return total
-    }
     const handleOnChangeForm = (e) => {
         handleErrorForm(e)
         setOrder({...order,[e.target.name]: e.target.value})
@@ -396,8 +389,8 @@ const PaymentCheckout = () => {
                     <CardElement />
                     </div>
                     <div className="totals">
-                        <span>Total footwears: {totalFootwear()}</span>
-                        <span>Order total: ${totalPrice(cart)}</span>
+                        <span>Total footwears: {totalFootwear}</span>
+                        <span>Order total: ${total}</span>
                     </div>
                     <button className="submit-button" disabled={validation()}><i class="bi bi-bag-fill"></i>Place the order!</button>
                 </form>

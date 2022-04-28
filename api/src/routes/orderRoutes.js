@@ -9,6 +9,7 @@ const {
   getTotalGain,
   getTotalOrders,
   getOrderById,
+  prueba,
 } = require("../controllers/order.js")
 const {
   verifyTokenUserOrAdmin,

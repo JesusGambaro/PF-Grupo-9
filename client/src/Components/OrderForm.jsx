@@ -43,57 +43,56 @@ const PaymentCheckout = () => {
         setOrder({...order,[e.target.name]: e.target.value})
     }
     const handleErrorForm = (e) => {
-       /*  if(e.target.name === "telephoneNumber"){
-            console.log(e.target.value.length)
-            if(e.target.value.length === 0) { console.log('a')
-             setError({...error,telephoneNumber: "Telephone number is required"})}
-            /* else if(e.target.value.length){setError({...error,telephoneNumber: ""})} 
-            if(e.target.value.length > 15 || e.target.value.length < 4) {console.log('e') 
-            setError({...error,telephoneNumber: "Invalid telephone number"})}
+        if(e.target.name === "telephoneNumber"){
+            if(!e.target.value.length || e.target.value.length > 15 || e.target.value.length < 6) { console.log('a')
+            setError({...error,telephoneNumber: "Telephone number is required and must be valid"})}
             else if(!e.target.value.length > 15 || !e.target.value.length < 4){setError({...error,telephoneNumber: ""})}
         }
         if(e.target.name === "address"){
-            if(!e.target.value.length) { setError({...error,address: "Address is required"})}
-            else if(e.target.value.length){ setError({...error,address: ""})}
-            if(e.target.value.length > 100) { setError({...error,address: "Invalid address"})}
-            else if(!e.target.value.length > 100){ setError({...error,address: ""})}
+            if(!e.target.value.length)  return setError({...error,address: "Address is required"})
+            else if(e.target.value.length)return setError({...error,address: ""})
+            if(e.target.value.length > 100) return setError({...error,address: "Invalid address"})
+            else if(!e.target.value.length > 100) setError({...error,address: ""})
         }
         if(e.target.name === "name"){
-            if(e.target.value.length ===0) {setError({...error,name: "Your name is required"})}
-            else if(e.target.value.length!==0){setError({...error,name: ""})}
-            if(e.target.value.length > 30 ||/[0-9-]+$/.test(order.name)) {setError({...error,name: "Invalid name"})}
-            else if(!e.target.value.length > 30 ||!/[0-9-]+$/.test(order.name)){setError({...error,name: ""})}
+            if(e.target.value.length ===0)return setError({...error,name: "Your name is required"})
+            /* else if(e.target.value.length!==0){setError({...error,name: ""})} */
+            if(e.target.value.length > 30 ||/[0-9-]+$/.test(e.target.value))return setError({...error,name: "Invalid name"})
+            if(e.target.value.length < 30 &&!/[0-9-]+$/.test(e.target.value) && e.target.value.length!==0)return setError({...error,name: ""})
         }
         if(e.target.name === "surname"){
             if(!e.target.value.length) return setError({...error,surname: "Your surname is required"})
-            if(e.target.value.length > 30 ||/[0-9-]+$/.test(order.surname)) return setError({...error,surname: "Invalid surname"})
+            if(e.target.value.length > 30 ||/[0-9-]+$/.test(e.target.value)) return setError({...error,surname: "Invalid surname"})
+            if(e.target.value.length < 30 &&!/[0-9-]+$/.test(e.target.value) && e.target.value.length!==0)return setError({...error,surname: ""})
         }
         if(e.target.name === "country"){
             if(!e.target.value.length) return setError({...error,country: "Your country is required"})
         }
         if(e.target.name === "city"){
             if(!e.target.value.length) return setError({...error,city: "Your city is required"})
-            if(e.target.value.length > 30 ||/[0-9-]+$/.test(order.city)) return setError({...error,city: "Invalid city"})
+            if(e.target.value.length > 30 ||/[0-9-]+$/.test(e.target.value)) return setError({...error,city: "Invalid city"})
+            if(e.target.value.length < 30 &&!/[0-9-]+$/.test(e.target.value) && e.target.value.length!==0)return setError({...error,city: ""})
+
         }
         if(e.target.name === "postalCode"){
             if(!e.target.value.length) return setError({...error,postalCode: "The Postal Code is required"})
-            if(e.target.value.length > 10 ) return setError({...error,postalCode: "Invalid Postal Code"})
+            if(e.target.value.length > 10 ||!/[0-9-]+$/.test(e.target.value) ) return setError({...error,postalCode: "Invalid Postal Code"})
+            if(e.target.value <10 && e.target.value >0 && /[0-9-]+$/.test(e.target.value))return setError({...error, postalCode:""})
         }
         if(e.target.name === "floor"){
-            if(order.floor !==""){
-            if(!/[0-9-]+$/.test(order.floor)){
-            return setError({...error,floor: "The floor must be provided as an integer"})
-        }}}
+            
+            if(!/[0-9-]+$/.test(e.target.value)&& e.target.value.length >0)return setError({...error,floor: "The floor must be provided as an integer"})
+            if(/[0-9-]+$/.test(e.target.value) || e.target.value.length ===0)return setError({...error,floor: ""})
+        }
         
-         */
+         
     }
-    const validation = () =>{
-        if(!order.address.length || !order.telephoneNumber.length) return true
-        return Object.keys(error).length
-    }
+    const validation = (order.name && order.telephoneNumber && order.surname && order.country && order.city && order.address && order.postalCode)?false:true/* () =>{
+        if(error.name && error.telephoneNumber || error.surname || error.country || error.city || error.address)return true
+    } */
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
+        console.log('entró al handle')
          const { error, paymentMethod } = await stripe.createPaymentMethod({
              type: "card",
              card: elements.getElement(CardElement),
@@ -101,7 +100,7 @@ const PaymentCheckout = () => {
            console.log({paymentMethod})
            console.log('datos de la orden',order)
          if(error){return console.log(error)}
-          dispatch(postOrder(token,{order, paymentMethod}))
+          dispatch(postOrder(token,{order,paymentMethod,total}))
 
 
         Swal.fire({
@@ -112,6 +111,7 @@ const PaymentCheckout = () => {
           }).then( () => {
             // navigate("/home/profile")
           })
+          
     }
     return (
         <div >
@@ -128,7 +128,7 @@ const PaymentCheckout = () => {
                     <label><span>Surname<i className="asterisco">*</i></span><input name="surname" placeholder="Carrillo Rodríguez" value={order.surname} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.surname && <label className="col form-label text-danger fw-bold text-end">{error.surname}</label>}
                    
-                   {/* <div className="country-city"> */}
+                   
                    <div className="country">
                    <label><span>Country<i className="asterisco">*</i></span></label>
                     <select className="country-select" id="country" name="country" onChange={e => handleOnChangeForm(e)} >
@@ -388,9 +388,9 @@ const PaymentCheckout = () => {
                     {error.floor && <label className="col form-label text-danger fw-bold text-end">{error.floor}</label>}
                     <label><span>Apartment</span><input name="apartment" placeholder="B" value={order.apartment} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.apartment && <label className="col form-label text-danger fw-bold text-end">{error.apartment}</label>}
-                    <label><span>Notes</span><textarea name="notes" placeholder="" value={order.notes} onChange={e => handleOnChangeForm(e)}/></label>
+                    <label><span>Notes</span><textarea name="notes"  value={order.notes} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.notes && <label className="col form-label text-danger fw-bold text-end">{error.notes}</label>}
-                    {/* </div> */}
+                    
                     <div style={{width:"100%"}}>
                     <CardElement />
                     </div>
@@ -398,7 +398,7 @@ const PaymentCheckout = () => {
                         <span>Total footwears: {totalFootwear}</span>
                         <span>Order total: ${total}</span>
                     </div>
-                    <button className="submit-button" disabled={validation()}><i class="bi bi-bag-fill"></i>Place the order!</button>
+                    <button className="submit-button" disabled={validation}><i class="bi bi-bag-fill"></i>Place the order!</button>
                 </form>
             </section>}
         </div>

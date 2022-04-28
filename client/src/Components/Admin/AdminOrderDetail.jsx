@@ -94,7 +94,7 @@ export default function AdminOrderDetail() {
                   <h5 className="">Customer</h5>
                   <p className="detail-text-data">
                     {orderDetail.name} {orderDetail.surname} <br /> {orderDetail.user.email && orderDetail.user.email}{" "}
-                    <br /> {"+" + orderDetail.telephoneNum}
+                    <br /> {"+" + orderDetail.telephoneNumber}
                   </p>
                   {/*               <a href="#">View profile</a>
                    */}

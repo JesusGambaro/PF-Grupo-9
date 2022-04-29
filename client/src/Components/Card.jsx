@@ -8,36 +8,53 @@ const Card = ({ e, horizontal }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = window.localStorage.getItem("token");
-  const handleAddProduct = (e,type) => {
+  const handleAddProduct = (e, type) => {
     const sizes = {};
     e.stocks.forEach((element) => {
       sizes[element.size] = element.size;
     });
     if (token) {
-      Swal.fire({
-        title: "Select a size",
-        input: "select",
-        inputOptions: sizes,
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Add",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const product = { productId: e.id, size: result.value };
-          type === "cart" ? dispatch(addCart(token, product)) : dispatch(addFav(token, product));
-          Swal.fire({
-            position: "bottom-end",
-            icon: "success",
-            title: "Product added successfully",
-            showConfirmButton: false,
-            timer: 1250,
-          });
-        }
-      });
+      if (type === "cart") {
+        console.log("addCart");
+        Swal.fire({
+          title: "Select a size",
+          input: "select",
+          inputOptions: sizes,
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Add",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const product = { productId: e.id, size: result.value };
+            dispatch(addCart(token, product));
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: "Product added successfully",
+              showConfirmButton: false,
+              timer: 1250,
+            });
+          }
+        });
+      } else {
+        console.log("addFav");
+        const product = { productId: e.id };
+        dispatch(addFav(token, product));
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: "Product added successfully",
+          showConfirmButton: false,
+          timer: 1250,
+        });
+      }
     } else {
       Swal.fire({
-        title: type === "cart" ? "You must login to add products" : "You must login to add products to your favorites" ,
+        title:
+          type === "cart"
+            ? "You must login to add products"
+            : "You must login to add products to your favorites",
         text: "Do you want to login?",
         icon: "warning",
         showCancelButton: true,
@@ -111,7 +128,7 @@ const Card = ({ e, horizontal }) => {
           <i
             className="bi bi-bag"
             title="Add to cart"
-            onClick={() => handleAddProduct(e,"cart")}
+            onClick={() => handleAddProduct(e, "cart")}
           >
             &nbsp;
             <p>{horizontal ? "Add to cart" : ""}</p>
@@ -125,7 +142,7 @@ const Card = ({ e, horizontal }) => {
           <i
             className="bi bi-heart"
             title="Add to favorites"
-            onClick={() => handleAddProduct(e,"fav")}
+            onClick={() => handleAddProduct(e, "fav")}
           ></i>
         </div>
       </div>

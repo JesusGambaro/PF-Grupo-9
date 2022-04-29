@@ -11,14 +11,21 @@ import {
 import Swal from "sweetalert2";
 import { NavLink, useNavigate } from "react-router-dom";
 
-const CardProduct = ({ id, product, amount, deleteFavItem, handlePut,token }) => {
+const CardProduct = ({
+  id,
+  product,
+  amount,
+  deleteFavItem,
+  handlePut,
+  token,
+}) => {
   const dispatch = useDispatch();
   const { finalPrice, model, brand, images } = product;
   return (
     <div className="favorite-card">
       <div className="img">
         {" "}
-        <NavLink to={`/home/${id}/${product.model}`}>
+        <NavLink to={`/home/${product.id}/${product.model}`}>
           <img src={images[0].url} alt="" />
         </NavLink>
       </div>
@@ -40,7 +47,7 @@ const CardProduct = ({ id, product, amount, deleteFavItem, handlePut,token }) =>
             <p>Add to cart</p>
           </button>
           <NavLink
-            to={`/home/${id}/${product.model}`}
+            to={`/home/${product.id}/${product.model}`}
             style={{ color: "black", textDecoration: "none" }}
           >
             <i className="bi bi-toggles2" title="View details"></i>
@@ -60,7 +67,7 @@ const Favorites = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const favUser = useSelector((state) => state.root.favUser);
-  console.log(favUser);
+  //console.log(favUser);
   useEffect(() => {
     if (!token || (token && !token.length)) {
       //dispatch(loadingCartBoolean(true))
@@ -98,29 +105,43 @@ const Favorites = () => {
   };
   return (
     <div className="favorites">
-      <h1>Favorites</h1>
-      <div className="favoritesContainer">
-        {favUser.length &&
-          favUser.map((cartItem, i) => {
-            //<Card e={e} key={i} horizontal={true}/>
-            return (
-              <CardProduct
-                key={cartItem.id}
-                token={token}
-                id={cartItem.id}
-                product={cartItem.product}
-                amount={cartItem.amount}
-                size={cartItem.size}
-                deleteFavItem={handleDeleteFavtItem}
-              />
-            );
-          })}
-      </div>
-      <div className="fav-buttons">
-        <button className="deleteAll-button">
-          <i className="bi bi-trash"></i> Delete all
-        </button>
-      </div>
+      {favUser.length ? (
+        <>
+          <h1>Favorites</h1>
+          <div className="favoritesContainer">
+            {favUser.length &&
+              favUser.map((cartItem, i) => {
+                //<Card e={e} key={i} horizontal={true}/>
+                return (
+                  <CardProduct
+                    key={cartItem.id}
+                    token={token}
+                    id={cartItem.id}
+                    product={cartItem.product}
+                    amount={cartItem.amount}
+                    size={cartItem.size}
+                    deleteFavItem={handleDeleteFavtItem}
+                  />
+                );
+              })}
+          </div>
+          <div className="fav-buttons">
+            <button className="deleteAll-button">
+              <i className="bi bi-trash"></i> Delete all
+            </button>
+          </div>
+        </>
+      ) : (
+        <div className="noFavoriteItems">
+          <h1>There are no favorite items</h1>
+          <NavLink
+            to={`/home`}
+            style={{ color: "black"}}
+          >
+            <p>Click here to add more</p>
+          </NavLink>
+        </div>
+      )}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { addCart, getUserCart, putCart } from "../redux/actions/userCart"
 import "../Css/OrderForm.css"
 import { useNavigate } from "react-router-dom"
-import { postOrder } from "../redux/actions/order"
+import { cleanOrder, postOrder } from "../redux/actions/order"
 import Swal from "sweetalert2"
 
 import {CardElement, useStripe, useElements,Elements } from "@stripe/react-stripe-js";
@@ -17,7 +17,7 @@ const PaymentCheckout = () => {
     const token = window.localStorage.getItem("token")
     const cart = useSelector(state => state.root.cartUser)
     const paymentInfo = useSelector(state => state.root.paymentInfo)
-    console.log ('a',paymentInfo)
+    
     const {totalFootwear,total} = cart
     const stripe = useStripe();
     const elements = useElements();
@@ -36,7 +36,33 @@ const PaymentCheckout = () => {
     const [error, setError] = useState({})
     useEffect(() => {
         if(!totalFootwear || !total) {navigate("/home")}
-    },[dispatch,token,navigate,addCart,cart,getUserCart,putCart])
+        console.log('se montó')
+         /* dispatch(cleanOrder())   */  
+         if(paymentInfo){
+            if(/* Object.entries(paymentInfo)[0][0]==='error' */paymentInfo.error){
+                console.log('paymenterror',paymentInfo)
+            Swal.fire({
+                    icon: 'error',
+                    title: 'The order has failed',
+                    text: paymentInfo.error,
+                    showConfirmButton: true,
+                    
+                  })
+                  
+                }
+            if(/* Object.entries(paymentInfo)[0][0]==='msg' */paymentInfo.msg){
+                console.log('pasó')
+           Swal.fire({
+                icon: 'success',
+                title: 'The order has been placed',
+                text:paymentInfo.msg,
+                showConfirmButton: true,
+                timer: 3250,
+              })
+              
+            } 
+         }
+    },[dispatch,token,navigate,addCart,cart,getUserCart,putCart,total, totalFootwear,paymentInfo])
 
     const handleOnChangeForm = (e) => {
         handleErrorForm(e)
@@ -90,7 +116,10 @@ const PaymentCheckout = () => {
     const validation = (order.name && order.telephoneNumber && order.surname && order.country && order.city && order.address && order.postalCode)?false:true/* () =>{
         if(error.name && error.telephoneNumber || error.surname || error.country || error.city || error.address)return true
     } */
+    
+    console.log ('a',paymentInfo)
     const handleSubmit = async (e) => {
+        console.log ('e',paymentInfo)
         e.preventDefault()
         console.log('entró al handle')
          const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -99,20 +128,12 @@ const PaymentCheckout = () => {
            });
            console.log({paymentMethod})
            console.log('datos de la orden',order)
-         if(error){return console.log(error)}
-          dispatch(postOrder(token,{order,paymentMethod,total}))
-
-
-        Swal.fire({
-            icon: 'success',
-            title: 'The order has been placed',
-            showConfirmButton: false,
-            timer: 1250,
-          }).then( () => {
-            // navigate("/home/profile")
-          })
-          
-    }
+         if(error){
+             return console.log('mensaje de error',error)
+            }else{
+         
+        dispatch(postOrder(token,{order,paymentMethod,total}))     
+    }}
     return (
         <div >
             { cart &&

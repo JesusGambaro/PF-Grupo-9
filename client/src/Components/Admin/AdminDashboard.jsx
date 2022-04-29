@@ -116,25 +116,6 @@ export default function AdminDashboard() {
                     </tr>
                   );
                 })}
-                <tr>
-                  <td>ID order</td>
-                  <td>
-                    <b>Customer name</b>
-                  </td>
-                  <td>email@example.com</td>
-                  <td>$778.35</td>
-                  <td>
-                    <span className="badge rounded-pill alert-success">
-                      status
-                    </span>
-                  </td>
-                  <td>07.05.2020</td>
-                  <td className="text-end">
-                    <a href="#" className="btn btn-light">
-                      Detail
-                    </a>
-                  </td>
-                </tr>
               </tbody>
             </table>
           </div>

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { GET_FAV, } from "./actions"
+import { GET_FAV } from "./actions"
 
 const URL = "http://localhost:3001/favorite"
 
@@ -15,17 +15,16 @@ export const getUserFav = (token) => {
   }
 }
 
-
 export const deleteFavItem = (id, token) => {
   return async (dispatch, useSelector) => {
     await axios.delete(`${URL}/${id}`, {
       headers: { Authorization: `bearer ${token}` },
     })
 
-   /*  dispatch({
-      type: GET_FAV,
-      payload: data,
-    }) */
+    // dispatch({
+    //   type: GET_FAV,
+    //   payload: data,
+    // })
   }
 }
 
@@ -34,7 +33,7 @@ export const deleteAllFav = (token) => {
     await axios.delete(`${URL}/deleteAll`, {
       headers: { Authorization: `bearer ${token}` },
     })
-    
+
     const { data } = await axios.get(`${URL}`, {
       headers: { Authorization: `bearer ${token}` },
     })
@@ -52,4 +51,3 @@ export const addFav = (token, product) => {
     })
   }
 }
-

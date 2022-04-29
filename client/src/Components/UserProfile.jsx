@@ -64,7 +64,7 @@ function UserProfile() {
                   <div className="col-12 d-flex flex-column flex-xl-row gap-2 gap-xl-4 justify-content-center m-0 align-items-center pt-4 pb-4 rounded rounded-5">
                     <p className="m-0"><strong>Order number: </strong>{order.id}</p>
                     <p className="m-0"><strong>Addres:</strong> {order.address}</p>
-                    <p className="m-0"><strong>Phone Number:</strong> {order.telephoneNum} </p>
+                    <p className="m-0"><strong>Phone Number:</strong> {order.telephoneNumber} </p>
                     <p className="m-0"><strong>Date:</strong> {order.createdAt}</p>
                     <p className="m-0"><strong>Total:</strong> ${order.total}</p>
                     <p className="m-0"><strong>Status:</strong> {order.delivered}</p>

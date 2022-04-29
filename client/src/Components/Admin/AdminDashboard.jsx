@@ -12,6 +12,7 @@ import {
   getLastSevenDaysOrders,
 } from "../../redux/actions/ordersAdmin";
 import {roleUser} from "../../redux/actions/Loginregister";
+import { getAllProductsAdmin } from "../../redux/actions/productsAdmin";
 
 export default function AdminDashboard() {
   const {role} = useSelector((store) => store.root);
@@ -25,6 +26,7 @@ export default function AdminDashboard() {
       const token = window.localStorage.getItem("token");
       dispatch(roleUser(token));
       if (role.admin) {
+        dispatch(getAllProductsAdmin(token))
         dispatch(getLastSevenDaysOrders(token));
         dispatch(getAllOrders(token));
         dispatch(getAllGain(token));

@@ -21,9 +21,17 @@ module.exports = {
             },
           ],
         },
+        order: [["id", "DESC"]],
       })
-
-      res.send(sameUserCartItems)
+      let totalFootwear = 0
+      sameUserCartItems.forEach((item) => {
+        totalFootwear += item.amount
+      })
+      let total = 0
+      sameUserCartItems.forEach((item) => {
+        total += item.product.finalPrice * item.amount
+      })
+      res.send({ sameUserCartItems, total, totalFootwear })
     } catch (error) {
       sendError(res, error)
     }
@@ -31,11 +39,24 @@ module.exports = {
 
   deleteCart: async (req, res) => {
     try {
-      const { id } = req.params
-      await ShoppingCartItem.destroy({
-        where: { id },
+      const { id } = req.params;
+      
+      const decodedToken = await verifyToken(req, res)
+      const userId = decodedToken.id
+      
+      const shoppingCart = await ShoppingCartItem.findOne({
+        where: { id}
       })
-      return res.send({ msg: "Cart item deleted" })
+
+      if(userId === shoppingCart.userId){
+        await ShoppingCartItem.destroy({
+          where: { id },
+        })
+        return res.send({ msg: "Cart item deleted" })
+      }else{
+        return res.send({ msg: "Wrong credentials" })
+      }
+
     } catch (error) {
       sendError(res, error)
     }

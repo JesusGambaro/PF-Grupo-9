@@ -10,6 +10,7 @@ import {useNavigate} from "react-router-dom";
 import {getAllCategories, getAllGenders} from "../../redux/actions/getAllUtils";
 import Loading from "../Loading";
 import search from "../../redux/actions/search";
+import usePagination from "../../hooks/usePagination";
 const CardProduct = ({shoe, editShoeFunctions}) => {
   //console.log(editShoeFunctions);
   const {setFunc} = editShoeFunctions;
@@ -110,6 +111,7 @@ const AdminProducts = () => {
   };
   const {allData, loading} = useSelector((state) => state.admin);
   const {categories, genders, role} = useSelector((state) => state.root);
+  const {Pagination, dataPerPage} = usePagination(allData, 12, 4);
   const navigate = useNavigate();
   const [shoeDialog, setShoeDialog] = useState(false);
   useEffect(() => {
@@ -132,44 +134,6 @@ const AdminProducts = () => {
       }
     }
   }, [dispatch, navigate, role.admin]);
-
-  /* ------------------------------- PAGINATION ------------------------------- */
-  const pageLimit = 4,
-    cardsPerPage = 12;
-  const [currentPage, setCurrentPage] = useState(1);
-  const pages = Math.ceil(allData.length / cardsPerPage);
-  const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);
-
-  const prevPage = () => setCurrentPage((currentPage) => currentPage - 1);
-
-  const goPage = (e) => setCurrentPage(Number(e.target.textContent));
-
-  useEffect(() => {
-    if (allData.length < 40) setCurrentPage(1);
-  }, [allData.length]);
-
-  const dataPerPage = () => {
-    const start = currentPage * cardsPerPage - cardsPerPage,
-      end = start + cardsPerPage;
-    return allData.slice(start, end);
-  };
-
-  const dividedGroups = () => {
-    const start = Math.floor((currentPage - 1) / pageLimit) * pageLimit;
-    return new Array(pageLimit).fill().map((_, i) => {
-      let limit = start + i + 1;
-      return limit <= pages && limit;
-    });
-  };
-
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [currentPage]);
-  /* ------------------------------- PAGINATION ------------------------------- */
-
   const [searchParam, setSearchParam] = useState("");
   const handleSearch = (e) => {
     e.preventDefault();
@@ -232,42 +196,7 @@ const AdminProducts = () => {
             ) : (
               <h2>No results</h2>
             )}
-            {allData.length > 1 && (
-              <div className="pagination-container">
-                <div className="selectionOwn">
-                  <button
-                    className="btnOwn prev"
-                    onClick={prevPage}
-                    disabled={currentPage === 1}
-                  >
-                    <i className="fa-solid fa-angle-left"></i>
-                  </button>
-                  {dividedGroups().map((e, i) => {
-                    return (
-                      e && (
-                        <button
-                          className={
-                            currentPage === e ? "btnOwn active" : "btnOwn"
-                          }
-                          key={i}
-                          onClick={goPage}
-                        >
-                          {e}
-                        </button>
-                      )
-                    );
-                  })}
-
-                  <button
-                    className="btnOwn next"
-                    onClick={nextPage}
-                    disabled={currentPage === pages}
-                  >
-                    <i className="fa-solid fa-angle-right"></i>
-                  </button>
-                </div>
-              </div>
-            )}
+            <Pagination />
           </div>
         )}
       </div>

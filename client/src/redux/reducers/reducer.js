@@ -23,8 +23,10 @@ import {
   GET_PROFILE,
   LOADING_CART,
   USER_INFO,
+  CHANGE_PASSWORD,
+  CLEAR_PASSWORD,
   POST_ORDER
-} from "../actions/actions"
+} from "../actions/actions";
 
 const initialState = {
   allData: [],
@@ -46,67 +48,69 @@ const initialState = {
   favUser: [],
   orderUser: [],
   loadingCart: true,
-  user:{},
+  user: {},
+  changePasswort: {},
   paymentInfo:[]
-}
+};
+
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case BRING_ALL_DATA:
-      return { ...state, allData: action.payload, allDataCopy: action.payload }
+      return { ...state, allData: action.payload, allDataCopy: action.payload };
     case LOAD_GENDERS:
-      return { ...state, genderData: action.payload }
+      return { ...state, genderData: action.payload };
     case "@shoes/agregarFiltro":
-      return { ...state, filters: [...state.filters, action.payload] }
+      return { ...state, filters: [...state.filters, action.payload] };
     case "@shoes/agregarFiltros":
-      return { ...state, filters: action.payload }
+      return { ...state, filters: action.payload };
     case "@shoes/borrarFiltros":
-      return { ...state, filters: action.payload }
+      return { ...state, filters: action.payload };
     case "@shoes/genderActual":
-      return { ...state, genderActual: action.payload }
+      return { ...state, genderActual: action.payload };
     case GET_ALL_CATEGORIES:
-      return { ...state, categories: action.payload }
+      return { ...state, categories: action.payload };
     case GET_ALL_GENDERS:
-      return { ...state, genders: action.payload }
+      return { ...state, genders: action.payload };
     case SORT_BY:
-      return { ...state, allData: action.payload }
+      return { ...state, allData: action.payload };
     case LEFT_SIDE_FILTERS:
-      return { ...state, allData: action.payload }
+      return { ...state, allData: action.payload };
     case LOADING:
-      return { ...state, loading: action.payload }
+      return { ...state, loading: action.payload };
     case DETAIL:
-      return { ...state, detail: action.payload }
+      return { ...state, detail: action.payload };
     case SEARCH:
-      return { ...state, allData: action.payload }
+      return { ...state, allData: action.payload };
     case RESET:
-      return { ...state, allData: action.payload }
+      return { ...state, allData: action.payload };
     case DETAILCOLOR:
-      return { ...state, detailColor: action.payload }
+      return { ...state, detailColor: action.payload };
     case CLEARDETAIL:
-      return { ...state, detailColor: action.payload, detail: {} }
+      return { ...state, detailColor: action.payload, detail: {} };
     case GET_ALL_SALES:
-      return { ...state, sales: action.payload }
+      return { ...state, sales: action.payload };
     case REGISTER_USER:
-      return { ...state, registerUser: action.payload }
+      return { ...state, registerUser: action.payload };
     case LOGIN_USER:
-      return { ...state, loginUser: action.payload }
+      return { ...state, loginUser: action.payload };
     case CLEAR_USER:
       return {
         ...state,
         loginUser: action.payload,
         registerUser: action.payload,
         role: action.payload,
-      }
+      };
     case GET_ROLE:
       return {
         ...state,
         role: action.payload,
-      }
+      };
     case GET_CART:
       return {
         ...state,
         cartUser: action.payload,
         loadingCart: false,
-      }
+      };
     case DELETE_CART:
       return {
         ...state,
@@ -126,16 +130,26 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         orderUser: action.payload,
-      }
+      };
     case LOADING_CART:
       return {
         ...state,
         loadingCart: action.payload,
-      }
+      };
     case USER_INFO:
       return {
         ...state,
-        user:action.payload
+        user: action.payload,
+      };
+    case CHANGE_PASSWORD:
+      return {
+        ...state,
+        changePasswort: action.payload,
+      };
+    case CLEAR_PASSWORD:
+      return {
+        ...state,
+        changePasswort: action.payload
       }
 
     case POST_ORDER:
@@ -144,7 +158,7 @@ const rootReducer = (state = initialState, action) => {
         paymentInfo: action.payload
       }
     default:
-      return state
+      return state;
   }
-}
-export default rootReducer
+};
+export default rootReducer;

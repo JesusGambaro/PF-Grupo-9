@@ -11,6 +11,7 @@ const moment = require("moment")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
 const Stripe = require("stripe")
+const { emailOrder } = require("../helpers/email.js")
 
 const orderInclude = {
   include: [
@@ -98,7 +99,6 @@ module.exports = {
         return res.send(userOrders)
       }
       const user = await User.findOne({ where: { id: decodedToken.id } })
-      console.log(user)
       return res.send(user)
     } catch (error) {
       sendError(res, error)
@@ -163,6 +163,7 @@ module.exports = {
           { ordered: true },
           { where: { userId, ordered: false } }
         )
+        emailOrder({ email: owner.email, id: userId })
         return res.send({ msg: "Order created, succesfull payment" })
       }
     } catch (error) {

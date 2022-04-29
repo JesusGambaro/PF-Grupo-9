@@ -42,10 +42,9 @@ export default function AdminPandO() {
   }
   function handleStatusFilter(e) {
     e.preventDefault();
-    dispatch(updateOrder(token1, e.target.value));
+    dispatch(getOrderByStatus(token1, e.target.value));
   }
   const allOrders = useSelector((state) => state.admin.allOrders);
-console.log(allOrders)
   return (
     <div className="admin-container">
       <div className="orders-card">
@@ -159,25 +158,6 @@ console.log(allOrders)
                   </tr>
                 );
               })}
-              <tr>
-                <td>ID order</td>
-                <td>
-                  <b>Customer name</b>
-                </td>
-                <td>email@example.com</td>
-                <td>$778.35</td>
-                <td>
-                  <span className="badge rounded-pill alert-success">
-                    status
-                  </span>
-                </td>
-                <td>07.05.2020</td>
-                <td className="text-end">
-                  <a href="order/detail" className="btn btn-light detalle">
-                    Detail
-                  </a>
-                </td>
-              </tr>
             </tbody>
           </table>
           {/* =======

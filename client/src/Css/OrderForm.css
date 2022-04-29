@@ -13,6 +13,7 @@
     padding: 2rem;
     width: max-content;
 }
+
 .order-container .form{
     display: flex;
     flex-direction: column;

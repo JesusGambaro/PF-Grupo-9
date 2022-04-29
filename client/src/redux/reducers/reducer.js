@@ -26,7 +26,9 @@ import {
   CHANGE_PASSWORD,
   CLEAR_PASSWORD,
   POST_ORDER,
+  CLEAN_ORDER
 } from "../actions/actions";
+
 
 const initialState = {
   allData: [],
@@ -48,10 +50,12 @@ const initialState = {
   favUser: [],
   orderUser: [],
   loadingCart: true,
+
   user: {},
   changePasswort: {},
   paymentInfo: [],
 };
+
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -155,8 +159,13 @@ const rootReducer = (state = initialState, action) => {
     case POST_ORDER:
       return {
         ...state,
-        paymentInfo: action.payload,
-      };
+        paymentInfo: action.payload
+      }
+    case CLEAN_ORDER:
+      return{
+        ...state,
+        paymentInfo:{}
+      }
     default:
       return state;
   }

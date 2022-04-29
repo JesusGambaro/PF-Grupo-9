@@ -79,12 +79,11 @@ module.exports = {
     try {
       const userExists = await User.findOne({ where: { email } });
       if (!userExists) {
-        throw new Error("User does not exist");
+        return  res.send({ status: false });
       }
-
       userExists.token = simpleToken(); // Agregar token al modelo User? y una funcion que genere un Token
       await userExists.save();
-
+      
       await emailForgotPassword({
         email,
         name: userExists.userName,
@@ -104,11 +103,7 @@ module.exports = {
       const user = await User.findOne({ where: { token } });
 
       if (!user) {
-        throw new Error("User does not exist");
-      }
-
-      if (password.length < 4) {
-        throw new Error("Password must have more than 4 characters");
+        return res.status(201).send({ status: false });
       }
 
       user.token = null;

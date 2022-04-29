@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getUserCart,
@@ -11,7 +11,7 @@ import {
 import "../Css/AdminProducts.scss";
 import "../Css/Cart.css";
 import Swal from "sweetalert2";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import Loading from "./Loading";
 
 const CardProduct = ({
@@ -24,14 +24,28 @@ const CardProduct = ({
 }) => {
   const { finalPrice, model, brand, images } = product;
   const maxStock = product.stocks.find((stock) => stock.size === size);
-  const max = maxStock.size;
+  const max = maxStock.amount;
+  const [input, setInput] = useState({ amount: amount });
+  const navigate = useNavigate();
+  const handleInput = (e) => {
+    if (e.target.value <= max && e.target.value > 0) {
+      setInput({ amount: e.target.value });
+      handlePut(e, product.id, size);
+    }
+  };
   return (
     <div className="product-card">
-      <img src={images[0].url} alt="" />
-      <p>${finalPrice}</p>
+      <img
+        className="image"
+        style={{ width: "500px", height: "100px" }}
+        src={images[0].url}
+        alt=""
+        onClick={() => navigate(`/home/${product.id}/${model}`)}
+      />
+      <span>${finalPrice}</span>
+      <span>{brand}</span>
       <div className="model">
         <p>{model}</p>
-        <p>{brand}</p>
       </div>
       <div className="amount">
         <label>
@@ -39,10 +53,10 @@ const CardProduct = ({
         </label>
         <input
           type="number"
-          defaultValue={amount}
           min={1}
           max={max}
-          onClick={(e) => handlePut(e, product.id, size)}
+          value={input.amount}
+          onChange={(e) => handleInput(e)}
         />
       </div>
       <div className="size">
@@ -62,7 +76,7 @@ export default function Cart() {
   const token = window.localStorage.getItem("token");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let { cartUser, loadingCart } = useSelector((state) => state.root);
+  const { cartUser, loadingCart } = useSelector((state) => state.root);
   const { sameUserCartItems, total } = cartUser;
   const initLoad = () => {
     dispatch(loadingCartBoolean(true));
@@ -87,7 +101,7 @@ export default function Cart() {
     }
     dispatch(getUserCart(token));
     return initLoad;
-  }, [dispatch, addCart, navigate, token]);
+  }, [dispatch, navigate, token, addCart]);
   const handlePut = (e, productId, size) => {
     const product = { amount: e.target.value, productId, size };
     dispatch(putCart(token, product));
@@ -104,7 +118,6 @@ export default function Cart() {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteCartItem(id, token));
-        dispatch(getUserCart(token));
       }
     });
   };
@@ -119,7 +132,6 @@ export default function Cart() {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteAllCart(token));
-        dispatch(getUserCart(token));
       }
     });
   };
@@ -153,22 +165,24 @@ export default function Cart() {
               })}
             <div className="cart-actions">
               <button className="trash" onClick={(e) => deleteAll()}>
-                <i class="bi bi-trash"></i> Delete all
+                <i className="bi bi-trash"></i> Delete all
               </button>
               <label className="totalprice">Total:${total}</label>
               <button className="purchase" onClick={(e) => makeOrder(e)}>
-                <i class="bi bi-bag-fill"></i> Purchase
+                <i className="bi bi-bag-fill"></i> Purchase
               </button>
             </div>
           </div>
         </div>
       ) : (
-        <div className="noCartItems">
-          <h1 style={{ marginTop: "50px" }}>Your cart is empty</h1>
-          <NavLink to={`/home`} style={{ color: "black" }}>
-            <p>Click here to add more</p>
-          </NavLink>
-        </div>
+        <>
+          <h1 style={{ marginTop: "50px" }}>
+            Your cart is empty
+            <NavLink to={`/home`} style={{ color: "black" }}>
+              <h6>Click here to add more</h6>
+            </NavLink>
+          </h1>
+        </>
       )}
     </div>
   );

@@ -874,8 +874,7 @@ conn.sync({ force: true }).then(async () => {
     category: "Urban",
     gender: "Kids",
     price: 15000,
-    description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
     sale: 0,
     color: "Blue",
     rating: 4,
@@ -1015,7 +1014,7 @@ conn.sync({ force: true }).then(async () => {
     floor: 2,
     apartment: "B",
     notes: "My brother pick up the order",
-    telephoneNumber: 12345678,
+    telephoneNum: 12345678,
     total: 500000,
   })
   const paymentRodolfo1 = await Payment.create({
@@ -1043,7 +1042,7 @@ conn.sync({ force: true }).then(async () => {
     floor: 2,
     apartment: "B",
     notes: "My brother pick up the order",
-    telephoneNumber: 1283214,
+    telephoneNum: 1283214,
     total: 10000,
   })
   const paymentRodolfo2 = await Payment.create({
@@ -1064,7 +1063,7 @@ conn.sync({ force: true }).then(async () => {
     city: "Washington DC",
     postalCode: 20001,
     address: "AvenidaSiempreViva 123",
-    telephoneNumber: 123678,
+    telephoneNum: 123678,
     total: 1000000,
     createdAt: "2021-04-21 19:52:24.029-03",
   })

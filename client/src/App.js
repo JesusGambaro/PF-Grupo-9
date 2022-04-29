@@ -1,6 +1,6 @@
 import "./Css/app.scss";
 import Shoes from "./Components/Shoes";
-import {Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import NotFound from "./Components/NotFound";
 import NavBar from "./Components/NavBar";
 import LandingPage from "./Components/LandingPage";
@@ -19,6 +19,7 @@ import Cart from "./Components/Cart";
 import Favorites from "./Components/Favorites";
 import UserProfile from "./Components/UserProfile";
 import OrderForm from "./Components/OrderForm";
+import ChangePassword from "./Components/ChangePassword";
 
 function App() {
   return (
@@ -70,6 +71,16 @@ function App() {
         element={[
           <NavBar key={"nav"} />,
           <OrderForm key={"order"} />,
+          <Footer key={"footer"} />,
+        ]}
+      />
+
+      <Route
+        exact
+        path="home/forgotPassword/:token"
+        element={[
+          <NavBar key={"nav"} />,
+          <ChangePassword key={"password"} />,
           <Footer key={"footer"} />,
         ]}
       />

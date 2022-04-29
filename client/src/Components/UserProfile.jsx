@@ -49,10 +49,6 @@ function UserProfile() {
             )}
           </div>
         </div>
-        <div className="row d-flex flex-column flex-md-row align-items-center justify-content-center m-0 p-0 gap-3 mt-5">
-              <button className="btn btn-primary px-0 py-2" style={{"width":"20%"}}>Change Password</button>
-              <button className="btn btn-primary px-0 py-2" style={{"width":"20%"}}>Delete acount</button>
-        </div>
       </div>
       <hr className="border border-2 border-secondary" />
 

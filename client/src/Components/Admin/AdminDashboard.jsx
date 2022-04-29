@@ -17,7 +17,7 @@ export default function AdminDashboard() {
   const {role} = useSelector((store) => store.root);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const shoes = useSelector((state) => state.admin.allData.length);
+  const shoes = useSelector((state) => state.admin.products.length);
 
   useEffect(() => {
     if (!shoes.length) dispatch(bringAllData(true));
@@ -116,25 +116,6 @@ export default function AdminDashboard() {
                     </tr>
                   );
                 })}
-                <tr>
-                  <td>ID order</td>
-                  <td>
-                    <b>Customer name</b>
-                  </td>
-                  <td>email@example.com</td>
-                  <td>$778.35</td>
-                  <td>
-                    <span className="badge rounded-pill alert-success">
-                      status
-                    </span>
-                  </td>
-                  <td>07.05.2020</td>
-                  <td className="text-end">
-                    <a href="#" className="btn btn-light">
-                      Detail
-                    </a>
-                  </td>
-                </tr>
               </tbody>
             </table>
           </div>

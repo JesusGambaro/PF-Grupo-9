@@ -1,7 +1,41 @@
 import axios from "axios";
-import {POST_NEW_SHOE, EDIT_SHOE, DELETE_SHOE} from "./actionsAdmin";
+import {GET_ALL_PRODUCTS_A} from "./actionsAdmin";
 import {LOADING} from "./actions";
-import bringAllData from "./bringAllData";
+import {SEARCH_PRODUCT_A} from "./actionsAdmin";
+const getAllProductsAdmin = (token) => {
+  return async (dispatch) => {
+    dispatch({type: LOADING, payload: true});
+    const {data} = await axios.get(
+      `http://localhost:3001/allFootwear/allForAdmin`,
+      {
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      }
+    );
+    console.log("SOy el foots===>>", data);
+    dispatch({type: GET_ALL_PRODUCTS_A, payload: data});
+    dispatch({type: LOADING, payload: false});
+  };
+};
+
+const searchProduct = (token, param) => {
+  return async (dispatch) => {
+    dispatch({type: LOADING, payload: true});
+    let {data} = await axios.get(
+      "http://localhost:3001/allFootwear?footwear=" + param,
+      {
+        headers: {
+          Authorization: `bearer ${token}`,
+        },
+      }
+    );
+    if (!data.length) data = [{msg: "No results"}];
+    dispatch({type: SEARCH_PRODUCT_A, payload: data});
+    dispatch({type: LOADING, payload: false});
+  };
+};
+
 const postProduct = (token, newShoe) => {
   console.log("Soy el nuevo shoe=>>", newShoe);
   return async (dispatch) => {
@@ -11,8 +45,7 @@ const postProduct = (token, newShoe) => {
         Authorization: `bearer ${token}`,
       },
     });
-    dispatch({type: POST_NEW_SHOE, payload: newShoe});
-    dispatch(bringAllData(true));
+    dispatch(getAllProductsAdmin(token));
     dispatch({type: LOADING, payload: false});
   };
 };
@@ -29,18 +62,17 @@ const editShoe = (token, editedShoe) => {
         },
       }
     );
-    dispatch({type: EDIT_SHOE, payload: editShoe});
-    dispatch(bringAllData(true));
+    dispatch(getAllProductsAdmin(token));
     dispatch({type: LOADING, payload: false});
   };
 };
 
-const deleteShoe = (id) => {
+const deleteShoe = (token, id) => {
   return async (dispatch, getState) => {
     dispatch({type: LOADING, payload: true});
     await axios.delete(`http://localhost:3001/allFootwear/${id}`, {
       headers: {
-        Authorization: `bearer ${window.localStorage.getItem("token")}`,
+        Authorization: `bearer ${token}`,
       },
     });
     let oldData = getState().admin.allDataCopy;
@@ -49,9 +81,8 @@ const deleteShoe = (id) => {
       return el.id !== id;
     });
     console.log(newData);
-    dispatch({type: DELETE_SHOE, payload: newData});
-    dispatch(bringAllData(true));
+    dispatch(getAllProductsAdmin(token));
     dispatch({type: LOADING, payload: false});
   };
 };
-export {postProduct, editShoe, deleteShoe};
+export {postProduct, editShoe, deleteShoe, getAllProductsAdmin, searchProduct};

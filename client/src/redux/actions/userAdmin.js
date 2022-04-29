@@ -18,12 +18,12 @@ const getAllUsers = (token) => {
 const searchUser = (token, searchParam) => {
   return async (dispatch) => {
     dispatch({type: LOADING, payload: true});
-    const {data} = await axios.get(`${URL}allUsers?search=${searchParam}`, {
+    let {data} = await axios.get(`${URL}allUsers?search=${searchParam}`, {
       headers: {
         Authorization: `bearer ${token}`,
       },
     });
-    console.log(data);
+    if (!data.length) data = [{msg: "No results"}];
     dispatch({type: SEARCH_USER_A, payload: data});
     dispatch({type: LOADING, payload: false});
   };

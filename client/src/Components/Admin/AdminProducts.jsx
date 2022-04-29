@@ -11,11 +11,9 @@ import {
 } from "../../redux/actions/productsAdmin";
 import {roleUser} from "../../redux/actions/Loginregister";
 import "../../Css/AdminProducts.scss";
-import {getAllCategories, getAllGenders} from "../../redux/actions/getAllUtils";
 import Loading from "../Loading";
 import usePagination from "../../hooks/usePagination";
 const CardProduct = ({shoe, editShoeFunctions}) => {
-  //console.log(editShoeFunctions);
   const {setFunc} = editShoeFunctions;
   const {openEditorFunc} = editShoeFunctions;
   const navigate = useNavigate();
@@ -42,7 +40,15 @@ const CardProduct = ({shoe, editShoeFunctions}) => {
       <img src={shoe.images[0].url} alt="" />
       <p>{shoe.brand + " - " + shoe.model}</p>
       <p>$ {shoe.price}</p>
-      <p style={{visibility: "hidden"}}>Status</p>
+      <p
+        style={
+          !shoe.stocks.length
+            ? {background: "#FF5F00"}
+            : {background: "#B4E197"}
+        }
+      >
+        {!shoe.stocks.length ? "Out of stock" : "In stock"}
+      </p>
       {shoe.createdAt && (
         <p>{shoe.createdAt.substring(0, shoe.createdAt.indexOf("T"))}</p>
       )}
@@ -130,7 +136,6 @@ const AdminProducts = () => {
   useEffect(() => {
     if (window.localStorage.getItem("token")) {
       const token = window.localStorage.getItem("token");
-
       if (role.admin) {
         if (!products.length) dispatch(getAllProductsAdmin(token));
         dispatch(roleUser(token));
@@ -195,18 +200,22 @@ const AdminProducts = () => {
         ) : (
           <div className="products-cards-container">
             {products.length > 0 ? (
-              dataPerPage().map((shoe, id) => (
-                <CardProduct
-                  key={id}
-                  shoe={shoe}
-                  editShoeFunctions={{
-                    setFunc: (param) => handleShoeToEdit(param),
-                    openEditorFunc: () => {
-                      setShoeDialog(true);
-                    },
-                  }}
-                />
-              ))
+              dataPerPage().map((shoe, id) =>
+                shoe.hasOwnProperty("msg") ? (
+                  <h2 key={id}>{shoe.msg}</h2>
+                ) : (
+                  <CardProduct
+                    key={id}
+                    shoe={shoe}
+                    editShoeFunctions={{
+                      setFunc: (param) => handleShoeToEdit(param),
+                      openEditorFunc: () => {
+                        setShoeDialog(true);
+                      },
+                    }}
+                  />
+                )
+              )
             ) : (
               <h2>No results</h2>
             )}

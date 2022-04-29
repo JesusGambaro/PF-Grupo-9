@@ -13,6 +13,7 @@ const getAllProductsAdmin = (token) => {
         },
       }
     );
+    console.log("SOy el foots===>>", data);
     dispatch({type: GET_ALL_PRODUCTS_A, payload: data});
     dispatch({type: LOADING, payload: false});
   };
@@ -21,7 +22,7 @@ const getAllProductsAdmin = (token) => {
 const searchProduct = (token, param) => {
   return async (dispatch) => {
     dispatch({type: LOADING, payload: true});
-    const {data} = await axios.get(
+    let {data} = await axios.get(
       "http://localhost:3001/allFootwear?footwear=" + param,
       {
         headers: {
@@ -29,6 +30,7 @@ const searchProduct = (token, param) => {
         },
       }
     );
+    if (!data.length) data = [{msg: "No results"}];
     dispatch({type: SEARCH_PRODUCT_A, payload: data});
     dispatch({type: LOADING, payload: false});
   };

@@ -70,16 +70,14 @@ const AdminCustomers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    if (window.localStorage.getItem("token")) {
+    if (role.admin) {
+      const token = window.localStorage.getItem("token");
+      dispatch(roleUser(token));
       if (!users.length) {
-        const token = window.localStorage.getItem("token");
-        dispatch(roleUser(token));
-        if (role.admin) {
-          dispatch(getAllUsers(token));
-        } else if (role.admin === false) {
-          navigate("/home");
-        }
+        dispatch(getAllUsers(token));
       }
+    } else if (role.admin === false) {
+      navigate("/home");
     }
   }, [dispatch, navigate, role.admin, users.length]);
 
@@ -131,66 +129,70 @@ const AdminCustomers = () => {
   };
   return (
     <div className="admin-container">
-      {loading ? (
-        <Loading />
-      ) : (
-        <div className="customers-section-container">
-          <div className="add-section">
-            <h1>Customers list</h1>
-            <form
-              className="searchOwn"
-              onSubmit={handleSearch}
-              onClick={() => {
-                //dispatch(resetState());
-                //dispatch(resetFilters());
-              }}
-            >
-              <button type="submit">
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </button>
-              <input
-                type="text"
-                placeholder="SEARCH"
-                value={searchParam}
-                onChange={(e) => setSearchParam(e.target.value)}
-              />
-            </form>
-            <div className="filter-sortby">
-              <Selection
-                options={["All", "Is admin", "Not admin", "A-Z", "Z-A"]}
-                type="Sort By"
-                handleChange={handleChange}
-              />
-            </div>
+      <div className="customers-section-container">
+        <div className="add-section">
+          <h1>Customers list</h1>
+          <form
+            className="searchOwn"
+            onSubmit={handleSearch}
+            onClick={() => {
+              //dispatch(resetState());
+              //dispatch(resetFilters());
+            }}
+          >
+            <button type="submit">
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <input
+              type="text"
+              placeholder="SEARCH"
+              value={searchParam}
+              onChange={(e) => setSearchParam(e.target.value)}
+            />
+          </form>
+          <div className="filter-sortby">
+            <Selection
+              options={["All", "Is admin", "Not admin", "A-Z", "Z-A"]}
+              type="Sort By"
+              handleChange={handleChange}
+            />
           </div>
+        </div>
+        {loading ? (
+          <Loading />
+        ) : (
           <div className="customers-cards-container">
             {!users.length ? (
               <h2>No results</h2>
             ) : (
-              dataPerPage().map((user, id) => (
-                <UserCard
-                  key={id}
-                  user={user}
-                  id={id}
-                  handleDeleteUser={(email) => handleDeleteUser(email)}
-                  handleUpdateUser={(email, state) =>
-                    handleUpdateUser(email, state)
-                  }
-                  disabled={users.reduce(
-                    (prev, cur, i) => ({
-                      ...prev,
-                      rep: cur.isAdmin ? prev.rep + 1 : prev.rep,
-                      pos: cur.isAdmin ? i : 0,
-                    }),
-                    {rep: 0}
-                  )}
-                />
-              ))
+              dataPerPage().map((user, id) =>
+                user.hasOwnProperty("msg") ? (
+                  <h2 key={id}>{user.msg}</h2>
+                ) : (
+                  <UserCard
+                    key={id}
+                    user={user}
+                    id={id}
+                    handleDeleteUser={(email) => handleDeleteUser(email)}
+                    handleUpdateUser={(email, state) =>
+                      handleUpdateUser(email, state)
+                    }
+                    disabled={users.reduce(
+                      (prev, cur, i) => ({
+                        ...prev,
+                        rep: cur.isAdmin ? prev.rep + 1 : prev.rep,
+                        pos: cur.isAdmin ? i : 0,
+                      }),
+                      {rep: 0}
+                    )}
+                  />
+                )
+              )
             )}
+            <Pagination />
           </div>
-          <Pagination />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

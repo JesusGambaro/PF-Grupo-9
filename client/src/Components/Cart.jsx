@@ -105,7 +105,7 @@ export default function Cart() {
   const handlePut = (e, productId, size) => {
     const product = { amount: e.target.value, productId, size };
     dispatch(putCart(token, product));
-    dispatch(getUserCart(token));
+    // dispatch(getUserCart(token));
   };
   const handleDeleteCartItem = (id) => {
     Swal.fire({
@@ -118,7 +118,7 @@ export default function Cart() {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteCartItem(id, token));
-        dispatch(getUserCart(token));
+        // dispatch(getUserCart(token));
       }
     });
   };
@@ -133,7 +133,7 @@ export default function Cart() {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteAllCart(token));
-        dispatch(getUserCart(token));
+        // dispatch(getUserCart(token));
       }
     });
   };

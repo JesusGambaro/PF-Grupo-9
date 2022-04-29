@@ -892,12 +892,10 @@ conn.sync({ force: true }).then(async () => {
   const imageNikeBlue4 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/M1027400_a2?wid=520&hei=520&fmt=png-alpha",
   })
-  const stockNikeShoeBlue = await Stock.create({ size: 10, amount: 32 })
   nikeShoeBlue.addImage(imageNikeBlue)
   nikeShoeBlue.addImage(imageNikeBlue2)
   nikeShoeBlue.addImage(imageNikeBlue3)
   nikeShoeBlue.addImage(imageNikeBlue4)
-  nikeShoeBlue.addStock(stockNikeShoeBlue)
 
   /////////////////////////////////////////////////////////////////77
 

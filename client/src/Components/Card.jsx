@@ -118,10 +118,10 @@ const Card = ({ e, horizontal }) => {
                     : {}
                 }
               >
-                ${Math.floor((e.price * 100) / (100 - e.sale))}
+                ${e.price}
               </p>
             )}
-            <p title="Price">${e.price}</p>
+            <p title="Price">${e.finalPrice}</p>
           </span>
         </div>
         <div className="appear">

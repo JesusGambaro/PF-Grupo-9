@@ -6,9 +6,9 @@ import "../../Css/ShoeForm.scss";
 import Input from "./Input";
 import Selection from "./Selection";
 import {useSelector} from "react-redux";
-import {brands, colors, sizes} from "../data";
+import {brands, colors, sizes, categories} from "../data";
 import bringAllData from "../../redux/actions/bringAllData";
-
+import ImageUploader from "./ImageUploader";
 const ShoeForm = ({handleShoeDialog, shoeObject}) => {
   const {role} = useSelector((state) => state.root);
   const navigate = useNavigate();
@@ -70,8 +70,7 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
     handleShoeDialog();
   };
   const validation = (param, type) => {
-    if (!param || param === "")
-      return type !== "sale" ? "Is required" : "";
+    if (!param || param === "") return type !== "sale" ? "Is required" : "";
     switch (type) {
       case "size":
         if (
@@ -136,7 +135,7 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
     });
   };
 
-  const {categories, genders} = useSelector((state) => state.root);
+  const {genders} = useSelector((state) => state.root);
   const handleSelectChange = (e) => {
     setData({
       ...data,
@@ -161,34 +160,6 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
     });
   };
 
-  const handleImagesChange = () => {
-    let repetido;
-    if (!addImgDialog.error.length && addImgDialog.url.length) {
-      data.images.map((e) => {
-        if (e.url === addImgDialog.url) {
-          //console.log("SOY LAS IMAGENES: ", data.images);
-          repetido = true;
-        }
-      });
-      !repetido &&
-        setData({
-          ...data,
-          images: data.images.map((e, i) => {
-            return i === addImgDialog.pos ? {url: addImgDialog.url} : e;
-          }),
-        });
-    }
-
-    if (!addImgDialog.error.length && addImgDialog.url.length && !repetido) {
-      setAddImgDialog({...addImgDialog, on: false, error: ""});
-    } else if (repetido) {
-      setAddImgDialog({
-        ...addImgDialog,
-        on: true,
-        error: "Can't repeat images",
-      });
-    }
-  };
   const [color, setColor] = useState(shoeObject ? shoeObject.color : "white");
   const deleteStock = (size) => {
     setData({...data, stock: data.stock.filter((s) => s.size !== size)});
@@ -224,6 +195,12 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
       });
     }
   }, [stock.amount, stock.size]);
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [image, setImage] = useState("");
+  useEffect(() => {
+    console.log(image);
+  }, [image]);
   return (
     <div className="create-container">
       <div className="form-container">
@@ -238,7 +215,6 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
             </button>
           </span>
         </h2>
-
         <form action="">
           <div className="leftside">
             <div className="model">
@@ -259,7 +235,7 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
                 </h4>
                 {categories.length && (
                   <Selection
-                    options={categories.map((e) => Object.values(e)[0])}
+                    options={categories}
                     type={"category"}
                     handleChange={handleSelectChange}
                     value={data.category}
@@ -323,68 +299,23 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
                     <div
                       className={img.url ? "imagent show" : "imagent"}
                       key={i}
-                      style={
-                        img.url ? {backgroundImage: `url(${img.url})`} : {}
-                      }
+                      style={img.url ? {backgroundImage: `url(${image})`} : {}}
                     >
-                      {img.url && (
-                        <button
-                          type="button"
-                          className="delete-image-btn"
-                          onClick={() => deleteImage(img.url)}
-                        >
-                          <i className="bi bi-x-circle-fill"></i>
-                        </button>
-                      )}
                       <button
                         type="button"
-                        onClick={() =>
-                          setAddImgDialog({
-                            ...addImgDialog,
-                            on: true,
-                            pos: i,
-                          })
-                        }
+                        className="delete-image-btn"
+                        onClick={() => deleteImage(img.url)}
                       >
-                        <i className="bi bi-plus-circle-fill"></i>Add image
+                        <i className="bi bi-x-circle-fill"></i>
                       </button>
+                      <ImageUploader
+                        onFileSelectSuccess={(file) => setSelectedFile(file)}
+                        setImg={(img) => setImage(img)}
+                      />
                     </div>
                   );
                 })}
               </div>
-              {addImgDialog.on && (
-                <div className="add-images">
-                  <button
-                    onClick={() =>
-                      setAddImgDialog({
-                        ...addImgDialog,
-                        on: false,
-                        url: "",
-                        error: " ",
-                      })
-                    }
-                  >
-                    <i className="bi bi-x-circle-fill"></i>
-                  </button>
-                  <span>
-                    <input
-                      type="text"
-                      placeholder="Image URL"
-                      onChange={(e) => {
-                        setAddImgDialog({
-                          ...addImgDialog,
-                          url: e.target.value,
-                          error: validation(e.target.value, "imageUrl"),
-                        });
-                      }}
-                    />
-                    <button type="button" onClick={() => handleImagesChange()}>
-                      Add image
-                    </button>
-                  </span>
-                  <p className="error-msg">{addImgDialog.error}</p>
-                </div>
-              )}
             </div>
             {/* --------------------------------- IMAGES --------------------------------- */}
             <div className="stock-color-section">
@@ -419,7 +350,9 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
                   </span>
                 </div>
                 <div className="color">
-                  <h4 className="input-name">Color<p>{errors.color}</p></h4>
+                  <h4 className="input-name">
+                    Color<p>{errors.color}</p>
+                  </h4>
                   <span>
                     <Selection
                       options={colors}

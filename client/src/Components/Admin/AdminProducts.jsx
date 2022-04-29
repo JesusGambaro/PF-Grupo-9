@@ -3,7 +3,7 @@ import ShoeForm from "./ShoeForm";
 import {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
-
+import {getAllGenders} from "../../redux/actions/getAllUtils"; 
 import {
   deleteShoe,
   getAllProductsAdmin,
@@ -138,6 +138,7 @@ const AdminProducts = () => {
       const token = window.localStorage.getItem("token");
       if (role.admin) {
         if (!products.length) dispatch(getAllProductsAdmin(token));
+        if (!genders.length) dispatch(getAllGenders());
         dispatch(roleUser(token));
       } else if (role.admin === false) {
         navigate("/home");

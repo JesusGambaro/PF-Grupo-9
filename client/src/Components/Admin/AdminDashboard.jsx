@@ -17,7 +17,7 @@ export default function AdminDashboard() {
   const {role} = useSelector((store) => store.root);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const shoes = useSelector((state) => state.admin.allData.length);
+  const shoes = useSelector((state) => state.admin.products.length);
 
   useEffect(() => {
     if (!shoes.length) dispatch(bringAllData(true));

@@ -4,7 +4,6 @@ import ConfirmPanel from "./ConfirmPanel";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import Loading from "../Loading";
-import search from "../../redux/actions/search";
 import {
   deleteUser,
   getAllUsers,
@@ -17,8 +16,7 @@ import {useEffect} from "react";
 import {roleUser} from "../../redux/actions/Loginregister";
 import usePagination from "../../hooks/usePagination";
 import Selection from "./Selection";
-import Checkbox from "../Checkbox";
-const UserCard = ({user, handleDeleteUser, handleUpdateUser, disabled}) => {
+const UserCard = ({id, user, handleDeleteUser, handleUpdateUser, disabled}) => {
   const [confirmState, setConfirmState] = useState(false);
   return (
     <div className="user-card">
@@ -47,12 +45,16 @@ const UserCard = ({user, handleDeleteUser, handleUpdateUser, disabled}) => {
         <p>{user.password.replace(/./g, "*").substring(0, 10)}</p>
       )}
       <div className="actions">
-        <button onClick={() => handleUpdateUser(user.email, user.isAdmin)}>
+        <button
+          onClick={() => handleUpdateUser(user.email, user.isAdmin)}
+          disabled={disabled.pos === id && disabled.rep === 1}
+        >
           <i className="bi bi-pen"></i>
           {user.isAdmin ? "Remove admin" : "Make admin"}
         </button>
         <button
           onClick={() => setConfirmState(true) /*handleDeleteUser(user.email)*/}
+          disabled={disabled.pos === id && disabled.rep === 1}
         >
           <i className="bi bi-trash"></i> Delete
         </button>
@@ -68,16 +70,14 @@ const AdminCustomers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    if (window.localStorage.getItem("token")) {
+    if (role.admin) {
+      const token = window.localStorage.getItem("token");
+      dispatch(roleUser(token));
       if (!users.length) {
-        const token = window.localStorage.getItem("token");
-        dispatch(roleUser(token));
-        if (role.admin) {
-          dispatch(getAllUsers(token));
-        } else if (role.admin === false) {
-          navigate("/home");
-        }
+        dispatch(getAllUsers(token));
       }
+    } else if (role.admin === false) {
+      navigate("/home");
     }
   }, [dispatch, navigate, role.admin, users.length]);
 
@@ -102,6 +102,7 @@ const AdminCustomers = () => {
     }
   };
 
+  /* --------------------------------- search --------------------------------- */
   const [searchParam, setSearchParam] = useState("");
   const handleSearch = (e) => {
     e.preventDefault();
@@ -111,72 +112,87 @@ const AdminCustomers = () => {
       navigate("/home");
     }
   };
-  const handleIsAdminFilter = (e) => {
-    console.log(e);
-    if (role.admin) {
-      dispatch(
-        filterUsers(window.localStorage.getItem("token"), e.target.checked)
-      );
-    } else if (role.admin === false) {
-      navigate("/home");
-    }
-  };
+  /* --------------------------------- search --------------------------------- */
   const handleChange = (e) => {
+    if (e.target.value === "Is admin" || e.target.value === "Not admin") {
+      if (role.admin)
+        dispatch(
+          filterUsers(
+            window.localStorage.getItem("token"),
+            e.target.value === "Is admin"
+          )
+        );
+      else if (role.admin === false) navigate("/home");
+      return;
+    }
     dispatch(filterByName(e.target.value));
   };
   return (
     <div className="admin-container">
-      {loading ? (
-        <Loading />
-      ) : (
-        <div className="customers-section-container">
-          <div className="add-section">
-            <h1>Customers list</h1>
-            <form
-              className="searchOwn"
-              onSubmit={handleSearch}
-              onClick={() => {
-                //dispatch(resetState());
-                //dispatch(resetFilters());
-              }}
-            >
-              <button type="submit">
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </button>
-              <input
-                type="text"
-                placeholder="SEARCH"
-                value={searchParam}
-                onChange={(e) => setSearchParam(e.target.value)}
-              />
-            </form>
-            <div className="filter-sortby">
-              <Checkbox data={"Admin"} change={(e)=>handleIsAdminFilter(e)} />
-              <Checkbox data={"Not admin"} change={(e)=>handleIsAdminFilter(e)} />
-              <Selection
-                options={["A-Z", "Z-A"]}
-                type="Sort By"
-                handleChange={handleChange}
-              />
-            </div>
+      <div className="customers-section-container">
+        <div className="add-section">
+          <h1>Customers list</h1>
+          <form
+            className="searchOwn"
+            onSubmit={handleSearch}
+            onClick={() => {
+              //dispatch(resetState());
+              //dispatch(resetFilters());
+            }}
+          >
+            <button type="submit">
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <input
+              type="text"
+              placeholder="SEARCH"
+              value={searchParam}
+              onChange={(e) => setSearchParam(e.target.value)}
+            />
+          </form>
+          <div className="filter-sortby">
+            <Selection
+              options={["All", "Is admin", "Not admin", "A-Z", "Z-A"]}
+              type="Sort By"
+              handleChange={handleChange}
+            />
           </div>
-          <div className="customers-cards-container">
-            {users.length > 0 &&
-              dataPerPage().map((user, id) => (
-                <UserCard
-                  key={id}
-                  user={user}
-                  handleDeleteUser={(email) => handleDeleteUser(email)}
-                  handleUpdateUser={(email, state) =>
-                    handleUpdateUser(email, state)
-                  }
-                  disabled={users.length < 2 || user.isAdmin}
-                />
-              ))}
-          </div>
-          <Pagination />
         </div>
-      )}
+        {loading ? (
+          <Loading />
+        ) : (
+          <div className="customers-cards-container">
+            {!users.length ? (
+              <h2>No results</h2>
+            ) : (
+              dataPerPage().map((user, id) =>
+                user.hasOwnProperty("msg") ? (
+                  <h2 key={id}>{user.msg}</h2>
+                ) : (
+                  <UserCard
+                    key={id}
+                    user={user}
+                    id={id}
+                    handleDeleteUser={(email) => handleDeleteUser(email)}
+                    handleUpdateUser={(email, state) =>
+                      handleUpdateUser(email, state)
+                    }
+                    disabled={users.reduce(
+                      (prev, cur, i) => ({
+                        ...prev,
+                        rep: cur.isAdmin ? prev.rep + 1 : prev.rep,
+                        pos: cur.isAdmin ? i : 0,
+                      }),
+                      {rep: 0}
+                    )}
+                  />
+                )
+              )
+            )}
+            <Pagination />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

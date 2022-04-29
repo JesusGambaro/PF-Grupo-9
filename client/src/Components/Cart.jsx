@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getUserCart,
@@ -24,14 +24,22 @@ const CardProduct = ({
 }) => {
   const { finalPrice, model, brand, images } = product;
   const maxStock = product.stocks.find((stock) => stock.size === size);
-  const max = maxStock.size;
+  const max = maxStock.amount;
+  const [input,setInput] = useState({ amount: amount})
+  const navigate = useNavigate()
+  const handleInput = (e) => {
+    if(e.target.value <= max && e.target.value > 0){
+      setInput({amount: e.target.value})
+      handlePut(e,product.id,size)
+    }
+  }
   return (
     <div className="product-card">
-      <img src={images[0].url} alt="" />
-      <p>${finalPrice}</p>
+      <img className="image" style={{width:"500px",height:"100px"}} src={images[0].url} alt="" onClick={() => navigate(`/home/${product.id}/${model}`)}/>
+      <span>${finalPrice}</span>
+        <span>{brand}</span>
       <div className="model">
         <p>{model}</p>
-        <p>{brand}</p>
       </div>
       <div className="amount">
         <label>
@@ -39,10 +47,10 @@ const CardProduct = ({
         </label>
         <input
           type="number"
-          defaultValue={amount}
           min={1}
           max={max}
-          onClick={(e) => handlePut(e, product.id, size)}
+          value={input.amount}
+          onChange={(e) => handleInput(e)}
         />
       </div>
       <div className="size">
@@ -62,7 +70,7 @@ export default function Cart () {
     const token = window.localStorage.getItem("token")
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    let {cartUser, loadingCart} = useSelector(state => state.root)
+    const {cartUser, loadingCart} = useSelector(state => state.root)
     const {sameUserCartItems, total} = cartUser
     const initLoad = ()=> {
       dispatch(loadingCartBoolean(true))
@@ -86,7 +94,7 @@ export default function Cart () {
       })}
        dispatch(getUserCart(token))
        return initLoad
-      },[dispatch,addCart,navigate,token])
+      },[dispatch,navigate,token,addCart])
     const handlePut = (e,productId,size) => {
       const product = {amount:  e.target.value, productId,size}
       dispatch(putCart(token,product))
@@ -137,11 +145,11 @@ export default function Cart () {
                 {sameUserCartItems && sameUserCartItems.map(cartItem => {return <CardProduct key={cartItem.id} id={cartItem.id} product={cartItem.product} amount={cartItem.amount} size={cartItem.size} handlePut={handlePut} deleteCartItem={handleDeleteCartItem}/>})}
             <div className="cart-actions">
                 <button className="trash" onClick={e => deleteAll()}>
-                <i class="bi bi-trash"></i> Delete all
+                <i className="bi bi-trash"></i> Delete all
                 </button>
                 <label className="totalprice">Total:${total}</label>
                 <button className="purchase" onClick={e => makeOrder(e)}>
-                <i class="bi bi-bag-fill"></i> Purchase
+                <i className="bi bi-bag-fill"></i> Purchase
                 </button>
             </div>
           </div>

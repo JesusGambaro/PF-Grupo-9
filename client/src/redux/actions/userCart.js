@@ -39,9 +39,16 @@ export const deleteAllCart = (token) => {
 }
 
 export const addCart = (token, product) => {
-  return async () => {
+  return async (dispatch) => {
     await axios.post(`${URL}`, product, {
       headers: { Authorization: `bearer ${token}` },
+    })
+    const { data } = await axios.get(`${URL}`, {
+      headers: { Authorization: `bearer ${token}` },
+    })
+    dispatch({
+      type: GET_CART,
+      payload: data,
     })
   }
 }

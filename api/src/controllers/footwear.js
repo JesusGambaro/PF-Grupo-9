@@ -56,6 +56,43 @@ module.exports = {
     }
   },
 
+  getAllFootwearForAdmin: async (req, res) => {
+    const { footwear } = req.query
+    try {
+      const allFootwears = await Product.findAll({
+        attributes: { exclude: "description" },
+        include: [
+          { model: Image, }, 
+          { model: Stock, },
+        ],
+      })
+      if (footwear) {
+        const footwearsSearched = await Product.findAll({
+          where: {
+            [Op.or]: [
+              { model: { [Op.iLike]: `%${footwear}%` } },
+              Sequelize.where(
+                Sequelize.cast(Sequelize.col("brand"), "varchar"),
+                {
+                  [Op.iLike]: `%${footwear}%`,
+                }
+              ),
+            ],
+          },
+          include: [
+            { model: Image, },
+            { model: Stock, },
+          ],
+        })
+
+        return res.send(footwearsSearched)
+      }
+      return res.send(allFootwears)
+    } catch (error) {
+      sendError(res, error)
+    }
+  },
+
   getAllGenders: async (req, res) => {
     try {
       const genders = await Product.findAll({
@@ -125,6 +162,26 @@ module.exports = {
     }
   },
 
+  getAllProductsSameModelForAdmin: async (req, res) => {
+    try {
+      const { model } = req.params
+      const productsSearched = await Product.findAll({
+        where: {
+          model: {
+            [Op.eq]: model,
+          },
+        },
+        include: [
+          { model: Image, },
+          { model: Stock, },
+        ],
+      })
+      res.status(200).send(productsSearched)
+    } catch (error) {
+      sendError(res, error)
+    }
+  },
+
   getProductById: async (req, res) => {
     try {
       const { id } = req.params
@@ -143,6 +200,26 @@ module.exports = {
               amount: { [Op.gt]: 0 },
             },
           },
+        ],
+      })
+      // Retorna el coincidente. Si no existe, retorna un array vacio
+      res.send(footwear)
+    } catch (error) {
+      sendError(res, error)
+    }
+  },
+
+  getProductByIdForAdmin: async (req, res) => {
+    try {
+      const { id } = req.params
+      // footwear es el calzado encontrado, findByPk retorna el coincidente con el id
+      const footwear = await Product.findOne({
+        where: {
+          id: { [Op.eq]: id },
+        },
+        include: [
+          { model: Image, },
+          { model: Stock, },
         ],
       })
       // Retorna el coincidente. Si no existe, retorna un array vacio

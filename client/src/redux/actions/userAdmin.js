@@ -1,5 +1,5 @@
 import axios from "axios";
-import {UPDATE_USERS, GET_ALL_USERS, SEARCH_USER_A} from "./actionsAdmin";
+import {GET_ALL_USERS, SEARCH_USER_A} from "./actionsAdmin";
 import {LOADING} from "./actions";
 
 const URL = "http://localhost:3001/user/";
@@ -18,12 +18,12 @@ const getAllUsers = (token) => {
 const searchUser = (token, searchParam) => {
   return async (dispatch) => {
     dispatch({type: LOADING, payload: true});
-    const {data} = await axios.get(`${URL}allUsers?search=${searchParam}`, {
+    let {data} = await axios.get(`${URL}allUsers?search=${searchParam}`, {
       headers: {
         Authorization: `bearer ${token}`,
       },
     });
-    console.log(data);
+    if (!data.length) data = [{msg: "No results"}];
     dispatch({type: SEARCH_USER_A, payload: data});
     dispatch({type: LOADING, payload: false});
   };
@@ -54,7 +54,7 @@ const deleteUser = (token, user) => {
       return el.email !== user.email;
     });
     console.log("Soy el new Data: ", newData);
-    dispatch({type: UPDATE_USERS, payload: newData});
+    dispatch(getAllUsers(token));
     dispatch({type: LOADING, payload: false});
   };
 };
@@ -70,26 +70,34 @@ const changeUserRole = (token, user) => {
     let newData = oldData.map((el) =>
       user.email === el.email ? {...el, isAdmin: user.adminState} : el
     );
-    dispatch({type: UPDATE_USERS, payload: newData});
+    dispatch(getAllUsers(token));
     dispatch({type: LOADING, payload: false});
   };
 };
 const filterByName = (filter) => {
   return async (dispatch, getState) => {
     let filtered = [...getState().admin.users];
-    console.log(filtered);
-    if (filter === "A-Z")
-      filtered.sort((a, b) => {
-        let c = a.userName.toLowerCase(),
-          d = b.userName.toLowerCase();
-        return c < d ? -1 : d > c ? 1 : 0;
-      });
-    else
-      filtered.sort((b, a) => {
-        let c = a.userName.toLowerCase(),
-          d = b.userName.toLowerCase();
-        return c < d ? -1 : d > c ? 1 : 0;
-      });
+    switch (filter) {
+      case "A-Z":
+        filtered.sort((a, b) => {
+          let c = a.userName.toLowerCase(),
+            d = b.userName.toLowerCase();
+          return c < d ? -1 : d > c ? 1 : 0;
+        });
+        break;
+      case "Z-A":
+        filtered.sort((b, a) => {
+          let c = a.userName.toLowerCase(),
+            d = b.userName.toLowerCase();
+          return c < d ? -1 : d > c ? 1 : 0;
+        });
+        break;
+      case "All":
+        filtered = [...getState().admin.usersBackup];
+        break;
+      default:
+        return [];
+    }
     dispatch({type: SEARCH_USER_A, payload: filtered});
   };
 };

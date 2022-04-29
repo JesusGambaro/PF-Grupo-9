@@ -6,7 +6,7 @@ const Checkbox = ({data, change, size, selected}) => {
       <input
         type="checkbox"
         className={size ? "checkbox size" : "checkbox"}
-        onChange={() => change(data)}
+        onChange={change}
         title={data}
         checked={selected}
       />

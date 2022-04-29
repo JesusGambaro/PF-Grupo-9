@@ -98,9 +98,14 @@
       p {
         margin-bottom: 0;
         width: 20%;
-        &:nth-child(3),
-        &:nth-child(4) {
+        &:nth-child(3) {
           width: 10%;
+        }
+        &:nth-child(4) {
+          width: 12%;
+          text-align: center;
+          color: #fff;
+          border-radius: 0.5rem;
         }
         &:nth-child(5) {
           width: 15%;

@@ -9,7 +9,7 @@ import MultiRangeSlider from "multi-range-slider-react";
 import {brands, colors, sizes} from "./data";
 
 const LeftSideFilters = () => {
-  const {categories, genders, filters} = useSelector((state) => state.root);
+  const {categories, filters} = useSelector((state) => state.root);
   const dispatch = useDispatch();
   const [range, setRange] = useState({minValue: 0, maxValue: 75000});
   const [checkeds, setCheckeds] = useState([]);

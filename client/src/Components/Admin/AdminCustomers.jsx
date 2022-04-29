@@ -4,7 +4,6 @@ import ConfirmPanel from "./ConfirmPanel";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import Loading from "../Loading";
-import search from "../../redux/actions/search";
 import {
   deleteUser,
   getAllUsers,
@@ -17,8 +16,7 @@ import {useEffect} from "react";
 import {roleUser} from "../../redux/actions/Loginregister";
 import usePagination from "../../hooks/usePagination";
 import Selection from "./Selection";
-import Checkbox from "../Checkbox";
-const UserCard = ({user, handleDeleteUser, handleUpdateUser, disabled}) => {
+const UserCard = ({id, user, handleDeleteUser, handleUpdateUser, disabled}) => {
   const [confirmState, setConfirmState] = useState(false);
   return (
     <div className="user-card">
@@ -47,12 +45,16 @@ const UserCard = ({user, handleDeleteUser, handleUpdateUser, disabled}) => {
         <p>{user.password.replace(/./g, "*").substring(0, 10)}</p>
       )}
       <div className="actions">
-        <button onClick={() => handleUpdateUser(user.email, user.isAdmin)}>
+        <button
+          onClick={() => handleUpdateUser(user.email, user.isAdmin)}
+          disabled={disabled.pos === id && disabled.rep === 1}
+        >
           <i className="bi bi-pen"></i>
           {user.isAdmin ? "Remove admin" : "Make admin"}
         </button>
         <button
           onClick={() => setConfirmState(true) /*handleDeleteUser(user.email)*/}
+          disabled={disabled.pos === id && disabled.rep === 1}
         >
           <i className="bi bi-trash"></i> Delete
         </button>
@@ -102,6 +104,7 @@ const AdminCustomers = () => {
     }
   };
 
+  /* --------------------------------- search --------------------------------- */
   const [searchParam, setSearchParam] = useState("");
   const handleSearch = (e) => {
     e.preventDefault();
@@ -111,17 +114,19 @@ const AdminCustomers = () => {
       navigate("/home");
     }
   };
-  const handleIsAdminFilter = (e) => {
-    console.log(e);
-    if (role.admin) {
-      dispatch(
-        filterUsers(window.localStorage.getItem("token"), e.target.checked)
-      );
-    } else if (role.admin === false) {
-      navigate("/home");
-    }
-  };
+  /* --------------------------------- search --------------------------------- */
   const handleChange = (e) => {
+    if (e.target.value === "Is admin" || e.target.value === "Not admin") {
+      if (role.admin)
+        dispatch(
+          filterUsers(
+            window.localStorage.getItem("token"),
+            e.target.value === "Is admin"
+          )
+        );
+      else if (role.admin === false) navigate("/home");
+      return;
+    }
     dispatch(filterByName(e.target.value));
   };
   return (
@@ -151,28 +156,37 @@ const AdminCustomers = () => {
               />
             </form>
             <div className="filter-sortby">
-              <Checkbox data={"Admin"} change={(e)=>handleIsAdminFilter(e)} />
-              <Checkbox data={"Not admin"} change={(e)=>handleIsAdminFilter(e)} />
               <Selection
-                options={["A-Z", "Z-A"]}
+                options={["All", "Is admin", "Not admin", "A-Z", "Z-A"]}
                 type="Sort By"
                 handleChange={handleChange}
               />
             </div>
           </div>
           <div className="customers-cards-container">
-            {users.length > 0 &&
+            {!users.length ? (
+              <h2>No results</h2>
+            ) : (
               dataPerPage().map((user, id) => (
                 <UserCard
                   key={id}
                   user={user}
+                  id={id}
                   handleDeleteUser={(email) => handleDeleteUser(email)}
                   handleUpdateUser={(email, state) =>
                     handleUpdateUser(email, state)
                   }
-                  disabled={users.length < 2 || user.isAdmin}
+                  disabled={users.reduce(
+                    (prev, cur, i) => ({
+                      ...prev,
+                      rep: cur.isAdmin ? prev.rep + 1 : prev.rep,
+                      pos: cur.isAdmin ? i : 0,
+                    }),
+                    {rep: 0}
+                  )}
                 />
-              ))}
+              ))
+            )}
           </div>
           <Pagination />
         </div>

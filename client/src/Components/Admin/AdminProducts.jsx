@@ -1,30 +1,39 @@
 import ConfirmPanel from "./ConfirmPanel";
 import ShoeForm from "./ShoeForm";
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import bringAllData from "../../redux/actions/bringAllData";
-import {deleteShoe} from "../../redux/actions/productsAdmin";
+import {useNavigate} from "react-router-dom";
+
+import {
+  deleteShoe,
+  getAllProductsAdmin,
+  searchProduct,
+} from "../../redux/actions/productsAdmin";
 import {roleUser} from "../../redux/actions/Loginregister";
 import "../../Css/AdminProducts.scss";
-import {useNavigate} from "react-router-dom";
 import {getAllCategories, getAllGenders} from "../../redux/actions/getAllUtils";
 import Loading from "../Loading";
-import search from "../../redux/actions/search";
 import usePagination from "../../hooks/usePagination";
 const CardProduct = ({shoe, editShoeFunctions}) => {
   //console.log(editShoeFunctions);
   const {setFunc} = editShoeFunctions;
   const {openEditorFunc} = editShoeFunctions;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [confirmDialog, setConfirmDialog] = useState(false);
-
+  const {role} = useSelector((store) => store.root);
+  const handleDeleteProduct = (id) => {
+    if (role.admin)
+      dispatch(deleteShoe(window.localStorage.getItem("token"), id));
+    else if (role.admin === false) navigate("/home");
+  };
   return (
     <div className="product-card">
       {confirmDialog && (
         <ConfirmPanel
           textoDisplay={"Are You Sure You Want To Delete It Permanently?"}
           handleDelete={() => {
-            dispatch(deleteShoe(shoe.id));
+            handleDeleteProduct(shoe.id);
             setConfirmDialog(false);
           }}
           cancelDelete={() => setConfirmDialog(false)}
@@ -109,36 +118,41 @@ const AdminProducts = () => {
       console.log("-------------------------New Shoe-------------------------");
     } else setShoeToEdit(param);
   };
-  const {allData, loading} = useSelector((state) => state.admin);
+  const {products, loading} = useSelector((state) => state.admin);
   const {categories, genders, role} = useSelector((state) => state.root);
-  const {Pagination, dataPerPage} = usePagination(allData, 12, 4);
+  const {Pagination, dataPerPage} = usePagination(products, 12, 4);
   const navigate = useNavigate();
   const [shoeDialog, setShoeDialog] = useState(false);
-  useEffect(() => {
-    if (!allData.length) dispatch(bringAllData(true));
-
-    if (!categories.length || !genders.length) {
-      dispatch(getAllGenders());
-      dispatch(getAllCategories());
-    }
-  }, [allData.length, categories.length, genders.length, dispatch, shoeDialog]);
   shoeDialog
     ? (document.body.style.overflow = "hidden")
     : (document.body.style.overflow = "auto");
+
   useEffect(() => {
     if (window.localStorage.getItem("token")) {
       const token = window.localStorage.getItem("token");
-      dispatch(roleUser(token));
-      if (role.admin === false) {
+
+      if (role.admin) {
+        if (!products.length) dispatch(getAllProductsAdmin(token));
+        dispatch(roleUser(token));
+      } else if (role.admin === false) {
         navigate("/home");
       }
     }
-  }, [dispatch, navigate, role.admin]);
+  }, [dispatch, navigate, products.length, role.admin]);
+
+  /* ---------------------------------- searh --------------------------------- */
   const [searchParam, setSearchParam] = useState("");
   const handleSearch = (e) => {
     e.preventDefault();
-    dispatch(search(searchParam, true));
+    if (role.admin) {
+      dispatch(
+        searchProduct(window.localStorage.getItem("token"), searchParam)
+      );
+    } else if (role.admin === false) {
+      navigate("/home");
+    }
   };
+  /* ---------------------------------- searh --------------------------------- */
   return (
     <div className="admin-container">
       {shoeDialog && (
@@ -180,7 +194,7 @@ const AdminProducts = () => {
           <Loading />
         ) : (
           <div className="products-cards-container">
-            {allData.length > 0 ? (
+            {products.length > 0 ? (
               dataPerPage().map((shoe, id) => (
                 <CardProduct
                   key={id}

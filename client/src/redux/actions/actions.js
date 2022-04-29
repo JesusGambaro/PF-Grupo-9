@@ -23,6 +23,7 @@ const GET_PROFILE = "@user/profile"
 const LOADING_CART = "loadingcart"
 const USER_INFO = "userInfo"
 const POST_ORDER = '@user/postOrder'
+const CLEAN_ORDER='@user/cleanOrder'
 
 export {
   LOADING_CART,
@@ -49,5 +50,6 @@ export {
   GET_ROLE,
   GET_PROFILE,
   USER_INFO,
-  POST_ORDER
+  POST_ORDER,
+  CLEAN_ORDER
 }

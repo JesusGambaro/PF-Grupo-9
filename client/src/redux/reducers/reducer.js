@@ -23,7 +23,8 @@ import {
   GET_PROFILE,
   LOADING_CART,
   USER_INFO,
-  POST_ORDER
+  POST_ORDER,
+  CLEAN_ORDER
 } from "../actions/actions"
 
 const initialState = {
@@ -47,7 +48,7 @@ const initialState = {
   orderUser: [],
   loadingCart: true,
   user:{},
-  paymentInfo:[]
+  paymentInfo:{}
 }
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -142,6 +143,11 @@ const rootReducer = (state = initialState, action) => {
       return{
         ...state,
         paymentInfo: action.payload
+      }
+    case CLEAN_ORDER:
+      return{
+        ...state,
+        paymentInfo:{}
       }
     default:
       return state

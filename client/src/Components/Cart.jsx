@@ -118,6 +118,7 @@ export default function Cart() {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteCartItem(id, token));
+        dispatch(getUserCart(token));
       }
     });
   };
@@ -132,6 +133,7 @@ export default function Cart() {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteAllCart(token));
+        dispatch(getUserCart(token));
       }
     });
   };

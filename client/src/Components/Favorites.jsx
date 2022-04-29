@@ -8,16 +8,15 @@ import {
   deleteAllFav,
   addFav,
 } from "../redux/actions/userFav";
+import { addCart } from "../redux/actions/userCart";
 import Swal from "sweetalert2";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const CardProduct = ({
   id,
   product,
-  amount,
   deleteFavItem,
-  handlePut,
-  token,
+  addCartItem,
 }) => {
   const dispatch = useDispatch();
   const { finalPrice, model, brand, images } = product;
@@ -40,7 +39,7 @@ const CardProduct = ({
             <i
               className="bi bi-bag"
               title="Add to cart"
-              //onClick={() => handleAddProduct(e, "cart")}
+              onClick={() => addCartItem(product)}
             >
               &nbsp;
             </i>
@@ -103,6 +102,36 @@ const Favorites = () => {
       }
     });
   };
+  const handleAddCart = (e) => {
+    const sizes = {};
+    e.stocks.forEach((element) => {
+      sizes[element.size] = element.size;
+    });
+    if (token) {
+      console.log("addCartFav");
+      Swal.fire({
+        title: "Select a size",
+        input: "select",
+        inputOptions: sizes,
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Add",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const product = { productId: e.id, size: result.value };
+          dispatch(addCart(token, product));
+          Swal.fire({
+            position: "bottom-end",
+            icon: "success",
+            title: "Product added successfully",
+            showConfirmButton: false,
+            timer: 1250,
+          });
+        }
+      });
+    }
+  };
   return (
     <div className="favorites">
       {favUser.length ? (
@@ -121,6 +150,7 @@ const Favorites = () => {
                     amount={cartItem.amount}
                     size={cartItem.size}
                     deleteFavItem={handleDeleteFavtItem}
+                    addCartItem={handleAddCart}
                   />
                 );
               })}
@@ -134,10 +164,7 @@ const Favorites = () => {
       ) : (
         <div className="noFavoriteItems">
           <h1>There are no favorite items</h1>
-          <NavLink
-            to={`/home`}
-            style={{ color: "black"}}
-          >
+          <NavLink to={`/home`} style={{ color: "black" }}>
             <p>Click here to add more</p>
           </NavLink>
         </div>

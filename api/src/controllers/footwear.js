@@ -13,6 +13,7 @@ module.exports = {
         include: [
           {
             model: Image,
+            order: [["id", "DESC"]],
           },
           {
             model: Stock,
@@ -38,6 +39,7 @@ module.exports = {
           include: [
             {
               model: Image,
+              order: [["id", "DESC"]],
             },
             {
               model: Stock,
@@ -62,7 +64,9 @@ module.exports = {
       const allFootwears = await Product.findAll({
         attributes: { exclude: "description" },
         include: [
-          { model: Image, }, 
+          { model: Image,
+            order: [["id", "DESC"]],
+          }, 
           { model: Stock, },
         ],
       })
@@ -80,7 +84,9 @@ module.exports = {
             ],
           },
           include: [
-            { model: Image, },
+            { model: Image, 
+              order: [["id", "DESC"]],
+            },
             { model: Stock, },
           ],
         })
@@ -126,6 +132,7 @@ module.exports = {
         },
         include: {
           model: Image,
+          order: [["id", "DESC"]],
         },
       })
 
@@ -147,6 +154,7 @@ module.exports = {
         include: [
           {
             model: Image,
+            order: [["id", "DESC"]],
           },
           {
             model: Stock,
@@ -172,7 +180,9 @@ module.exports = {
           },
         },
         include: [
-          { model: Image, },
+          { model: Image, 
+            order: [["id", "DESC"]],
+          },
           { model: Stock, },
         ],
       })
@@ -193,6 +203,7 @@ module.exports = {
         include: [
           {
             model: Image,
+            order: [["id", "DESC"]],
           },
           {
             model: Stock,
@@ -218,7 +229,9 @@ module.exports = {
           id: { [Op.eq]: id },
         },
         include: [
-          { model: Image, },
+          { model: Image, 
+            order: [["id", "DESC"]],
+          },
           { model: Stock, },
         ],
       })

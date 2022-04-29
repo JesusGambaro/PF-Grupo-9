@@ -20,8 +20,8 @@ console.log(data.data.error)
   }
 }
 
-export const cleanOrder=()=>{
+/* export const cleanOrder=()=>{
   return{
     type: CLEAN_ORDER
   }
-}
+} */

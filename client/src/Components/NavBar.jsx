@@ -179,7 +179,7 @@ const NavBar = () => {
             </Dropdown>
           ) : (
             <NavLink to="/home/login" className="text-dark" style={{textDecoration:"none"}}>
-              Log In
+              LogIn
             </NavLink>
           )}
         </li>

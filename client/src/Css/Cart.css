@@ -12,6 +12,9 @@
     justify-content: center;
     gap: 30px
 }
+.product-card > img {
+    width: 200px;
+}
 .cart-container .model {
     display: flex;
     align-items: center;

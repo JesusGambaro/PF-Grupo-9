@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { registerUsers, loginUsers, clearUser, roleUser } from "../redux/actions/Loginregister"
 import Swal from "sweetalert2"
+import SendConfirmedEmail from "./SendConfirmedEmail"
 import LoginGoogle from "./LoginGoogle"
 
 function Login() {
@@ -12,14 +13,17 @@ function Login() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [validation, setValidation] = useState(true)
+  const [forgotPassword, setForgotPassword] = useState(false)
   const [signUp, setSignUp] = useState(false)
   const [loading, setLoading] = useState({
     login: false,
-    register: false
+    register: false,
+
   })
   const [SigInUp, setSignInUp] = useState({
     login: false,
-    register: false
+    register: false,
+    forgotPass: false
   })
   const [state, setState] = useState({
     email: "",
@@ -30,7 +34,7 @@ function Login() {
   const [error, setError] = useState({
     email: false,
     password: false,
-    user: signUp
+    user: false
   })
 
   useEffect(() => {
@@ -140,7 +144,7 @@ function Login() {
     setError({
       email: false,
       password: false,
-      user: signUp
+      user: false
     })
     setSignInUp({
       login: false,
@@ -265,95 +269,100 @@ function Login() {
           </div>
           <h2 className="fw-bold text-center pt-3 mb-5">Welcome</h2>
 
-          <form onSubmit={hanldeSubmit}>
-            {signUp
-              ? (
+          {forgotPassword
+            ? <SendConfirmedEmail signIn={setForgotPassword} register={setSignUp}/>
+            : (
+              <form onSubmit={hanldeSubmit}>
+                {signUp
+                  ? (
+                    <div className="mb-4">
+                      <div className="row">
+                        <label htmlFor="user" className="col form-label">User name:</label>
+                        {error.user
+                          ? <label htmlFor="user" className="col form-label text-danger fw-bold text-end">Invalid User Name</label>
+                          : null
+                        }
+                      </div>
+                      <input type="text" value={state.user} autoFocus name="user" className="form-control" onChange={handleValidationInputs}
+                      />
+                    </div>
+                  )
+                  : null
+                }
                 <div className="mb-4">
                   <div className="row">
-                    <label htmlFor="user" className="col form-label">User name:</label>
-                    {error.user
-                      ? <label htmlFor="user" className="col form-label text-danger fw-bold text-end">Invalid User Name</label>
+                    <label htmlFor="email" className="col form-label">Email:</label>
+                    {error.email
+                      ? <label htmlFor="email" className="col form-label text-danger fw-bold text-end">Invalid Email</label>
                       : null
                     }
                   </div>
-                  <input type="text" value={state.user} autoFocus name="user" className="form-control" onChange={handleValidationInputs}
+                  <input type="email" value={state.email} name="email" autoFocus className="form-control" onChange={handleValidationInputs}
                   />
                 </div>
-              )
-              : null
-            }
-            <div className="mb-4">
-              <div className="row">
-                <label htmlFor="email" className="col form-label">Email:</label>
-                {error.email
-                  ? <label htmlFor="email" className="col form-label text-danger fw-bold text-end">Invalid Email</label>
-                  : null
-                }
-              </div>
-              <input type="email" value={state.email} name="email" autoFocus className="form-control" onChange={handleValidationInputs}
-              />
-            </div>
-            <div className={SigInUp.register || SigInUp.login || error.password ? "mb-2" : "mb-4"}>
-              <div className="row">
-                <label htmlFor="password" className="col form-label">Password:</label>
+                <div className={SigInUp.register || SigInUp.login || error.password ? "mb-2" : "mb-4"}>
+                  <div className="row">
+                    <label htmlFor="password" className="col form-label">Password:</label>
+                    {error.password
+                      ? <label htmlFor="email" className="col form-label text-danger fw-bold text-end">Invalid Password</label>
+                      : null
+                    }
+                  </div>
+                  <input type="password" name="password" value={state.password} className="form-control" onChange={handleValidationInputs}
+                  />
+                </div>
                 {error.password
-                  ? <label htmlFor="email" className="col form-label text-danger fw-bold text-end">Invalid Password</label>
+                  ? <div className="mb-2">
+                    <label htmlFor="register" className="col form-label text-danger fw-bold text-start">The password must have a minimum of 5 characters and a maximum of 15 characters and at least one lowercase.</label>
+                  </div>
                   : null
                 }
-              </div>
-              <input type="password" name="password" value={state.password} className="form-control" onChange={handleValidationInputs}
-              />
-            </div>
-            {error.password
-              ? <div className="mb-2">
-                <label htmlFor="register" className="col form-label text-danger fw-bold text-start">The password must have a minimum of 5 characters and a maximum of 15 characters and at least one lowercase.</label>
-              </div>
-              : null
-            }
-            <div className="mb-2">
-              {signUp
-                ? SigInUp.register
-                  ? <label htmlFor="register" className="col form-label text-danger fw-bold text-start fs-5">This email already exists, please put another email or login</label>
-                  : null
-                : SigInUp.login
-                  ? <label htmlFor="login" className="col form-label text-danger fw-bold text-end fs-5">Invalid email or password</label>
-                  : null
-              }
-            </div>
-            <div className="d-grid">
-              {signUp
-                ? <button type="submit" className="btn btn-primary" name="signUp" disabled={validation}>
-                  {loading.register
-                    ? <span className="spinner-border text-info" role="status"></span>
-                    : "Sign Up"
+                <div className="mb-2">
+                  {signUp
+                    ? SigInUp.register
+                      ? <label htmlFor="register" className="col form-label text-danger fw-bold text-start fs-5">This email already exists, please put another email or login</label>
+                      : null
+                    : SigInUp.login
+                      ? <label htmlFor="login" className="col form-label text-danger fw-bold text-end fs-5">Invalid email or password</label>
+                      : null
                   }
-                </button>
-                : <button type="submit" className="btn btn-primary" name="login" disabled={validation}>
-                  {loading.login
-                    ? <span className="spinner-border text-info" role="status"></span>
-                    : "Login"
+                </div>
+                <div className="d-grid">
+                  {signUp
+                    ? <button type="submit" className="btn btn-primary" name="signUp" disabled={validation}>
+                      {loading.register
+                        ? <span className="spinner-border text-info" role="status"></span>
+                        : "Sign Up"
+                      }
+                    </button>
+                    : <button type="submit" className="btn btn-primary" name="login" disabled={validation}>
+                      {loading.login
+                        ? <span className="spinner-border text-info" role="status"></span>
+                        : "Login"
+                      }
+                    </button>
                   }
-                </button>
-              }
 
-            </div>
-            <div className="mt-4">
-              {!signUp
-                ? <span>You don't have an account? <button onClick={handleSignUp}
-                  className="bg-transparent border-0 mb-3 text-primary text-decoration-underline">Sign up</button></span>
-                : <span>You have an account? <button onClick={handleSignUp}
-                  className="bg-transparent border-0 text-primary text-decoration-underline">Login</button></span>
-              }
+                </div>
+                <div className="mt-4">
+                  {!signUp
+                    ? <span>You don't have an account? <button onClick={handleSignUp}
+                      className="bg-transparent border-0 mb-3 text-primary text-decoration-underline">Sign up</button></span>
+                    : <span>You have an account? <button onClick={handleSignUp}
+                      className="bg-transparent border-0 text-primary text-decoration-underline">Login</button></span>
+                  }
 
-              <br />
-              {!signUp
-                ? <span>Forgot your password? <button className="bg-transparent border-0 text-primary text-decoration-underline">Recover password</button></span>
-                : null
-              }
-            </div>
-          </form>
-          
-          <LoginGoogle/>
+                  <br />
+                  {!signUp
+                    ? <span>Forgot your password? <button className="bg-transparent border-0 text-primary text-decoration-underline" onClick={()=>setForgotPassword(true)}>Recover password</button></span>
+                    : null
+                  }
+                </div>
+              </form>
+            )
+          }
+
+          <LoginGoogle />
         </div>
 
       </div>

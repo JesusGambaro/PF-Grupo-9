@@ -30,7 +30,7 @@ const UpSideBar = ({quantity, handleToggle, genderActual}) => {
             dispatch(leftSideFilter());
           }}
         >
-          <i class="bi bi-journal-x"></i> Clear Filters
+          <i className="bi bi-journal-x"></i> Clear Filters
         </p>
         <select
           className="form-select"

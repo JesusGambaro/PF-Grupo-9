@@ -7,11 +7,8 @@ import {
 } from "../actions/actions";
 
 import {
-  POST_NEW_SHOE,
-  UPDATE_USERS,
-  EDIT_SHOE,
+  GET_ALL_PRODUCTS_A,
   GET_ALL_USERS,
-  DELETE_SHOE,
   GET_LAST_SEVEN_DAYS_ORDERS,
   GET_ALL_ORDERS,
   GET_ORDER_DETAIL,
@@ -23,7 +20,7 @@ import {
   SEARCH_USER_A,
 } from "../actions/actionsAdmin";
 const initialState = {
-  allData: [],
+  products: [],
   allDataCopy: [],
   sales: [],
   loading: false,
@@ -38,26 +35,13 @@ const initialState = {
 };
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "@admin/init":
-      return {...state, allData: action.payload, allDataCopy: action.payload};
+    case GET_ALL_PRODUCTS_A:
+      return {...state, products: action.payload, allDataCopy: action.payload};
     case GET_ALL_USERS:
       return {...state, users: action.payload};
-    case POST_NEW_SHOE:
-      return {...state, allData: [action.payload, ...state.allData]};
-    case EDIT_SHOE:
-      return {
-        ...state,
-        allData: state.allData.map((el) =>
-          action.payload.id === el.id ? action.payload : el
-        ),
-      };
-    case DELETE_SHOE:
-      return {...state, allData: action.payload, allDataCopy: action.payload};
     case SEARCH_PRODUCT_A:
-      return {...state, allData: action.payload};
+      return {...state, products: action.payload};
     case SEARCH_USER_A:
-      return {...state, users: action.payload};
-    case UPDATE_USERS:
       return {...state, users: action.payload};
     case LOADING:
       return {...state, loading: action.payload};
@@ -82,7 +66,7 @@ const adminReducer = (state = initialState, action) => {
     case GET_ALL_GAIN:
       return {...state, gain: action.payload};
     case UPDATE_ORDER:
-      return {...state, orderDetail: action.payload}
+      return {...state, orderDetail: action.payload};
     default:
       return state;
   }

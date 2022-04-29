@@ -22,7 +22,10 @@ const DELETE_FAV = "@user/deleteFav"
 const GET_PROFILE = "@user/profile"
 const LOADING_CART = "loadingcart"
 const USER_INFO = "userInfo"
+const CHANGE_PASSWORD= "changePassword"
+const CLEAR_PASSWORD="clearPassword"
 const POST_ORDER = '@user/postOrder'
+
 
 export {
   LOADING_CART,
@@ -49,5 +52,7 @@ export {
   GET_ROLE,
   GET_PROFILE,
   USER_INFO,
+  CHANGE_PASSWORD,
+  CLEAR_PASSWORD,
   POST_ORDER
 }

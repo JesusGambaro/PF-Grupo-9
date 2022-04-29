@@ -32,15 +32,15 @@ function UserProfile() {
   return (
 
     <div className="container p-0 bg-light shadow-lg con" style={{ "marginTop": "7rem", "marginBottom": "3rem" }}>
-      <div className="row w-100 mb-5" >
+      <div className="row w-100 m-0 p-0 mb-5" >
         <h1 className="text-center fw-bold mb-5 pt-5">MY ACCOUNT</h1>
 
-        <div className="row align-items-center justify-content-center">
+        <div className="row align-items-center justify-content-center m-0 p-0">
 
           <img src="https://previews.123rf.com/images/chudtsankov/chudtsankov1703/chudtsankov170300127/73952540-cara-divertida-de-dibujos-animados-feliz-con-expresi%C3%B3n-sonriente-ilustraci%C3%B3n-con-fondo-amarillo.jpg" alt="fondo"
             className="col-12 rounded-circle p-0 border border-5 border-secondary perfil"
           />
-          <div className="col-12 ms-sm-4 text-center mt-4">
+          <div className="col-12 text-center m-0 p-0 mt-4">
             {user.userName && (
               <>
                 <p className="col-12 fs-5 m-0"><strong>UserName:</strong> {user.userName}</p>

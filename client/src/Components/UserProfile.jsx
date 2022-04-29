@@ -77,7 +77,11 @@ function UserProfile() {
                     ? order.shoppingCartItems.map((item) => (
                       <div className="d-flex flex-column flex-md-row align-items-center gap-0 pt-3 pb-2 shadow pedido" key={item.id}>
                         <div className="imagen">
-                          <img src={item.product.images[0].url} className="card-img-top" alt="..." />
+                          <img src={item.product.images[0].url} className="card-img-top" alt="..." onClick={() =>
+                            navigate(
+                              `/home/${item.productId}/${item.product.model}`
+                            )
+                          }/>
                         </div>
                         <div className="text-center text-md-start m-0 p-0 w-100">
                           <h5 className="fw-bold fs-4 mb-3">{item.product.brand}-{item.product.model}</h5>

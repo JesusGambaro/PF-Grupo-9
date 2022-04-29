@@ -230,7 +230,7 @@ function Details() {
                     </div>
                   </div>
                   <div className="row mt-5 mb-4 d-flex justify-content-center mt-xl-4 pt-xl-4 mt-lg-3 pt-lg-3">
-                    <button className="w-50 btn btn-outline-info fs-4 fw-bold" onClick={handleAddingCart}>
+                    <button className={`${detail.stocks[0].amount = 0 ? 'disabled' : ''} w-50 btn btn-outline-info fs-4 fw-bold`} onClick={handleAddingCart}>
                       ADD TO CART
                     </button>
                   </div>

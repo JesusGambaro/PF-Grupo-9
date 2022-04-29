@@ -26,6 +26,7 @@ const CardProduct = ({
   const maxStock = product.stocks.find((stock) => stock.size === size);
   const max = maxStock.amount;
   const [input,setInput] = useState({ amount: amount})
+  const navigate = useNavigate()
   const handleInput = (e) => {
     if(e.target.value <= max && e.target.value > 0){
       setInput({amount: e.target.value})
@@ -34,7 +35,7 @@ const CardProduct = ({
   }
   return (
     <div className="product-card">
-      <img className="image" style={{width:"500px",height:"100px"}} src={images[0].url} alt="" />
+      <img className="image" style={{width:"500px",height:"100px"}} src={images[0].url} alt="" onClick={() => navigate(`/home/${product.id}/${model}`)}/>
       <span>${finalPrice}</span>
         <span>{brand}</span>
       <div className="model">

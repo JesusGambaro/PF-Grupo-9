@@ -17,6 +17,7 @@ import {
 } from "reactstrap";
 
 export default function LandingPage() {
+  
   /* const dispatch = useDispatch()
     useEffect(()=>{
       const datos =  dispatch(bringAllData())
@@ -31,6 +32,7 @@ export default function LandingPage() {
 
   // State for Animation
   const [animating, setAnimating] = React.useState(false);
+  
 
   // Sample items for Carousel
   const items = [
@@ -53,12 +55,7 @@ export default function LandingPage() {
       filtros: [{name: "category", value: "Running"}],
     },
   ];
-  useEffect(() => {
-    if (!sales.length) {
-      dispatch(bringAllData());
-      dispatch(getAllSales());
-    }
-  }, []);
+  
   // Items array length
   const itemLength = items.length - 1;
 
@@ -95,6 +92,7 @@ export default function LandingPage() {
       </CarouselItem>
     );
   });
+  
 
   return (
     <div style={{width: "100%"}}>

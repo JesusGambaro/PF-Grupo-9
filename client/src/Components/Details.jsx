@@ -1,7 +1,7 @@
 import "../Css/Details.css";
 import Loading from "./Loading";
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import bringAllData from "../redux/actions/bringAllData";
 import {
@@ -10,7 +10,8 @@ import {
   clearDetail,
 } from "../redux/actions/getDetail";
 import Swal from "sweetalert2";
-import { addCart, deleteAllCart } from "../redux/actions/userCart";
+import { addCart } from "../redux/actions/userCart";
+import { addFav } from "../redux/actions/userFav";
 
 function Details() {
   const navigate = useNavigate();
@@ -62,8 +63,7 @@ function Details() {
   const handleAddingCart = () => {
     if (token) {
       const sizeCart = sizeSelect ? parseInt(sizeSelect) : size[0].size;
-      const productFound = allData.find((p) => p.color === colorSelect);
-      console.log(productFound);
+      const productFound = detailColor.find((p) => p.color === colorSelect);
       const productId = productFound ? productFound.id : detail.id;
       const product = { productId, size: sizeCart };
       dispatch(addCart(token, product));
@@ -91,10 +91,41 @@ function Details() {
     }
   };
 
+  const handleAddingFavCart = () => {
+    if (token) {
+      const sizeCart = sizeSelect ? parseInt(sizeSelect) : size[0].size;
+      const productFound = detailColor.find((p) => p.color === colorSelect);
+      const productId = productFound ? productFound.id : detail.id;
+      const product = { productId, size: sizeCart };
+      dispatch(addFav(token, product));
+      Swal.fire({
+        position: "bottom-end",
+        icon: "success",
+        title: "Product added successfully",
+        showConfirmButton: false,
+        timer: 1250,
+      });
+    } else {
+      Swal.fire({
+        title: "You must log in to add favorite products",
+        text: "Do you want to login?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, I want",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/home/login");
+        }
+      });
+    }
+  };
+
   useEffect(() => {
     setReload(false);
     setImages([]);
-    setColorSelect();
+    setColorSelect()
     setSizeSelect();
     setSize([]);
     setStock();
@@ -114,12 +145,12 @@ function Details() {
   }, [reload, dispatch]);
 
   return (
-    <div style={{ marginTop: "4rem" }}>
+    <div className="w-100" style={{ marginTop: "4rem" }}>
       {loading ? (
         <Loading />
       ) : (
         <>
-          <div className="container mt-5 mb-5 rounded-3 shadow-lg">
+          <div className="container mt-5 mb-5 rounded-3 shadow-lg w-100">
             <div className="row pt-4 pb-4 bg-white">
               <h1 className="text-info text-center">
                 {detail.brand} {detail.model}
@@ -133,6 +164,7 @@ function Details() {
                     className="border-0 bg-transparent"
                     id="fav"
                     title="Add to favorites"
+                    onClick={handleAddingFavCart}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -163,37 +195,35 @@ function Details() {
                 <div className="row grid ms-1 mx-1">
                   {Images.length > 0
                     ? Images.map((diseño) => (
-                        <button
-                          className={`${
-                            Images.length === 1 ? "col col-3" : "col"
+                      <button
+                        className={`${Images.length === 1 ? "col col-3" : "col"
                           } border-0 bg-transparent p-0`}
-                          key={diseño.id}
-                        >
-                          <img
-                            src={diseño.url}
-                            style={{ height: "18vh" }}
-                            alt="zapato"
-                            className={`border border-4 rounded shadow-lg ${
-                              mainImage === diseño.url
-                                ? "border-warning"
-                                : "border-info"
+                        key={diseño.id}
+                      >
+                        <img
+                          src={diseño.url}
+                          style={{ height: "18vh" }}
+                          alt="zapato"
+                          className={`border border-4 rounded shadow-lg ${mainImage === diseño.url
+                              ? "border-warning"
+                              : "border-info"
                             }`}
-                            onClick={handleMainImage}
-                            id={"images"}
-                          />
-                        </button>
-                      ))
+                          onClick={handleMainImage}
+                          id={"images"}
+                        />
+                      </button>
+                    ))
                     : detail.id
-                    ? setImages(detail.images) &
+                      ? setImages(detail.images) &
                       setMainImage(detail.images[0].url)
-                    : null}
+                      : null}
                 </div>
               </div>
 
               <div className="m-0 pb-3 col col-12 col-lg-5 pt-4 pb-lg-0">
                 <div className="row m-0 p-0">
                   <h3 className="text-light fs-2">$ {detail.price}</h3>
-                  <p className="text-warning fs-3">Available: {stock}</p>
+                  <p className="text-warning fs-3">Stock: {stock}</p>
                 </div>
 
                 <div className="row text-white mt-3 ms-md-2 mt-md-1">
@@ -206,11 +236,10 @@ function Details() {
                       <select
                         className="form-select fw-bold"
                         name="colors"
-                        value={colorSelect ? colorSelect : detail.color}
+                        value={colorSelect? colorSelect:detail.color }
                         onChange={handleColor}
                       >
-                        {detailColor.length > 0 &&
-                          detailColor.map((diseño) => (
+                        {detailColor.length > 0 &&  detailColor.map((diseño) => (
                             <option
                               key={diseño.id}
                               value={diseño.color}
@@ -219,7 +248,8 @@ function Details() {
                             >
                               {diseño.color.toUpperCase()}
                             </option>
-                          ))}
+                          ))
+                        }
                       </select>
                       <label
                         htmlFor="floatingSelect"
@@ -240,19 +270,19 @@ function Details() {
                       >
                         {size.length > 0
                           ? size.map((talla) => (
-                              <option
-                                key={talla.id}
-                                value={talla.size}
-                                className="fw-bold"
-                                id={talla.id}
-                              >
-                                {talla.size}
-                              </option>
-                            ))
+                            <option
+                              key={talla.id}
+                              value={talla.size}
+                              className="fw-bold"
+                              id={talla.id}
+                            >
+                              {talla.size}
+                            </option>
+                          ))
                           : detail.id
-                          ? setSize(detail.stocks) &
+                            ? setSize(detail.stocks) &
                             setStock(detail.stocks[0].amount)
-                          : null}
+                            : null}
                       </select>
                       <label
                         htmlFor="floatingSelect"
@@ -265,13 +295,12 @@ function Details() {
                 </div>
                 <div className="row mt-5 mb-4 d-flex justify-content-center mt-xl-4 pt-xl-4 mt-lg-3 pt-lg-3">
                   <button
-                    className={`${(detail.stocks[0].amount = 0
-                      ? "disabled"
-                      : "")} w-50 btn btn-outline-info fs-4 fw-bold`}
+                    className="w-50 btn btn-outline-info fs-4 fw-bold"
+                    disabled={stock == 0}
                     onClick={handleAddingCart}
                   >
                     ADD TO CART
-                    </button>
+                  </button>
                 </div>
               </div>
             </div>
@@ -294,7 +323,7 @@ function Details() {
             <div className="row">
               <h1 className="text-center text-info">More products</h1>
             </div>
-            <div className="row text-center m-0 mt-5 grid gap-3 gap-lg-5 justify-content-center">
+            <div className="row text-center m-0 mt-5 pb-5 grid gap-3 gap-lg-5 justify-content-center">
               {relatedProduct &&
                 relatedProduct.map((product) => (
                   <button

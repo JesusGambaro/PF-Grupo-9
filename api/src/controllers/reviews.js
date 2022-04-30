@@ -14,8 +14,6 @@ module.exports = {
         rating,
       })
       const productReviewed = await Product.findAll({ where: { model, brand } })
-
-      console.log(productReviewed)
       await ownerReview.addReview(review)
       await review.addProducts(productReviewed)
       const countRating = await Review.findAll({

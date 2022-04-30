@@ -143,7 +143,12 @@ module.exports = {
           {
             model: Image,
           },
-          { model: Stock },
+          {
+            model: Stock,
+            where: {
+              amount: { [Op.gt]: 0 },
+            },
+          },
         ],
         order: [
           ["id", "ASC"],

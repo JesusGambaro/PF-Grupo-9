@@ -12,6 +12,7 @@ import {
   getLastSevenDaysOrders,
 } from "../../redux/actions/ordersAdmin";
 import {roleUser} from "../../redux/actions/Loginregister";
+import { getAllProductsAdmin } from "../../redux/actions/productsAdmin";
 
 export default function AdminDashboard() {
   const {role} = useSelector((store) => store.root);
@@ -25,6 +26,7 @@ export default function AdminDashboard() {
       const token = window.localStorage.getItem("token");
       dispatch(roleUser(token));
       if (role.admin) {
+        dispatch(getAllProductsAdmin(token))
         dispatch(getLastSevenDaysOrders(token));
         dispatch(getAllOrders(token));
         dispatch(getAllGain(token));
@@ -116,25 +118,6 @@ export default function AdminDashboard() {
                     </tr>
                   );
                 })}
-                <tr>
-                  <td>ID order</td>
-                  <td>
-                    <b>Customer name</b>
-                  </td>
-                  <td>email@example.com</td>
-                  <td>$778.35</td>
-                  <td>
-                    <span className="badge rounded-pill alert-success">
-                      status
-                    </span>
-                  </td>
-                  <td>07.05.2020</td>
-                  <td className="text-end">
-                    <a href="#" className="btn btn-light">
-                      Detail
-                    </a>
-                  </td>
-                </tr>
               </tbody>
             </table>
           </div>

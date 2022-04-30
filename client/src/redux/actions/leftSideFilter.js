@@ -1,7 +1,7 @@
 import {LEFT_SIDE_FILTERS} from "./actions";
 
 const genderFilter = (gender) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch({
       type: "@shoes/genderActual",
       payload: gender,

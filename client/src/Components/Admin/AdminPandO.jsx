@@ -42,10 +42,9 @@ export default function AdminPandO() {
   }
   function handleStatusFilter(e) {
     e.preventDefault();
-    dispatch(updateOrder(token1, e.target.value));
+    dispatch(getOrderByStatus(token1, e.target.value));
   }
   const allOrders = useSelector((state) => state.admin.allOrders);
-console.log(allOrders)
   return (
     <div className="admin-container">
       <div className="orders-card">
@@ -116,21 +115,20 @@ console.log(allOrders)
                 <th scope="col">Status</th>
                 <th scope="col">Date</th>
                 <th scope="col" className="text-end">
-                  {" "}
-                  Action{" "}
+                  Action
                 </th>
               </tr>
             </thead>
             <tbody>
-              {allOrders.map((e) => {
+              {allOrders.length? allOrders.map((e) => {
                 return (
                   <tr key={e.id}>
                     <td>
-                      {e.id} {/* ID order */}
+                      {e.id&&e.id} {/* ID order */}
                     </td>
                     <td>
                       <b>
-                        {e.name} {e.surname} {/* Customer name */}
+                        {e.name&&e.name} {e.surname&&e.surname} {/* Customer name */}
                       </b>
                     </td>
                     <td>
@@ -138,15 +136,15 @@ console.log(allOrders)
                       {/* email@example.com */}
                     </td>
                     <td>
-                      ${e.total} {/* total */}
+                      ${e.total&&e.total} {/* total */}
                     </td>
                     <td>
                       <span className="badge rounded-pill alert-success">
-                        {e.delivered} {/* status */}
+                        {e.delivered&&e.delivered} {/* status */}
                       </span>
                     </td>
                     <td>
-                      {e.createdAt.slice(0, 10)} {/* date */}
+                      {e.createdAt&&e.createdAt.slice(0, 10)} {/* date */}
                     </td>
                     <td className="text-end">
                       <NavLink
@@ -158,26 +156,38 @@ console.log(allOrders)
                     </td>
                   </tr>
                 );
-              })}
-              <tr>
-                <td>ID order</td>
-                <td>
-                  <b>Customer name</b>
-                </td>
-                <td>email@example.com</td>
-                <td>$778.35</td>
-                <td>
-                  <span className="badge rounded-pill alert-success">
-                    status
-                  </span>
-                </td>
-                <td>07.05.2020</td>
-                <td className="text-end">
-                  <a href="order/detail" className="btn btn-light detalle">
-                    Detail
-                  </a>
-                </td>
-              </tr>
+              }):
+              /* si no coincide ninguna */
+              <tr >
+                    <td>
+                    No results
+                       {/* ID order */}
+                    </td>
+                    <td>
+                      <b>
+                         {/* Customer name */}
+                      </b>
+                    </td>
+                    <td>
+                      
+                      {/* email@example.com */}
+                    </td>
+                    <td>
+                       {/* total */}
+                    </td>
+                    <td>
+                      <span className="badge rounded-pill alert-success">
+                         {/* status */}
+                      </span>
+                    </td>
+                    <td>
+                       {/* date */}
+                    </td>
+                    <td className="text-end">
+                      
+                    </td>
+                  </tr>
+              }
             </tbody>
           </table>
           {/* =======

@@ -15,22 +15,24 @@ import {
   CarouselItem,
   CarouselIndicators,
 } from "reactstrap";
+import { addCart } from "../redux/actions/userCart";
 
 export default function LandingPage() {
-  /* const dispatch = useDispatch()
+  
+  const dispatch = useDispatch();
+
     useEffect(()=>{
-      const datos =  dispatch(bringAllData())
-        console.log(datos)
-    }) */
+      dispatch(getAllSales())
+    },[dispatch,addCart]) 
 
   // State for Active index
   const sales = useSelector((state) => state.root.sales);
   const [activeIndex, setActiveIndex] = React.useState(0);
 
-  const dispatch = useDispatch();
 
   // State for Animation
   const [animating, setAnimating] = React.useState(false);
+  
 
   // Sample items for Carousel
   const items = [
@@ -53,12 +55,7 @@ export default function LandingPage() {
       filtros: [{name: "category", value: "Running"}],
     },
   ];
-  useEffect(() => {
-    if (!sales.length) {
-      dispatch(bringAllData());
-      dispatch(getAllSales());
-    }
-  }, []);
+  
   // Items array length
   const itemLength = items.length - 1;
 
@@ -95,6 +92,7 @@ export default function LandingPage() {
       </CarouselItem>
     );
   });
+  
 
   return (
     <div style={{width: "100%"}}>

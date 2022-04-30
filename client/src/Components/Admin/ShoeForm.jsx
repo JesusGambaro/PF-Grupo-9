@@ -6,9 +6,9 @@ import "../../Css/ShoeForm.scss";
 import Input from "./Input";
 import Selection from "./Selection";
 import {useSelector} from "react-redux";
-import {brands, colors, sizes} from "../data";
+import {brands, colors, sizes, categories} from "../data";
 import bringAllData from "../../redux/actions/bringAllData";
-
+import axios from "axios";
 const ShoeForm = ({handleShoeDialog, shoeObject}) => {
   const {role} = useSelector((state) => state.root);
   const navigate = useNavigate();
@@ -28,10 +28,15 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
           price: 0, //input
           sale: 0, //input
           stock: [], //size -> select | amount -> input
-          images: [{url: ""}, {url: ""}, {url: ""}, {url: ""}],
+          images: [
+            {url: "", image: ""},
+            {url: "", image: ""},
+            {url: "", image: ""},
+            {url: "", image: ""},
+          ],
         }
   );
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setErrors({
       ...errors,
       model: validation(data.model, "model"),
@@ -52,16 +57,41 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
       return;
     if (role.admin) {
       if (shoeObject) {
+        console.log("ENTRE=>>>>>>");
+        const formData = new FormData();
+        Object.keys(data).forEach((param) => {
+          if (param !== "images") formData.append(param, data[param]);
+          else {
+            formData.append(
+              "images",
+              data[param].map((img) => (!img.form ? img.image : ""))
+            );
+            //else formData.append(param, data[param].map(img=>img.image));
+            data[param].forEach((img, i) => {
+              if (img.form) formData.append(i, img.image);
+            });
+          }
+        });
         dispatch(
-          editShoe(window.localStorage.getItem("token"), {
-            ...data,
-            id: shoeObject.id,
-          })
+          editShoe(
+            window.localStorage.getItem("token"),
+            formData,
+            shoeObject.id
+          )
         );
         dispatch(bringAllData(true));
       } else {
         console.log("Entre al add");
-        dispatch(postProduct(window.localStorage.getItem("token"), data));
+        const formData = new FormData();
+        Object.keys(data).forEach((param) => {
+          if (param !== "images") formData.append(param, data[param]);
+          else
+            data[param].forEach((img, i) =>
+              formData.append("image " + i, img.image)
+            );
+          //else formData.append(param, data[param].map(img=>img.image));
+        });
+        dispatch(postProduct(window.localStorage.getItem("token"), formData));
       }
     } else if (role.admin === false) {
       navigate("/home");
@@ -70,8 +100,7 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
     handleShoeDialog();
   };
   const validation = (param, type) => {
-    if (!param || param === "")
-      return type !== "sale" ? "Is required" : "";
+    if (!param || param === "") return type !== "sale" ? "Is required" : "";
     switch (type) {
       case "size":
         if (
@@ -136,7 +165,7 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
     });
   };
 
-  const {categories, genders} = useSelector((state) => state.root);
+  const {genders} = useSelector((state) => state.root);
   const handleSelectChange = (e) => {
     setData({
       ...data,
@@ -148,47 +177,7 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
       [e.target.name]: validation(e.target.value, e.target.name),
     });
   };
-  const [addImgDialog, setAddImgDialog] = useState({
-    on: false,
-    pos: 0,
-    url: "",
-    error: "",
-  });
-  const deleteImage = (img) => {
-    setData({
-      ...data,
-      images: data.images.map((i) => (i.url === img ? "" : i)),
-    });
-  };
 
-  const handleImagesChange = () => {
-    let repetido;
-    if (!addImgDialog.error.length && addImgDialog.url.length) {
-      data.images.map((e) => {
-        if (e.url === addImgDialog.url) {
-          //console.log("SOY LAS IMAGENES: ", data.images);
-          repetido = true;
-        }
-      });
-      !repetido &&
-        setData({
-          ...data,
-          images: data.images.map((e, i) => {
-            return i === addImgDialog.pos ? {url: addImgDialog.url} : e;
-          }),
-        });
-    }
-
-    if (!addImgDialog.error.length && addImgDialog.url.length && !repetido) {
-      setAddImgDialog({...addImgDialog, on: false, error: ""});
-    } else if (repetido) {
-      setAddImgDialog({
-        ...addImgDialog,
-        on: true,
-        error: "Can't repeat images",
-      });
-    }
-  };
   const [color, setColor] = useState(shoeObject ? shoeObject.color : "white");
   const deleteStock = (size) => {
     setData({...data, stock: data.stock.filter((s) => s.size !== size)});
@@ -224,6 +213,27 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
       });
     }
   }, [stock.amount, stock.size]);
+
+  const deleteImage = (img) => {
+    setData({
+      ...data,
+      images: data.images.map((i) => (i.url === img ? {url: "", form: ""} : i)),
+    });
+  };
+  const handleFileInput = async (e, index) => {
+    setData({
+      ...data,
+      images: data.images.map((img, i) => {
+        return i === index
+          ? {
+              url: URL.createObjectURL(e.target.files[0]),
+              image: e.target.files[0],
+            }
+          : img;
+      }),
+    });
+  };
+
   return (
     <div className="create-container">
       <div className="form-container">
@@ -238,7 +248,6 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
             </button>
           </span>
         </h2>
-
         <form action="">
           <div className="leftside">
             <div className="model">
@@ -259,7 +268,7 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
                 </h4>
                 {categories.length && (
                   <Selection
-                    options={categories.map((e) => Object.values(e)[0])}
+                    options={categories}
                     type={"category"}
                     handleChange={handleSelectChange}
                     value={data.category}
@@ -323,68 +332,29 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
                     <div
                       className={img.url ? "imagent show" : "imagent"}
                       key={i}
-                      style={
-                        img.url ? {backgroundImage: `url(${img.url})`} : {}
-                      }
+                      style={{backgroundImage: `url(${img.url})`}}
                     >
-                      {img.url && (
-                        <button
-                          type="button"
-                          className="delete-image-btn"
-                          onClick={() => deleteImage(img.url)}
-                        >
-                          <i className="bi bi-x-circle-fill"></i>
-                        </button>
-                      )}
                       <button
                         type="button"
-                        onClick={() =>
-                          setAddImgDialog({
-                            ...addImgDialog,
-                            on: true,
-                            pos: i,
-                          })
-                        }
+                        className="delete-image-btn"
+                        onClick={() => deleteImage(img.url)}
                       >
-                        <i className="bi bi-plus-circle-fill"></i>Add image
+                        <i className="bi bi-x-circle-fill"></i>
                       </button>
+                      <label>
+                        <input
+                          type="file"
+                          onChange={(e) => handleFileInput(e, i)}
+                          accept="image/*"
+                          placeholder="Choose Iamge"
+                        />
+                        <i className="bi bi-plus-circle-fill"></i>
+                        <p>Add new image</p>
+                      </label>
                     </div>
                   );
                 })}
               </div>
-              {addImgDialog.on && (
-                <div className="add-images">
-                  <button
-                    onClick={() =>
-                      setAddImgDialog({
-                        ...addImgDialog,
-                        on: false,
-                        url: "",
-                        error: " ",
-                      })
-                    }
-                  >
-                    <i className="bi bi-x-circle-fill"></i>
-                  </button>
-                  <span>
-                    <input
-                      type="text"
-                      placeholder="Image URL"
-                      onChange={(e) => {
-                        setAddImgDialog({
-                          ...addImgDialog,
-                          url: e.target.value,
-                          error: validation(e.target.value, "imageUrl"),
-                        });
-                      }}
-                    />
-                    <button type="button" onClick={() => handleImagesChange()}>
-                      Add image
-                    </button>
-                  </span>
-                  <p className="error-msg">{addImgDialog.error}</p>
-                </div>
-              )}
             </div>
             {/* --------------------------------- IMAGES --------------------------------- */}
             <div className="stock-color-section">
@@ -419,7 +389,9 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
                   </span>
                 </div>
                 <div className="color">
-                  <h4 className="input-name">Color<p>{errors.color}</p></h4>
+                  <h4 className="input-name">
+                    Color<p>{errors.color}</p>
+                  </h4>
                   <span>
                     <Selection
                       options={colors}
@@ -465,7 +437,7 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
             <div className="price-sale">
               <span>
                 <h4 className="input-name">
-                  Price <p>{errors.price}</p>{" "}
+                  Price <p>{errors.price}</p>
                 </h4>
                 <Input
                   name={"price"}

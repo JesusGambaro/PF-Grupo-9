@@ -5,7 +5,7 @@ import "../Css/OrderForm.css"
 import { useNavigate } from "react-router-dom"
 import { cleanOrder, postOrder } from "../redux/actions/order"
 import Swal from "sweetalert2"
-
+import Spinner from 'react-bootstrap/Spinner'
 import {CardElement, useStripe, useElements,Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js"
 
@@ -17,7 +17,6 @@ const PaymentCheckout = () => {
     const token = window.localStorage.getItem("token")
     const cart = useSelector(state => state.root.cartUser)
     const paymentInfo = useSelector(state => state.root.paymentInfo)
-    
     const {totalFootwear,total} = cart
     const stripe = useStripe();
     const elements = useElements();
@@ -29,18 +28,22 @@ const PaymentCheckout = () => {
     country:"Argentina",
     city:"",
     floor:"",
+    postalCode:"",
     apartment:"",
+    notes:""
 
 
     })
+    const [loading, setLoding]=useState(false)
     const [error, setError] = useState({})
     useEffect(() => {
-        if(!totalFootwear || !total) {navigate("/home")}
-        console.log('se montó')
+        // if(!totalFootwear && !total && !cart.length) {navigate("/home")}
+        
          /* dispatch(cleanOrder())   */  
          if(paymentInfo){
+             
             if(/* Object.entries(paymentInfo)[0][0]==='error' */paymentInfo.error){
-                console.log('paymenterror',paymentInfo)
+                setLoding(false) 
             Swal.fire({
                     icon: 'error',
                     title: 'The order has failed',
@@ -48,10 +51,10 @@ const PaymentCheckout = () => {
                     showConfirmButton: true,
                     
                   })
-                  
+                  dispatch(cleanOrder())   
                 }
             if(/* Object.entries(paymentInfo)[0][0]==='msg' */paymentInfo.msg){
-                console.log('pasó')
+                setLoding(false) 
            Swal.fire({
                 icon: 'success',
                 title: 'The order has been placed',
@@ -59,8 +62,9 @@ const PaymentCheckout = () => {
                 showConfirmButton: true,
                 timer: 3250,
               })
-              
+              dispatch(cleanOrder())
             } 
+           
          }
     },[dispatch,token,navigate,addCart,cart,getUserCart,putCart,total, totalFootwear,paymentInfo])
 
@@ -113,15 +117,15 @@ const PaymentCheckout = () => {
         
          
     }
-    const validation = (order.name && order.telephoneNumber && order.surname && order.country && order.city && order.address && order.postalCode)?false:true/* () =>{
+    const validation = (order.name && order.telephoneNumber && order.surname && order.country && order.city && order.address && order.postalCode && total && totalFootwear)?false:true/* () =>{
         if(error.name && error.telephoneNumber || error.surname || error.country || error.city || error.address)return true
     } */
     
-    console.log ('a',paymentInfo)
+   
     const handleSubmit = async (e) => {
-        console.log ('e',paymentInfo)
+        setLoding(true)
         e.preventDefault()
-        console.log('entró al handle')
+       
          const { error, paymentMethod } = await stripe.createPaymentMethod({
              type: "card",
              card: elements.getElement(CardElement),
@@ -132,14 +136,32 @@ const PaymentCheckout = () => {
              return console.log('mensaje de error',error)
             }else{
          
-        dispatch(postOrder(token,{order,paymentMethod,total}))     
+        dispatch(postOrder(token,{order,paymentMethod,total})) 
+
+        setOrder({
+            telephoneNumber:"",
+            address:"",
+            name:"",
+            surname:"",
+            country:"Argentina",
+            city:"",
+            floor:"",
+            postalCode:"",
+            apartment:"",
+            notes:""
+        
+        
+            })
+        
+      
     }}
     return (
         <div >
-            { cart &&
+
+           { cart &&
              <section className="order-container">
                 <h1 className="fw-bold text-center mb-3">Purchase</h1>
-                <form onSubmit={(e) => handleSubmit(e)} className="form">
+                <form onSubmit={(e) => handleSubmit(e)}  className="form">
                     <label className="input-number" ><span>Telephone number<i className="asterisco">*</i></span><input placeholder="3447423612" type="number" name="telephoneNumber" value={order.telephoneNumber} onChange={e => handleOnChangeForm(e)} /></label>
                     {error.telephoneNumber && <label className="col form-label text-danger fw-bold text-end">{error.telephoneNumber}</label>}
                     <label><span>Address<i className="asterisco">*</i></span><input name="address" placeholder="San Martin 35" value={order.address} onChange={e => handleOnChangeForm(e)} /></label>
@@ -160,8 +182,8 @@ const PaymentCheckout = () => {
    <option value="Andorra">Andorra</option>
    <option value="Angola">Angola</option>
    <option value="Anguilla">Anguilla</option>
-   <option value="Antigua & Barbuda">Antigua & Barbuda</option>
-   <option value="Argentina" selected="selected">Argentina</option>
+   <option value="Antigua  Barbuda">Antigua & Barbuda</option>
+   <option selected value="Argentina" >Argentina</option>
    <option value="Armenia">Armenia</option>
    <option value="Aruba">Aruba</option>
    <option value="Australia">Australia</option>
@@ -179,7 +201,7 @@ const PaymentCheckout = () => {
    <option value="Bhutan">Bhutan</option>
    <option value="Bolivia">Bolivia</option>
    <option value="Bonaire">Bonaire</option>
-   <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
+   <option value="Bosnia  Herzegovina">Bosnia & Herzegovina</option>
    <option value="Botswana">Botswana</option>
    <option value="Brazil">Brazil</option>
    <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
@@ -341,13 +363,13 @@ const PaymentCheckout = () => {
    <option value="St Kitts-Nevis">St Kitts-Nevis</option>
    <option value="St Lucia">St Lucia</option>
    <option value="St Maarten">St Maarten</option>
-   <option value="St Pierre & Miquelon">St Pierre & Miquelon</option>
-   <option value="St Vincent & Grenadines">St Vincent & Grenadines</option>
+   <option value="St Pierre  Miquelon">St Pierre & Miquelon</option>
+   <option value="St Vincent  Grenadines">St Vincent & Grenadines</option>
    <option value="Saipan">Saipan</option>
    <option value="Samoa">Samoa</option>
    <option value="Samoa American">Samoa American</option>
    <option value="San Marino">San Marino</option>
-   <option value="Sao Tome & Principe">Sao Tome & Principe</option>
+   <option value="Sao Tome  Principe">Sao Tome & Principe</option>
    <option value="Saudi Arabia">Saudi Arabia</option>
    <option value="Senegal">Senegal</option>
    <option value="Seychelles">Seychelles</option>
@@ -374,11 +396,11 @@ const PaymentCheckout = () => {
    <option value="Togo">Togo</option>
    <option value="Tokelau">Tokelau</option>
    <option value="Tonga">Tonga</option>
-   <option value="Trinidad & Tobago">Trinidad & Tobago</option>
+   <option value="Trinidad  Tobago">Trinidad & Tobago</option>
    <option value="Tunisia">Tunisia</option>
    <option value="Turkey">Turkey</option>
    <option value="Turkmenistan">Turkmenistan</option>
-   <option value="Turks & Caicos Is">Turks & Caicos Is</option>
+   <option value="Turks  Caicos Is">Turks & Caicos Is</option>
    <option value="Tuvalu">Tuvalu</option>
    <option value="Uganda">Uganda</option>
    <option value="United Kingdom">United Kingdom</option>
@@ -394,7 +416,7 @@ const PaymentCheckout = () => {
    <option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
    <option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
    <option value="Wake Island">Wake Island</option>
-   <option value="Wallis & Futana Is">Wallis & Futana Is</option>
+   <option value="Wallis  Futana Is">Wallis & Futana Is</option>
    <option value="Yemen">Yemen</option>
    <option value="Zaire">Zaire</option>
    <option value="Zambia">Zambia</option>
@@ -412,14 +434,17 @@ const PaymentCheckout = () => {
                     <label><span>Notes</span><textarea name="notes"  value={order.notes} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.notes && <label className="col form-label text-danger fw-bold text-end">{error.notes}</label>}
                     
-                    <div style={{width:"100%"}}>
-                    <CardElement />
+                    <div style={{width:"100%", height:'50px', fontSize:'30px'}}>
+                    <CardElement style={{height:"50px"}} className="a"/>
+                    
                     </div>
                     <div className="totals">
                         <span>Total footwears: {totalFootwear}</span>
                         <span>Order total: ${total}</span>
                     </div>
-                    <button className="submit-button" disabled={validation}><i class="bi bi-bag-fill"></i>Place the order!</button>
+                    <button className="submit-button" disabled={validation}><i class="bi bi-bag-fill"></i>{loading===true?<Spinner animation="border" role="status">
+  <span className="visually-hidden">Loading...</span>
+</Spinner>:'Place the order!'}</button>
                 </form>
             </section>}
         </div>

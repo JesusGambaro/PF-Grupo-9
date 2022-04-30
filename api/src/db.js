@@ -42,6 +42,7 @@ const {
   User,
   FavoriteItem,
   Payment,
+  Review,
 } = sequelize.models
 
 Product.hasMany(Image)
@@ -65,6 +66,11 @@ User.hasMany(FavoriteItem)
 FavoriteItem.belongsTo(User)
 Product.hasMany(FavoriteItem)
 FavoriteItem.belongsTo(Product)
+
+User.hasMany(Review)
+Review.belongsTo(User)
+Product.belongsToMany(Review, { through: "SameModelProductsReview" })
+Review.belongsToMany(Product, { through: "SameModelProductsReview" })
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

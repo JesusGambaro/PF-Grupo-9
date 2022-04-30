@@ -25,6 +25,7 @@ function CardProfile({ brand, model }) {
     description.length > 0 ? setValidation(false) : setValidation(true)
   }, [description])
 
+
   const handleRange = (e) => {
     const value = e.target.value
     setRange(value)
@@ -83,7 +84,7 @@ function CardProfile({ brand, model }) {
       position: "center",
       icon: "success",
       title: "Thanks for your review",
-      text:"Your review was sent successfully",
+      text: "Your review was sent successfully",
       showConfirmButton: false,
       timer: 1200,
     });

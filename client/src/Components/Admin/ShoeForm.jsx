@@ -8,7 +8,7 @@ import Selection from "./Selection";
 import {useSelector} from "react-redux";
 import {brands, colors, sizes, categories} from "../data";
 import bringAllData from "../../redux/actions/bringAllData";
-import ImageUploader from "./ImageUploader";
+import axios from "axios";
 const ShoeForm = ({handleShoeDialog, shoeObject}) => {
   const {role} = useSelector((state) => state.root);
   const navigate = useNavigate();
@@ -28,10 +28,15 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
           price: 0, //input
           sale: 0, //input
           stock: [], //size -> select | amount -> input
-          images: [{url: ""}, {url: ""}, {url: ""}, {url: ""}],
+          images: [
+            {url: "", image: ""},
+            {url: "", image: ""},
+            {url: "", image: ""},
+            {url: "", image: ""},
+          ],
         }
   );
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setErrors({
       ...errors,
       model: validation(data.model, "model"),
@@ -52,16 +57,41 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
       return;
     if (role.admin) {
       if (shoeObject) {
+        console.log("ENTRE=>>>>>>");
+        const formData = new FormData();
+        Object.keys(data).forEach((param) => {
+          if (param !== "images") formData.append(param, data[param]);
+          else {
+            formData.append(
+              "images",
+              data[param].map((img) => (!img.form ? img.image : ""))
+            );
+            //else formData.append(param, data[param].map(img=>img.image));
+            data[param].forEach((img, i) => {
+              if (img.form) formData.append(i, img.image);
+            });
+          }
+        });
         dispatch(
-          editShoe(window.localStorage.getItem("token"), {
-            ...data,
-            id: shoeObject.id,
-          })
+          editShoe(
+            window.localStorage.getItem("token"),
+            formData,
+            shoeObject.id
+          )
         );
         dispatch(bringAllData(true));
       } else {
         console.log("Entre al add");
-        dispatch(postProduct(window.localStorage.getItem("token"), data));
+        const formData = new FormData();
+        Object.keys(data).forEach((param) => {
+          if (param !== "images") formData.append(param, data[param]);
+          else
+            data[param].forEach((img, i) =>
+              formData.append("image " + i, img.image)
+            );
+          //else formData.append(param, data[param].map(img=>img.image));
+        });
+        dispatch(postProduct(window.localStorage.getItem("token"), formData));
       }
     } else if (role.admin === false) {
       navigate("/home");
@@ -147,18 +177,6 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
       [e.target.name]: validation(e.target.value, e.target.name),
     });
   };
-  const [addImgDialog, setAddImgDialog] = useState({
-    on: false,
-    pos: 0,
-    url: "",
-    error: "",
-  });
-  const deleteImage = (img) => {
-    setData({
-      ...data,
-      images: data.images.map((i) => (i.url === img ? "" : i)),
-    });
-  };
 
   const [color, setColor] = useState(shoeObject ? shoeObject.color : "white");
   const deleteStock = (size) => {
@@ -196,11 +214,26 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
     }
   }, [stock.amount, stock.size]);
 
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [image, setImage] = useState("");
-  useEffect(() => {
-    console.log(image);
-  }, [image]);
+  const deleteImage = (img) => {
+    setData({
+      ...data,
+      images: data.images.map((i) => (i.url === img ? {url: "", form: ""} : i)),
+    });
+  };
+  const handleFileInput = async (e, index) => {
+    setData({
+      ...data,
+      images: data.images.map((img, i) => {
+        return i === index
+          ? {
+              url: URL.createObjectURL(e.target.files[0]),
+              image: e.target.files[0],
+            }
+          : img;
+      }),
+    });
+  };
+
   return (
     <div className="create-container">
       <div className="form-container">
@@ -299,7 +332,7 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
                     <div
                       className={img.url ? "imagent show" : "imagent"}
                       key={i}
-                      style={img.url ? {backgroundImage: `url(${image})`} : {}}
+                      style={{backgroundImage: `url(${img.url})`}}
                     >
                       <button
                         type="button"
@@ -308,10 +341,16 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
                       >
                         <i className="bi bi-x-circle-fill"></i>
                       </button>
-                      <ImageUploader
-                        onFileSelectSuccess={(file) => setSelectedFile(file)}
-                        setImg={(img) => setImage(img)}
-                      />
+                      <label>
+                        <input
+                          type="file"
+                          onChange={(e) => handleFileInput(e, i)}
+                          accept="image/*"
+                          placeholder="Choose Iamge"
+                        />
+                        <i className="bi bi-plus-circle-fill"></i>
+                        <p>Add new image</p>
+                      </label>
                     </div>
                   );
                 })}
@@ -398,7 +437,7 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
             <div className="price-sale">
               <span>
                 <h4 className="input-name">
-                  Price <p>{errors.price}</p>{" "}
+                  Price <p>{errors.price}</p>
                 </h4>
                 <Input
                   name={"price"}

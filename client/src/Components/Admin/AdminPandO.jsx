@@ -115,8 +115,7 @@ export default function AdminPandO() {
                 <th scope="col">Status</th>
                 <th scope="col">Date</th>
                 <th scope="col" className="text-end">
-                  {" "}
-                  Action{" "}
+                  Action
                 </th>
               </tr>
             </thead>

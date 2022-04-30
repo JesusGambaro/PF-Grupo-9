@@ -50,7 +50,6 @@ const initialState = {
   favUser: [],
   orderUser: [],
   loadingCart: true,
-
   user: {},
   changePasswort: {},
   paymentInfo: [],

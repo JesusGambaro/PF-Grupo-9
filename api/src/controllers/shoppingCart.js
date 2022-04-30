@@ -1,4 +1,3 @@
-const { Op } = require("sequelize")
 const { ShoppingCartItem, Product, Stock, Image } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
@@ -21,7 +20,10 @@ module.exports = {
             },
           ],
         },
-        order: [["id", "DESC"]],
+        order: [
+          ["id", "DESC"],
+          ["product", "images", "id", "ASC"],
+        ],
       })
       let totalFootwear = 0
       sameUserCartItems.forEach((item) => {
@@ -39,24 +41,23 @@ module.exports = {
 
   deleteCart: async (req, res) => {
     try {
-      const { id } = req.params;
-      
+      const { id } = req.params
+
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
-      
+
       const shoppingCart = await ShoppingCartItem.findOne({
-        where: { id}
+        where: { id },
       })
 
-      if(userId === shoppingCart.userId){
+      if (userId === shoppingCart.userId) {
         await ShoppingCartItem.destroy({
           where: { id },
         })
         return res.send({ msg: "Cart item deleted" })
-      }else{
+      } else {
         return res.send({ msg: "Wrong credentials" })
       }
-
     } catch (error) {
       sendError(res, error)
     }

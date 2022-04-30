@@ -73,14 +73,14 @@ module.exports = (sequelize) => {
     finalPrice: {
       type: DataTypes.VIRTUAL,
       get() {
-        const tempPrice = this.getDataValue("price");
-        const tempDiscount = this.getDataValue('sale');
-        if(tempDiscount === 0){
-          return tempPrice;
-        }else{
-          return tempPrice * (100 - tempDiscount) / 100;
+        const tempPrice = this.getDataValue("price")
+        const tempDiscount = this.getDataValue("sale")
+        if (tempDiscount === 0) {
+          return tempPrice
+        } else {
+          return (tempPrice * (100 - tempDiscount)) / 100
         }
-      }
+      },
     },
     rating: {
       type: DataTypes.FLOAT,

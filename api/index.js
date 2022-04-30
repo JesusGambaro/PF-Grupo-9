@@ -11,7 +11,7 @@ const {
   Payment,
 } = require("./src/db.js")
 
-conn.sync({ force: true }).then(async () => {
+const prueba = async () => {
   const NikeKyrieInfinityPurple = await Product.create({
     model: "Kyrie Infinity",
     brand: "Nike",
@@ -123,14 +123,14 @@ conn.sync({ force: true }).then(async () => {
     color: "Red",
     rating: 4,
   })
-  const imageNikeAirZoomAlphafly2 = await Image.create({
-    url: "https://images.footlocker.com/is/image/EBFL2/M8061600_a3?wid=520&hei=520&fmt=png-alpha",
-  })
   const imageNikeAirZoomAlphafly = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/M8061600_a2?wid=520&hei=520&fmt=png-alpha",
   })
   const imageNikeAirZoomAlphafly3 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/M8061600_a4?wid=520&hei=520&fmt=png-alpha",
+  })
+  const imageNikeAirZoomAlphafly2 = await Image.create({
+    url: "https://images.footlocker.com/is/image/EBFL2/M8061600_a3?wid=520&hei=520&fmt=png-alpha",
   })
   const imageNikeAirZoomAlphafly4 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/M8061600_a1?wid=520&hei=520&fmt=png-alpha",
@@ -159,17 +159,20 @@ conn.sync({ force: true }).then(async () => {
     color: "White",
     rating: 4,
   })
-  const imageAdidasWhite = await Image.create({
-    url: "https://images.footlocker.com/is/image/EBFL2/FY7756_a3?wid=520&hei=520&fmt=png-alpha",
-  })
-  const imageAdidasWhite2 = await Image.create({
-    url: "https://images.footlocker.com/is/image/EBFL2/FY7756_a4?wid=520&hei=520&fmt=png-alpha",
-  })
   const imageAdidasWhite3 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/FY7756_a2?wid=520&hei=520&fmt=png-alpha",
   })
+
   const imageAdidasWhite4 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/FY7756_a1?wid=520&hei=520&fmt=png-alpha",
+  })
+
+  const imageAdidasWhite = await Image.create({
+    url: "https://images.footlocker.com/is/image/EBFL2/FY7756_a3?wid=520&hei=520&fmt=png-alpha",
+  })
+
+  const imageAdidasWhite2 = await Image.create({
+    url: "https://images.footlocker.com/is/image/EBFL2/FY7756_a4?wid=520&hei=520&fmt=png-alpha",
   })
 
   const stockShoeWhite39 = await Stock.create({ size: 39, amount: 0 })
@@ -204,11 +207,11 @@ conn.sync({ force: true }).then(async () => {
     color: "Black",
     rating: 3.5,
   })
-  const imageClassicLeather = await Image.create({
-    url: "https://images.footlocker.com/is/image/EBFL2/49798_a4?wid=520&hei=520&fmt=png-alpha",
-  })
   const imageClassicLeather1 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/49798_a2?wid=520&hei=520&fmt=png-alpha",
+  })
+  const imageClassicLeather = await Image.create({
+    url: "https://images.footlocker.com/is/image/EBFL2/49798_a4?wid=520&hei=520&fmt=png-alpha",
   })
   const imageClassicLeather2 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/49798_a3?wid=520&hei=520&fmt=png-alpha",
@@ -287,6 +290,9 @@ conn.sync({ force: true }).then(async () => {
     color: "Green",
     rating: 3.5,
   })
+  const imageNikeKyrieInfinity4 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/31894742-692c-45d0-bba6-b034571c23b9/kyrie-infinity-basketball-shoes-LvzsVp.png",
+  })
   const imageNikeKyrieInfinity = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/516cded5-91a4-48d8-8e5c-a2a2d31aff0b/kyrie-infinity-basketball-shoes-LvzsVp.png",
   })
@@ -295,9 +301,6 @@ conn.sync({ force: true }).then(async () => {
   })
   const imageNikeKyrieInfinity3 = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/ce351403-5d20-4f84-8d01-ebd61a38c828/kyrie-infinity-basketball-shoes-LvzsVp.png",
-  })
-  const imageNikeKyrieInfinity4 = await Image.create({
-    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/31894742-692c-45d0-bba6-b034571c23b9/kyrie-infinity-basketball-shoes-LvzsVp.png",
   })
   NikeKyrieInfinity.addImages([
     imageNikeKyrieInfinity,
@@ -328,6 +331,9 @@ conn.sync({ force: true }).then(async () => {
     color: "Pink",
     rating: 5,
   })
+  const imageNikeDownshifter2 = await Image.create({
+    url: "https://images.footlocker.com/is/image/EBFL2/M8326600_a2?wid=520&hei=520&fmt=png-alpha",
+  })
   const imageNikeDownshifter3 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/M8326600_a1?wid=520&hei=520&fmt=png-alpha",
   })
@@ -336,9 +342,6 @@ conn.sync({ force: true }).then(async () => {
   })
   const imageNikeDownshifter = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/M8326600_a3?wid=520&hei=520&fmt=png-alpha",
-  })
-  const imageNikeDownshifter2 = await Image.create({
-    url: "https://images.footlocker.com/is/image/EBFL2/M8326600_a2?wid=520&hei=520&fmt=png-alpha",
   })
   NikeDownshifter.addImages([
     imageNikeDownshifter,
@@ -369,14 +372,14 @@ conn.sync({ force: true }).then(async () => {
     color: "Black",
     rating: 5,
   })
+  const imageNikeDownshifterBlack2 = await Image.create({
+    url: "https://images.footlocker.com/is/image/EBFL2/H6789006_a2?wid=520&hei=520&fmt=png-alpha",
+  })
   const imageNikeDownshifterBlack4 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/H6789006_a4?wid=520&hei=520&fmt=png-alpha",
   })
   const imageNikeDownshifterBlack = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/H6789006_a3?wid=520&hei=520&fmt=png-alpha",
-  })
-  const imageNikeDownshifterBlack2 = await Image.create({
-    url: "https://images.footlocker.com/is/image/EBFL2/H6789006_a2?wid=520&hei=520&fmt=png-alpha",
   })
   const imageNikeDownshifterBlack3 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/H6789006_a1?wid=520&hei=520&fmt=png-alpha",
@@ -485,7 +488,7 @@ conn.sync({ force: true }).then(async () => {
     imageNikeZoomXInvinciblePink,
     imageNikeZoomXInvinciblePink2,
     imageNikeZoomXInvinciblePink3,
-    imageNikeZoomXInvinciblePink3,
+    imageNikeZoomXInvinciblePink4,
   ])
   const stockNikeZoomXInvinciblePink10 = await Stock.create({
     size: 10,
@@ -760,6 +763,9 @@ conn.sync({ force: true }).then(async () => {
     color: "White",
     rating: 3.5,
   })
+  const imagenConverseChuckTaylor2 = await Image.create({
+    url: "https://images.footlocker.com/is/image/EBFL2/W7652_a2?wid=520&hei=520&fmt=png-alpha",
+  })
   const imagenConverseChuckTaylor4 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/W7652_a4?wid=520&hei=520&fmt=png-alpha",
   })
@@ -768,9 +774,6 @@ conn.sync({ force: true }).then(async () => {
   })
   const imagenConverseChuckTaylor = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/W7652_a1?wid=520&hei=520&fmt=png-alpha",
-  })
-  const imagenConverseChuckTaylor2 = await Image.create({
-    url: "https://images.footlocker.com/is/image/EBFL2/W7652_a2?wid=520&hei=520&fmt=png-alpha",
   })
 
   converseChuckTaylor.addImages([
@@ -811,6 +814,9 @@ conn.sync({ force: true }).then(async () => {
     color: "Black",
     rating: 3.5,
   })
+  const imagenconverseChuckTaylorBlack4 = await Image.create({
+    url: "https://images.footlocker.com/is/image/EBFL2/W9166_a2?wid=520&hei=520&fmt=png-alpha",
+  })
   const imagenconverseChuckTaylorBlack = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/W9166_a4?wid=520&hei=520&fmt=png-alpha",
   })
@@ -819,9 +825,6 @@ conn.sync({ force: true }).then(async () => {
   })
   const imagenconverseChuckTaylorBlack3 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/W9166_a1?wid=520&hei=520&fmt=png-alpha",
-  })
-  const imagenconverseChuckTaylorBlack4 = await Image.create({
-    url: "https://images.footlocker.com/is/image/EBFL2/W9166_a2?wid=520&hei=520&fmt=png-alpha",
   })
 
   converseChuckTaylorBlack.addImages([
@@ -874,10 +877,14 @@ conn.sync({ force: true }).then(async () => {
     category: "Urban",
     gender: "Kids",
     price: 15000,
-    description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+    description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
     sale: 0,
     color: "Blue",
     rating: 4,
+  })
+  const imageNikeBlue4 = await Image.create({
+    url: "https://images.footlocker.com/is/image/EBFL2/M1027400_a2?wid=520&hei=520&fmt=png-alpha",
   })
   const imageNikeBlue = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/M1027400_a4?wid=520&hei=520&fmt=png-alpha",
@@ -887,9 +894,6 @@ conn.sync({ force: true }).then(async () => {
   })
   const imageNikeBlue3 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/M1027400_a1?wid=520&hei=520&fmt=png-alpha",
-  })
-  const imageNikeBlue4 = await Image.create({
-    url: "https://images.footlocker.com/is/image/EBFL2/M1027400_a2?wid=520&hei=520&fmt=png-alpha",
   })
   nikeShoeBlue.addImage(imageNikeBlue)
   nikeShoeBlue.addImage(imageNikeBlue2)
@@ -910,17 +914,17 @@ conn.sync({ force: true }).then(async () => {
     color: "Pink",
     rating: 4.5,
   })
-  const imagenikeZoomXVaporfly3 = await Image.create({
-    url: "https://www.zapatillasysneakers.com/sites/default/files/static/images/nike_zoomx_vaporfly_next6.png",
+  const imagenikeZoomXVaporfly4 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/nwtrnwbxlqzqkdwfbsbd/calzado-de-carrera-para-carretera-zoomx-vaporfly-next-Sf9zRb.png",
   })
   const imagenikeZoomXVaporfly = await Image.create({
     url: "https://www.loberen.dk/sites/default/files/ao4568-600-phsrh001-750.png",
   })
+  const imagenikeZoomXVaporfly3 = await Image.create({
+    url: "https://www.zapatillasysneakers.com/sites/default/files/static/images/nike_zoomx_vaporfly_next6.png",
+  })
   const imagenikeZoomXVaporfly2 = await Image.create({
     url: "https://www.zapatillasysneakers.com/sites/default/files/static/images/nike_zoomx_vaporfly_next5.png",
-  })
-  const imagenikeZoomXVaporfly4 = await Image.create({
-    url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/nwtrnwbxlqzqkdwfbsbd/calzado-de-carrera-para-carretera-zoomx-vaporfly-next-Sf9zRb.png",
   })
 
   nikeZoomXVaporfly.addImages([
@@ -1014,7 +1018,7 @@ conn.sync({ force: true }).then(async () => {
     floor: 2,
     apartment: "B",
     notes: "My brother pick up the order",
-    telephoneNum: 12345678,
+    telephoneNumber: 12345678,
     total: 500000,
   })
   const paymentRodolfo1 = await Payment.create({
@@ -1042,7 +1046,7 @@ conn.sync({ force: true }).then(async () => {
     floor: 2,
     apartment: "B",
     notes: "My brother pick up the order",
-    telephoneNum: 1283214,
+    telephoneNumber: 1283214,
     total: 10000,
   })
   const paymentRodolfo2 = await Payment.create({
@@ -1063,7 +1067,7 @@ conn.sync({ force: true }).then(async () => {
     city: "Washington DC",
     postalCode: 20001,
     address: "AvenidaSiempreViva 123",
-    telephoneNum: 123678,
+    telephoneNumber: 123678,
     total: 1000000,
     createdAt: "2021-04-21 19:52:24.029-03",
   })
@@ -1076,6 +1080,10 @@ conn.sync({ force: true }).then(async () => {
   await orderAdmin.addShoppingCartItem(cartAdmin)
   await orderAdmin.setUser(admin)
   await orderAdmin.setPayment(paymentAdmin)
+}
+
+conn.sync({ force: true }).then(async () => {
+  await prueba()
   server.listen(3001, () => {
     console.log("%s listening at 3001")
   })

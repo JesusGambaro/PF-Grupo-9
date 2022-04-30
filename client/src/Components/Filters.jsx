@@ -13,7 +13,7 @@ const Filters = ({filters, handleCheckSelect}) => {
               <p>
                 {`${
                   el.name.substring(0, 1).toUpperCase() + el.name.substring(1)
-                }: `}{" "}
+                }: `}
                 <p>
                   {el.name === "price"
                     ? `${el.value.minValue} - ${el.value.maxValue}`

@@ -114,18 +114,18 @@ const AdminCustomers = () => {
   };
   /* --------------------------------- search --------------------------------- */
   const handleChange = (e) => {
-    if (e.target.value === "Is admin" || e.target.value === "Not admin") {
-      if (role.admin)
+    if (role.admin) {
+      if (e.target.value === "Is admin" || e.target.value === "Not admin") {
         dispatch(
           filterUsers(
             window.localStorage.getItem("token"),
             e.target.value === "Is admin"
           )
         );
-      else if (role.admin === false) navigate("/home");
-      return;
-    }
-    dispatch(filterByName(e.target.value));
+      } else if (e.target.value === "All")
+        dispatch(getAllUsers(window.localStorage.getItem("token")));
+      dispatch(filterByName(e.target.value));
+    } else if (role.admin === false) navigate("/home");
   };
   return (
     <div className="admin-container">

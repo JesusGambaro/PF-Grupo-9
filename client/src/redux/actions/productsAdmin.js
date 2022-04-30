@@ -43,6 +43,7 @@ const postProduct = (token, newShoe) => {
     await axios.post(`http://localhost:3001/allFootwear`, newShoe, {
       headers: {
         Authorization: `bearer ${token}`,
+        "Content-Type": "multipart/form-data",
       },
     });
     dispatch(getAllProductsAdmin(token));
@@ -50,18 +51,15 @@ const postProduct = (token, newShoe) => {
   };
 };
 
-const editShoe = (token, editedShoe) => {
+const editShoe = (token, editedShoe, id) => {
   return async (dispatch) => {
     dispatch({type: LOADING, payload: true});
-    axios.put(
-      `http://localhost:3001/allFootwear/${editedShoe.id}`,
-      editedShoe,
-      {
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      }
-    );
+    axios.put(`http://localhost:3001/allFootwear/${id}`, editedShoe, {
+      headers: {
+        Authorization: `bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
     dispatch(getAllProductsAdmin(token));
     dispatch({type: LOADING, payload: false});
   };

@@ -158,7 +158,7 @@ export default function AdminOrderDetail() {
                               ></img>
                             </div>
                             <div className="info">
-                              {e.product.model && e.product.model} {/* model */}{" "}
+                              {e.product.model && e.product.model} {/* model */}
                             </div>
                           </td>
                           <td> {e.product.color && e.product.color} </td>

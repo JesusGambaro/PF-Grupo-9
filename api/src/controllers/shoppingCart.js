@@ -1,3 +1,4 @@
+const { Sequelize, Op } = require("sequelize")
 const { ShoppingCartItem, Product, Stock, Image } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
@@ -13,10 +14,12 @@ module.exports = {
         },
         include: {
           model: Product,
+          required: true,
           include: [
             { model: Image },
             {
               model: Stock,
+              where: { size: { [Op.col]: "shoppingCartItem.size" } },
             },
           ],
         },

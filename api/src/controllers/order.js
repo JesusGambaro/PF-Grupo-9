@@ -5,6 +5,7 @@ const {
   Product,
   Image,
   Payment,
+  Stock,
 } = require("../db.js")
 const { Op, Sequelize } = require("sequelize")
 const moment = require("moment")
@@ -107,27 +108,36 @@ module.exports = {
   },
   postOrder: async (req, res) => {
     const { order, paymentMethod, total } = req.body
-    const {
-      telephoneNumber,
-      address,
-      name,
-      surname,
-      country,
-      city,
-      postalCode,
-      floor,
-      apartment,
-      notes,
-    } = order
     try {
-      const { id, card } = paymentMethod
-      const { brand, funding } = card
+      // const {
+      //   telephoneNumber,
+      //   address,
+      //   name,
+      //   surname,
+      //   country,
+      //   city,
+      //   postalCode,
+      //   floor,
+      //   apartment,
+      //   notes,
+      // } = order
+      // const { id, card } = paymentMethod
+      // const { brand, funding } = card
       const stripe = new Stripe(process.env.STRIPEKEY)
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
       const allShoppingCarts = await ShoppingCartItem.findAll({
         where: { userId, ordered: false },
-        include: [{ model: Product }],
+        include: [
+          {
+            model: Product,
+            required: true,
+            include: {
+              model: Stock,
+              where: { size: { [Op.col]: "shoppingCartItem.size" } },
+            },
+          },
+        ],
       })
       const owner = await User.findOne({ where: { id: userId } })
       const payment = await stripe.paymentIntents.create({
@@ -166,6 +176,11 @@ module.exports = {
         )
         emailOrder({ email: owner.email, id: userId })
         res.send({ msg: "Order created, succesfull payment" })
+        allShoppingCarts.forEach(async (item) => {
+          const newStock = item.product.stocks[0].amount - item.amount
+          const id = item.product.stocks[0].id
+          await Stock.update({ amount: newStock }, { where: { id } })
+        })
       }
     } catch (error) {
       console.log(error)

@@ -22,7 +22,7 @@ module.exports = {
         },
         order: [
           ["id", "DESC"],
-          ["images", "id", "ASC"],
+          ["product", "images", "id", "ASC"],
         ],
       })
       let totalFootwear = 0

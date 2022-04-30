@@ -26,7 +26,7 @@ const CHANGE_PASSWORD= "changePassword"
 const CLEAR_PASSWORD="clearPassword"
 const POST_ORDER = '@user/postOrder'
 const CLEAN_ORDER='@user/cleanOrder'
-
+const POST_REVIEW="review"
 
 export {
   LOADING_CART,
@@ -53,10 +53,9 @@ export {
   GET_ROLE,
   GET_PROFILE,
   USER_INFO,
-
   CHANGE_PASSWORD,
   CLEAR_PASSWORD,
   POST_ORDER,
-  CLEAN_ORDER
-
+  CLEAN_ORDER,
+  POST_REVIEW
 }

@@ -93,8 +93,8 @@ function UserProfile() {
                             <p className="fs-5 m-0"><strong>Amount:</strong> {item.amount}</p>
                           </div>
                         </div>
-                        
-                          <CardProfile/>
+
+                          <CardProfile brand={item.product.brand} model={item.product.model}/>
 
                       </div>
                     ))

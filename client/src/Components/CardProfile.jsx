@@ -1,17 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Collapse, Button } from "react-bootstrap"
+import { useDispatch, useSelector } from "react-redux";
+import { postReview } from "../redux/actions/Review";
+import Swal from "sweetalert2"
 
-function CardProfile() {
+function CardProfile({ brand, model }) {
+  const { review } = useSelector(store => store.root)
   const [expanded, setExpanded] = useState(false)
-  const [range, setRange] = useState(0)
+  const dispatch = useDispatch()
+  const [range, setRange] = useState(1)
+  const [validation, setValidation] = useState(true)
+  const [description, setDescription] = useState("")
+  const [reviewComplete, setReviewComplete] = useState(false)
   const [stars, setStars] = useState([
-    <i className="bi bi-star text-warning fs-4"></i>,
+    <i className="bi bi-star-fill text-warning fs-4"></i>,
     <i className="bi bi-star text-warning fs-4"></i>,
     <i className="bi bi-star text-warning fs-4"></i>,
     <i className="bi bi-star text-warning fs-4"></i>,
     <i className="bi bi-star text-warning fs-4"></i>
   ]
   )
+
+  useEffect(() => {
+    description.length > 0 ? setValidation(false) : setValidation(true)
+  }, [description])
 
   const handleRange = (e) => {
     const value = e.target.value
@@ -58,6 +70,26 @@ function CardProfile() {
       setStars(result)
     }
   }
+
+  const handleSend = () => {
+    const token = window.localStorage.getItem("token")
+    dispatch(postReview(token, {
+      description: description,
+      rating: range,
+      model: model,
+      brand: brand
+    }))
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Thanks for your review",
+      text:"Your review was sent successfully",
+      showConfirmButton: false,
+      timer: 1200,
+    });
+    setReviewComplete(true)
+    setExpanded(false)
+  }
   return (
     <>
       <div className="pb-4">
@@ -71,26 +103,36 @@ function CardProfile() {
       </div>
       <Collapse in={expanded}>
         <div id="example-collapse-text" className="row w-75 mb-4">
-          <div className="d-flex flex-row gap-2 mb-2 justify-content-center" >
-            {stars?.map(((start, index) =>
-              <div key={index}>
-                {start}
-              </div>
-            ))}
-          </div >
+          {reviewComplete
+            ? <div className="card card-body text-center fw-bold">
+              {review.msg}
+            </div>
+            : (
+              <>
+                <div className="d-flex flex-row gap-2 mb-2 justify-content-center" >
+                  {stars?.map(((start, index) =>
+                    <div key={index}>
+                      {start}
+                    </div>
+                  ))}
+                </div >
 
-          <label htmlFor="customRange3" className="text-center fw-bold fs-5">{range}</label>
-          <input type="range" className="form-range py-3" min="0" max="5" step="0.5" id="customRange3"
-            defaultValue={0} onChange={(e) => handleRange(e)} />
+                <label htmlFor="customRange3" className="text-center fw-bold fs-5">{range}</label>
+                <input type="range" className="form-range py-3" min="1" max="5" step="0.5" id="customRange3"
+                  defaultValue={1} onChange={(e) => handleRange(e)} />
 
-          <div className="form-floating m-0 p-0 mb-3">
-            <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style={{ "height": "100px" }}></textarea>
-            <label htmlFor="floatingTextarea2" className="p-0 ps-3 pt-2">Your Comment</label>
-          </div>
+                <div className="form-floating m-0 p-0 mb-3">
+                  <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style={{ "height": "100px" }} onChange={(e) => setDescription(e.target.value)}></textarea>
+                  <label htmlFor="floatingTextarea2" className="p-0 ps-3 pt-2">Your Comment</label>
+                </div>
 
-          <div className="text-center">
-            <button className="btn btn-primary">Send</button>
-          </div>
+                <div className="text-center">
+                  <button className="btn btn-primary" onClick={handleSend} disabled={validation}>Send</button>
+                </div>
+              </>
+            )
+          }
+
         </div>
       </Collapse>
     </>

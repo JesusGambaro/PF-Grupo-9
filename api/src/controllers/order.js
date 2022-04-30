@@ -164,8 +164,9 @@ module.exports = {
           { ordered: true },
           { where: { userId, ordered: false } }
         )
-        emailOrder({ email: owner.email, id: userId })
+        emailOrder({ owner, orderCreated, id: userId, allShoppingCarts})
         res.send({ msg: "Order created, succesfull payment" })
+
       }
     } catch (error) {
       console.log(error)

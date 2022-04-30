@@ -6,6 +6,7 @@ const {
   ShoppingCartItem,
   FavoriteItem,
   Review,
+  User,
 } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
 const cloudinary = require("../helpers/cloudinary.js")
@@ -91,7 +92,14 @@ module.exports = {
             ["images", "id", "ASC"],
           ],
         })
-
+        const allFootwears = await Product.findAll({
+          attributes: { exclude: "description" },
+          include: [{ model: Image }, { model: Stock }],
+          order: [
+            ["id", "ASC"],
+            ["images", "id", "ASC"],
+          ],
+        })
         return res.send(footwearsSearched)
       }
       const allFootwears = await Product.findAll({
@@ -181,6 +189,10 @@ module.exports = {
           {
             model: Review,
             through: { attributes: [] },
+            include: {
+              model: User,
+              attributes: { exclude: ["password", "token"] },
+            },
           },
         ],
         order: [
@@ -232,6 +244,10 @@ module.exports = {
           {
             model: Review,
             through: { attributes: [] },
+            include: {
+              model: User,
+              attributes: { exclude: ["password", "token"] },
+            },
           },
         ],
         order: [

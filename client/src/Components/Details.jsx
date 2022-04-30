@@ -12,6 +12,7 @@ import {
 import Swal from "sweetalert2";
 import { addCart } from "../redux/actions/userCart";
 import { addFav } from "../redux/actions/userFav";
+import Reviews from "./Reviews";
 
 function Details() {
   const navigate = useNavigate();
@@ -319,6 +320,7 @@ function Details() {
             </div>
           </div>
           <hr className="border border-2 border-secondary" />
+
           <div className="container mt-5 mb-5" id="container">
             <div className="row">
               <h1 className="text-center text-info">More products</h1>
@@ -342,6 +344,9 @@ function Details() {
                 ))}
             </div>
           </div>
+
+          <hr className="border border-2 border-secondary" />
+          <Reviews/>
         </>
       )}
     </div>

@@ -15,20 +15,20 @@ import {
   CarouselItem,
   CarouselIndicators,
 } from "reactstrap";
+import { addCart } from "../redux/actions/userCart";
 
 export default function LandingPage() {
   
-  /* const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
     useEffect(()=>{
-      const datos =  dispatch(bringAllData())
-        console.log(datos)
-    }) */
+      dispatch(getAllSales())
+    },[dispatch,addCart]) 
 
   // State for Active index
   const sales = useSelector((state) => state.root.sales);
   const [activeIndex, setActiveIndex] = React.useState(0);
 
-  const dispatch = useDispatch();
 
   // State for Animation
   const [animating, setAnimating] = React.useState(false);

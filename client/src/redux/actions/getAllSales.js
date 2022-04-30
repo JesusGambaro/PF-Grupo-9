@@ -8,6 +8,7 @@ const getAllSales = () => {
     const { data } = await axios.get(URL)
     dispatch({ type: GET_ALL_SALES, payload: data })
     dispatch({ type: LOADING, payload: false })
+    console.log(data)
   }
 }
 

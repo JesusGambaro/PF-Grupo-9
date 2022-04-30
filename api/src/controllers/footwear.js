@@ -30,6 +30,7 @@ module.exports = {
           include: [
             {
               model: Image,
+              order: [["id", "DESC"]],
             },
             {
               model: Stock,
@@ -91,7 +92,14 @@ module.exports = {
             ["images", "id", "ASC"],
           ],
         })
-
+        const allFootwears = await Product.findAll({
+        attributes: { exclude: "description" },
+        include: [{ model: Image }, { model: Stock }],
+        order: [
+            ["id", "ASC"],
+            ["images", "id", "ASC"],
+        ],
+      })
         return res.send(footwearsSearched)
       }
       const allFootwears = await Product.findAll({
@@ -174,6 +182,7 @@ module.exports = {
         include: [
           {
             model: Image,
+            order: [["id", "DESC"]],
           },
           {
             model: Stock,
@@ -225,6 +234,7 @@ module.exports = {
         include: [
           {
             model: Image,
+            order: [["id", "DESC"]],
           },
           {
             model: Stock,

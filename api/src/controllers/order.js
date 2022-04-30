@@ -174,7 +174,7 @@ module.exports = {
           { ordered: true },
           { where: { userId, ordered: false } }
         )
-        emailOrder({ email: owner.email, id: userId })
+        emailOrder({ owner, orderCreated, id: userId, allShoppingCarts })
         res.send({ msg: "Order created, succesfull payment" })
         allShoppingCarts.forEach(async (item) => {
           const newStock = item.product.stocks[0].amount - item.amount

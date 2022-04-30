@@ -91,7 +91,8 @@ function Reviews() {
                   ))
                   }
                 </div>
-                <p className="fs-4 fw-bold m-0 mb-1">{review.description}</p>
+                <p className="fs-5 m-0 mb-1">{review.user.userName}</p>
+                <p className="fs-4 fw-bold m-0 mb-1 ms-2 parrafo">{review.description}</p>
               </div>
             ))
             : (<div className="row shadow-lg border border-4 border-info py-2 px-4 mb-5 bg-light review">

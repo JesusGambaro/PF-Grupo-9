@@ -18,7 +18,6 @@ const CardProduct = ({ id, product, deleteFavItem, addCartItem }) => {
   return (
     <div className="favorite-card">
       <div className="img">
-        {" "}
         <NavLink to={`/home/${product.id}/${product.model}`}>
           <img src={images[0].url} alt="" />
         </NavLink>

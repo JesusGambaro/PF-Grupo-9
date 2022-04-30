@@ -12,6 +12,7 @@ const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
 const Stripe = require("stripe")
 const { emailOrder } = require("../helpers/email.js")
+const { emailOrderDelivered } = require("../helpers/emailOrderDelivered.js")
 
 const orderInclude = {
   include: [
@@ -164,7 +165,7 @@ module.exports = {
           { where: { userId, ordered: false } }
         )
         emailOrder({ email: owner.email, id: userId })
-        return res.send({ msg: "Order created, succesfull payment" })
+        res.send({ msg: "Order created, succesfull payment" })
       }
     } catch (error) {
       console.log(error)
@@ -178,16 +179,23 @@ module.exports = {
   putOrder: async (req, res) => {
     const { delivered, id } = req.body
     try {
-      const order = await Order.update(
-        { delivered },
-        {
-          where: {
-            id,
-          },
-        }
-      )
-
-      res.send({ msg: "Order updated" })
+      const order = await Order.findOne({
+        where: {
+          id,
+        },
+        include: [
+          { model: User },
+          { model: ShoppingCartItem, include: { model: Product } },
+        ],
+      })
+      order.delivered = delivered
+      order.save()
+      if (delivered === "delivered") {
+        emailOrderDelivered(order)
+        return res.send({ msg: "Order updated and  sent" })
+      } else {
+        return res.send({ msg: "Order updated" })
+      }
     } catch (error) {
       sendError(res, error)
     }

@@ -11,7 +11,7 @@ const {
   deleteProduct,
   getProductByIdForAdmin,
   getAllFootwearForAdmin,
-  getAllProductsSameModelForAdmin
+  getAllProductsSameModelForAdmin,
 } = require("../controllers/footwear.js")
 const { verifyTokenAdmin } = require("../middlewares/auth.js")
 
@@ -23,7 +23,11 @@ router.get("/allCategories", getAllCategories)
 router.get("/sales", getAllSales)
 router.get("/detail/:model", getAllProductsSameModel)
 router.get("/allForAdmin", verifyTokenAdmin, getAllFootwearForAdmin)
-router.get("/sameModelForAdmin/:model", verifyTokenAdmin, getAllProductsSameModelForAdmin)
+router.get(
+  "/sameModelForAdmin/:model",
+  verifyTokenAdmin,
+  getAllProductsSameModelForAdmin
+)
 router.get("/admin/:id", verifyTokenAdmin, getProductByIdForAdmin)
 router.get("/:id", getProductById)
 router.post("/", verifyTokenAdmin, postNewProduct)

@@ -49,9 +49,7 @@ const AdminNav = ({ section }) => {
           </NavLink>
         </li>
 
-        <li>
-          <i className="bi bi-bell bell-admin"></i>
-        </li>
+       
         <li>
           <Dropdown isOpen={dropDown} toggle={abrirYcerrar}>
             <DropdownToggle className="drop">

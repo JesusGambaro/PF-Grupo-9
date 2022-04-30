@@ -15,6 +15,7 @@ import {
   CarouselItem,
   CarouselIndicators,
 } from "reactstrap";
+import { addCart } from "../redux/actions/userCart";
 
 export default function LandingPage() {
   
@@ -22,7 +23,7 @@ export default function LandingPage() {
 
     useEffect(()=>{
       dispatch(getAllSales())
-    },[dispatch]) 
+    },[dispatch,addCart]) 
 
   // State for Active index
   const sales = useSelector((state) => state.root.sales);

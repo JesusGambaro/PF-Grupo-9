@@ -15,8 +15,8 @@ module.exports = {
     await transporter.sendMail({
       from: process.env.EMAIL,
       to: order.user.email,
-      subject: "Henry shoes",
-      text: "Hello: Your order has been delivered.",
+      subject: `Henry Shoes - Your order has been delivered.`,
+      text: `Hello: ${order.user.userName}Your order has been delivered.`,
       html: `  <h1>Hello ${order.user.userName}:</h1>
                <h2>Your order has been delivered</h2>
                ${order.shoppingCartItems.map(item => {
@@ -26,9 +26,8 @@ module.exports = {
                     <p>Price: ${item.product.finalPrice}</p>
                     <p>Total: ${(item.product.finalPrice*item.amount)}</p>`
                })}
-               <br/><h2>Final Total: ${order.shoppingCartItems.reduce((total, item) => {
-                    return total + item.product.finalPrice*item.amount;
-               },0)}</h2>
+
+               <h2>Final Total: ${order.total}</h2>
                `
     })
   }

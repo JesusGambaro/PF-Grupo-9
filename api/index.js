@@ -25,7 +25,7 @@ const prueba = async () => {
     rating: 3.5,
   })
   const imageNikeKyrieInfinityPurple = await Image.create({
-    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/d6f5179b-2c54-47ca-ab43-6a43200cae62/kyrie-infinity-basketball-shoes-LvzsVp.png",
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/fd9e6360-4422-4863-9ad3-20b265b29146/kyrie-infinity-basketball-shoes-LvzsVp.png",
   })
   const imageNikeKyrieInfinityPurple2 = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/389bc835-458d-4877-8534-66aae2923f8e/kyrie-infinity-basketball-shoes-LvzsVp.png",
@@ -34,7 +34,7 @@ const prueba = async () => {
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/a211de35-26d2-4432-8ea8-dd6d7e550357/kyrie-infinity-basketball-shoes-LvzsVp.png",
   })
   const imageNikeKyrieInfinityPurple4 = await Image.create({
-    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/fd9e6360-4422-4863-9ad3-20b265b29146/kyrie-infinity-basketball-shoes-LvzsVp.png",
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/d6f5179b-2c54-47ca-ab43-6a43200cae62/kyrie-infinity-basketball-shoes-LvzsVp.png",
   })
   NikeKyrieInfinityPurple.addImages([
     imageNikeKyrieInfinityPurple,
@@ -44,15 +44,15 @@ const prueba = async () => {
   ])
   const stockNikeKyrieInfinityPurple10 = await Stock.create({
     size: 10,
-    amount: 0,
+    amount: 10,
   })
   const stockNikeKyrieInfinityPurple11 = await Stock.create({
     size: 11,
-    amount: 0,
+    amount: 11,
   })
   const stockNikeKyrieInfinityPurple12 = await Stock.create({
     size: 12,
-    amount: 0,
+    amount: 12,
   })
   NikeKyrieInfinityPurple.addStock([
     stockNikeKyrieInfinityPurple10,
@@ -112,7 +112,7 @@ const prueba = async () => {
 
   ///////////////////////
   const NikeAirZoomAlphafly = await Product.create({
-    model: "AIR ZOOM PEGASUS",
+    model: "Air Zoom Pegasus",
     brand: "Nike",
     category: "Running",
     gender: "Male",
@@ -320,7 +320,7 @@ const prueba = async () => {
   ///////////////////////
 
   const NikeDownshifter = await Product.create({
-    model: "AIR MAX 270",
+    model: "Air max 270",
     brand: "Nike",
     category: "Running",
     gender: "Female",
@@ -361,7 +361,7 @@ const prueba = async () => {
   ///////////////////////
 
   const NikeDownshifterBlack = await Product.create({
-    model: "AIR MAX 270",
+    model: "Air max 270",
     brand: "Nike",
     category: "Running",
     gender: "Female",

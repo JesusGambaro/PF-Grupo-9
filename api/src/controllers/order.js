@@ -174,13 +174,14 @@ module.exports = {
           { ordered: true },
           { where: { userId, ordered: false } }
         )
-        emailOrder({ email: owner.email, id: userId })
+        emailOrder({ owner, orderCreated, id: userId, allShoppingCarts})
         res.send({ msg: "Order created, succesfull payment" })
         allShoppingCarts.forEach(async (item) => {
           const newStock = item.product.stocks[0].amount - item.amount
           const id = item.product.stocks[0].id
           await Stock.update({ amount: newStock }, { where: { id } })
         })
+
       }
     } catch (error) {
       console.log(error)

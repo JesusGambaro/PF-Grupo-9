@@ -17,7 +17,6 @@ const PaymentCheckout = () => {
     const token = window.localStorage.getItem("token")
     const cart = useSelector(state => state.root.cartUser)
     const paymentInfo = useSelector(state => state.root.paymentInfo)
-    console.log('a',paymentInfo)
     const {totalFootwear,total} = cart
     const stripe = useStripe();
     const elements = useElements();
@@ -38,7 +37,7 @@ const PaymentCheckout = () => {
     const [loading, setLoding]=useState(false)
     const [error, setError] = useState({})
     useEffect(() => {
-        if(!totalFootwear || !total) {navigate("/home")}
+        // if(!totalFootwear && !total && !cart.length) {navigate("/home")}
         
          /* dispatch(cleanOrder())   */  
          if(paymentInfo){
@@ -118,7 +117,7 @@ const PaymentCheckout = () => {
         
          
     }
-    const validation = (order.name && order.telephoneNumber && order.surname && order.country && order.city && order.address && order.postalCode)?false:true/* () =>{
+    const validation = (order.name && order.telephoneNumber && order.surname && order.country && order.city && order.address && order.postalCode && total && totalFootwear)?false:true/* () =>{
         if(error.name && error.telephoneNumber || error.surname || error.country || error.city || error.address)return true
     } */
     
@@ -435,8 +434,8 @@ const PaymentCheckout = () => {
                     <label><span>Notes</span><textarea name="notes"  value={order.notes} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.notes && <label className="col form-label text-danger fw-bold text-end">{error.notes}</label>}
                     
-                    <div style={{width:"100%", height:'15px', fontSize:'30px'}}>
-                    <CardElement className="a"/>
+                    <div style={{width:"100%", height:'50px', fontSize:'30px'}}>
+                    <CardElement style={{height:"50px"}} className="a"/>
                     
                     </div>
                     <div className="totals">

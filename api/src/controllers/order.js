@@ -165,7 +165,7 @@ module.exports = {
           { where: { userId, ordered: false } }
         )
         emailOrder({ email: owner.email, id: userId })
-        return res.send({ msg: "Order created, succesfull payment" })
+        res.send({ msg: "Order created, succesfull payment" })
       }
     } catch (error) {
       console.log(error)
@@ -179,21 +179,22 @@ module.exports = {
   putOrder: async (req, res) => {
     const { delivered, id } = req.body
     try {
-      const order = await Order.findOne(
-        {
-          where: {
-            id,
-          },
-          include: [{model: User}, {model: ShoppingCartItem, include: {model: Product}}]
-        }
-      );
-      order.delivered = delivered;
-      order.save();
-      if(delivered === 'delivered'){
+      const order = await Order.findOne({
+        where: {
+          id,
+        },
+        include: [
+          { model: User },
+          { model: ShoppingCartItem, include: { model: Product } },
+        ],
+      })
+      order.delivered = delivered
+      order.save()
+      if (delivered === "delivered") {
         emailOrderDelivered(order)
-        return res.send({msg: "Order updated and  sent"})
-      }else{
-        return res.send({msg: "Order updated"})
+        return res.send({ msg: "Order updated and  sent" })
+      } else {
+        return res.send({ msg: "Order updated" })
       }
     } catch (error) {
       sendError(res, error)

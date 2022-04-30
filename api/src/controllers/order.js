@@ -6,12 +6,13 @@ const {
   Image,
   Payment,
 } = require("../db.js")
-const { Op, Sequelize } = require("sequelize")
+const { Op, Sequelize, or } = require("sequelize")
 const moment = require("moment")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
 const Stripe = require("stripe")
 const { emailOrder } = require("../helpers/email.js")
+const { emailOrderDelivered } = require("../helpers/emailOrderDelivered.js")
 
 const orderInclude = {
   include: [
@@ -178,16 +179,22 @@ module.exports = {
   putOrder: async (req, res) => {
     const { delivered, id } = req.body
     try {
-      const order = await Order.update(
-        { delivered },
+      const order = await Order.findOne(
         {
           where: {
             id,
           },
+          include: [{model: User}, {model: ShoppingCartItem, include: {model: Product}}]
         }
-      )
-
-      res.send({ msg: "Order updated" })
+      );
+      order.delivered = delivered;
+      order.save();
+      if(delivered === 'delivered'){
+        emailOrderDelivered(order)
+        return res.send({msg: "Order updated and  sent"})
+      }else{
+        return res.send({msg: "Order updated"})
+      }
     } catch (error) {
       sendError(res, error)
     }

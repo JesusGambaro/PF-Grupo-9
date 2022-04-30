@@ -121,15 +121,15 @@ export default function AdminPandO() {
               </tr>
             </thead>
             <tbody>
-              {allOrders.map((e) => {
+              {allOrders.length? allOrders.map((e) => {
                 return (
                   <tr key={e.id}>
                     <td>
-                      {e.id} {/* ID order */}
+                      {e.id&&e.id} {/* ID order */}
                     </td>
                     <td>
                       <b>
-                        {e.name} {e.surname} {/* Customer name */}
+                        {e.name&&e.name} {e.surname&&e.surname} {/* Customer name */}
                       </b>
                     </td>
                     <td>
@@ -137,15 +137,15 @@ export default function AdminPandO() {
                       {/* email@example.com */}
                     </td>
                     <td>
-                      ${e.total} {/* total */}
+                      ${e.total&&e.total} {/* total */}
                     </td>
                     <td>
                       <span className="badge rounded-pill alert-success">
-                        {e.delivered} {/* status */}
+                        {e.delivered&&e.delivered} {/* status */}
                       </span>
                     </td>
                     <td>
-                      {e.createdAt.slice(0, 10)} {/* date */}
+                      {e.createdAt&&e.createdAt.slice(0, 10)} {/* date */}
                     </td>
                     <td className="text-end">
                       <NavLink
@@ -157,7 +157,38 @@ export default function AdminPandO() {
                     </td>
                   </tr>
                 );
-              })}
+              }):
+              /* si no coincide ninguna */
+              <tr >
+                    <td>
+                    No results
+                       {/* ID order */}
+                    </td>
+                    <td>
+                      <b>
+                         {/* Customer name */}
+                      </b>
+                    </td>
+                    <td>
+                      
+                      {/* email@example.com */}
+                    </td>
+                    <td>
+                       {/* total */}
+                    </td>
+                    <td>
+                      <span className="badge rounded-pill alert-success">
+                         {/* status */}
+                      </span>
+                    </td>
+                    <td>
+                       {/* date */}
+                    </td>
+                    <td className="text-end">
+                      
+                    </td>
+                  </tr>
+              }
             </tbody>
           </table>
           {/* =======

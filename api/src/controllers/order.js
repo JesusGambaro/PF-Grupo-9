@@ -6,7 +6,7 @@ const {
   Image,
   Payment,
 } = require("../db.js")
-const { Op, Sequelize, or } = require("sequelize")
+const { Op, Sequelize } = require("sequelize")
 const moment = require("moment")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")

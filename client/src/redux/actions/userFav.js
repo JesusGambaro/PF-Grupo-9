@@ -1,12 +1,12 @@
 import axios from "axios";
-import { GET_FAV } from "./actions";
+import {GET_FAV} from "./actions";
 
 const URL = "http://localhost:3001/favorite";
 
 export const getUserFav = (token) => {
   return async (dispatch) => {
-    const { data } = await axios.get(`${URL}`, {
-      headers: { Authorization: `bearer ${token}` },
+    const {data} = await axios.get(`${URL}`, {
+      headers: {Authorization: `bearer ${token}`},
     });
     dispatch({
       type: GET_FAV,
@@ -18,7 +18,7 @@ export const getUserFav = (token) => {
 export const deleteFavItem = (id, token) => {
   return async (dispatch, getState) => {
     await axios.delete(`${URL}/${id}`, {
-      headers: { Authorization: `bearer ${token}` },
+      headers: {Authorization: `bearer ${token}`},
     });
     let userData = getState().root.favUser;
     userData = userData.filter((e) => {
@@ -35,7 +35,7 @@ export const deleteFavItem = (id, token) => {
 export const deleteAllFav = (token) => {
   return async (dispatch) => {
     await axios.delete(`${URL}/deleteAll`, {
-      headers: { Authorization: `bearer ${token}` },
+      headers: {Authorization: `bearer ${token}`},
     });
     dispatch({
       type: GET_FAV,
@@ -47,7 +47,7 @@ export const deleteAllFav = (token) => {
 export const addFav = (token, product) => {
   return async () => {
     await axios.post(`${URL}`, product, {
-      headers: { Authorization: `bearer ${token}` },
+      headers: {Authorization: `bearer ${token}`},
     });
   };
 };

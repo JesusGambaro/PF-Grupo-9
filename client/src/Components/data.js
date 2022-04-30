@@ -10,7 +10,7 @@ export const colors = [
   "Yellow",
   "Gray",
   "Beige",
-  "Pink"
+  "Pink",
 ];
 export const brands = [
   "Nike",
@@ -19,6 +19,7 @@ export const brands = [
   "Puma",
   "New Balance",
   "Reebok",
-  "Converse"
+  "Converse",
 ];
+export const categories = ["Urban", "Sport", "Elegant", "Running", "Others"];
 export const sizes = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];

@@ -72,8 +72,8 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
               data[param].map((img) => (!img.form ? img.image : ""))
             );
             else formData.append(param, data[param].map(img=>img.image)); */
-            data[param].forEach((img, i) => {
-              if (img.form) formData.append("Image " + i, img.image);
+             data[param].forEach((img, i) => {
+              formData.append("image " + i, img.image);
             });
           }
         });

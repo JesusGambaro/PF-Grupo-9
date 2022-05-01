@@ -6,18 +6,18 @@ import {addCart} from "../redux/actions/userCart";
 import {addFav} from "../redux/actions/userFav";
 import {useSelector} from "react-redux";
 import {getUserFav} from "../redux/actions/userFav";
+import { LOGIN_USER } from "../redux/actions/actions";
 const Card = ({e, horizontal}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = window.localStorage.getItem("token");
   const {favUser} = useSelector((state) => state.root);
-  useEffect(() => {
+  /*   useEffect(() => {
     if (token) {
       dispatch(getUserFav(token));
     }
-    console.log(favUser);
-  }, [dispatch, token]);
-
+    //console.log(favUser);
+  }, [dispatch, token]); */
   const handleAddProduct = (e, type) => {
     const sizes = {};
     e.stocks.forEach((element) => {
@@ -25,7 +25,7 @@ const Card = ({e, horizontal}) => {
     });
     if (token) {
       if (type === "cart") {
-        console.log("addCart");
+        //console.log("addCart");
         Swal.fire({
           title: "Select a size",
           input: "select",
@@ -48,7 +48,7 @@ const Card = ({e, horizontal}) => {
           }
         });
       } else {
-        console.log("addFav");
+        //console.log("addFav");
         const product = {productId: e.id};
         dispatch(addFav(token, product));
         Swal.fire({
@@ -86,6 +86,7 @@ const Card = ({e, horizontal}) => {
     "RGB(113, 190, 231)",
     "RGB(131, 128, 179)",
   ];
+  console.log(e.rating);
   return (
     <div className={"cardOwn" + (horizontal ? " h" : "")}>
       {e.sale !== 0 && <p className="offer-ribbon" offer={e.sale + "%"}></p>}
@@ -112,11 +113,16 @@ const Card = ({e, horizontal}) => {
           </NavLink>
           <span>
             <div className="rating" title="Rating">
-              <i className="bi bi-star-fill"></i>
-              <i className="bi bi-star-fill"></i>
-              <i className="bi bi-star-fill"></i>
-              <i className="bi bi-star-half"></i>
-              <i className="bi bi-star"></i>
+              {new Array(5).fill("").map((_, i) => {
+                return i + 1 <= Math.floor(e.rating) ? (
+                  <i className="bi bi-star-fill"></i>
+                ) : e.rating - Math.floor(e.rating) === 0.5 &&
+                  i === Math.floor(e.rating) ? (
+                  <i className="bi bi-star-half"></i>
+                ) : (
+                  <i className="bi bi-star"></i>
+                );
+              })}
             </div>
             &nbsp;
             {e.sale !== 0 && (
@@ -147,8 +153,12 @@ const Card = ({e, horizontal}) => {
           >
             <i className="bi bi-toggles2" title="View details"></i>
           </NavLink>
-          {favUser.find((a) => a.id === e.id) ? (
-            <i className="bi bi-heart-fill"></i>
+          {e.isFavorite === true ? (
+            <i
+              className="bi bi-heart-fill"
+              title="Add to favorites"
+              onClick={() => handleAddProduct(e, "fav")}
+            ></i>
           ) : (
             <i
               className="bi bi-heart"

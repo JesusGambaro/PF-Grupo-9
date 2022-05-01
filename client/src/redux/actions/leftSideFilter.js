@@ -1,4 +1,4 @@
-import {LEFT_SIDE_FILTERS} from "./actions";
+import { LEFT_SIDE_FILTERS } from "./actions";
 
 const genderFilter = (gender) => {
   return async (dispatch) => {
@@ -22,19 +22,25 @@ const deleteFilter = (filter) => {
 };
 const leftSideFilter = (filtroAgregar = null, valor = null) => {
   return async (dispatch, getState) => {
+    //console.log("leftSideFilters");
     let payload;
     let genderActual = getState().root.genderActual.toLowerCase();
 
     let data =
       genderActual !== "all"
-        ? getState().root.genderData[genderActual]
+        ? genderActual === "male" || genderActual === "female"
+          ? [
+              ...getState().root.genderData[genderActual],
+              ...getState().root.genderData.unisex,
+            ]
+          : getState().root.genderData[genderActual]
         : [...getState().root.allDataCopy];
 
     let filtros = [...getState().root.filters];
     let repetido = false;
     if (filtroAgregar) {
       filtroAgregar = filtroAgregar.toLowerCase();
-      payload = {name: filtroAgregar, value: valor};
+      payload = { name: filtroAgregar, value: valor };
       filtros.length > 0
         ? filtros.forEach((el) => {
             repetido = el.name === payload.name;

@@ -1,0 +1,15 @@
+#rating{
+  font-size: 5rem;
+}
+
+.parrafo{
+  text-align: justify;
+}
+
+.review{
+  border-radius: 20px;
+}
+
+#estrella{
+  font-size: 3rem;
+}

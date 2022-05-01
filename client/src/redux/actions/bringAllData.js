@@ -1,5 +1,5 @@
 import axios from "axios";
-import {BRING_ALL_DATA, LOADING, LOAD_GENDERS} from "./actions";
+import {BRING_ALL_DATA, LOADING, LOAD_GENDERS,GET_FAV} from "./actions";
 const URL = "http://localhost:3001/allFootwear";
 
 const bringAllData = () => {

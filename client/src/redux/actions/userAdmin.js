@@ -29,6 +29,7 @@ const searchUser = (token, searchParam) => {
   };
 };
 const filterUsers = (token, isAdmin) => {
+  console.log();
   return async (dispatch) => {
     dispatch({type: LOADING, payload: true});
     const {data} = await axios.get(`${URL}allUsers?isAdmin=${isAdmin}`, {
@@ -49,11 +50,6 @@ const deleteUser = (token, user) => {
         Authorization: `bearer ${token}`,
       },
     });
-    let oldData = getState().admin.users;
-    let newData = oldData.filter((el) => {
-      return el.email !== user.email;
-    });
-    console.log("Soy el new Data: ", newData);
     dispatch(getAllUsers(token));
     dispatch({type: LOADING, payload: false});
   };
@@ -66,10 +62,6 @@ const changeUserRole = (token, user) => {
         Authorization: `bearer ${token}`,
       },
     });
-    let oldData = getState().admin.users;
-    let newData = oldData.map((el) =>
-      user.email === el.email ? {...el, isAdmin: user.adminState} : el
-    );
     dispatch(getAllUsers(token));
     dispatch({type: LOADING, payload: false});
   };

@@ -4,6 +4,7 @@ import { getOrderProfile, userInfo } from "../redux/actions/getOrdersUser";
 import { roleUser } from "../redux/actions/Loginregister";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import CardProfile from "./CardProfile";
 
 function UserProfile() {
   const { orderUser, role, user } = useSelector(store => store.root)
@@ -75,21 +76,26 @@ function UserProfile() {
 
                   {order.shoppingCartItems.length > 0
                     ? order.shoppingCartItems.map((item) => (
-                      <div className="d-flex flex-column flex-md-row align-items-center gap-0 pt-3 pb-2 shadow pedido" key={item.id}>
-                        <div className="imagen">
-                          <img src={item.product.images[0].url} className="card-img-top" alt="..." onClick={() =>
-                            navigate(
-                              `/home/${item.productId}/${item.product.model}`
-                            )
-                          }/>
+                      <div className="d-flex flex-column shadow pedido align-items-center" key={item.id}>
+                        <div className="d-flex flex-column flex-md-row align-items-center gap-0 pt-3 pb-2">
+                          <div className="imagen overflow-hidden" style={{ "cursor": "pointer" }} title="View detail">
+                            <img src={item.product.images[0].url} className="card-img-top" alt="..." onClick={() =>
+                              navigate(
+                                `/home/${item.productId}/${item.product.model}`
+                              )
+                            } />
+                          </div>
+                          <div className="text-center text-md-start m-0 p-0 w-100">
+                            <h5 className="fw-bold fs-4 mb-3">{item.product.brand}-{item.product.model}</h5>
+                            <p className="fs-5 m-0"><strong>Color:</strong> {item.product.color}</p>
+                            <p className="fs-5 m-0"><strong>Size:</strong> {item.size}</p>
+                            <p className="fs-5 m-0"><strong>Price:</strong> ${item.product.finalPrice}</p>
+                            <p className="fs-5 m-0"><strong>Amount:</strong> {item.amount}</p>
+                          </div>
                         </div>
-                        <div className="text-center text-md-start m-0 p-0 w-100">
-                          <h5 className="fw-bold fs-4 mb-3">{item.product.brand}-{item.product.model}</h5>
-                          <p className="fs-5 m-0"><strong>Color:</strong> {item.product.color}</p>
-                          <p className="fs-5 m-0"><strong>Size:</strong> {item.size}</p>
-                          <p className="fs-5 m-0"><strong>Price:</strong> ${item.product.finalPrice}</p>
-                          <p className="fs-5 m-0"><strong>Amount:</strong> {item.amount}</p>
-                        </div>
+
+                          <CardProfile brand={item.product.brand} model={item.product.model}/>
+
                       </div>
                     ))
                     : <h1>No hay productos</h1>

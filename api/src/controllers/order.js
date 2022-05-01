@@ -5,6 +5,7 @@ const {
   Product,
   Image,
   Payment,
+  Stock,
 } = require("../db.js")
 const { Op, Sequelize } = require("sequelize")
 const moment = require("moment")
@@ -12,6 +13,7 @@ const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
 const Stripe = require("stripe")
 const { emailOrder } = require("../helpers/email.js")
+const { emailOrderDelivered } = require("../helpers/emailOrderDelivered.js")
 
 const orderInclude = {
   include: [
@@ -106,27 +108,36 @@ module.exports = {
   },
   postOrder: async (req, res) => {
     const { order, paymentMethod, total } = req.body
-    const {
-      telephoneNumber,
-      address,
-      name,
-      surname,
-      country,
-      city,
-      postalCode,
-      floor,
-      apartment,
-      notes,
-    } = order
     try {
-      const { id, card } = paymentMethod
-      const { brand, funding } = card
+      // const {
+      //   telephoneNumber,
+      //   address,
+      //   name,
+      //   surname,
+      //   country,
+      //   city,
+      //   postalCode,
+      //   floor,
+      //   apartment,
+      //   notes,
+      // } = order
+      // const { id, card } = paymentMethod
+      // const { brand, funding } = card
       const stripe = new Stripe(process.env.STRIPEKEY)
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
       const allShoppingCarts = await ShoppingCartItem.findAll({
         where: { userId, ordered: false },
-        include: [{ model: Product }],
+        include: [
+          {
+            model: Product,
+            required: true,
+            include: {
+              model: Stock,
+              where: { size: { [Op.col]: "shoppingCartItem.size" } },
+            },
+          },
+        ],
       })
       const owner = await User.findOne({ where: { id: userId } })
       const payment = await stripe.paymentIntents.create({
@@ -163,8 +174,13 @@ module.exports = {
           { ordered: true },
           { where: { userId, ordered: false } }
         )
-        emailOrder({ email: owner.email, id: userId })
-        return res.send({ msg: "Order created, succesfull payment" })
+        emailOrder({ owner, orderCreated, id: userId, allShoppingCarts })
+        res.send({ msg: "Order created, succesfull payment" })
+        allShoppingCarts.forEach(async (item) => {
+          const newStock = item.product.stocks[0].amount - item.amount
+          const id = item.product.stocks[0].id
+          await Stock.update({ amount: newStock }, { where: { id } })
+        })
       }
     } catch (error) {
       console.log(error)
@@ -178,16 +194,23 @@ module.exports = {
   putOrder: async (req, res) => {
     const { delivered, id } = req.body
     try {
-      const order = await Order.update(
-        { delivered },
-        {
-          where: {
-            id,
-          },
-        }
-      )
-
-      res.send({ msg: "Order updated" })
+      const order = await Order.findOne({
+        where: {
+          id,
+        },
+        include: [
+          { model: User },
+          { model: ShoppingCartItem, include: { model: Product } },
+        ],
+      })
+      order.delivered = delivered
+      order.save()
+      if (delivered === "delivered") {
+        emailOrderDelivered(order)
+        return res.send({ msg: "Order updated and  sent" })
+      } else {
+        return res.send({ msg: "Order updated" })
+      }
     } catch (error) {
       sendError(res, error)
     }

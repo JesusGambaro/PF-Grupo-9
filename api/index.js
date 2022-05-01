@@ -1082,8 +1082,8 @@ const prueba = async () => {
   await orderAdmin.setPayment(paymentAdmin)
 }
 
-conn.sync({ force: true }).then(async () => {
-  await prueba()
+conn.sync({ force: false }).then(async () => {
+  // await prueba()
   server.listen(3001, () => {
     console.log("%s listening at 3001")
   })

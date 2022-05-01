@@ -61,9 +61,8 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
     if (role.admin) {
       if (shoeObject) {
         const formData = new FormData();
-        setData({...data, deletedImages});
         Object.keys(data).forEach((param) => {
-          if (param === "stock" || param === "deletedImages") {
+          if (param === "stock") {
             formData.append(param, JSON.stringify(data[param]));
           } else if (param !== "images") formData.append(param, data[param]);
           else {
@@ -72,11 +71,13 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
               data[param].map((img) => (!img.form ? img.image : ""))
             );
             else formData.append(param, data[param].map(img=>img.image)); */
-             data[param].forEach((img, i) => {
-              formData.append("image " + i, img.image);
+            data[param].forEach((img, i) => {
+              if (img.image) formData.append("image " + i, img.image);
             });
           }
         });
+        if (deletedImages.length)
+          formData.append("deletedImages", JSON.stringify(deletedImages));
         dispatch(
           editShoe(
             window.localStorage.getItem("token"),

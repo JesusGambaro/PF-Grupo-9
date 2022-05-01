@@ -24,6 +24,9 @@ const prueba = async () => {
     color: "Purple",
     rating: 3.5,
   })
+  const imageNikeKyrieInfinityPurple4 = await Image.create({
+    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/d6f5179b-2c54-47ca-ab43-6a43200cae62/kyrie-infinity-basketball-shoes-LvzsVp.png",
+  })
   const imageNikeKyrieInfinityPurple = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/fd9e6360-4422-4863-9ad3-20b265b29146/kyrie-infinity-basketball-shoes-LvzsVp.png",
   })
@@ -32,9 +35,6 @@ const prueba = async () => {
   })
   const imageNikeKyrieInfinityPurple3 = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5,q_80/a211de35-26d2-4432-8ea8-dd6d7e550357/kyrie-infinity-basketball-shoes-LvzsVp.png",
-  })
-  const imageNikeKyrieInfinityPurple4 = await Image.create({
-    url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/d6f5179b-2c54-47ca-ab43-6a43200cae62/kyrie-infinity-basketball-shoes-LvzsVp.png",
   })
   NikeKyrieInfinityPurple.addImages([
     imageNikeKyrieInfinityPurple,

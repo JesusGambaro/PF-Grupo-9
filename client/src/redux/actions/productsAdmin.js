@@ -40,7 +40,6 @@ const postProduct = (token, newShoe) => {
   console.log("Soy el nuevo shoe=>>", newShoe);
   return async (dispatch, getState) => {
     dispatch({type: LOADING, payload: true});
-    await axios.post(`http://localhost:3002/post`, newShoe);
     await axios.post(`http://localhost:3001/allFootwear`, newShoe, {
       headers: {
         Authorization: `bearer ${token}`,
@@ -58,7 +57,6 @@ const postProduct = (token, newShoe) => {
 const editShoe = (token, editedShoe, id) => {
   return async (dispatch, getState) => {
     dispatch({type: LOADING, payload: true});
-    await axios.post(`http://localhost:3002/post`, editedShoe);
     axios.put(`http://localhost:3001/allFootwear/${id}`, editedShoe, {
       headers: {
         Authorization: `bearer ${token}`,

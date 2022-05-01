@@ -293,19 +293,18 @@ module.exports = {
         color,
         stock,
       } = req.body
-
-      // const model = "Harmoso3"
-      // const brand = "New Balance"
-      // const category = "Elegant"
-      // const gender = "Male"
-      // const price = 34000
-      // const description = "Zapato fachero"
-      // const sale = 0
-      // const color = "Yellow"
-      // const stock = [{size: 10, amount: 100}, {size:12, amount: 200}]
-
       const imgFiles = req.files
-      
+      // function stringify (stock) {
+      //   let strinStock = Object.prototype.toString.call(stock);
+      //   console.log("strinStock1",strinStock)
+      //   console.log("stock2", JSON.parse(strinStock))
+      // }
+      // stringify()
+      // const stringuif = JSON.stringify(stock, null, "   ") 
+      // console.log("stringuif", stringuif)
+      console.log("req", req)
+      JSON.parse("stringuifPARSE",stock)
+
       const foundProduct = await Product.findOne({
         where: { model, brand, color },
       })
@@ -330,14 +329,14 @@ module.exports = {
         })
       }
 
-      stock.length > 0 &&
-        stock.map(async (amountAndSize) => {
-          let stockProduct = await Stock.create({
-            size: amountAndSize.size,
-            amount: amountAndSize.amount,
-          })
-          await product.addStock(stockProduct)
-        })
+      // stock.length > 0 &&
+      //   stock.map(async (amountAndSize) => {
+      //     let stockProduct = await Stock.create({
+      //       size: amountAndSize.size,
+      //       amount: amountAndSize.amount,
+      //     })
+      //     await product.addStock(stockProduct)
+      //   })
 
       return res.send("Product with its images created!")
     } catch (error) {

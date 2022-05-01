@@ -27,9 +27,17 @@ export default function Footer() {
     Henry © 2022 | All rights reserved.</div>
         <div className="mediosde-pago">
         <p className="footer-text">Payment Methods</p>
-          <li className="itemL">
-          <img src="https://files.kuder.com.ar/images/kuder-mercadopago-blanco-negro.png" className="mercado-pago"></img>
+        <ol className="payments-icon">
+          <li className="itemIcon">
+          <img src={require("../Images/Visa.jpg")} alt="Logo Visa" className="mercado-pago"></img>
           </li>
+          <li className="itemIcon">
+          <img src="https://brandemia.org/sites/default/files/inline/images/american_express_logo_wordmark_detail.png" alt="Logo American express" className="mercado-pago"></img>
+          </li>
+          <li className="itemIcon">
+          <img src="https://e7.pngegg.com/pngimages/728/671/png-clipart-logo-mastercard-font-gif-mastercard.png" alt="Logo mastecard" className="mercado-pago"></img>
+          </li>
+        </ol>
         </div>
       </div>
       

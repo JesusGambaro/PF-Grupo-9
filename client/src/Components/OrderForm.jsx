@@ -9,7 +9,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import {CardElement, useStripe, useElements,Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js"
 
-const stripePromise = loadStripe("pk_test_51KtCmaEyrMDgVNEx9jvaVUbtUuGmXVXmnhrtCnNdsQdVxna17PhfnQ08NrXMMs94GPIyQpOp3RI70VjlNBwHE3ZN00oJfjWvbj");
+const stripePromise = loadStripe("pk_test_51KtCmaEyrMDgVNEx9jvaVUbtUuGmXVXmnhrtCnNdsQdVxna17PhfnQ08NrXMMs94GPIyQpOp3RI70VjlNBwHE3ZN00oJfjWvbj",{locale:"en"});
 
 const PaymentCheckout = () => {
     const navigate = useNavigate()
@@ -434,8 +434,10 @@ const PaymentCheckout = () => {
                     <label><span>Notes</span><textarea name="notes"  value={order.notes} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.notes && <label className="col form-label text-danger fw-bold text-end">{error.notes}</label>}
                     
-                    <div style={{width:"100%", height:'50px', fontSize:'30px'}}>
-                    <CardElement style={{height:"50px"}} className="a"/>
+                    <div style={{padding:"10px",width:"100%",borderColor: "rgb(133, 133, 133)",borderStyle:"solid",borderWidth: "1px",height: "max-content"}}>
+                    <CardElement options={{style:{base:
+                        {fontSize:"1.5rem"}
+                        }}} className="a"/>
                     
                     </div>
                     <div className="totals">

@@ -29,13 +29,13 @@ export default function Footer() {
         <p className="footer-text">Payment Methods</p>
         <ol className="payments-icon">
           <li className="itemIcon">
-          <img src={require("../Images/Visaa.png")} alt="Logo Visa" className="mercado-pago"></img>
+          <img src={require("../Images/Visaa.jpg")} alt="Logo Visa" className="mercado-pago"></img>
           </li>
           <li className="itemIcon">
-          <img src={require("../Images/MasterCard.png")} alt="Logo American express" className="mercado-pago"></img>
+          <img src={require("../Images/MasterCard.jpg")} alt="Logo American express" className="mercado-pago"></img>
           </li>
           <li className="itemIcon">
-          <img src={require("../Images/American.png")} alt="Logo mastecard" className="mercado-pago"></img>
+          <img src={require("../Images/American.jpg")} alt="Logo mastecard" className="mercado-pago"></img>
           </li>
         </ol>
         </div>

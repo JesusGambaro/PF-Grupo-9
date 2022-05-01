@@ -109,20 +109,20 @@ module.exports = {
   postOrder: async (req, res) => {
     const { order, paymentMethod, total } = req.body
     try {
-      // const {
-      //   telephoneNumber,
-      //   address,
-      //   name,
-      //   surname,
-      //   country,
-      //   city,
-      //   postalCode,
-      //   floor,
-      //   apartment,
-      //   notes,
-      // } = order
-      // const { id, card } = paymentMethod
-      // const { brand, funding } = card
+      const {
+        telephoneNumber,
+        address,
+        name,
+        surname,
+        country,
+        city,
+        postalCode,
+        floor,
+        apartment,
+        notes,
+      } = order
+      const { id, card } = paymentMethod
+      const { brand, funding } = card
       const stripe = new Stripe(process.env.STRIPEKEY)
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id

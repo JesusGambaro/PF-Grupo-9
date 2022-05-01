@@ -347,75 +347,80 @@ module.exports = {
         sale,
         color,
         stock,
+        deletedImages
       } = req.body
 
       const { id } = req.params
       const imgFiles = req.files
       parsedStock = JSON.parse(stock)
+      parsedDeletedImages = JSON.parse(deletedImages)
 
+      console.log( "parsedDeletedImages", parsedDeletedImages )
       console.log( "req.body", req.body )
       console.log( "req.files", req.files )
 
-      // const product = await Product.findOne({
-      //   where: { id },
-      // })
+      const product = await Product.findOne({
+        where: { id },
+      })
 
-      // if (model) {
-      //   product.model = model
-      //   await product.save()
-      // }
-      // if (brand) {
-      //   product.brand = brand
-      //   await product.save()
-      // }
-      // if (category) {
-      //   product.category = category
-      //   await product.save()
-      // }
-      // if (gender) {
-      //   product.gender = gender
-      //   await product.save()
-      // }
-      // if (price) {
-      //   product.price = price
-      //   await product.save()
-      // }
-      // if (description) {
-      //   product.description = description
-      //   await product.save()
-      // }
-      // if (sale) {
-      //   product.sale = sale
-      //   await product.save()
-      // }
-      // if (color) {
-      //   product.color = color
-      //   await product.save()
-      // }
-      // if (parsedStock.length > 0) {
-      //   await Stock.destroy({
-      //     where: { productId: product.id },
-      //   })
-      //   parsedStock.map(async (amountAndSize) => {
-      //     let stockProduct = await Stock.create({
-      //       size: parseInt(amountAndSize.size),
-      //       amount: parseInt(amountAndSize.amount),
-      //     })
-      //     await product.addStock(stockProduct)
-      //   })
-      // }
-
-      // if (Object.keys(imgFiles).length !== 0) {
-      //   console.log("entré a Object.keys")
-      //   const productImages = await Image.destroy({
-      //     where: { productId: id },
-      //   })
-      //   Object.entries(imgFiles).forEach(async ([key, imgFile]) => {
-      //     const urlImg = await cloudinary(imgFile.tempFilePath)
-      //     let imageProduct = await Image.create({ url: urlImg.secure_url })
-      //     await product.addImage(imageProduct)
-      //   })
-      // }
+      if (model) {
+        product.model = model
+        await product.save()
+      }
+      if (brand) {
+        product.brand = brand
+        await product.save()
+      }
+      if (category) {
+        product.category = category
+        await product.save()
+      }
+      if (gender) {
+        product.gender = gender
+        await product.save()
+      }
+      if (price) {
+        product.price = price
+        await product.save()
+      }
+      if (description) {
+        product.description = description
+        await product.save()
+      }
+      if (sale) {
+        product.sale = sale
+        await product.save()
+      }
+      if (color) {
+        product.color = color
+        await product.save()
+      }
+      if (parsedStock.length > 0) {
+        await Stock.destroy({
+          where: { productId: product.id },
+        })
+        parsedStock.map(async (amountAndSize) => {
+          let stockProduct = await Stock.create({
+            size: parseInt(amountAndSize.size),
+            amount: parseInt(amountAndSize.amount),
+          })
+          await product.addStock(stockProduct)
+        })
+      }
+      if(parsedDeletedImages.length > 0){
+        parsedDeletedImages.map( async (urlImage) =>{
+          await Image.destroy({
+            where: {url: urlImage.url }
+          })
+        })
+      }
+      if (Object.keys(imgFiles).length !== 0) {
+        Object.entries(imgFiles).forEach(async ([key, imgFile]) => {
+          const urlImg = await cloudinary(imgFile.tempFilePath)
+          let imageProduct = await Image.create({ url: urlImg.secure_url })
+          await product.addImage(imageProduct)
+        })
+      }
 
       res.send("calzado editado")
     } catch (error) {

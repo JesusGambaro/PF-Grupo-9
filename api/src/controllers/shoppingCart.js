@@ -116,12 +116,13 @@ module.exports = {
       })
 
       if (productSelected?.stocks[0].amount > 0) {
-        let [cartItem] = await ShoppingCartItem.findOrCreate({
+        const [cartItem] = await ShoppingCartItem.findOrCreate({
           where: { productId, userId, size, ordered: false },
         })
-
-        cartItem.amount++
-        await cartItem.save()
+        if (cartItem.amount < productSelected?.stocks[0].amount) {
+          cartItem.amount++
+          await cartItem.save()
+        }
 
         res.send(cartItem)
       } else {

@@ -119,6 +119,7 @@ const Favorites = () => {
         if (result.isConfirmed) {
           const product = { productId: e.id, size: result.value };
           dispatch(addCart(token, product));
+          
           Swal.fire({
             position: "bottom-end",
             icon: "success",

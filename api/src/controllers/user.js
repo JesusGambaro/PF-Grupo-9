@@ -7,6 +7,7 @@ const { verifyToken } = require("../helpers/verify.js")
 const { simpleToken } = require("../helpers/simpleToken.js")
 const { generatePassword } = require("../helpers/generatePassword.js")
 const { emailForgotPassword } = require("../helpers/emailForgotPassword.js")
+const { getTestMessageUrl } = require("nodemailer")
 
 module.exports = {
   userSingUp: async (req, res) => {
@@ -151,6 +152,18 @@ module.exports = {
     try {
       const decodedToken = await verifyToken(req, res)
       if (decodedToken) res.status(200).send({ admin: decodedToken.isAdmin })
+    } catch (error) {
+      sendError(res, error)
+    }
+  },
+  getSuperAdmin: async (req, res) => {
+    try {
+      const decodedToken = await verifyToken(req, res)
+      const admin = await User.findByPk(decodedToken.id)
+      if (admin.email === "admin@gmail.com") {
+        return res.send({ superAdmin: true })
+      }
+      return res.send({ superAdmin: false })
     } catch (error) {
       sendError(res, error)
     }

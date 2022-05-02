@@ -91,7 +91,11 @@ module.exports = (sequelize) => {
           }
         },
       },
-      defaultValue: 4,
+      defaultValue: 0,
+    },
+    ratingAmount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
   })
 }

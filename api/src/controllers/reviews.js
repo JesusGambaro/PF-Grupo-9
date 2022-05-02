@@ -24,7 +24,7 @@ module.exports = {
 
       const productRating = roundRating(total / countRating.length)
       await Product.update(
-        { rating: productRating },
+        { rating: productRating, ratingAmount: countRating.length },
         { where: { model, brand } }
       )
       return res.send({ msg: "Thanks for your review" })

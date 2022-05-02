@@ -21,10 +21,9 @@ module.exports = {
       })
       let total = 0
       countRating.forEach((review) => (total += review.rating))
-
       const productRating = roundRating(total / countRating.length)
       await Product.update(
-        { rating: productRating },
+        { rating: productRating, ratingAmount: countRating.length },
         { where: { model, brand } }
       )
       return res.send({ msg: "Thanks for your review" })

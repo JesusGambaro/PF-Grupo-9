@@ -22,7 +22,6 @@ import {
 } from "../actions/actionsAdmin";
 const initialState = {
   products: [],
-  allDataCopy: [],
   sales: [],
   loading: false,
   registerUser: {},
@@ -37,7 +36,7 @@ const initialState = {
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_PRODUCTS_A:
-      return {...state, products: action.payload, allDataCopy: action.payload};
+      return {...state, products: action.payload};
     case GET_ALL_USERS:
       return {...state, users: action.payload};
     case SEARCH_PRODUCT_A:

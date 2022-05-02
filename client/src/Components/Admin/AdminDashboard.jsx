@@ -100,9 +100,14 @@ export default function AdminDashboard() {
                         ${e.total} {/* total */}
                       </td>
                       <td>
-                        <span className="badge rounded-pill alert-success">
+                      {e.delivered==='canceled'? <span className="badge rounded-pill alert-danger">
                           {e.delivered} {/* status */}
-                        </span>
+                        </span>:e.delivered==='completed'?<span className="badge rounded-pill alert-success">
+                          {e.delivered} {/* status */}
+                        </span>:
+                        <span className="badge rounded-pill alert-warning">
+                          {e.delivered} {/* status */}
+                        </span>}
                       </td>
                       <td>
                         {e.createdAt.slice(0, 10)} {/* date */}

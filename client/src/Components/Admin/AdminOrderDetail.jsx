@@ -14,6 +14,7 @@ export default function AdminOrderDetail() {
   const {order} = useParams();
   const orderDetail = useSelector((state) => state.admin.orderDetail);
   const [dropDown, setDropDown] = useState(false);
+  console.log(orderDetail)
   function abrirYcerrar() {
     setDropDown(!dropDown);
   }
@@ -89,7 +90,8 @@ export default function AdminOrderDetail() {
                   <h5 className="">Customer</h5>
                   <p className="detail-text-data">
                     {orderDetail.name&&orderDetail.name} {orderDetail.surname&&orderDetail.surname} <br /> {orderDetail.user? orderDetail.user.email: "User eliminated"}
-                    <br /> {orderDetail.telephoneNumber&& "+" + orderDetail.telephoneNumber}
+                    <br /> {orderDetail.telephoneNumber&& "Phone: " + orderDetail.telephoneNumber}
+                    
                   </p>
                   {/*               <a href="#">View profile</a>
                    */}
@@ -111,10 +113,10 @@ export default function AdminOrderDetail() {
                 <i className="bi bi-geo-alt icon-detail-order"></i>
                 <div className="order-data-container">
                   <h5 className="">Deliver to</h5>
-                  <p className="detail-text-data">City: {orderDetail.city && orderDetail.city}, {orderDetail.country && orderDetail.country} </p>
-                  <p className="detail-text-data">{orderDetail.address && orderDetail.address}, 
-                   {orderDetail.apartment && '  ' +orderDetail.apartment },
-                   {orderDetail.floor && ' floor '+orderDetail.floor}</p>
+                  <p className="detail-text-data">City: {orderDetail.city && orderDetail.city} {orderDetail.country && ', '+orderDetail.country} </p>
+                  <p className="detail-text-data">{orderDetail.address && orderDetail.address} 
+                   {orderDetail.apartment && ',  ' +orderDetail.apartment }
+                   {orderDetail.floor && ', floor '+orderDetail.floor}</p>
                   <p className="detail-text-data">Postalcode: {orderDetail.postalCode && orderDetail.postalCode}</p>
                 </div>
               </article>
@@ -145,8 +147,9 @@ export default function AdminOrderDetail() {
                             <div className="left">
                               <img
                                 src={e.product.images[0].url &&e.product.images[0].url}
-                                width="40"
-                                height="40"
+                                width="70"
+                                height="90"
+                                
                                 className="img-xs"
                                 alt="Item"
                               ></img>
@@ -157,7 +160,7 @@ export default function AdminOrderDetail() {
                           </td>
                           <td> {e.product.color && e.product.color} </td>
                           <td > {e.size && e.size}</td>
-                          <td > ${e.product.price && e.product.price}</td>
+                          <td > {e.product.finalPrice?'$'+e.product.finalPrice:e.product.price && '$'+e.product.price}</td>
                           
                           {/* 
                           <td className="text-end"> $99.50 </td> */}
@@ -216,12 +219,33 @@ export default function AdminOrderDetail() {
               </div>
             </div>
             <div className="box shadow-sm bg-light Payment-info">
-              <h5>Payment info</h5>
+            <h5>Payment info</h5>
+            <p className="detail-text-data">
+              <p>
+              {orderDetail.payment&&orderDetail.payment.cardBrand==='visa'?
+          <img src={require("../../Images/Visaa.jpg")} alt="Logo Visa" className="mercado-pago visa" ></img>
+          
+          :orderDetail.payment.cardBrand==='mastercard'&&
+          <img src={require("../../Images/MasterCard.jpg")} alt="Logo American express" className="mercado-pago"></img>
+        
+          }
+            {orderDetail.payment&&
+                orderDetail.payment.cardBrand&&' '+ orderDetail.payment.cardBrand 
+              }
+              </p>{orderDetail.payment&&
+                orderDetail.payment.funding&&'Funding: '+orderDetail.payment.funding
+              }
+    {orderDetail.payment&&
+                orderDetail.payment.status&& orderDetail.payment.status==='succeeded'?<p className="badge rounded-pill alert-success pay-status">Payment done</p> :
+                <p className="badge rounded-pill alert-danger pay-status">...</p>
+              }
+            </p>
+              {/* <h5>Payment info</h5>
               <p className="detail-text-data">
                 Master Card **** **** 4768 <br />
                 Business name: Grand Market LLC <br />
                 Phone: +1 (800) 555-154-52
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

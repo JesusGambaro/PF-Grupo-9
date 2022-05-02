@@ -54,7 +54,7 @@ export default function AdminPandO() {
             <form className=" col-md-6 admin-search">
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder="Search by email..."
                 className="form-control-admin"
                 onChange={(e) => handleChange(e)}
               ></input>
@@ -139,9 +139,14 @@ export default function AdminPandO() {
                       ${e.total&&e.total} {/* total */}
                     </td>
                     <td>
-                      <span className="badge rounded-pill alert-success">
-                        {e.delivered&&e.delivered} {/* status */}
-                      </span>
+                    {e.delivered==='canceled'? <span className="badge rounded-pill alert-danger">
+                          {e.delivered} {/* status */}
+                        </span>:e.delivered==='completed'?<span className="badge rounded-pill alert-success">
+                          {e.delivered} {/* status */}
+                        </span>:
+                        <span className="badge rounded-pill alert-warning">
+                          {e.delivered} {/* status */}
+                        </span>}
                     </td>
                     <td>
                       {e.createdAt&&e.createdAt.slice(0, 10)} {/* date */}

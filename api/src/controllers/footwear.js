@@ -94,11 +94,11 @@ module.exports = {
             ["id", "ASC"],
             ["images", "id", "ASC"],
           ],
+
         })
         return res.send(footwearsSearched)
       }
       const allFootwears = await Product.findAll({
-        attributes: { exclude: "description" },
         where: { active: true },
         include: [{ model: Image }, { model: Stock }],
         order: [
@@ -433,7 +433,6 @@ module.exports = {
   deleteProduct: async (req, res) => {
     try {
       const { id } = req.params
-      console.log(id)
       const product = await Product.findOne({ where: { id } })
       if (product) {
         await Stock.update(

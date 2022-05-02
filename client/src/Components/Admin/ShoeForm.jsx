@@ -19,12 +19,10 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
   if (shoeObject) {
     shoeObject = {
       ...shoeObject,
-      images: new Array(4).fill("").map((e, i) => {
-        console.log("soy el obj=>>", shoeObject?.images[i]?.url);
+      images: new Array(4).fill("").map((_, i) => {
         return shoeObject?.images[i]?.url ? shoeObject?.images[i] : {url: ""};
       }),
     };
-    console.log(shoeObject);
   }
   const [data, setData] = useState(
     shoeObject
@@ -175,8 +173,8 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
       setErrors({
         ...errors,
         stock: validation(data.stock, "stock"),
-        amount: validation(stock.amount, "amount"),
-        size: validation(stock.size, "size"),
+        // amount: validation(stock.amount, "amount"),
+        //size: validation(stock.size, "size"),
       });
     }
   }, [stock.amount, stock.size, data.stock]);

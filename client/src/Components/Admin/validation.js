@@ -38,8 +38,8 @@ const validation = (param, type) => {
     case "description":
       return param.length < 3
         ? "Minimum length 3"
-        : param.length > 200
-        ? "Maximum length 200"
+        : param.length > 500
+        ? "Maximum length 500"
         : "";
     default:
       return !/^[A-Za-z0-9\s]+$/g.test(param)

@@ -57,32 +57,33 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
-        margin-right: .5rem;
-        .cart_detail {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          a {
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #d4d4d4;
-            padding: 0.4rem 1rem;
-          }
-        }
+        margin-right: 0.5rem;
+        
+        font-size: small;
         button {
           display: flex;
-          align-items: center;
-          justify-content: center;
           border-radius: 0.5rem;
           border: none;
           padding: 0.4rem 1rem;
           background-color: #d4d4d4;
+          white-space: nowrap;
+          color: rgb(255, 255, 255);
+        }
+        a {
+          border-radius: 0.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #d4d4d4;
+          padding: 0.4rem 1rem;
+          white-space: nowrap;
         }
         .deleteButton {
           //font-weight: 500;
-          color: rgb(255, 255, 255);
+          background: #df0902;
+        }
+        .addToCartButton {
+          //font-weight: 500;
           background: #df0902;
         }
       }

@@ -173,8 +173,8 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
       setErrors({
         ...errors,
         stock: validation(data.stock, "stock"),
-        amount: validation(stock.amount, "amount"),
-        size: validation(stock.size, "size"),
+        // amount: validation(stock.amount, "amount"),
+        //size: validation(stock.size, "size"),
       });
     }
   }, [stock.amount, stock.size, data.stock]);

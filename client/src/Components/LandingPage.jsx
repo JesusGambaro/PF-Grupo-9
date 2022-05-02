@@ -21,13 +21,14 @@ import {
   CarouselIndicators,
 } from "reactstrap";
 import {addCart} from "../redux/actions/userCart";
-
+import {getUserFav} from "../redux/actions/userFav";
 export default function LandingPage() {
   const dispatch = useDispatch();
-
+  const token = window.localStorage.getItem("token");
+  const shoes = useSelector((state) => state.root);
   useEffect(() => {
-    dispatch(getAllSales());
-
+    if (!shoes.allData.length) dispatch(bringAllData());
+    dispatch(getUserFav(token));
   }, [dispatch, addCart]);
 
   // State for Active index
@@ -137,11 +138,13 @@ export default function LandingPage() {
 
       <div className="cards-container">
         {sales.length > 0 &&
-          sales.map((shoe, i) => (
-            <div key={i} className="landing-card col col-3">
-              <Card e={shoe} key={shoe.id} />
-            </div>
-          ))}
+          sales.map((shoe, i) => {
+            return i < 6 ? (
+              <div key={i} className="landing-card col col-3">
+                <Card e={shoe} key={shoe.id} />
+              </div>
+            ) : null;
+          })}
       </div>
 
       <Footer />

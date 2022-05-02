@@ -1,4 +1,4 @@
-const {Op, Sequelize} = require("sequelize");
+const {Op, Sequelize, where} = require("sequelize");
 const {
   Product,
   Image,
@@ -93,7 +93,7 @@ module.exports = {
           ],
         });
         const allFootwears = await Product.findAll({
-          attributes: {exclude: "description"},
+          //attributes: {exclude: "description"},
           include: [{model: Image}, {model: Stock}],
           order: [
             ["id", "ASC"],
@@ -103,7 +103,7 @@ module.exports = {
         return res.send(footwearsSearched);
       }
       const allFootwears = await Product.findAll({
-        attributes: {exclude: "description"},
+      //  attributes: {exclude: "description"},
         include: [{model: Image}, {model: Stock}],
         order: [
           ["id", "ASC"],
@@ -433,7 +433,8 @@ module.exports = {
   deleteProduct: async (req, res) => {
     try {
       const {id} = req.params;
-      const product = await Product.findOne({id});
+      console.log(id);
+      const product = await Product.findOne({where: {id}});
       if (product) {
         // eliminar todas las imagenes relacionadas al producto.
         const imageProduct = await Image.findAll({
@@ -472,7 +473,8 @@ module.exports = {
           });
 
         // Finalmente elimimnar el producto.
-        product.destroy();
+
+        await product.destroy();
       }
       res.send("product destroyed");
     } catch (error) {

@@ -46,9 +46,9 @@ const postProduct = (token, newShoe, form) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    let oldData = getState().admin.products;
+/*     let oldData = getState().admin.products;
     let newData = {...oldData, newShoe};
-    dispatch({type: UPDATE_PRODUCT, payload: newData});
+    dispatch({type: UPDATE_PRODUCT, payload: newData}); */
     dispatch(getAllProductsAdmin(token));
     dispatch({type: LOADING, payload: false});
   };
@@ -64,12 +64,12 @@ const editShoe = (token, editedShoe, form, id) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    let oldData = getState().admin.products;
+    /*     let oldData = getState().admin.products;
     let newData = oldData.map((el) => {
       return el.id === id ? editedShoe : el;
     });
     console.log("DAAT=>>", newData);
-    dispatch({type: UPDATE_PRODUCT, payload: newData});
+    dispatch({type: UPDATE_PRODUCT, payload: newData}); */
     dispatch(getAllProductsAdmin(token));
     dispatch({type: LOADING, payload: false});
   };
@@ -84,13 +84,13 @@ const deleteShoe = (token, id) => {
         Authorization: `bearer ${token}`,
       },
     });
-    let oldData = getState().admin.products;
+    /* let oldData = getState().admin.products;
     console.log("Soy el old data===>", oldData);
     let newData = oldData.filter((el) => {
       return el.id !== id;
     });
     console.log("Soy el new data===>", newData);
-    dispatch({type: UPDATE_PRODUCT, payload: newData});
+    dispatch({type: UPDATE_PRODUCT, payload: newData}); */
     dispatch(getAllProductsAdmin(token));
     dispatch({type: LOADING, payload: false});
   };

@@ -136,18 +136,15 @@ const AdminProducts = () => {
     : (document.body.style.overflow = "auto");
 
   useEffect(() => {
-    if (window.localStorage.getItem("token")) {
+    if (role.admin) {
       const token = window.localStorage.getItem("token");
-      if (role.admin) {
-        if (!products.length) dispatch(getAllProductsAdmin(token));
-        if (!genders.length) dispatch(getAllGenders());
-        dispatch(roleUser(token));
-      } else if (role.admin === false) {
-        navigate("/home");
-      }
+      if (!products.length) dispatch(getAllProductsAdmin(token));
+      if (!genders.length) dispatch(getAllGenders(token));
+      dispatch(roleUser(token));
+    } else if (role.admin === false) {
+      navigate("/home");
     }
   }, [dispatch, navigate, products.length, role.admin]);
-
   /* ---------------------------------- searh --------------------------------- */
   const [searchParam, setSearchParam] = useState("");
   const handleSearch = (e) => {

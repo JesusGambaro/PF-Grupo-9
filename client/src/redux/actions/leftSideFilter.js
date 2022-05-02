@@ -69,7 +69,7 @@ const leftSideFilter = (filtroAgregar = null, valor = null) => {
             return e.sale > 0;
           case "price":
             return (
-              filtro.value.maxValue > e.price && e.price > filtro.value.minValue
+              filtro.value.maxValue > e.finalPrice && e.finalPrice > filtro.value.minValue
             );
           case "size":
             let mandar = false;

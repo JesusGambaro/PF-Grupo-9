@@ -1,5 +1,5 @@
 import axios from "axios";
-import {BRING_ALL_DATA, LOADING, LOAD_GENDERS,GET_FAV} from "./actions";
+import {BRING_ALL_DATA, LOADING, LOAD_GENDERS,GET_ALL_SALES} from "./actions";
 const URL = "http://localhost:3001/allFootwear";
 
 const bringAllData = () => {
@@ -12,7 +12,9 @@ const bringAllData = () => {
     let kids = filtered.filter((shoe) => shoe.gender === "Kids");
     let unisex = filtered.filter((shoe) => shoe.gender === "Unisex");
     let filtereds = {female, male, kids, unisex};
+    let sales = data.filter((shoe)=> shoe.sale > 0);
     dispatch({type: BRING_ALL_DATA, payload: data});
+    dispatch({type: GET_ALL_SALES, payload: sales});
     dispatch({type: LOAD_GENDERS, payload: filtereds});
     dispatch({type: LOADING, payload: false});
   };

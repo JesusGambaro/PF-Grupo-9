@@ -16,6 +16,7 @@ export const getUserFav = (token) => {
       type: GET_FAV,
       payload: data,
     })
+    dispatch(filtrarLosFav(null, false))
     data.map((shoe) => dispatch(filtrarLosFav(shoe.product.id, true)))
   }
 }
@@ -47,6 +48,7 @@ export const deleteAllFav = (token) => {
       type: GET_FAV,
       payload: [],
     })
+    dispatch(filtrarLosFav(null, false))
   }
 }
 
@@ -59,27 +61,32 @@ export const addFav = (token, product) => {
   }
 }
 
-const filtrarLosFav = (idFav, isFavorite) => {
+const filtrarLosFav = (idFav = null, isFavorite) => {
   return async (dispatch, getState) => {
     let filtered = getState().root.genderData
     let allDataCopy = getState().root.allDataCopy
     allDataCopy = allDataCopy.map((shoe) => {
+      if(!idFav) return { ...shoe, isFavorite: isFavorite };
       return shoe.id === idFav ? { ...shoe, isFavorite: isFavorite } : shoe
     })
     let female = filtered.female.map((shoe) => {
       //console.log(shoe.id ," ", idFav);
+      if(!idFav) return { ...shoe, isFavorite: isFavorite };
       return shoe.id === idFav ? { ...shoe, isFavorite: isFavorite } : shoe
     })
     let male = filtered.male.map((shoe) => {
       //console.log(shoe.id === idFav ? "Hay un fav" : "");
+      if(!idFav) return { ...shoe, isFavorite: isFavorite };
       return shoe.id === idFav ? { ...shoe, isFavorite: isFavorite } : shoe
     })
     let kids = filtered.kids.map((shoe) => {
       //console.log(shoe.id === idFav ? "Hay un fav" : "");
+      if(!idFav) return { ...shoe, isFavorite: isFavorite };
       return shoe.id === idFav ? { ...shoe, isFavorite: isFavorite } : shoe
     })
     let unisex = filtered.unisex.map((shoe) => {
       //console.log(shoe.id === idFav ? "Hay un fav" : "");
+      if(!idFav) return { ...shoe, isFavorite: isFavorite };
       return shoe.id === idFav ? { ...shoe, isFavorite: isFavorite } : shoe
     })
     let filtereds = { female, male, kids, unisex }

@@ -16,7 +16,16 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
   const [errors, setErrors] = useState({});
   const [stock, setStock] = useState({amount: 0, size: 0});
   const [deletedImages, setDeletedImages] = useState([]);
-
+  if (shoeObject) {
+    shoeObject = {
+      ...shoeObject,
+      images: new Array(4).fill("").map((e, i) => {
+        console.log("soy el obj=>>", shoeObject?.images[i]?.url);
+        return shoeObject?.images[i]?.url ? shoeObject?.images[i] : {url: ""};
+      }),
+    };
+    console.log(shoeObject);
+  }
   const [data, setData] = useState(
     shoeObject
       ? shoeObject
@@ -76,11 +85,11 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
             });
           }
         });
-        if (deletedImages.length)
-          formData.append("deletedImages", JSON.stringify(deletedImages));
+        formData.append("deletedImages", JSON.stringify(deletedImages));
         dispatch(
           editShoe(
             window.localStorage.getItem("token"),
+            data,
             formData,
             shoeObject.id
           )
@@ -99,7 +108,9 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
           }
           //else formData.append(param, data[param].map(img=>img.image));
         });
-        dispatch(postProduct(window.localStorage.getItem("token"), formData));
+        dispatch(
+          postProduct(window.localStorage.getItem("token"), data, formData)
+        );
       }
     } else if (role.admin === false) {
       navigate("/home");

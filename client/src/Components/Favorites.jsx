@@ -97,6 +97,7 @@ const Favorites = () => {
           ? dispatch(deleteFavItem(id, token))
           : dispatch(deleteAllFav(token));
       }
+      console.log("token: ",token);
     });
   };
   const handleAddCart = (e) => {

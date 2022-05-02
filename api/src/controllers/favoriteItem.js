@@ -54,15 +54,17 @@ module.exports = {
   deleteOneFavoriteItem: async (req, res) => {
     try {
       const { id } = req.params
+      
 
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
-
+      
       const favItem = await FavoriteItem.findOne({
         where: { id },
       })
-
+      
       if (userId === favItem.userId) {
+        
         await FavoriteItem.destroy({
           where: { id },
         })

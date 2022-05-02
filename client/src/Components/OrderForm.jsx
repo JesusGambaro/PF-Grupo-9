@@ -424,7 +424,7 @@ const PaymentCheckout = () => {
                     <label><span>Notes</span><textarea name="notes"  value={order.notes} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.notes && <label className="col form-label text-danger fw-bold text-end">{error.notes}</label>}
                     
-                    <div style={{padding:"10px",width:"100%",borderColor: "rgb(133, 133, 133)",borderStyle:"solid",borderWidth: "1px",height: "max-content"}}>
+                    <div style={{width:"100%",borderColor: "rgb(133, 133, 133)",borderStyle:"solid",borderWidth: "1px",height: "max-content"}}>
                     <CardElement options={{style:{base:
                         {fontSize:"1.5rem"}
                         }}} className="a"/>

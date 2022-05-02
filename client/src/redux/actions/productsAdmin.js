@@ -36,28 +36,28 @@ const searchProduct = (token, param) => {
   };
 };
 
-const postProduct = (token, newShoe) => {
+const postProduct = (token, newShoe, form) => {
   console.log("Soy el nuevo shoe=>>", newShoe);
   return async (dispatch, getState) => {
     dispatch({type: LOADING, payload: true});
-    await axios.post(`http://localhost:3001/allFootwear`, newShoe, {
+    await axios.post(`http://localhost:3001/allFootwear`, form, {
       headers: {
         Authorization: `bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
     });
-    let oldData = getState().admin.allDataCopy;
+    let oldData = getState().admin.products;
     let newData = {...oldData, newShoe};
-    dispatch(getAllProductsAdmin(token));
     dispatch({type: UPDATE_PRODUCT, payload: newData});
     dispatch({type: LOADING, payload: false});
   };
 };
 
-const editShoe = (token, editedShoe, id) => {
+const editShoe = (token, editedShoe, form, id) => {
+  console.log("Soy el EDITED====>", editedShoe);
   return async (dispatch, getState) => {
     dispatch({type: LOADING, payload: true});
-    axios.put(`http://localhost:3001/allFootwear/${id}`, editedShoe, {
+    axios.put(`http://localhost:3001/allFootwear/${id}`, form, {
       headers: {
         Authorization: `bearer ${token}`,
         "Content-Type": "multipart/form-data",
@@ -65,9 +65,10 @@ const editShoe = (token, editedShoe, id) => {
     });
     let oldData = getState().admin.allDataCopy;
     let newData = oldData.map((el) => {
-      return el.id === id ? editShoe : el;
+      return el.id === id ? editedShoe : el;
     });
-    dispatch(getAllProductsAdmin(token));
+    console.log("DAAT=>>", newData);
+    //dispatch(getAllProductsAdmin(token));
     dispatch({type: UPDATE_PRODUCT, payload: newData});
     dispatch({type: LOADING, payload: false});
   };
@@ -81,12 +82,10 @@ const deleteShoe = (token, id) => {
         Authorization: `bearer ${token}`,
       },
     });
-    let oldData = getState().admin.allDataCopy;
+    let oldData = getState().admin.products;
     let newData = oldData.filter((el) => {
       return el.id !== id;
     });
-    console.log(newData);
-    dispatch(getAllProductsAdmin(token));
     dispatch({type: UPDATE_PRODUCT, payload: newData});
     dispatch({type: LOADING, payload: false});
   };

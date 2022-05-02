@@ -3,7 +3,7 @@ import ShoeForm from "./ShoeForm";
 import {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {getAllGenders} from "../../redux/actions/getAllUtils"; 
+import {getAllGenders} from "../../redux/actions/getAllUtils";
 import {
   deleteShoe,
   getAllProductsAdmin,
@@ -14,6 +14,7 @@ import "../../Css/AdminProducts.scss";
 import Loading from "../Loading";
 import usePagination from "../../hooks/usePagination";
 const CardProduct = ({shoe, editShoeFunctions}) => {
+  if (shoe.stock) shoe = {...shoe, stocks: shoe.stock};
   const {setFunc} = editShoeFunctions;
   const {openEditorFunc} = editShoeFunctions;
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const CardProduct = ({shoe, editShoeFunctions}) => {
       dispatch(deleteShoe(window.localStorage.getItem("token"), id));
     else if (role.admin === false) navigate("/home");
   };
+  //console.log(shoe);
   return (
     <div className="product-card">
       {confirmDialog && (
@@ -37,7 +39,7 @@ const CardProduct = ({shoe, editShoeFunctions}) => {
           cancelDelete={() => setConfirmDialog(false)}
         />
       )}
-      <img src={shoe.images[0].url} alt="" />
+      <img src={shoe?.images[0]?.url} alt="" />
       <p>{shoe.brand + " - " + shoe.model}</p>
       <p>$ {shoe.price}</p>
       <p
@@ -146,6 +148,16 @@ const AdminProducts = () => {
     }
   }, [dispatch, navigate, products.length, role.admin]);
 
+  useEffect(() => {
+    if (window.localStorage.getItem("token")) {
+      const token = window.localStorage.getItem("token");
+      if (role.admin) {
+        dispatch(getAllProductsAdmin(token));
+      } else if (role.admin === false) {
+        navigate("/home");
+      }
+    }
+  }, [products.length, dispatch, navigate, role.admin]);
   /* ---------------------------------- searh --------------------------------- */
   const [searchParam, setSearchParam] = useState("");
   const handleSearch = (e) => {
@@ -201,8 +213,8 @@ const AdminProducts = () => {
         ) : (
           <div className="products-cards-container">
             {products.length > 0 ? (
-              dataPerPage().map((shoe, id) =>
-                shoe.hasOwnProperty("msg") ? (
+              dataPerPage().map((shoe, id) => {
+                return shoe.hasOwnProperty("msg") ? (
                   <h2 key={id}>{shoe.msg}</h2>
                 ) : (
                   <CardProduct
@@ -215,8 +227,8 @@ const AdminProducts = () => {
                       },
                     }}
                   />
-                )
-              )
+                );
+              })
             ) : (
               <h2>No results</h2>
             )}

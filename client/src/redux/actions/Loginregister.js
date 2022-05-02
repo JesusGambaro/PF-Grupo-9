@@ -30,7 +30,7 @@ export const loginUsers = (datos) => {
 export const roleUser = (token) => {
   return async (dispatch) => {
     const { data } = await axios.get(`${URL}/role`, {
-      headers: { Authorization: `bearer ${token}` },
+      headers: { "Authorization": `bearer ${token}` },
     });
     dispatch({
       type: GET_ROLE,

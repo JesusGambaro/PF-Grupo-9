@@ -23,6 +23,7 @@ const prueba = async () => {
     sale: 0,
     color: "Purple",
     rating: 3.5,
+    ratingAmount: 5,
   })
   const imageNikeKyrieInfinityPurple4 = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/d6f5179b-2c54-47ca-ab43-6a43200cae62/kyrie-infinity-basketball-shoes-LvzsVp.png",

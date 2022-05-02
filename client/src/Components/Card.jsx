@@ -58,10 +58,14 @@ const Card = ({ e, horizontal }) => {
           showConfirmButton: false,
           timer: 1250,
         });
-      } else if (type === "delFav") {
+
+      }else if (type === "delFav") {
         const id = e.id;
-        console.log("token: ",token);
-        
+        //console.log("token: ",token);
+        console.log(favUser);
+        /*console.log(favUser.find((e) => {
+          return e.product.id === id;
+        })) */
         Swal.fire({
           text: "Are you sure do you want to delete it from favorites?",
           icon: "warning",

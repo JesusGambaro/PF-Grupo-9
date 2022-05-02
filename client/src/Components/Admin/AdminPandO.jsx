@@ -132,7 +132,7 @@ export default function AdminPandO() {
                       </b>
                     </td>
                     <td>
-                      {e.user.email?e.user.email:'No ha sido suministrado'}
+                      {e.user?e.user.email:'User eliminated'}
                       {/* email@example.com */}
                     </td>
                     <td>

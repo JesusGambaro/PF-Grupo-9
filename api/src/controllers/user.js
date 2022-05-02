@@ -1,4 +1,4 @@
-const { User, Reviews } = require("../db.js")
+const { User, Review } = require("../db.js")
 const bcrypt = require("bcryptjs")
 const { generateToken } = require("../helpers/token.js")
 const { Op } = require("sequelize")
@@ -197,7 +197,7 @@ module.exports = {
         where: { email },
       })
       if (removedUser) {
-        await Reviews.destroy({ where: { userId: user.id } })
+        await Review.destroy({ where: { userId: user.id } })
         return res.send({ msg: `User ${email} removed` })
       }
       return res.status(400).send({

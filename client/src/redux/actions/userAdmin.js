@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GET_ALL_USERS, SEARCH_USER_A} from "./actionsAdmin";
+import {GET_ALL_USERS, IS_THE_MASTER_ONE, SEARCH_USER_A} from "./actionsAdmin";
 import {LOADING} from "./actions";
 
 const URL = "http://localhost:3001/user/";
@@ -43,7 +43,7 @@ const filterUsers = (token, isAdmin) => {
 };
 
 const deleteUser = (token, user) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch({type: LOADING, payload: true});
     await axios.delete(`http://localhost:3001/user/deleteUser/${user.email}`, {
       headers: {
@@ -66,6 +66,7 @@ const changeUserRole = (token, user) => {
     dispatch({type: LOADING, payload: false});
   };
 };
+
 const filterByName = (filter) => {
   return async (dispatch, getState) => {
     let filtered = [...getState().admin.users];

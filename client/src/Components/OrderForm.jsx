@@ -74,7 +74,7 @@ const PaymentCheckout = () => {
     }
     const handleErrorForm = (e) => {
         if(e.target.name === "telephoneNumber"){
-            if(!e.target.value.length || e.target.value.length > 15 || e.target.value.length < 6) { console.log('a')
+            if(!e.target.value.length || e.target.value.length > 15 || e.target.value.length < 6) {
             setError({...error,telephoneNumber: "Telephone number is required and must be valid"})}
             else if(!e.target.value.length > 15 || !e.target.value.length < 4){setError({...error,telephoneNumber: ""})}
         }
@@ -130,14 +130,8 @@ const PaymentCheckout = () => {
              type: "card",
              card: elements.getElement(CardElement),
            });
-           console.log({paymentMethod})
-           console.log('datos de la orden',order)
-         if(error){
-             return console.log('mensaje de error',error)
-            }else{
-         
+         if(!error){         
         dispatch(postOrder(token,{order,paymentMethod,total})) 
-
         setOrder({
             telephoneNumber:"",
             address:"",
@@ -149,11 +143,7 @@ const PaymentCheckout = () => {
             postalCode:"",
             apartment:"",
             notes:""
-        
-        
             })
-        
-      
     }}
     return (
         <div >

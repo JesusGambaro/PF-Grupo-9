@@ -79,7 +79,7 @@ const AdminCustomers = () => {
     } else if (role.admin === false) {
       navigate("/home");
     }
-  }, [dispatch, navigate, role.admin, users.length]);
+  }, [dispatch, navigate, role.admin, users]);
 
   const handleDeleteUser = (email) => {
     if (role.admin) {

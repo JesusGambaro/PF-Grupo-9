@@ -49,6 +49,7 @@ const postProduct = (token, newShoe, form) => {
     let oldData = getState().admin.products;
     let newData = {...oldData, newShoe};
     dispatch({type: UPDATE_PRODUCT, payload: newData});
+    dispatch(getAllProductsAdmin(token));
     dispatch({type: LOADING, payload: false});
   };
 };
@@ -63,18 +64,19 @@ const editShoe = (token, editedShoe, form, id) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    let oldData = getState().admin.allDataCopy;
+    let oldData = getState().admin.products;
     let newData = oldData.map((el) => {
       return el.id === id ? editedShoe : el;
     });
     console.log("DAAT=>>", newData);
-    //dispatch(getAllProductsAdmin(token));
     dispatch({type: UPDATE_PRODUCT, payload: newData});
+    dispatch(getAllProductsAdmin(token));
     dispatch({type: LOADING, payload: false});
   };
 };
 
 const deleteShoe = (token, id) => {
+  console.log(id);
   return async (dispatch, getState) => {
     dispatch({type: LOADING, payload: true});
     await axios.delete(`http://localhost:3001/allFootwear/${id}`, {
@@ -83,10 +85,13 @@ const deleteShoe = (token, id) => {
       },
     });
     let oldData = getState().admin.products;
+    console.log("Soy el old data===>", oldData);
     let newData = oldData.filter((el) => {
       return el.id !== id;
     });
+    console.log("Soy el new data===>", newData);
     dispatch({type: UPDATE_PRODUCT, payload: newData});
+    dispatch(getAllProductsAdmin(token));
     dispatch({type: LOADING, payload: false});
   };
 };

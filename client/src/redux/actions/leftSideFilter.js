@@ -65,7 +65,7 @@ const leftSideFilter = (filtroAgregar = null, valor = null) => {
       let nombre = filtro.name;
       data = data.filter((e) => {
         switch (nombre) {
-          case "sale":
+          case "discount":
             return e.sale > 0;
           case "price":
             return (

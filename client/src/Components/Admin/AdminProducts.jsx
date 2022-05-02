@@ -148,16 +148,6 @@ const AdminProducts = () => {
     }
   }, [dispatch, navigate, products.length, role.admin]);
 
-  useEffect(() => {
-    if (window.localStorage.getItem("token")) {
-      const token = window.localStorage.getItem("token");
-      if (role.admin) {
-        dispatch(getAllProductsAdmin(token));
-      } else if (role.admin === false) {
-        navigate("/home");
-      }
-    }
-  }, [products.length, dispatch, navigate, role.admin]);
   /* ---------------------------------- searh --------------------------------- */
   const [searchParam, setSearchParam] = useState("");
   const handleSearch = (e) => {

@@ -105,14 +105,14 @@ const LeftSideFilters = () => {
         </div>
       </div>
       <div className="offer-filter">
-        <h4>Sale</h4>
+        <h4>Discount</h4>
         <Checkbox
-          data={"On sale"}
+          data={"On Discount"}
           change={(e) => {
-            handleCheckChange(e, "Sale", "On Sale");
-            handleCheckboxChange("On Sale");
+            handleCheckChange(e, "discount", "On Discount");
+            handleCheckboxChange("On Discount");
           }}
-          selected={checkeds.includes("On Sale")}
+          selected={checkeds.includes("On Discount")}
         />
       </div>
 

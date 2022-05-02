@@ -74,7 +74,8 @@ const PaymentCheckout = () => {
     }
     const handleErrorForm = (e) => {
         if(e.target.name === "telephoneNumber"){
-            if(!e.target.value.length || e.target.value.length > 15 || e.target.value.length < 6) {
+            
+            if(!e.target.value.length || e.target.value.length > 11 || e.target.value.length < 11) {
             setError({...error,telephoneNumber: "Telephone number is required and must be valid"})}
             else if(!e.target.value.length > 15 || !e.target.value.length < 4){setError({...error,telephoneNumber: ""})}
         }
@@ -145,6 +146,8 @@ const PaymentCheckout = () => {
             notes:""
             })
     }}
+
+    
     return (
         <div >
 
@@ -152,7 +155,8 @@ const PaymentCheckout = () => {
              <section className="order-container">
                 <h1 className="fw-bold text-center mb-3">Purchase</h1>
                 <form onSubmit={(e) => handleSubmit(e)}  className="form">
-                    <label className="input-number" ><span>Telephone number<i className="asterisco">*</i></span><input placeholder="3447423612" type="number" name="telephoneNumber" value={order.telephoneNumber} onChange={e => handleOnChangeForm(e)} /></label>
+                    <label className="input-number" ><span>Telephone number<i className="asterisco">*</i></span><input placeholder="93447411712" type="number" name="telephoneNumber" value={order.telephoneNumber} onChange={e => handleOnChangeForm(e)}
+                    /></label>
                     {error.telephoneNumber && <label className="col form-label text-danger fw-bold text-end">{error.telephoneNumber}</label>}
                     <label><span>Address<i className="asterisco">*</i></span><input name="address" placeholder="San Martin 35" value={order.address} onChange={e => handleOnChangeForm(e)} /></label>
                     {error.address && <label className="col form-label text-danger fw-bold text-end">{error.address}</label>}
@@ -415,9 +419,9 @@ const PaymentCheckout = () => {
                     </div>
                     <label><span>City<i className="asterisco">*</i></span><input name="city" placeholder="Buenos Aires" value={order.city} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.city && <label className="col form-label text-danger fw-bold text-end">{error.city}</label>}
-                    <label><span>Postal Code<i className="asterisco">*</i></span><input name="postalCode" placeholder="10111" value={order.postalCode} onChange={e => handleOnChangeForm(e)}/></label>
+                    <label><span>Postal Code<i className="asterisco">*</i></span><input name="postalCode" placeholder="10111" type="number" value={order.postalCode} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.postalCode && <label className="col form-label text-danger fw-bold text-end">{error.postalCode}</label>}
-                    <label><span>Floor</span><input name="floor" placeholder="2" value={order.floor} onChange={e => handleOnChangeForm(e)}/></label>
+                    <label><span>Floor</span><input name="floor" placeholder="2" type="number"value={order.floor} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.floor && <label className="col form-label text-danger fw-bold text-end">{error.floor}</label>}
                     <label><span>Apartment</span><input name="apartment" placeholder="B" value={order.apartment} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.apartment && <label className="col form-label text-danger fw-bold text-end">{error.apartment}</label>}

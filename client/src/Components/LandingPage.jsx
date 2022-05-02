@@ -4,7 +4,12 @@ import React from "react";
 import Footer from "./Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "./Card";
-import {agregarFiltros} from "../redux/actions/leftSideFilter";
+import {
+  resetFilters,
+  genderFilter,
+  leftSideFilter,
+  agregarFiltros,
+} from "../redux/actions/leftSideFilter";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import bringAllData from "../redux/actions/bringAllData";

@@ -58,6 +58,7 @@ const Card = ({ e, horizontal }) => {
           showConfirmButton: false,
           timer: 1250,
         });
+
       }else if (type === "delFav") {
         const id = e.id;
         //console.log("token: ",token);

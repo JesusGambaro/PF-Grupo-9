@@ -16,10 +16,8 @@ const Shoes = () => {
   useEffect(() => {
     if (!shoes.allData.length) dispatch(bringAllData());
     dispatch(getUserFav(token));
-  }, [dispatch]);
-  useEffect(() => {
     dispatch(leftSideFilter());
-  },);
+  }, [dispatch]);
   const [toggle, setToggle] = useState(true);
   const {allData, loading, genderActual} = shoes;
   const {Pagination, dataPerPage} = usePagination(allData, 12, 4);

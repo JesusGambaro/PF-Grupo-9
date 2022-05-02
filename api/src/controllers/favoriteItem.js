@@ -54,24 +54,23 @@ module.exports = {
   deleteOneFavoriteItem: async (req, res) => {
     try {
       const { id } = req.params
-      
-
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
-      
       const favItem = await FavoriteItem.findOne({
+        include: { model: Product, where: { id } },
+      })
+      const favItemId = await FavoriteItem.findOne({
         where: { id },
       })
-      
-      if (userId === favItem.userId) {
-        
-        await FavoriteItem.destroy({
-          where: { id },
-        })
+      if (favItem && userId === favItem.userId) {
+        await favItem.destroy()
         return res.send({ msg: "Favorite item deleted" })
-      } else {
-        return res.send({ msg: "Wrong credentials" })
       }
+      if (userId === favItemId.id) {
+        await favItem.destroy()
+        return res.send({ msg: "Favorite item deleted" })
+      }
+      return res.send({ msg: "Wrong credentials" })
     } catch (error) {
       sendError(res, error)
     }

@@ -147,7 +147,7 @@ function Details() {
   useEffect(()=>{
     return () => dispatch(clearDetail());
   },[])
-  
+
   return (
     <div className="w-100" style={{ marginTop: "4rem" }}>
       {loading ? (
@@ -244,7 +244,7 @@ function Details() {
                         value={colorSelect? colorSelect:detail.color }
                         onChange={handleColor}
                       >
-                        {detailColor.length > 0 &&  detailColor.map((diseño) => (
+                        {detailColor.length && detailColor.find(i => i.color === detail.color)? detailColor.map((diseño) => (
                             <option
                               key={diseño.id}
                               value={diseño.color}
@@ -254,7 +254,14 @@ function Details() {
                               {diseño.color.toUpperCase()}
                             </option>
                           ))
-                        }
+                        : detail.id &&
+                        <option
+                              value={detail.color}
+                              className="fw-bold"
+                              id={detail.id}
+                            >
+                              {detail.color.toUpperCase()}
+                            </option> }
                       </select>
                       <label
                         htmlFor="floatingSelect"
@@ -299,13 +306,15 @@ function Details() {
                   </div>
                 </div>
                 <div className="row mt-5 mb-4 d-flex justify-content-center mt-xl-4 pt-xl-4 mt-lg-3 pt-lg-3">
-                  <button
+                 {detail.active? <button
                     className="w-50 btn btn-outline-info fs-4 fw-bold"
                     disabled={stock == 0}
                     onClick={handleAddingCart}
                   >
                     ADD TO CART
                   </button>
+                  : <h2 className="text-center text-info">This product was removed</h2>  
+                }
                 </div>
               </div>
             </div>

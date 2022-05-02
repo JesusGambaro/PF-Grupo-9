@@ -1,31 +1,31 @@
-const { Op, Sequelize } = require("sequelize")
-const { Product, Image, Stock, ShoppingCartItem, FavoriteItem } = require("../db.js")
+const { Product, Image, Stock, FavoriteItem } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
 
 module.exports = {
   postFavoriteItem: async (req, res) => {
     try {
-        const { productId } = req.body
-        const decodedToken = await verifyToken(req, res)
-        const userId = decodedToken.id
-        const productSelected = await Product.findOne({
-          where: { id: productId },
-          include: { model: Stock },
+      const { productId } = req.body
+      const decodedToken = await verifyToken(req, res)
+      const userId = decodedToken.id
+      const productSelected = await Product.findOne({
+        where: { id: productId },
+        include: { model: Stock },
+      })
+      if (productSelected?.stocks.length) {
+        let [favoriteItem] = await FavoriteItem.findOrCreate({
+          where: { productId, userId },
         })
-  
-        if (productSelected?.stocks[0].amount > 0) {
-          let [favoriteItem] = await FavoriteItem.findOrCreate({
-            where: { productId, userId },
-          })
-  
-          return res.send(favoriteItem)
-        } else {
-          return res.send({ Error: `The proctId (${productId}) was not found or stock 0.` })
-        }
-      } catch (error) {
-        sendError(res, error)
+
+        return res.send(favoriteItem)
+      } else {
+        return res.send({
+          Error: `The proctId (${productId}) was not found or stock 0.`,
+        })
       }
+    } catch (error) {
+      sendError(res, error)
+    }
   },
 
   getAllFavoriteItems: async (req, res) => {
@@ -37,11 +37,12 @@ module.exports = {
         },
         include: {
           model: Product,
-          include: [
-            { model: Image },
-            { model: Stock },
-          ],
+          include: [{ model: Image }, { model: Stock }],
         },
+        order: [
+          ["id", "ASC"],
+          ["product", "images", "id", "ASC"],
+        ],
       })
 
       res.send(sameUserFavorites)
@@ -58,18 +59,17 @@ module.exports = {
       const userId = decodedToken.id
 
       const favItem = await FavoriteItem.findOne({
-        where: { id }
+        where: { id },
       })
 
-      if(userId === favItem.userId){
+      if (userId === favItem.userId) {
         await FavoriteItem.destroy({
           where: { id },
         })
         return res.send({ msg: "Favorite item deleted" })
-      }else{
+      } else {
         return res.send({ msg: "Wrong credentials" })
       }
-
     } catch (error) {
       sendError(res, error)
     }
@@ -87,5 +87,4 @@ module.exports = {
       sendError(res, error)
     }
   },
-
 }

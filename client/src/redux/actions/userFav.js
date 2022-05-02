@@ -53,10 +53,14 @@ export const deleteAllFav = (token) => {
 }
 
 export const addFav = (token, product) => {
-  return async (dispatch, getState) => {
-    await axios.post(`${URL}`, product, {
+  return async (dispatch) => {
+    const addFavIten = await axios.post(`${URL}`, product, {
       headers: { Authorization: `bearer ${token}` },
     })
+    /*dispatch({
+      type: GET_FAV,
+      payload: [...userData,addFavIten],
+    })*/
     dispatch(filtrarLosFav(product.productId, true))
   }
 }

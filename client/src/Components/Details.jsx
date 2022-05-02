@@ -122,7 +122,8 @@ function Details() {
       });
     }
   };
-
+  console.log({detailColor})
+  console.log({detail})
   useEffect(() => {
     setReload(false);
     setImages([]);
@@ -143,8 +144,8 @@ function Details() {
   useEffect(() => {
     window.scroll({ top: 0, behavior: "smooth" });
     return () => dispatch(clearDetail());
-  }, [reload, dispatch]);
-  
+  }, [reload, dispatch])
+
   return (
     <div className="w-100" style={{ marginTop: "4rem" }}>
       {loading ? (
@@ -240,7 +241,7 @@ function Details() {
                         value={colorSelect? colorSelect:detail.color }
                         onChange={handleColor}
                       >
-                        {detailColor.length > 0 &&  detailColor.map((diseño) => (
+                        {detailColor.length && detailColor.find(i => i.color === detail.color)? detailColor.map((diseño) => (
                             <option
                               key={diseño.id}
                               value={diseño.color}
@@ -250,7 +251,14 @@ function Details() {
                               {diseño.color.toUpperCase()}
                             </option>
                           ))
-                        }
+                        : detail.id &&
+                        <option
+                              value={detail.color}
+                              className="fw-bold"
+                              id={detail.id}
+                            >
+                              {detail.color.toUpperCase()}
+                            </option> }
                       </select>
                       <label
                         htmlFor="floatingSelect"

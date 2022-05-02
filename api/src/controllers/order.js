@@ -22,6 +22,7 @@ const orderInclude = {
       include: { model: Product, include: { model: Image, limit: 1 } },
     },
     { model: User },
+    { model: Payment },
   ],
 }
 
@@ -37,12 +38,12 @@ module.exports = {
               include: { model: Product, include: { model: Image, limit: 1 } },
             },
             { model: User },
+            { model: Payment },
           ],
         })
         return res.send(orderById)
       }
       if (delivered) {
-        console.log(delivered)
         const orderSearched = await Order.findAll({
           where: {
             [Op.or]: [
@@ -60,6 +61,7 @@ module.exports = {
               include: { model: Product, include: { model: Image, limit: 1 } },
             },
             { model: User, where: { email: { [Op.iLike]: `${email}%` } } },
+            { model: Payment },
           ],
         })
         return res.send(orderSearched)
@@ -72,6 +74,7 @@ module.exports = {
               include: { model: Product, include: { model: Image, limit: 1 } },
             },
             { model: User, where: { email: { [Op.iLike]: `${email}%` } } },
+            { model: Payment },
           ],
         })
         return res.send(orderSearchedEmail)
@@ -95,6 +98,7 @@ module.exports = {
             include: { model: Product, include: { model: Image, limit: 1 } },
           },
           { model: User },
+          { model: Payment },
         ],
       })
       if (userOrders.length) {
@@ -243,6 +247,7 @@ module.exports = {
             include: { model: Product, include: { model: Image, limit: 1 } },
           },
           { model: User },
+          { model: Payment },
         ],
       })
       res.send(lastOrders)

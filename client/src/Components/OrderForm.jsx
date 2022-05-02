@@ -147,10 +147,7 @@ const PaymentCheckout = () => {
             })
     }}
 
-    function beforeInput(e){
-        e.preventDefault()
-        if(e.target.value.charCode < 48|| e.target.value.charCode > 57)return true
-    }
+    
     return (
         <div >
 

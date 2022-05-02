@@ -219,12 +219,33 @@ export default function AdminOrderDetail() {
               </div>
             </div>
             <div className="box shadow-sm bg-light Payment-info">
-              <h5>Payment info</h5>
+            <h5>Payment info</h5>
+            <p className="detail-text-data">
+              <p>
+              {orderDetail.payment&&orderDetail.payment.cardBrand==='visa'?
+          <img src={require("../../Images/Visaa.jpg")} alt="Logo Visa" className="mercado-pago visa" ></img>
+          
+          :orderDetail.payment.cardBrand==='mastercard'&&
+          <img src={require("../../Images/MasterCard.jpg")} alt="Logo American express" className="mercado-pago"></img>
+        
+          }
+            {orderDetail.payment&&
+                orderDetail.payment.cardBrand&&' '+ orderDetail.payment.cardBrand 
+              }
+              </p>{orderDetail.payment&&
+                orderDetail.payment.funding&&'Funding: '+orderDetail.payment.funding
+              }
+    {orderDetail.payment&&
+                orderDetail.payment.status&& orderDetail.payment.status==='succeeded'?<p className="badge rounded-pill alert-success pay-status">Payment done</p> :
+                <p className="badge rounded-pill alert-danger pay-status">...</p>
+              }
+            </p>
+              {/* <h5>Payment info</h5>
               <p className="detail-text-data">
                 Master Card **** **** 4768 <br />
                 Business name: Grand Market LLC <br />
                 Phone: +1 (800) 555-154-52
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

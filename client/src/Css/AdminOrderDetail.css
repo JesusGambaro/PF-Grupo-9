@@ -35,6 +35,10 @@ justify-self: end;
 }
 .detail-text-data {
   font-size: larger;
+  display: flex;
+  flex-direction: column;
+ 
+  
 }
 .order-data {
   display: flex;
@@ -71,6 +75,8 @@ justify-self: end;
   padding: 12px 20px;
   width: max-content;
   height: min-content;
+  font-weight: 700;
+  
 }
 .dlist {
   display: flex;
@@ -98,3 +104,11 @@ dt {
 .img-xs{
   margin-right: 10px;
 }
+
+.visa{
+  width:25px;
+}
+.pay-status{
+  margin-top: 20px;
+}
+

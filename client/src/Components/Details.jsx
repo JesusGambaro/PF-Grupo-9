@@ -144,7 +144,7 @@ function Details() {
     window.scroll({ top: 0, behavior: "smooth" });
     return () => dispatch(clearDetail());
   }, [reload, dispatch]);
-
+  
   return (
     <div className="w-100" style={{ marginTop: "4rem" }}>
       {loading ? (
@@ -223,7 +223,7 @@ function Details() {
 
               <div className="m-0 pb-3 col col-12 col-lg-5 pt-4 pb-lg-0">
                 <div className="row m-0 p-0">
-                  <h3 className="text-light fs-2">$ {detail.price}</h3>
+                  <h3 className="text-light fs-2">$ {detail.finalPrice}</h3>
                   <p className="text-warning fs-3">Stock: {stock}</p>
                 </div>
 

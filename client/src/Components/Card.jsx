@@ -1,17 +1,17 @@
-import {useEffect} from "react";
-import {useDispatch} from "react-redux";
-import {NavLink, useNavigate} from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import {addCart} from "../redux/actions/userCart";
-import {addFav} from "../redux/actions/userFav";
-import {useSelector} from "react-redux";
-import {getUserFav} from "../redux/actions/userFav";
+import { addCart } from "../redux/actions/userCart";
+import { addFav,deleteFavItem } from "../redux/actions/userFav";
+import { useSelector } from "react-redux";
+import { getUserFav } from "../redux/actions/userFav";
 import { LOGIN_USER } from "../redux/actions/actions";
-const Card = ({e, horizontal}) => {
+const Card = ({ e, horizontal }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = window.localStorage.getItem("token");
-  const {favUser} = useSelector((state) => state.root);
+  const { favUser } = useSelector((state) => state.root);
   /*   useEffect(() => {
     if (token) {
       dispatch(getUserFav(token));
@@ -36,7 +36,7 @@ const Card = ({e, horizontal}) => {
           confirmButtonText: "Add",
         }).then((result) => {
           if (result.isConfirmed) {
-            const product = {productId: e.id, size: result.value};
+            const product = { productId: e.id, size: result.value };
             dispatch(addCart(token, product));
             Swal.fire({
               position: "bottom-end",
@@ -47,9 +47,9 @@ const Card = ({e, horizontal}) => {
             });
           }
         });
-      } else {
+      } else if (type === "addFav") {
         //console.log("addFav");
-        const product = {productId: e.id};
+        const product = { productId: e.id };
         dispatch(addFav(token, product));
         Swal.fire({
           position: "bottom-end",
@@ -58,7 +58,23 @@ const Card = ({e, horizontal}) => {
           showConfirmButton: false,
           timer: 1250,
         });
-      }
+      } /*else if (type === "delFav") {
+        const id = e.id;
+        console.log("token: ",token);
+        
+        Swal.fire({
+          text: "Are you sure do you want to delete it from favorites?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, I want",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            dispatch(deleteFavItem(id, token));
+          }
+        });
+      }*/
     } else {
       Swal.fire({
         title:
@@ -92,7 +108,7 @@ const Card = ({e, horizontal}) => {
       <div className="img">
         <NavLink
           to={`/home/${e.id}/${e.model}`}
-          style={{textDecoration: "none"}}
+          style={{ textDecoration: "none" }}
         >
           <img
             src={e.images[0].url ? e.images[0].url : "./Images/logo2.png"}
@@ -104,7 +120,7 @@ const Card = ({e, horizontal}) => {
         <div className="f-section">
           <NavLink
             to={`/home/${e.id}/${e.model}`}
-            style={{textDecoration: "none", color: "black"}}
+            style={{ textDecoration: "none", color: "black" }}
           >
             <p title="Name">
               {e.brand} - {e.model}
@@ -128,7 +144,9 @@ const Card = ({e, horizontal}) => {
               <p
                 title="Offer Price"
                 style={
-                  e.sale ? {textDecoration: "line-through", color: "#999"} : {}
+                  e.sale
+                    ? { textDecoration: "line-through", color: "#999" }
+                    : {}
                 }
               >
                 ${e.price}
@@ -148,21 +166,21 @@ const Card = ({e, horizontal}) => {
           </i>
           <NavLink
             to={`/home/${e.id}/${e.model}`}
-            style={{color: "black", textDecoration: "none"}}
+            style={{ color: "black", textDecoration: "none" }}
           >
             <i className="bi bi-toggles2" title="View details"></i>
           </NavLink>
           {e.isFavorite === true ? (
             <i
               className="bi bi-heart-fill"
-              title="Add to favorites"
-              onClick={() => handleAddProduct(e, "fav")}
+              title="Delete favorite"
+              onClick={() => handleAddProduct(e, "delFav")}
             ></i>
           ) : (
             <i
               className="bi bi-heart"
               title="Add to favorites"
-              onClick={() => handleAddProduct(e, "fav")}
+              onClick={() => handleAddProduct(e, "addFav")}
             ></i>
           )}
         </div>

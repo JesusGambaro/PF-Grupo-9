@@ -23,7 +23,7 @@ const prueba = async () => {
     sale: 0,
     color: "Purple",
     rating: 3.5,
-    ratingAmount: 5,
+    ratingAmount: 2,
   })
   const imageNikeKyrieInfinityPurple4 = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/d6f5179b-2c54-47ca-ab43-6a43200cae62/kyrie-infinity-basketball-shoes-LvzsVp.png",
@@ -45,15 +45,15 @@ const prueba = async () => {
   ])
   const stockNikeKyrieInfinityPurple10 = await Stock.create({
     size: 10,
-    amount: 0,
+    amount: 10,
   })
   const stockNikeKyrieInfinityPurple11 = await Stock.create({
     size: 11,
-    amount: 0,
+    amount: 11,
   })
   const stockNikeKyrieInfinityPurple12 = await Stock.create({
     size: 12,
-    amount: 0,
+    amount: 12,
   })
   NikeKyrieInfinityPurple.addStock([
     stockNikeKyrieInfinityPurple10,
@@ -74,6 +74,7 @@ const prueba = async () => {
     sale: 0,
     color: "Beige",
     rating: 3.5,
+    ratingAmount: 3,
   })
   const imageNikeKyrieInfinityBeige = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/66e00d01-9ba4-4676-8e8f-6f11e977a8a2/kyrie-infinity-n7-basketball-shoes-LvzsVp.png",
@@ -122,7 +123,6 @@ const prueba = async () => {
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
     sale: 10,
     color: "Red",
-    rating: 4,
   })
   const imageNikeAirZoomAlphafly = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/M8061600_a2?wid=520&hei=520&fmt=png-alpha",
@@ -159,6 +159,7 @@ const prueba = async () => {
     sale: 10,
     color: "White",
     rating: 4,
+    ratingAmount: 1,
   })
   const imageAdidasWhite3 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/FY7756_a2?wid=520&hei=520&fmt=png-alpha",
@@ -207,6 +208,7 @@ const prueba = async () => {
     sale: 10,
     color: "Black",
     rating: 3.5,
+    ratingAmount: 2,
   })
   const imageClassicLeather1 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/49798_a2?wid=520&hei=520&fmt=png-alpha",
@@ -249,6 +251,7 @@ const prueba = async () => {
     sale: 15,
     color: "White",
     rating: 4,
+    ratingAmount: 1,
   })
   const imageadidasSuperstar4 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/FV3285_a2?wid=520&hei=520&fmt=png-alpha",
@@ -290,6 +293,7 @@ const prueba = async () => {
     sale: 0,
     color: "Green",
     rating: 3.5,
+    ratingAmount: 4,
   })
   const imageNikeKyrieInfinity4 = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/31894742-692c-45d0-bba6-b034571c23b9/kyrie-infinity-basketball-shoes-LvzsVp.png",
@@ -331,6 +335,7 @@ const prueba = async () => {
     sale: 10,
     color: "Pink",
     rating: 5,
+    ratingAmount: 1,
   })
   const imageNikeDownshifter2 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/M8326600_a2?wid=520&hei=520&fmt=png-alpha",
@@ -372,6 +377,7 @@ const prueba = async () => {
     sale: 0,
     color: "Black",
     rating: 5,
+    ratingAmount: 1,
   })
   const imageNikeDownshifterBlack2 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/H6789006_a2?wid=520&hei=520&fmt=png-alpha",
@@ -422,6 +428,7 @@ const prueba = async () => {
     sale: 20,
     color: "White",
     rating: 5,
+    ratingAmount: 1,
   })
   const imageNikeZoomXInvincible = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/65b9e6d3-4c66-4b1c-b5ca-d4a43470713b/zoomx-invincible-run-flyknit-womens-road-running-shoes-kVqSJ8.png",
@@ -472,6 +479,7 @@ const prueba = async () => {
     sale: 25,
     color: "Pink",
     rating: 5,
+    ratingAmount: 1,
   })
   const imageNikeZoomXInvinciblePink = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/53afa01b-cd20-4def-bd2a-201dadfae4d2/zoomx-invincible-run-flyknit-womens-road-running-shoes-kVqSJ8.png",
@@ -522,6 +530,7 @@ const prueba = async () => {
     sale: 0,
     color: "Black",
     rating: 5,
+    ratingAmount: 1,
   })
   const imageNikeZoomXInvincibleBlack = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/9314e18a-3324-4249-8592-0e795acc3db5/zoomx-invincible-run-flyknit-womens-road-running-shoes-kVqSJ8.png",
@@ -571,7 +580,8 @@ const prueba = async () => {
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
     sale: 0,
     color: "Black",
-    rating: 4,
+    rating: 5,
+    ratingAmount: 1,
   })
   const imageNikeLegendEssential = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/eacd9775-1eef-4187-b98d-969022e361f2/legend-essential-2-womens-training-shoes-LnSrgb.png",
@@ -622,6 +632,7 @@ const prueba = async () => {
     sale: 0,
     color: "Pink",
     rating: 4,
+    ratingAmount: 1,
   })
   const imageNikeLegendEssentialPink = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/c373e1f7-4c2a-41d7-bf9a-77f6ac9c39cc/legend-essential-2-womens-training-shoes-LnSrgb.png",
@@ -672,6 +683,7 @@ const prueba = async () => {
     sale: 0,
     color: "White",
     rating: 4.5,
+    ratingAmount: 4,
   })
   const imageNikeReactInfinity = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/bdd3f8d9-e05e-43ab-8dbe-694f9e49cb0c/react-infinity-run-flyknit-2-mens-road-running-shoes-DttDF2.png",
@@ -713,6 +725,7 @@ const prueba = async () => {
     sale: 0,
     color: "Gray",
     rating: 4.5,
+    ratingAmount: 2,
   })
   const imageNikeLegendEssentialGray = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/cf0bb345-427a-4f95-b5ae-e082b110122b/legend-essential-2-womens-training-shoes-LnSrgb.png",
@@ -762,7 +775,8 @@ const prueba = async () => {
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
     sale: 0,
     color: "White",
-    rating: 3.5,
+    rating: 5,
+    ratingAmount: 1,
   })
   const imagenConverseChuckTaylor2 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/W7652_a2?wid=520&hei=520&fmt=png-alpha",
@@ -814,6 +828,7 @@ const prueba = async () => {
     sale: 0,
     color: "Black",
     rating: 3.5,
+    ratingAmount: 2,
   })
   const imagenconverseChuckTaylorBlack4 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/W9166_a2?wid=520&hei=520&fmt=png-alpha",
@@ -862,6 +877,7 @@ const prueba = async () => {
     sale: 0,
     color: "White",
     rating: 3.5,
+    ratingAmount: 2,
   })
   const imageNikeSize7 = await Image.create({
     url: "https://5.imimg.com/data5/RE/US/MY-49405442/594997-500x500.jpg",
@@ -882,7 +898,8 @@ const prueba = async () => {
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
     sale: 0,
     color: "Blue",
-    rating: 4,
+    rating: 3.5,
+    ratingAmount: 2,
   })
   const imageNikeBlue4 = await Image.create({
     url: "https://images.footlocker.com/is/image/EBFL2/M1027400_a2?wid=520&hei=520&fmt=png-alpha",
@@ -914,6 +931,7 @@ const prueba = async () => {
     sale: 0,
     color: "Pink",
     rating: 4.5,
+    ratingAmount: 4,
   })
   const imagenikeZoomXVaporfly4 = await Image.create({
     url: "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/nwtrnwbxlqzqkdwfbsbd/calzado-de-carrera-para-carretera-zoomx-vaporfly-next-Sf9zRb.png",

@@ -62,10 +62,10 @@ export const deleteAllCart = (token) => {
 export const addCart = (token, product) => {
   return async (dispatch) => {
     await axios.post(`${URL}`, product, {
-      headers: { Authorization: `bearer ${token}` },
+      headers: { "Authorization": `bearer ${token}` },
     })
     const { data } = await axios.get(`${URL}`, {
-      headers: { Authorization: `bearer ${token}` },
+      headers: { "Authorization": `bearer ${token}` },
     })
     dispatch({
       type: GET_CART,

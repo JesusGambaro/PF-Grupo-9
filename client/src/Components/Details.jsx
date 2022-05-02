@@ -134,16 +134,19 @@ function Details() {
     dispatch(getDetail(id));
     dispatch(getDetailColor(model));
 
+  }, [ reload, id, model]);
+
+  useEffect(() => {
+    window.scroll({ top: 0, behavior: "smooth" });
     if (allData.length > 3) {
       const numRandom = Math.round(Math.random() * (allData.length - 3) + 3);
       setRelatedProduct(allData.slice(numRandom - 3, numRandom));
     } else if (allData.length === 0) dispatch(bringAllData());
-  }, [allData, reload, id, dispatch, model]);
+  }, [reload, allData, detail]);
 
-  useEffect(() => {
-    window.scroll({ top: 0, behavior: "smooth" });
+  useEffect(()=>{
     return () => dispatch(clearDetail());
-  }, [reload, dispatch]);
+  },[])
   
   return (
     <div className="w-100" style={{ marginTop: "4rem" }}>
@@ -166,6 +169,7 @@ function Details() {
                     id="fav"
                     title="Add to favorites"
                     onClick={handleAddingFavCart}
+                    disabled={stock == 0}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

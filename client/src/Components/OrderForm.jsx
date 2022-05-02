@@ -9,7 +9,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import {CardElement, useStripe, useElements,Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js"
 
-const stripePromise = loadStripe("pk_test_51KtCmaEyrMDgVNEx9jvaVUbtUuGmXVXmnhrtCnNdsQdVxna17PhfnQ08NrXMMs94GPIyQpOp3RI70VjlNBwHE3ZN00oJfjWvbj");
+const stripePromise = loadStripe("pk_test_51KtCmaEyrMDgVNEx9jvaVUbtUuGmXVXmnhrtCnNdsQdVxna17PhfnQ08NrXMMs94GPIyQpOp3RI70VjlNBwHE3ZN00oJfjWvbj",{locale:"en"});
 
 const PaymentCheckout = () => {
     const navigate = useNavigate()
@@ -74,7 +74,7 @@ const PaymentCheckout = () => {
     }
     const handleErrorForm = (e) => {
         if(e.target.name === "telephoneNumber"){
-            if(!e.target.value.length || e.target.value.length > 15 || e.target.value.length < 6) { console.log('a')
+            if(!e.target.value.length || e.target.value.length > 15 || e.target.value.length < 6) {
             setError({...error,telephoneNumber: "Telephone number is required and must be valid"})}
             else if(!e.target.value.length > 15 || !e.target.value.length < 4){setError({...error,telephoneNumber: ""})}
         }
@@ -130,14 +130,8 @@ const PaymentCheckout = () => {
              type: "card",
              card: elements.getElement(CardElement),
            });
-           console.log({paymentMethod})
-           console.log('datos de la orden',order)
-         if(error){
-             return console.log('mensaje de error',error)
-            }else{
-         
+         if(!error){         
         dispatch(postOrder(token,{order,paymentMethod,total})) 
-
         setOrder({
             telephoneNumber:"",
             address:"",
@@ -149,11 +143,7 @@ const PaymentCheckout = () => {
             postalCode:"",
             apartment:"",
             notes:""
-        
-        
             })
-        
-      
     }}
     return (
         <div >
@@ -434,8 +424,10 @@ const PaymentCheckout = () => {
                     <label><span>Notes</span><textarea name="notes"  value={order.notes} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.notes && <label className="col form-label text-danger fw-bold text-end">{error.notes}</label>}
                     
-                    <div style={{width:"100%", height:'50px', fontSize:'30px'}}>
-                    <CardElement style={{height:"50px"}} className="a"/>
+                    <div style={{width:"100%",borderColor: "rgb(133, 133, 133)",borderStyle:"solid",borderWidth: "1px",height: "max-content"}}>
+                    <CardElement options={{style:{base:
+                        {fontSize:"1.5rem"}
+                        }}} className="a"/>
                     
                     </div>
                     <div className="totals">

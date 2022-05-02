@@ -16,6 +16,7 @@ import {
   GET_ORDER_BY_STATUS,
   GET_ALL_GAIN,
   UPDATE_ORDER,
+  UPDATE_PRODUCT,
   SEARCH_PRODUCT_A,
   SEARCH_USER_A,
 } from "../actions/actionsAdmin";
@@ -40,6 +41,8 @@ const adminReducer = (state = initialState, action) => {
     case GET_ALL_USERS:
       return {...state, users: action.payload};
     case SEARCH_PRODUCT_A:
+      return {...state, products: action.payload};
+    case UPDATE_PRODUCT:
       return {...state, products: action.payload};
     case SEARCH_USER_A:
       return {...state, users: action.payload};

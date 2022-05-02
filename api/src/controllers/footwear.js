@@ -31,7 +31,6 @@ module.exports = {
           include: [
             {
               model: Image,
-              order: [["id", "DESC"]],
             },
             {
               model: Stock,
@@ -183,7 +182,6 @@ module.exports = {
         include: [
           {
             model: Image,
-            order: [["id", "DESC"]],
           },
           {
             model: Stock,
@@ -239,7 +237,6 @@ module.exports = {
         include: [
           {
             model: Image,
-            order: [["id", "DESC"]],
           },
           {
             model: Stock,
@@ -295,19 +292,9 @@ module.exports = {
         sale,
         color,
         stock,
-      } = req.body.data
-
-      // const model = "Harmoso3"
-      // const brand = "New Balance"
-      // const category = "Elegant"
-      // const gender = "Male"
-      // const price = 34000
-      // const description = "Zapato fachero"
-      // const sale = 0
-      // const color = "Yellow"
-      // const stock = [{size: 10, amount: 100}, {size:12, amount: 200}]
-
+      } = req.body
       const imgFiles = req.files
+      parsedStock = JSON.parse(stock)
 
       const foundProduct = await Product.findOne({
         where: { model, brand, color },
@@ -333,11 +320,11 @@ module.exports = {
         })
       }
 
-      stock.length > 0 &&
-        stock.map(async (amountAndSize) => {
+      parsedStock.length > 0 &&
+      parsedStock.map(async (amountAndSize) => {
           let stockProduct = await Stock.create({
-            size: amountAndSize.size,
-            amount: amountAndSize.amount,
+            size: parseInt(amountAndSize.size),
+            amount: parseInt(amountAndSize.amount),
           })
           await product.addStock(stockProduct)
         })
@@ -360,20 +347,17 @@ module.exports = {
         sale,
         color,
         stock,
+        deletedImages
       } = req.body
-      // console.log("req.body", req.body)
-      // const model = "Harmoso3"
-      // const brand = "New Balance"
-      // const category = "Elegant"
-      // const gender = "Male"
-      // const price = 34000
-      // const description = "Zapato fachero"
-      // const sale = 0
-      // const color = "Yellow"
-      // const stock = [{size: 10, amount: 10000}, {size:12, amount: 20000}]
 
       const { id } = req.params
       const imgFiles = req.files
+      parsedStock = JSON.parse(stock)
+      parsedDeletedImages = JSON.parse(deletedImages)
+
+      console.log( "parsedDeletedImages", parsedDeletedImages )
+      console.log( "req.body", req.body )
+      console.log( "req.files", req.files )
 
       const product = await Product.findOne({
         where: { id },
@@ -411,11 +395,11 @@ module.exports = {
         product.color = color
         await product.save()
       }
-      if (stock.length > 0) {
+      if (parsedStock.length > 0) {
         await Stock.destroy({
           where: { productId: product.id },
         })
-        stock.map(async (amountAndSize) => {
+        parsedStock.map(async (amountAndSize) => {
           let stockProduct = await Stock.create({
             size: parseInt(amountAndSize.size),
             amount: parseInt(amountAndSize.amount),
@@ -423,11 +407,14 @@ module.exports = {
           await product.addStock(stockProduct)
         })
       }
-
-      if (Object.keys(imgFiles).length !== 0) {
-        const productImages = await Image.destroy({
-          where: { productId: id },
+      if(parsedDeletedImages.length > 0){
+        parsedDeletedImages.map( async (urlImage) =>{
+          await Image.destroy({
+            where: {url: urlImage.url }
+          })
         })
+      }
+      if (Object.keys(imgFiles).length !== 0) {
         Object.entries(imgFiles).forEach(async ([key, imgFile]) => {
           const urlImg = await cloudinary(imgFile.tempFilePath)
           let imageProduct = await Image.create({ url: urlImg.secure_url })

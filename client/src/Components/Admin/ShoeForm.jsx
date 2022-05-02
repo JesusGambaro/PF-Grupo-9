@@ -15,6 +15,8 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
   const [stock, setStock] = useState({amount: 0, size: 0});
+  const [deletedImages, setDeletedImages] = useState([]);
+
   const [data, setData] = useState(
     shoeObject
       ? shoeObject
@@ -64,16 +66,18 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
             formData.append(param, JSON.stringify(data[param]));
           } else if (param !== "images") formData.append(param, data[param]);
           else {
-            formData.append(
+            /*formData.append(
               "images",
               data[param].map((img) => (!img.form ? img.image : ""))
             );
-            //else formData.append(param, data[param].map(img=>img.image));
+            else formData.append(param, data[param].map(img=>img.image)); */
             data[param].forEach((img, i) => {
-              if (img.form) formData.append(i, img.image);
+              if (img.image) formData.append("image " + i, img.image);
             });
           }
         });
+        if (deletedImages.length)
+          formData.append("deletedImages", JSON.stringify(deletedImages));
         dispatch(
           editShoe(
             window.localStorage.getItem("token"),
@@ -167,6 +171,10 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
   }, [stock.amount, stock.size, data.stock]);
 
   const deleteImage = (img) => {
+    setDeletedImages([
+      ...deletedImages,
+      data.images.find((i) => i.url === img),
+    ]);
     setData({
       ...data,
       images: data.images.map((i) => (i.url === img ? {url: "", form: ""} : i)),

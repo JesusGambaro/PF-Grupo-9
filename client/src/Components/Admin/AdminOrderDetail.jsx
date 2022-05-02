@@ -13,33 +13,27 @@ export default function AdminOrderDetail() {
   const navigate = useNavigate();
   const {order} = useParams();
   const orderDetail = useSelector((state) => state.admin.orderDetail);
-  
   const [dropDown, setDropDown] = useState(false);
   function abrirYcerrar() {
     setDropDown(!dropDown);
   }
 
-  var token1 = window.localStorage.getItem("token");
+ 
+  const token = window.localStorage.getItem("token");
   useEffect(() => {
-   
-    if (window.localStorage.getItem("token")) {
-      const token = window.localStorage.getItem("token");
+    if (token) {
       dispatch(roleUser(token));
-
-      if (role.admin) {
+      if (role.admin === false) {
+          navigate("/home");
+        }
         dispatch(getOrderDetail(token, order));
-      } else if (role.admin === false) {
-        navigate("/home");
-      }
     }
-  }, [dispatch, navigate, order, role.admin,orderDetail ]);
-  
-  
-
+    }
+  , [dispatch,navigate,order,role.admin,token]);
 
   function handleStatusChange(e){
     e.preventDefault();
-   dispatch(updateOrder(token1, order, e.target.value))
+   dispatch(updateOrder(token, order, e.target.value))
    
   }
   return (

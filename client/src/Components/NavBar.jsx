@@ -12,6 +12,7 @@ import {
 import {roleUser} from "../redux/actions/Loginregister";
 import {useDispatch, useSelector} from "react-redux";
 import Swal from "sweetalert2";
+import {getUserFav} from "../redux/actions/userFav";
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const NavBar = () => {
   const [profileName, setProfileName] = useState("Profile");
   const {role} = useSelector((store) => store.root);
   const token = window.localStorage.getItem("token");
+  
   useEffect(() => {
  /*    if (!window.localStorage.getItem("token")) {
       navigate("/home/login");
@@ -97,6 +99,7 @@ const NavBar = () => {
         <li onClick={() => {}}>
           <NavLink
             onClick={() => {
+              dispatch(getUserFav(token));
               dispatch(resetState());
               dispatch(resetFilters());
               dispatch(genderFilter("All"));
@@ -108,6 +111,7 @@ const NavBar = () => {
         </li>
         <li
           onClick={() => {
+            dispatch(getUserFav(token));
             dispatch(sortByGender("Male"));
             dispatch(resetFilters());
             dispatch(genderFilter("Male"));
@@ -118,6 +122,7 @@ const NavBar = () => {
         </li>
         <li
           onClick={() => {
+            dispatch(getUserFav(token));
             dispatch(sortByGender("Female"));
             dispatch(resetFilters());
             dispatch(genderFilter("Female"));
@@ -128,6 +133,7 @@ const NavBar = () => {
         </li>
         <li
           onClick={() => {
+            dispatch(getUserFav(token));
             dispatch(sortByGender("Kids"));
             dispatch(resetFilters());
             dispatch(genderFilter("Kids"));

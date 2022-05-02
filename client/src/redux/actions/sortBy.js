@@ -1,41 +1,36 @@
-import { SORT_BY, RESET } from "./actions";
+import { SORT_BY, RESET } from "./actions"
 const sortByPrice = (order) => {
   return async (dispatch, getState) => {
-    let filtered = [...getState().root.allData];
+    let filtered = [...getState().root.allData]
     if (order === "asc") {
       filtered.sort((a, b) => {
-        return a.price - b.price;
-      });
+        return a.price - b.price
+      })
     } else if (order === "des")
       filtered.sort((a, b) => {
-        return b.price - a.price;
-      });
-    dispatch({ type: SORT_BY, payload: filtered });
-  };
-};
+        return b.price - a.price
+      })
+    dispatch({ type: SORT_BY, payload: filtered })
+  }
+}
 const sortByGender = (gender) => {
   return async (dispatch, getState) => {
-    let filtered = getState().root.genderData;
-    let genderLower = gender.toLowerCase();
-    console.log(
-      genderLower === "male" || genderLower === "female"
-        ? [...filtered[genderLower], ...filtered.unisex]
-        : filtered[genderLower]
-    );
+    let filtered = getState().root.genderData
+    let genderLower = gender.toLowerCase()
     filtered =
       genderLower === "male" || genderLower === "female"
         ? [...filtered[genderLower], ...filtered.unisex]
-        : filtered[genderLower];
+        : filtered[genderLower]
     dispatch({
       type: SORT_BY,
       payload: filtered,
-    });
-  };
-};
+    })
+  }
+}
 const resetState = () => {
   return async (dispatch, getState) => {
-    const state = getState().root.allDataCopy;
-    dispatch({ type: RESET, payload: state });
-  };
-};
-export { sortByPrice, sortByGender, resetState };
+    const state = getState().root.allDataCopy
+    dispatch({ type: RESET, payload: state })
+  }
+}
+export { sortByPrice, sortByGender, resetState }

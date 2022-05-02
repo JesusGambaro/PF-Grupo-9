@@ -86,7 +86,6 @@ const Card = ({e, horizontal}) => {
     "RGB(113, 190, 231)",
     "RGB(131, 128, 179)",
   ];
-  console.log(e.rating);
   return (
     <div className={"cardOwn" + (horizontal ? " h" : "")}>
       {e.sale !== 0 && <p className="offer-ribbon" offer={e.sale + "%"}></p>}

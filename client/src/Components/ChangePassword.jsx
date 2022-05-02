@@ -37,7 +37,7 @@ function ChangePassword() {
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: 'Password changed successfully,\n! Now login ¡',
+        title: 'Password changed successfully,\n Now login !',
         showConfirmButton: false,
         timer: 2000
       })

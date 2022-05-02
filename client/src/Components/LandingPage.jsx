@@ -136,8 +136,8 @@ export default function LandingPage() {
       <div className="cards-container">
         {sales.length > 0 &&
           sales.map((shoe, i) => (
-            <div className="landing-card col col-3" key={i}>
-              <Card e={shoe} key={i} />
+            <div className="landing-card col col-3" >
+              <Card e={shoe} key={shoe.id}/>
             </div>
           ))}
       </div>

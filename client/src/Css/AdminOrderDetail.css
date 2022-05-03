@@ -80,8 +80,9 @@ justify-self: end;
 }
 .dlist {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 300px;
+  margin-right: 50px;
 }
 
 dt {

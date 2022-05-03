@@ -115,6 +115,7 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
     }
     //navigate("/home");
     handleShoeDialog();
+    window.location.reload()
   };
 
   const handleInputChange = (e) => {

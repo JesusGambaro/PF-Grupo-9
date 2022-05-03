@@ -129,7 +129,9 @@ export default function AdminOrderDetail() {
                       <th width="20%">Product</th>
                       <th width="20%">color</th>
                       <th width="20%">Size</th>
+                      <th width="20%">Amount</th>
                       <th width="20%">Unit Price</th>
+                      
                       
                       
                       {/* <th width="20%">Quantity</th>
@@ -160,6 +162,7 @@ export default function AdminOrderDetail() {
                           </td>
                           <td> {e.product.color && e.product.color} </td>
                           <td > {e.size && e.size}</td>
+                          <td > {e.amount && e.amount}</td>
                           <td > {e.product.finalPrice?'$'+e.product.finalPrice:e.product.price && '$'+e.product.price}</td>
                           
                           {/* 
@@ -185,7 +188,7 @@ export default function AdminOrderDetail() {
                       <td className="text-end"> $99.50 </td>
                     </tr> */}
                     <tr>
-                    <td colSpan="4">
+                    <td colSpan="5" className="colprice">
                       <div className="float-end">
                         {/* <dl className="dlist">
                           <dt>Subtotal:</dt> <dd>$973.35</dd>
@@ -221,23 +224,24 @@ export default function AdminOrderDetail() {
             <div className="box shadow-sm bg-light Payment-info">
             <h5>Payment info</h5>
             <p className="detail-text-data">
-              <p>
+              <span>
               {orderDetail.payment&&orderDetail.payment.cardBrand==='visa'?
           <img src={require("../../Images/Visaa.jpg")} alt="Logo Visa" className="mercado-pago visa" ></img>
           
           :orderDetail.payment.cardBrand==='mastercard'&&
           <img src={require("../../Images/MasterCard.jpg")} alt="Logo American express" className="mercado-pago"></img>
         
-          }
-            {orderDetail.payment&&
+          }{/* card brand */}
+            {/* {orderDetail.payment&&
                 orderDetail.payment.cardBrand&&' '+ orderDetail.payment.cardBrand 
-              }
-              </p>{orderDetail.payment&&
+              } */}{/* last 4 */}
+              {orderDetail.payment&& orderDetail.payment.last4 && ' '+orderDetail.payment.last4}
+              </span>{orderDetail.payment&&
                 orderDetail.payment.funding&&'Funding: '+orderDetail.payment.funding
               }
     {orderDetail.payment&&
-                orderDetail.payment.status&& orderDetail.payment.status==='succeeded'?<p className="badge rounded-pill alert-success pay-status">Payment done</p> :
-                <p className="badge rounded-pill alert-danger pay-status">...</p>
+                orderDetail.payment.status&& orderDetail.payment.status==='succeeded'?<span className="badge rounded-pill alert-success pay-status">Payment done</span> :
+                <span className="badge rounded-pill alert-danger pay-status">...</span>
               }
             </p>
               {/* <h5>Payment info</h5>

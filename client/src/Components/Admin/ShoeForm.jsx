@@ -8,7 +8,6 @@ import Selection from "./Selection";
 import {useSelector} from "react-redux";
 import {brands, colors, sizes, categories} from "../data";
 import validation from "./validation.js";
-import bringAllData from "../../redux/actions/bringAllData";
 const ShoeForm = ({handleShoeDialog, shoeObject}) => {
   const {role} = useSelector((state) => state.root);
   const navigate = useNavigate();
@@ -92,7 +91,6 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
             shoeObject.id
           )
         );
-        dispatch(bringAllData(true));
       } else {
         const formData = new FormData();
         Object.keys(data).forEach((param) => {

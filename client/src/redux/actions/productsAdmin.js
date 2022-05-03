@@ -1,11 +1,9 @@
-import axios from "axios"
-import {
-  GET_ALL_PRODUCTS_A,
-  POST_PRODUCT,
-  UPDATE_FORM_PRODUCT,
-} from "./actionsAdmin"
-import { LOADING } from "./actions"
+import axios from "axios";
+import {GET_ALL_PRODUCTS_A} from "./actionsAdmin";
+import {LOADING} from "./actions";
+import bringAllData from "./bringAllData"
 import { SEARCH_PRODUCT_A, UPDATE_PRODUCT } from "./actionsAdmin"
+
 const getAllProductsAdmin = (token) => {
   return async (dispatch) => {
     dispatch({ type: LOADING, payload: true })
@@ -43,25 +41,18 @@ const searchProduct = (token, param) => {
 const postProduct = (token, newShoe, form) => {
   console.log("Soy el nuevo shoe=>>", newShoe)
   return async (dispatch, getState) => {
-    dispatch({ type: LOADING, payload: true })
-    axios
-      .post(`http://localhost:3001/allFootwear`, form, {
+    dispatch({type: LOADING, payload: true});
+    const response=await axios.post(`http://localhost:3001/allFootwear`, form, {
         headers: {
           Authorization: `bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((res) => {
-        console.log("sOY LA DATA===>", res.data)
-        if (res.data) {
-          dispatch({
-            type: POST_PRODUCT,
-            payload: res.data,
-          })
-          dispatch(getAllProductsAdmin(token))
-          dispatch({ type: LOADING, payload: false })
-        }
-      })
+    console.log("sOY LA DATA===>", response.data);
+    if (response.data) {
+          dispatch(getAllProductsAdmin(token));
+          dispatch({type: LOADING, payload: false});
+        };
     /*     let oldData = getState().admin.products;
     let newData = {...oldData, newShoe};
     dispatch({type: UPDATE_PRODUCT, payload: newData}); */
@@ -90,6 +81,7 @@ const editShoe = (token, editedShoe, form, id) => {
     // dispatch({type: UPDATE_PRODUCT, payload: newData});
     dispatch({ type: UPDATE_FORM_PRODUCT, payload: data })
     dispatch(getAllProductsAdmin(token))
+    dispatch(bringAllData(false));
     dispatch({ type: LOADING, payload: false })
   }
 }
@@ -110,8 +102,9 @@ const deleteShoe = (token, id) => {
     });
     console.log("Soy el new data===>", newData);
     dispatch({type: UPDATE_PRODUCT, payload: newData}); */
-    dispatch(getAllProductsAdmin(token))
-    dispatch({ type: LOADING, payload: false })
-  }
-}
-export { postProduct, editShoe, deleteShoe, getAllProductsAdmin, searchProduct }
+    dispatch(bringAllData(false))
+    dispatch(getAllProductsAdmin(token));
+    dispatch({type: LOADING, payload: false});
+  };
+};
+export {postProduct, editShoe, deleteShoe, getAllProductsAdmin, searchProduct};

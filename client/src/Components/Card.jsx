@@ -61,7 +61,6 @@ const Card = ({e, horizontal}) => {
       } else if (type === "delFav") {
         const id = e.id;
         //console.log("token: ",token);
-        console.log(favUser);
         /*console.log(favUser.find((e) => {
           return e.product.id === id;
         })) */

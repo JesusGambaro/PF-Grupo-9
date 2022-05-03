@@ -1,7 +1,6 @@
 import {NavLink} from "react-router-dom";
 import "../Css/App.css"
 const NotFound = () => {
-    console.log("Entre aca")
     return <div className="not-found-container">
         <h1>404 - Not Found</h1>
         <NavLink to={"/"}>

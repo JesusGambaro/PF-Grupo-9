@@ -313,8 +313,8 @@ function Login() {
                   <div className="row ms-1 gap-2">
                     <input type={viewPassword?"text":"password"} name="password" value={state.password} className="col form-control" onChange={handleValidationInputs} i/>
                     {viewPassword
-                    ?<i class="col col-2 bi bi-eye-fill fs-2 p-0" style={{"cursor":"pointer"}} onClick={()=>setViewPassword(!viewPassword)}></i>
-                    :<i class="col col-2 bi bi-eye-slash-fill fs-2 p-0" style={{"cursor":"pointer"}} onClick={()=>setViewPassword(!viewPassword)}></i>
+                    ?<i className="col col-2 bi bi-eye-fill fs-2 p-0" style={{"cursor":"pointer"}} onClick={()=>setViewPassword(!viewPassword)}></i>
+                    :<i className="col col-2 bi bi-eye-slash-fill fs-2 p-0" style={{"cursor":"pointer"}} onClick={()=>setViewPassword(!viewPassword)}></i>
                     }
                   </div>
                 </div>

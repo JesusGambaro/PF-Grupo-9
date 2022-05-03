@@ -17,5 +17,8 @@ module.exports = (sequelize) => {
     cardBrand: {
       type: DataTypes.STRING,
     },
+    last4: {
+      type: DataTypes.INTEGER,
+    },
   })
 }

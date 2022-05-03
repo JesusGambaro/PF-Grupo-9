@@ -40,17 +40,23 @@ const postProduct = (token, newShoe, form) => {
   console.log("Soy el nuevo shoe=>>", newShoe);
   return async (dispatch, getState) => {
     dispatch({type: LOADING, payload: true});
-    await axios.post(`http://localhost:3001/allFootwear`, form, {
-      headers: {
-        Authorization: `bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    });
-/*     let oldData = getState().admin.products;
+    axios
+      .post(`http://localhost:3001/allFootwear`, form, {
+        headers: {
+          Authorization: `bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log("sOY LA DATA===>", res.data);
+        if (res.data) {
+          dispatch(getAllProductsAdmin(token));
+          dispatch({type: LOADING, payload: false});
+        }
+      });
+    /*     let oldData = getState().admin.products;
     let newData = {...oldData, newShoe};
     dispatch({type: UPDATE_PRODUCT, payload: newData}); */
-    dispatch(getAllProductsAdmin(token));
-    dispatch({type: LOADING, payload: false});
   };
 };
 

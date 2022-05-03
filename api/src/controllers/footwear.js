@@ -94,7 +94,6 @@ module.exports = {
             ["id", "ASC"],
             ["images", "id", "ASC"],
           ],
-
         })
         return res.send(footwearsSearched)
       }
@@ -334,8 +333,11 @@ module.exports = {
           })
           await product.addStock(stockProduct)
         })
-
-      return res.send("Product with its images created!")
+      const delay = async () => {
+        setTimeout(() => {
+          res.send("Product with its images created!")
+        }, 3000)
+      }
     } catch (error) {
       sendError(res, error)
     }
@@ -423,8 +425,12 @@ module.exports = {
           })
         }
       }
-
-      res.send("calzado editado")
+      const delay = async () => {
+        setTimeout(() => {
+          res.send("calzado editado")
+        }, 3000)
+      }
+      await delay()
     } catch (error) {
       sendError(res, error)
     }

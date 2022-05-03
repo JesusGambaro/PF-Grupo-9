@@ -79,25 +79,28 @@ const AdminCustomers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    if (role.admin) {
-      const token = window.localStorage.getItem("token");
-      dispatch(roleUser(token));
-      if (!users.length) {
-        dispatch(getAllUsers(token));
+    const token = window.localStorage.getItem("token");
+    if (!token || (token && !token.length)) navigate("/home");
+    else {
+      if (role.admin) {
+        dispatch(roleUser(token));
+        if (!users.length) {
+          dispatch(getAllUsers(token));
+        }
+        (async () => {
+          const {data} = await axios.get(
+            `http://localhost:3001/user/superAdmin`,
+            {
+              headers: {
+                Authorization: `bearer ${token}`,
+              },
+            }
+          );
+          setIsTheMasterOne(data.superAdmin);
+        })();
+      } else if (role.admin === false) {
+        navigate("/home");
       }
-      (async () => {
-        const {data} = await axios.get(
-          `http://localhost:3001/user/superAdmin`,
-          {
-            headers: {
-              Authorization: `bearer ${token}`,
-            },
-          }
-        );
-        setIsTheMasterOne(data.superAdmin);
-      })();
-    } else if (role.admin === false) {
-      navigate("/home");
     }
   }, [dispatch, navigate, role.admin, users]);
 

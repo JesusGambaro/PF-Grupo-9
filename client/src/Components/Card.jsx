@@ -58,8 +58,7 @@ const Card = ({e, horizontal}) => {
           showConfirmButton: false,
           timer: 1250,
         });
-
-      }else if (type === "delFav") {
+      } else if (type === "delFav") {
         const id = e.id;
         //console.log("token: ",token);
         console.log(favUser);
@@ -142,7 +141,7 @@ const Card = ({e, horizontal}) => {
                   <i key={i} className="bi bi-star"></i>
                 );
               })}
-              <p>&nbsp;(123)</p>
+              <p>&nbsp;{`(${e.ratingAmount})`}</p>
             </div>
             &nbsp;
             {e.sale !== 0 && (

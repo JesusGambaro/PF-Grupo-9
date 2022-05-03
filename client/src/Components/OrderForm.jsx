@@ -34,9 +34,15 @@ const PaymentCheckout = () => {
 
 
     })
+
+    
+
     const [loading, setLoding]=useState(false)
     const [error, setError] = useState({})
+    const[validation, setValidation]=useState(true)
     useEffect(() => {
+
+        dispatch(getUserCart(token)) 
         // if(!totalFootwear && !total && !cart.length) {navigate("/home")}
         
          /* dispatch(cleanOrder())   */  
@@ -52,6 +58,7 @@ const PaymentCheckout = () => {
                     
                   })
                   dispatch(cleanOrder())   
+                  elements.getElement(CardElement).clear();
                 }
             if(/* Object.entries(paymentInfo)[0][0]==='msg' */paymentInfo.msg){
                 setLoding(false) 
@@ -63,27 +70,37 @@ const PaymentCheckout = () => {
                 timer: 3250,
               })
               dispatch(cleanOrder())
+              elements.getElement(CardElement).clear();
+              navigate("/home/profile")
             } 
            
          }
-    },[dispatch,token,navigate,addCart,cart,getUserCart,putCart,total, totalFootwear,paymentInfo])
+    },[dispatch,token,navigate,validation/* ,addCart,cart,getUserCart,putCart,total, totalFootwear */,paymentInfo,validation])
+   
 
     const handleOnChangeForm = (e) => {
+        
         handleErrorForm(e)
         setOrder({...order,[e.target.name]: e.target.value})
+        if(!order.name || !order.telephoneNumber || !order.surname || !order.country || !order.city || !order.address || !order.postalCode || !total || !totalFootwear){
+            setValidation(true)
+            
+        }
+
     }
     const handleErrorForm = (e) => {
+
         if(e.target.name === "telephoneNumber"){
             
-            if(!e.target.value.length || e.target.value.length > 11 || e.target.value.length < 11) {
+            if(!e.target.value.length || e.target.value.length > 15 || e.target.value.length < 8) {
             setError({...error,telephoneNumber: "Telephone number is required and must be valid"})}
             else if(!e.target.value.length > 15 || !e.target.value.length < 4){setError({...error,telephoneNumber: ""})}
         }
         if(e.target.name === "address"){
             if(!e.target.value.length)  return setError({...error,address: "Address is required"})
-            else if(e.target.value.length)return setError({...error,address: ""})
-            if(e.target.value.length > 100) return setError({...error,address: "Invalid address"})
-            else if(!e.target.value.length > 100) setError({...error,address: ""})
+           /*  else if(e.target.value.length)return setError({...error,address: ""}) */
+            if(e.target.value.length > 30 || e.target.value.length<10) return setError({...error,address: "Invalid address"})
+            else if(e.target.value.length <30 &&e.target.value.length>5) return setError({...error,address: ""})
         }
         if(e.target.name === "name"){
             if(e.target.value.length ===0)return setError({...error,name: "Your name is required"})
@@ -116,14 +133,42 @@ const PaymentCheckout = () => {
             if(/[0-9-]+$/.test(e.target.value) || e.target.value.length ===0)return setError({...error,floor: ""})
         }
         
+        if(error.name || error.telephoneNumber || error.surname || error.country || error.city || error.address || error.postalCode || !total || !totalFootwear){
+            setValidation(true)
+            
+        }
          
     }
-    const validation = (order.name && order.telephoneNumber && order.surname && order.country && order.city && order.address && order.postalCode && total && totalFootwear)?false:true/* () =>{
+    /* var validation='a' */ /* = (order.name && order.telephoneNumber && order.surname && order.country && order.city && order.address && order.postalCode && total && totalFootwear)?false:true *//* () =>{
         if(error.name && error.telephoneNumber || error.surname || error.country || error.city || error.address)return true
     } */
     
+   const prueba=(e)=>{  
+  if (e.complete) {
+    if(!error.name && !error.telephoneNumber && !error.surname && !error.country && !error.city && !error.address && !error.postalCode && total && totalFootwear
+        &&order.name && order.telephoneNumber && order.surname && order.country && order.city && order.address && order.postalCode 
+        ){
+         setValidation(false)
+         
+         
+    }else{
+        setValidation(true)
+        
+        
+    }
+    
+   
+    
+    // enable payment button
+ } else{
+    setValidation(true)
+    
+  }
+   }
    
     const handleSubmit = async (e) => {
+        
+        
         setLoding(true)
         e.preventDefault()
        
@@ -131,6 +176,7 @@ const PaymentCheckout = () => {
              type: "card",
              card: elements.getElement(CardElement),
            });
+        
          if(!error){         
         dispatch(postOrder(token,{order,paymentMethod,total})) 
         setOrder({
@@ -145,6 +191,7 @@ const PaymentCheckout = () => {
             apartment:"",
             notes:""
             })
+
     }}
 
     
@@ -153,16 +200,16 @@ const PaymentCheckout = () => {
 
            { cart &&
              <section className="order-container">
-                <h1 className="fw-bold text-center mb-3">Purchase</h1>
+                <h1 className="fw-bold text-center mb-3 ejemplo">Purchase</h1>
                 <form onSubmit={(e) => handleSubmit(e)}  className="form">
-                    <label className="input-number" ><span>Telephone number<i className="asterisco">*</i></span><input placeholder="93447411712" type="number" name="telephoneNumber" value={order.telephoneNumber} onChange={e => handleOnChangeForm(e)}
+                    <label className="input-number" ><span>Telephone number<i className="asterisco">*</i></span><input placeholder="example: 93447411712" type="number" name="telephoneNumber" value={order.telephoneNumber} onChange={e => handleOnChangeForm(e)}
                     /></label>
                     {error.telephoneNumber && <label className="col form-label text-danger fw-bold text-end">{error.telephoneNumber}</label>}
-                    <label><span>Address<i className="asterisco">*</i></span><input name="address" placeholder="San Martin 35" value={order.address} onChange={e => handleOnChangeForm(e)} /></label>
+                    <label><span>Address<i className="asterisco">*</i></span><input name="address" placeholder="example: San Martin 35" value={order.address} onChange={e => handleOnChangeForm(e)} /></label>
                     {error.address && <label className="col form-label text-danger fw-bold text-end">{error.address}</label>}
-                    <label><span>Name<i className="asterisco">*</i></span><input name="name" placeholder="Luis Eduardo" value={order.name} onChange={e => handleOnChangeForm(e)} /></label>
+                    <label><span>Name<i className="asterisco">*</i></span><input name="name" placeholder="example: Luis Eduardo" value={order.name} onChange={e => handleOnChangeForm(e)} /></label>
                     {error.name && <label className="col form-label text-danger fw-bold text-end">{error.name}</label>}
-                    <label><span>Surname<i className="asterisco">*</i></span><input name="surname" placeholder="Carrillo Rodríguez" value={order.surname} onChange={e => handleOnChangeForm(e)}/></label>
+                    <label><span>Surname<i className="asterisco">*</i></span><input name="surname" placeholder="example: Carrillo Rodríguez" value={order.surname} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.surname && <label className="col form-label text-danger fw-bold text-end">{error.surname}</label>}
                    
                    
@@ -417,13 +464,13 @@ const PaymentCheckout = () => {
    <option value="Zimbabwe">Zimbabwe</option>
                     </select>
                     </div>
-                    <label><span>City<i className="asterisco">*</i></span><input name="city" placeholder="Buenos Aires" value={order.city} onChange={e => handleOnChangeForm(e)}/></label>
+                    <label><span>City<i className="asterisco">*</i></span><input name="city" placeholder="example: Buenos Aires" value={order.city} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.city && <label className="col form-label text-danger fw-bold text-end">{error.city}</label>}
-                    <label><span>Postal Code<i className="asterisco">*</i></span><input name="postalCode" placeholder="10111" type="number" value={order.postalCode} onChange={e => handleOnChangeForm(e)}/></label>
+                    <label><span>Postal Code<i className="asterisco">*</i></span><input name="postalCode" placeholder="example: 10111" type="number" value={order.postalCode} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.postalCode && <label className="col form-label text-danger fw-bold text-end">{error.postalCode}</label>}
-                    <label><span>Floor</span><input name="floor" placeholder="2" type="number"value={order.floor} onChange={e => handleOnChangeForm(e)}/></label>
+                    <label><span>Floor</span><input name="floor" placeholder="example: 2" type="text"value={order.floor} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.floor && <label className="col form-label text-danger fw-bold text-end">{error.floor}</label>}
-                    <label><span>Apartment</span><input name="apartment" placeholder="B" value={order.apartment} onChange={e => handleOnChangeForm(e)}/></label>
+                    <label><span>Apartment</span><input name="apartment" placeholder="example: B" value={order.apartment} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.apartment && <label className="col form-label text-danger fw-bold text-end">{error.apartment}</label>}
                     <label><span>Notes</span><textarea name="notes"  value={order.notes} onChange={e => handleOnChangeForm(e)}/></label>
                     {error.notes && <label className="col form-label text-danger fw-bold text-end">{error.notes}</label>}
@@ -431,14 +478,14 @@ const PaymentCheckout = () => {
                     <div style={{width:"100%",borderColor: "rgb(133, 133, 133)",borderStyle:"solid",borderWidth: "1px",height: "max-content"}}>
                     <CardElement options={{style:{base:
                         {fontSize:"1.5rem"}
-                        }}} className="a"/>
+                        }}} className="a" onChange={e=>prueba(e)}/>
                     
                     </div>
                     <div className="totals">
                         <span>Total footwears: {totalFootwear}</span>
                         <span>Order total: ${total}</span>
                     </div>
-                    <button className="submit-button" disabled={validation}><i class="bi bi-bag-fill"></i>{loading===true?<Spinner animation="border" role="status">
+                    <button className="submit-button" disabled={validation} ><i class="bi bi-bag-fill"></i>{loading===true?<Spinner animation="border" role="status">
   <span className="visually-hidden">Loading...</span>
 </Spinner>:'Place the order!'}</button>
                 </form>

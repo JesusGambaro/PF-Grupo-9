@@ -137,6 +137,7 @@ function Login() {
 
   const handleSignUp = () => {
     signUp ? setSignUp(false) : setSignUp(true)
+    setViewPassword(false)
     setState({
       email: "",
       password: "",

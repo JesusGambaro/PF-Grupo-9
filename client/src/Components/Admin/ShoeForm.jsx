@@ -8,6 +8,7 @@ import Selection from "./Selection";
 import {useSelector} from "react-redux";
 import {brands, colors, sizes, categories} from "../data";
 import validation from "./validation.js";
+
 import bringAllData from "../../redux/actions/bringAllData";
 import Loading from "../Loading";
 import {
@@ -100,7 +101,6 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
             shoeObject.id
           )
         );
-        dispatch(bringAllData(true));
       } else {
         const formData = new FormData();
         Object.keys(data).forEach((param) => {

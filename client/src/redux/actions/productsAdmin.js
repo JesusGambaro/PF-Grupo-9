@@ -5,6 +5,7 @@ import {
   UPDATE_FORM_PRODUCT,
   LOADING_A,
 } from "./actionsAdmin";
+import bringAllData from "./bringAllData"
 import {SEARCH_PRODUCT_A} from "./actionsAdmin";
 const getAllProductsAdmin = (token) => {
   return async (dispatch) => {
@@ -59,6 +60,7 @@ const postProduct = (token, newShoe, form) => {
             payload: res.data,
           });
           dispatch(getAllProductsAdmin(token));
+          dispatch(bringAllData(false));
           dispatch({type: LOADING_A, payload: false});
         }
       });
@@ -84,6 +86,7 @@ const editShoe = (token, editedShoe, form, id) => {
         if (res.data) {
           dispatch({type: UPDATE_FORM_PRODUCT, payload: res.data});
           dispatch(getAllProductsAdmin(token));
+           dispatch(bringAllData(false));
           dispatch({type: LOADING_A, payload: false});
         }
       });
@@ -95,6 +98,7 @@ const editShoe = (token, editedShoe, form, id) => {
     // dispatch({type: UPDATE_PRODUCT, payload: newData});
   };
 };
+
 
 const deleteShoe = (token, id) => {
   console.log(id);
@@ -113,6 +117,7 @@ const deleteShoe = (token, id) => {
     console.log("Soy el new data===>", newData);
     dispatch({type: UPDATE_PRODUCT, payload: newData}); */
     dispatch(getAllProductsAdmin(token));
+     dispatch(bringAllData(false));
     dispatch({type: LOADING_A, payload: false});
   };
 };

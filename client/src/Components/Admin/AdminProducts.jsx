@@ -22,8 +22,9 @@ const CardProduct = ({shoe, editShoeFunctions}) => {
   const [confirmDialog, setConfirmDialog] = useState(false);
   const {role} = useSelector((store) => store.root);
   const handleDeleteProduct = (id) => {
-    if (role.admin)
+    if (role.admin){
       dispatch(deleteShoe(window.localStorage.getItem("token"), id));
+    }
     else if (role.admin === false) navigate("/home");
   };
   //console.log(shoe);
@@ -219,9 +220,7 @@ const AdminProducts = () => {
                   />
                 );
               })
-            ) : (
-              <h2>No results</h2>
-            )}
+            ) : (<h2>No results</h2>)}
             <Pagination />
           </div>
         )}

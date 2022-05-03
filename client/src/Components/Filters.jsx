@@ -10,7 +10,7 @@ const Filters = ({filters, handleCheckSelect}) => {
             {el.name === "sale" ? (
               <p>On Sale</p>
             ) : (
-              <p>
+              <span>
                 {`${
                   el.name.substring(0, 1).toUpperCase() + el.name.substring(1)
                 }: `}
@@ -19,7 +19,7 @@ const Filters = ({filters, handleCheckSelect}) => {
                     ? `${el.value.minValue} - ${el.value.maxValue}`
                     : el.value}
                 </p>
-              </p>
+              </span>
             )}
             <button
               onClick={() => {

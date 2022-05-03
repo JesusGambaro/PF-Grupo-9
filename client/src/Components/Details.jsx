@@ -122,8 +122,7 @@ function Details() {
       });
     }
   };
-  console.log({detailColor})
-  console.log({detail})
+
   useEffect(() => {
     setReload(false);
     setImages([]);
@@ -135,16 +134,19 @@ function Details() {
     dispatch(getDetail(id));
     dispatch(getDetailColor(model));
 
+  }, [ reload, id, model]);
+
+  useEffect(() => {
+    window.scroll({ top: 0, behavior: "smooth" });
     if (allData.length > 3) {
       const numRandom = Math.round(Math.random() * (allData.length - 3) + 3);
       setRelatedProduct(allData.slice(numRandom - 3, numRandom));
     } else if (allData.length === 0) dispatch(bringAllData());
-  }, [allData, reload, id, dispatch, model]);
+  }, [reload, allData, detail]);
 
-  useEffect(() => {
-    window.scroll({ top: 0, behavior: "smooth" });
+  useEffect(()=>{
     return () => dispatch(clearDetail());
-  }, [reload, dispatch])
+  },[])
 
   return (
     <div className="w-100" style={{ marginTop: "4rem" }}>
@@ -167,6 +169,7 @@ function Details() {
                     id="fav"
                     title="Add to favorites"
                     onClick={handleAddingFavCart}
+                    disabled={stock == 0}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -240,6 +243,7 @@ function Details() {
                         name="colors"
                         value={colorSelect? colorSelect:detail.color }
                         onChange={handleColor}
+                        disabled={!detail.active}
                       >
                         {detailColor.length && detailColor.find(i => i.color === detail.color)? detailColor.map((diseño) => (
                             <option
@@ -276,6 +280,7 @@ function Details() {
                         name="size"
                         value={sizeSelect}
                         onChange={handleSize}
+                        disabled={!detail.active}
                       >
                         {size.length > 0
                           ? size.map((talla) => (
@@ -303,13 +308,15 @@ function Details() {
                   </div>
                 </div>
                 <div className="row mt-5 mb-4 d-flex justify-content-center mt-xl-4 pt-xl-4 mt-lg-3 pt-lg-3">
-                  <button
+                 {detail.active? <button
                     className="w-50 btn btn-outline-info fs-4 fw-bold"
                     disabled={stock == 0}
                     onClick={handleAddingCart}
                   >
                     ADD TO CART
                   </button>
+                  : <h2 className="text-center text-info">This product was removed</h2>  
+                }
                 </div>
               </div>
             </div>

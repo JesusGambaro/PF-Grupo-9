@@ -4,11 +4,11 @@ const sortByPrice = (order) => {
     let filtered = [...getState().root.allData]
     if (order === "asc") {
       filtered.sort((a, b) => {
-        return a.price - b.price
+        return a.finalPrice - b.finalPrice
       })
     } else if (order === "des")
       filtered.sort((a, b) => {
-        return b.price - a.price
+        return b.finalPrice - a.finalPrice
       })
     dispatch({ type: SORT_BY, payload: filtered })
   }

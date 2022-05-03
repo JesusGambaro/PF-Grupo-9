@@ -24,6 +24,7 @@ const orderInclude = {
     { model: User },
     { model: Payment },
   ],
+  order: [["id", "DESC"]],
 }
 
 module.exports = {
@@ -40,6 +41,7 @@ module.exports = {
             { model: User },
             { model: Payment },
           ],
+          order: [["id", "DESC"]],
         })
         return res.send(orderById)
       }
@@ -63,6 +65,7 @@ module.exports = {
             { model: User, where: { email: { [Op.iLike]: `${email}%` } } },
             { model: Payment },
           ],
+          order: [["id", "DESC"]],
         })
         return res.send(orderSearched)
       }
@@ -76,6 +79,7 @@ module.exports = {
             { model: User, where: { email: { [Op.iLike]: `${email}%` } } },
             { model: Payment },
           ],
+          order: [["id", "DESC"]],
         })
         return res.send(orderSearchedEmail)
       }
@@ -100,6 +104,7 @@ module.exports = {
           { model: User },
           { model: Payment },
         ],
+        order: [["id", "DESC"]],
       })
       if (userOrders.length) {
         return res.send(userOrders)
@@ -125,8 +130,9 @@ module.exports = {
         apartment,
         notes,
       } = order
+      console.log(paymentMethod)
       const { id, card } = paymentMethod
-      const { brand, funding } = card
+      const { brand, funding, last4 } = card
       const stripe = new Stripe(process.env.STRIPEKEY)
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
@@ -143,9 +149,10 @@ module.exports = {
           },
         ],
       })
+      const finalTotal = total * 100
       const owner = await User.findOne({ where: { id: userId } })
       const payment = await stripe.paymentIntents.create({
-        amount: total,
+        amount: finalTotal,
         currency: "USD", //ARS? MEX?
         description: "footwears",
         payment_method: id,
@@ -170,7 +177,9 @@ module.exports = {
           paymentId: id,
           cardBrand: brand,
           funding,
+          last4,
         })
+        console.log(JSON.stringify(orderPayment))
         await orderCreated.addShoppingCartItems(allShoppingCarts)
         await orderCreated.setUser(owner)
         await orderCreated.setPayment(orderPayment)
@@ -249,6 +258,7 @@ module.exports = {
           { model: User },
           { model: Payment },
         ],
+        order: [["id", "DESC"]],
       })
       res.send(lastOrders)
     } catch (error) {

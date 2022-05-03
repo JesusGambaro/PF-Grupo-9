@@ -15,6 +15,7 @@ function Login() {
   const [validation, setValidation] = useState(true)
   const [forgotPassword, setForgotPassword] = useState(false)
   const [signUp, setSignUp] = useState(false)
+  const [viewPassword, setViewPassword] = useState(false)
   const [loading, setLoading] = useState({
     login: false,
     register: false,
@@ -136,6 +137,7 @@ function Login() {
 
   const handleSignUp = () => {
     signUp ? setSignUp(false) : setSignUp(true)
+    setViewPassword(false)
     setState({
       email: "",
       password: "",
@@ -270,7 +272,7 @@ function Login() {
           <h2 className="fw-bold text-center pt-3 mb-5">Welcome</h2>
 
           {forgotPassword
-            ? <SendConfirmedEmail signIn={setForgotPassword} register={setSignUp}/>
+            ? <SendConfirmedEmail signIn={setForgotPassword} register={setSignUp} />
             : (
               <form onSubmit={hanldeSubmit}>
                 {signUp
@@ -308,8 +310,13 @@ function Login() {
                       : null
                     }
                   </div>
-                  <input type="password" name="password" value={state.password} className="form-control" onChange={handleValidationInputs}
-                  />
+                  <div className="row ms-1 gap-2">
+                    <input type={viewPassword?"text":"password"} name="password" value={state.password} className="col form-control" onChange={handleValidationInputs} i/>
+                    {viewPassword
+                    ?<i class="col col-2 bi bi-eye-fill fs-2 p-0" style={{"cursor":"pointer"}} onClick={()=>setViewPassword(!viewPassword)}></i>
+                    :<i class="col col-2 bi bi-eye-slash-fill fs-2 p-0" style={{"cursor":"pointer"}} onClick={()=>setViewPassword(!viewPassword)}></i>
+                    }
+                  </div>
                 </div>
                 {error.password
                   ? <div className="mb-2">
@@ -354,7 +361,7 @@ function Login() {
 
                   <br />
                   {!signUp
-                    ? <span>Forgot your password? <button className="bg-transparent border-0 text-primary text-decoration-underline" onClick={()=>setForgotPassword(true)}>Recover password</button></span>
+                    ? <span>Forgot your password? <button className="bg-transparent border-0 text-primary text-decoration-underline" onClick={() => setForgotPassword(true)}>Recover password</button></span>
                     : null
                   }
                 </div>

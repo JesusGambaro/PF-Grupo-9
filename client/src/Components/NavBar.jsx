@@ -22,15 +22,14 @@ const NavBar = () => {
   const [profileName, setProfileName] = useState("Profile");
   const {role} = useSelector((store) => store.root);
   const token = window.localStorage.getItem("token");
-  
+
   useEffect(() => {
- /*    if (!window.localStorage.getItem("token")) {
+    /*    if (!window.localStorage.getItem("token")) {
       navigate("/home/login");
     } else { */
-      if (role.admin) setProfileName("Dashboard");
-      else if (role.admin === undefined) dispatch(roleUser(token));
-      else setProfileName("Profile");
-    
+    if (role.admin) setProfileName("Dashboard");
+    else if (role.admin === undefined && token) dispatch(roleUser(token));
+    else setProfileName("Profile");
   }, [dispatch, navigate, role.admin, token]);
 
   function abrirYcerrar() {
@@ -184,7 +183,11 @@ const NavBar = () => {
               </DropdownMenu>
             </Dropdown>
           ) : (
-            <NavLink to="/home/login" className="text-dark" style={{textDecoration:"none"}}>
+            <NavLink
+              to="/home/login"
+              className="text-dark"
+              style={{textDecoration: "none"}}
+            >
               LogIn
             </NavLink>
           )}

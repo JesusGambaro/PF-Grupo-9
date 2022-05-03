@@ -97,8 +97,7 @@ function ChangePassword() {
                 : null
               }
             </div>
-            <input type="password" value={password} autoFocus name="password" className="form-control" onChange={handleValidationPassword}
-            />
+            <input type="password" value={password} autoFocus name="password" className="form-control" onChange={handleValidationPassword}/>
 
             <div className="row mt-4">
               <label htmlFor="confirmPassword" className="col form-label">Confirm your password:</label>

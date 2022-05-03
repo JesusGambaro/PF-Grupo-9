@@ -27,19 +27,19 @@ export const deleteCartItem = (id, token) => {
     await axios.delete(`${URL}/deleteCart/${id}`, {
       headers: { Authorization: `bearer ${token}` },
     })
-    let userData = getState().root.cartUser
-    console.log("userData: ", userData.sameUserCartItems)
-    console.log("ids: ", userData.sameUserCartItems[0].id, " -- ", id)
-    userData = {
-      ...userData,
-      sameUserCartItems: userData.sameUserCartItems.filter((e) => {
-        return e.id !== id
-      }),
-    }
-    console.log("userData: ", userData)
+    // let userData = getState().root.cartUser
+    // userData = {
+    //   ...userData,
+    //   sameUserCartItems: userData.sameUserCartItems.filter((e) => {
+    //     return e.id !== id
+    //   }),
+    // }
+    const { data } = await axios.get(`${URL}`, {
+      headers: { Authorization: `bearer ${token}` },
+    })
     dispatch({
       type: GET_CART,
-      payload: userData,
+      payload: data,
     })
   }
 }

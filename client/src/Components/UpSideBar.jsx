@@ -38,7 +38,7 @@ const UpSideBar = ({quantity, handleToggle, genderActual}) => {
           name="sortby"
           onChange={handleSelect}
         >
-          <option value="default">Sort By</option>
+          <option value="default" disabled={true}>Sort By</option>
           <option value="asc">Price - Low to High</option>
           <option value="des">Price - High to Low</option>
         </select>

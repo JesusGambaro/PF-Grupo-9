@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import "../Css/Reviews.css"
 
 function Reviews() {
-  const { detail, detailColor } = useSelector(
+  const { detail } = useSelector(
     (state) => state.root
   );
 
@@ -50,31 +50,26 @@ function Reviews() {
       return result
     }
   }
+  
   return (
     <div className="container w-100 mb-5">
       <h1 className="ms-md-3 my-5 text-info text-center">Reviews</h1>
       <div className="row justify-content-center shadow-lg py-4 px-5 review">
         <div className="d-flex align-items-center mb-5 gap-4">
-          <h1 className="p-0 m-0 fw-bold text-info" id="rating">{detail.rating
+          <h1 className="p-0 m-0 fw-bold text-info" id="rating">{detail.rating && detail.reviews.length>0
             ? Number.isInteger(detail.rating)
               ? `${detail.rating}.0`
               : detail.rating
-            : 0}</h1>
+            : null}</h1>
 
           <div className="d-flex flex-row gap-2">
-            {detail.rating ?
+            {detail.rating && detail.reviews.length>0 ?
               handleStarts(detail.rating, true).map((start, index) => (
                 <div key={index} >
                   {start}
                 </div>
               ))
-              : (
-                <i className="bi bi-star-fill text-warning fs-4"></i>,
-                <i className="bi bi-star text-warning fs-4"></i>,
-                <i className="bi bi-star text-warning fs-4"></i>,
-                <i className="bi bi-star text-warning fs-4"></i>,
-                <i className="bi bi-star text-warning fs-4"></i>
-              )
+              : null
             }
           </div>
         </div>

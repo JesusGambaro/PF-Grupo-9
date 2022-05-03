@@ -322,6 +322,7 @@ module.exports = {
           const urlImg = await cloudinary(imgFile.tempFilePath)
           let imageProduct = await Image.create({ url: urlImg.secure_url })
           await product.addImage(imageProduct)
+          console.log("hola")
         })
       }
 
@@ -335,7 +336,7 @@ module.exports = {
         })
       const delay = async () => {
         setTimeout(() => {
-          res.send("Product with its images created!")
+          return res.send({ msg: "Product with its images created!" })
         }, 3000)
       }
       await delay()
@@ -428,8 +429,8 @@ module.exports = {
       }
       const delay = async () => {
         setTimeout(() => {
-          res.send("calzado editado")
-        }, 3000)
+          return res.send({ msg: "calzado editado" })
+        }, 5000)
       }
       await delay()
     } catch (error) {

@@ -1,5 +1,4 @@
 import {
-  LOADING,
   GET_ALL_SALES,
   REGISTER_USER,
   LOGIN_USER,
@@ -9,6 +8,7 @@ import {
 import {
   GET_ALL_PRODUCTS_A,
   GET_ALL_USERS,
+  LOADING_A,
   GET_LAST_SEVEN_DAYS_ORDERS,
   GET_ALL_ORDERS,
   GET_ORDER_DETAIL,
@@ -49,7 +49,7 @@ const adminReducer = (state = initialState, action) => {
       return { ...state, products: action.payload }
     case SEARCH_USER_A:
       return { ...state, users: action.payload }
-    case LOADING:
+    case LOADING_A:
       return { ...state, loading: action.payload }
     case GET_ALL_SALES:
       return { ...state, sales: action.payload }

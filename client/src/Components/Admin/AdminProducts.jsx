@@ -137,8 +137,11 @@ const AdminProducts = () => {
     : (document.body.style.overflow = "auto");
 
   useEffect(() => {
+    const token = window.localStorage.getItem("token");
+    if (!token || (token && !token.length)) navigate("/home");
+    else {
+    }
     if (role.admin) {
-      const token = window.localStorage.getItem("token");
       if (!products.length) dispatch(getAllProductsAdmin(token));
       if (!genders.length) dispatch(getAllGenders(token));
       dispatch(roleUser(token));

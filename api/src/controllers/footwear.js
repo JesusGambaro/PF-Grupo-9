@@ -338,6 +338,7 @@ module.exports = {
           res.send("Product with its images created!")
         }, 3000)
       }
+      await delay()
     } catch (error) {
       sendError(res, error)
     }

@@ -243,6 +243,7 @@ function Details() {
                         name="colors"
                         value={colorSelect? colorSelect:detail.color }
                         onChange={handleColor}
+                        disabled={!detail.active}
                       >
                         {detailColor.length && detailColor.find(i => i.color === detail.color)? detailColor.map((diseño) => (
                             <option
@@ -279,6 +280,7 @@ function Details() {
                         name="size"
                         value={sizeSelect}
                         onChange={handleSize}
+                        disabled={!detail.active}
                       >
                         {size.length > 0
                           ? size.map((talla) => (

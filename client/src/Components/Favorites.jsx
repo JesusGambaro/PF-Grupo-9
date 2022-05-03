@@ -98,7 +98,6 @@ const Favorites = () => {
           ? dispatch(deleteFavItem(id, token))
           : dispatch(deleteAllFav(token));
       }
-      console.log("token: ", token);
     });
   };
   const handleAddCart = (e) => {
@@ -107,7 +106,6 @@ const Favorites = () => {
       sizes[element.size] = element.size;
     });
     if (token) {
-      console.log("addCartFav");
       Swal.fire({
         title: "Select a size",
         input: "select",

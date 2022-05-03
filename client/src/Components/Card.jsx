@@ -114,7 +114,7 @@ const Card = ({e, horizontal}) => {
           style={{textDecoration: "none"}}
         >
           <img
-            src={e.images[0].url ? e.images[0].url : "./Images/logo2.png"}
+            src={e.images.length && e.images[0].url ? e.images[0].url : "./Images/logo2.png"}
             alt={e.model}
           />
         </NavLink>

@@ -78,7 +78,7 @@ module.exports = (sequelize) => {
         if (tempDiscount === 0) {
           return tempPrice
         } else {
-          return (tempPrice * (100 - tempDiscount)) / 100
+          return Math.round((tempPrice * (100 - tempDiscount)) / 100)
         }
       },
     },

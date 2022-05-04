@@ -11,7 +11,7 @@ import {brands, colors, sizes} from "./data";
 const LeftSideFilters = () => {
   const {categories, filters} = useSelector((state) => state.root);
   const dispatch = useDispatch();
-  const [range, setRange] = useState({minValue: 0, maxValue: 5000});
+  const [range, setRange] = useState({minValue: 0, maxValue: 1000});
   const [checkeds, setCheckeds] = useState([]);
   useEffect(() => {
     dispatch(getAllCategories());
@@ -71,7 +71,7 @@ const LeftSideFilters = () => {
         <h4>Price</h4>
         <MultiRangeSlider
           min={0}
-          max={5000}
+          max={1000}
           step={10}
           ruler={false}
           label={true}

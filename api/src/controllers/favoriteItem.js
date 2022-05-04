@@ -63,7 +63,7 @@ module.exports = {
       const favItemId = await FavoriteItem.findOne({
         where: { id },
       })
-      if (userId === favItemId.userId) {
+      if (favItemId && userId === favItemId.userId) {
         await favItem.destroy()
         return res.send({ msg: "Favorite item deleted" })
       }

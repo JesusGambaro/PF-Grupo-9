@@ -2,7 +2,7 @@ import axios from "axios";
 import {GET_ALL_PRODUCTS_A} from "./actionsAdmin";
 import {LOADING} from "./actions";
 import bringAllData from "./bringAllData"
-import { SEARCH_PRODUCT_A, UPDATE_PRODUCT } from "./actionsAdmin"
+import { SEARCH_PRODUCT_A, UPDATE_FORM_PRODUCT } from "./actionsAdmin"
 
 const getAllProductsAdmin = (token) => {
   return async (dispatch) => {

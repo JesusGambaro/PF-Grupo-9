@@ -1,6 +1,6 @@
 import axios from "axios"
 import { GET_ALL_SALES, LOADING } from "./actions"
-const URL = "http://localhost:3001/allFootwear/sales"
+const URL = "/allFootwear/sales"
 
 const getAllSales = () => {
   return async (dispatch) => {

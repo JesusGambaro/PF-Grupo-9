@@ -1,9 +1,12 @@
-
 import "../../Css/AdminPandO.css";
 import {useEffect, useState} from "react";
 import {useNavigate, NavLink} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
-import {getAllOrders, getOrderByStatus, updateOrder} from "../../redux/actions/ordersAdmin";
+import {
+  getAllOrders,
+  getOrderByStatus,
+  updateOrder,
+} from "../../redux/actions/ordersAdmin";
 import {roleUser} from "../../redux/actions/Loginregister";
 import {getOrderByEmail} from "../../redux/actions/ordersAdmin";
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
@@ -21,13 +24,15 @@ export default function AdminPandO() {
 
   var token1 = window.localStorage.getItem("token");
   useEffect(() => {
-    if (window.localStorage.getItem("token")) {
-      const token = window.localStorage.getItem("token");
-      dispatch(roleUser(token));
+    const token = window.localStorage.getItem("token");
+    if (!token || (token && !token.length)) navigate("/home");
+    else {
       if (role.admin) {
         dispatch(getAllOrders(token));
       } else if (role.admin === false) {
         navigate("/home");
+      } else {
+        dispatch(roleUser(token));
       }
     }
   }, [dispatch, navigate, role.admin]);
@@ -71,10 +76,7 @@ export default function AdminPandO() {
                 Status
               </DropdownToggle>
               <DropdownMenu>
-              <DropdownItem
-                  value=""
-                  onClick={(e) => handleStatusFilter(e)}
-                >
+                <DropdownItem value="" onClick={(e) => handleStatusFilter(e)}>
                   All
                 </DropdownItem>
                 <DropdownItem
@@ -120,79 +122,76 @@ export default function AdminPandO() {
               </tr>
             </thead>
             <tbody>
-              {allOrders.length? allOrders.map((e) => {
-                return (
-                  <tr key={e.id}>
-                    <td>
-                      {e.id&&e.id} {/* ID order */}
-                    </td>
-                    <td>
-                      <b>
-                        {e.name&&e.name} {e.surname&&e.surname} {/* Customer name */}
-                      </b>
-                    </td>
-                    <td>
-                      {e.user?e.user.email:'User eliminated'}
-                      {/* email@example.com */}
-                    </td>
-                    <td>
-                      ${e.total&&e.total} {/* total */}
-                    </td>
-                    <td>
-                    {e.delivered==='canceled'? <span className="badge rounded-pill alert-danger">
-                          {e.delivered} {/* status */}
-                        </span>:e.delivered==='completed'?<span className="badge rounded-pill alert-success">
-                          {e.delivered} {/* status */}
-                        </span>:
-                        <span className="badge rounded-pill alert-warning">
-                          {e.delivered} {/* status */}
-                        </span>}
-                    </td>
-                    <td>
-                      {e.createdAt&&e.createdAt.slice(0, 10)} {/* date */}
-                    </td>
-                    <td className="text-end">
-                      <NavLink
-                        to={`/home/admin/order/${e.id}`}
-                        className="btn btn-light detalle"
-                      >
-                        Detail
-                      </NavLink>
-                    </td>
-                  </tr>
-                );
-              }):
-              /* si no coincide ninguna */
-              <tr >
-                    <td>
+              {allOrders.length ? (
+                allOrders.map((e) => {
+                  return (
+                    <tr key={e.id}>
+                      <td>
+                        {e.id && e.id} {/* ID order */}
+                      </td>
+                      <td>
+                        <b>
+                          {e.name && e.name} {e.surname && e.surname}{" "}
+                          {/* Customer name */}
+                        </b>
+                      </td>
+                      <td>
+                        {e.user ? e.user.email : "User eliminated"}
+                        {/* email@example.com */}
+                      </td>
+                      <td>
+                        ${e.total && e.total} {/* total */}
+                      </td>
+                      <td>
+                        {e.delivered === "canceled" ? (
+                          <span className="badge rounded-pill alert-danger">
+                            {e.delivered} {/* status */}
+                          </span>
+                        ) : e.delivered === "completed" ? (
+                          <span className="badge rounded-pill alert-success">
+                            {e.delivered} {/* status */}
+                          </span>
+                        ) : (
+                          <span className="badge rounded-pill alert-warning">
+                            {e.delivered} {/* status */}
+                          </span>
+                        )}
+                      </td>
+                      <td>
+                        {e.createdAt && e.createdAt.slice(0, 10)} {/* date */}
+                      </td>
+                      <td className="text-end">
+                        <NavLink
+                          to={`/home/admin/order/${e.id}`}
+                          className="btn btn-light detalle"
+                        >
+                          Detail
+                        </NavLink>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                /* si no coincide ninguna */
+                <tr>
+                  <td>
                     No results
-                       {/* ID order */}
-                    </td>
-                    <td>
-                      <b>
-                         {/* Customer name */}
-                      </b>
-                    </td>
-                    <td>
-                      
-                      {/* email@example.com */}
-                    </td>
-                    <td>
-                       {/* total */}
-                    </td>
-                    <td>
-                      <span className="badge rounded-pill alert-success">
-                         {/* status */}
-                      </span>
-                    </td>
-                    <td>
-                       {/* date */}
-                    </td>
-                    <td className="text-end">
-                      
-                    </td>
-                  </tr>
-              }
+                    {/* ID order */}
+                  </td>
+                  <td>
+                    <b>{/* Customer name */}</b>
+                  </td>
+                  <td>{/* email@example.com */}</td>
+                  <td>{/* total */}</td>
+                  <td>
+                    <span className="badge rounded-pill alert-success">
+                      {/* status */}
+                    </span>
+                  </td>
+                  <td>{/* date */}</td>
+                  <td className="text-end"></td>
+                </tr>
+              )}
             </tbody>
           </table>
           {/* =======

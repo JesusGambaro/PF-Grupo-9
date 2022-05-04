@@ -82,14 +82,14 @@ const AdminCustomers = () => {
     const token = window.localStorage.getItem("token");
     if (!token || (token && !token.length)) navigate("/home");
     else {
+      dispatch(roleUser(token));
       if (role.admin) {
-        dispatch(roleUser(token));
         if (!users.length) {
           dispatch(getAllUsers(token));
         }
         (async () => {
           const {data} = await axios.get(
-            `http://localhost:3001/user/superAdmin`,
+            `https://shoespfhenry.herokuapp.com/user/superAdmin`,
             {
               headers: {
                 Authorization: `bearer ${token}`,
@@ -100,6 +100,8 @@ const AdminCustomers = () => {
         })();
       } else if (role.admin === false) {
         navigate("/home");
+      } else {
+        dispatch(roleUser(token));
       }
     }
   }, [dispatch, navigate, role.admin, users]);

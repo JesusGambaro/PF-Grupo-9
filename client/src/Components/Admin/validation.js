@@ -48,7 +48,7 @@ const validation = (param, type) => {
         ? "Must be just characters"
         : param.length < 3
         ? "Minimum length 3"
-        : param.length > 20
+        : param.length > 30
         ? "Maximum length 20"
         : "";
   }

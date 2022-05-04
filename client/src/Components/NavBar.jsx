@@ -13,6 +13,7 @@ import {roleUser} from "../redux/actions/Loginregister";
 import {useDispatch, useSelector} from "react-redux";
 import Swal from "sweetalert2";
 import {getUserFav} from "../redux/actions/userFav";
+import bringAllData from "../redux/actions/bringAllData";
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const NavBar = () => {
   const [logueado, setLogueado] = useState(false);
   const [searchParam, setSearchParam] = useState("");
   const [profileName, setProfileName] = useState("Profile");
-  const {role} = useSelector((store) => store.root);
+  const {role, allData} = useSelector((store) => store.root);
   const token = window.localStorage.getItem("token");
 
   useEffect(() => {
@@ -32,6 +33,11 @@ const NavBar = () => {
     else setProfileName("Profile");
   }, [dispatch, navigate, role.admin, token]);
 
+  useEffect(() => {
+    if (!allData.length) dispatch(bringAllData());
+    if (token) dispatch(getUserFav(token));
+    dispatch(leftSideFilter());
+  }, [dispatch]);
   function abrirYcerrar() {
     setDropDown(!dropDown);
   }
@@ -131,7 +137,7 @@ const NavBar = () => {
           WOMEN
         </li>
         <li
-          onClick={() => {
+          onClick={async () => {
             if (token) dispatch(getUserFav(token));
             dispatch(sortByGender("Kids"));
             dispatch(resetFilters());

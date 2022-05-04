@@ -1,7 +1,7 @@
 import axios from "axios"
 import { GET_FAV, LOAD_GENDERS, BRING_ALL_DATA, GET_ALL_SALES } from "./actions"
 import { leftSideFilter } from "./leftSideFilter"
-const URL = "http://localhost:3001/favorite"
+const URL = "/favorite"
 export const getUserFav = (token) => {
   return async (dispatch) => {
     const { data } = await axios.get(`${URL}`, {

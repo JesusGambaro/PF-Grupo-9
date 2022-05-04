@@ -1,7 +1,7 @@
 import axios from "axios"
 import { GET_CART, LOADING_CART } from "./actions"
 
-const URL = "http://localhost:3001/cart"
+const URL = "/cart"
 
 export const getUserCart = (token) => {
   return async (dispatch) => {

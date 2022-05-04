@@ -23,7 +23,7 @@ function LoginGoogle() {
   return (
     <div className='mt-4'>
       <GoogleLogin
-        clientId="931352466233-7mhmtsa47dv0p2bpi59fsaakomg8fng0.apps.googleusercontent.com"
+        clientId={process.env.REACT_APP_KEYGOOGLE}
         disabled={false}
         buttonText="Login"
         onSuccess={onSuccess}

@@ -32,7 +32,7 @@ function LoginGoogle() {
         onSuccess={onSuccess}
         onFailure={onFailure}
         theme={"dark"}
-        cookiePolicy={"https://henry-shoes.vercel.app/"}
+        cookiePolicy={"single_host_origin"}
       />
     </div>
   );

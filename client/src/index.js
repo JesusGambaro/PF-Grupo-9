@@ -5,12 +5,10 @@ import reportWebVitals from "./reportWebVitals"
 import { BrowserRouter } from "react-router-dom"
 import { Provider } from "react-redux"
 import store from "./redux/store/store"
-import dotenv from "dotenv"
 import axios from "axios"
 // API URL https://rapidapi.com/tg4-solutions-tg4-solutions-default/api/the-sneaker-database/
 const container = document.getElementById("root")
 
-dotenv.config()
 
 axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001"
 

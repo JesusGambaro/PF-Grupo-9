@@ -2,7 +2,7 @@ import axios from "axios"
 import { GET_ALL_USERS, IS_THE_MASTER_ONE, SEARCH_USER_A } from "./actionsAdmin"
 import { LOADING } from "./actions"
 
-const URL = "http://localhost:3001/user/"
+const URL = "/user/"
 const getAllUsers = (token) => {
   return async (dispatch) => {
     dispatch({ type: LOADING, payload: true })
@@ -44,7 +44,7 @@ const filterUsers = (token, isAdmin) => {
 const deleteUser = (token, user) => {
   return async (dispatch) => {
     dispatch({ type: LOADING, payload: true })
-    await axios.delete(`http://localhost:3001/user/deleteUser/${user.email}`, {
+    await axios.delete(`/user/deleteUser/${user.email}`, {
       headers: {
         Authorization: `bearer ${token}`,
       },
@@ -56,7 +56,7 @@ const deleteUser = (token, user) => {
 const changeUserRole = (token, user) => {
   return async (dispatch, getState) => {
     dispatch({ type: LOADING, payload: true })
-    await axios.put(`http://localhost:3001/user/changeAdminState`, user, {
+    await axios.put(`/user/changeAdminState`, user, {
       headers: {
         Authorization: `bearer ${token}`,
       },

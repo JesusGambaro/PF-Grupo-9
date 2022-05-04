@@ -1,7 +1,7 @@
 import axios from "axios"
 import { CLEAN_ORDER, POST_ORDER } from "./actions"
 
-const URL = "http://localhost:3001/orders"
+const URL = "/orders"
 
 export const postOrder = (token, order) => {
   return async (dispatch) => {

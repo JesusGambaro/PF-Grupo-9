@@ -1,6 +1,4 @@
 {
-  "devDependencies": {
-  },
   "scripts": {
     "start": "nodemon -L"
   },

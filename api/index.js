@@ -1163,7 +1163,7 @@ const prueba = async () => {
 
 conn.sync({ force: true }).then(async () => {
   await prueba()
-  server.listen(3001, () => {
+  server.listen(process.env.PORT || 3001, () => {
     console.log("%s listening at 3001")
   })
 })

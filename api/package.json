@@ -1,11 +1,11 @@
 {
   "devDependencies": {
-    "nodemon": "^2.0.15"
   },
   "scripts": {
     "start": "nodemon -L"
   },
   "dependencies": {
+    "nodemon": "^2.0.15",
     "axios": "^0.26.1",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.29.1",

@@ -316,13 +316,15 @@ module.exports = {
         sale,
         color,
       })
-
-      if (Object.keys(imgFiles).length !== 0) {
-        Object.entries(imgFiles).forEach(async ([key, imgFile]) => {
+      const saveImages = async (objEntries) => {
+        for (const [key, imgFile] of objEntries) {
           const urlImg = await cloudinary(imgFile.tempFilePath)
-          let imageProduct = await Image.create({ url: urlImg.secure_url })
+          const imageProduct = await Image.create({ url: urlImg.secure_url })
           await product.addImage(imageProduct)
-        })
+        }
+      }
+      if (Object.keys(imgFiles).length !== 0) {
+        await saveImages(Object.entries(imgFiles))
       }
 
       parsedStock.length > 0 &&
@@ -333,12 +335,7 @@ module.exports = {
           })
           await product.addStock(stockProduct)
         })
-      const delay = async () => {
-        setTimeout(() => {
-          return res.send({ msg: "Product with its images created!" })
-        }, 3000)
-      }
-      await delay()
+      return res.send({ msg: "Product with its images created!" })
     } catch (error) {
       sendError(res, error)
     }
@@ -398,7 +395,7 @@ module.exports = {
         product.color = color
         await product.save()
       }
-      if (parsedStock.length > 0) {
+      if (parsedStock) {
         await Stock.destroy({
           where: { productId: product.id },
         })
@@ -417,21 +414,19 @@ module.exports = {
           })
         })
       }
-      if (imgFiles) {
-        if (Object.keys(imgFiles).length !== 0) {
-          Object.entries(imgFiles).forEach(async ([key, imgFile]) => {
-            const urlImg = await cloudinary(imgFile.tempFilePath)
-            let imageProduct = await Image.create({ url: urlImg.secure_url })
-            await product.addImage(imageProduct)
-          })
+      const saveImages = async (objEntries) => {
+        for (const [key, imgFile] of objEntries) {
+          const urlImg = await cloudinary(imgFile.tempFilePath)
+          const imageProduct = await Image.create({ url: urlImg.secure_url })
+          await product.addImage(imageProduct)
         }
       }
-      const delay = async () => {
-        setTimeout(() => {
-          return res.send({ msg: "calzado editado" })
-        }, 3000)
+      if (imgFiles) {
+        if (Object.keys(imgFiles).length !== 0) {
+          await saveImages(Object.entries(imgFiles))
+        }
       }
-      await delay()
+      return res.send({ msg: "calzado editado" })
     } catch (error) {
       sendError(res, error)
     }

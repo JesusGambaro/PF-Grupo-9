@@ -130,7 +130,6 @@ module.exports = {
         apartment,
         notes,
       } = order
-      console.log(paymentMethod)
       const { id, card } = paymentMethod
       const { brand, funding, last4 } = card
       const stripe = new Stripe(process.env.STRIPEKEY)
@@ -179,7 +178,6 @@ module.exports = {
           funding,
           last4,
         })
-        console.log(JSON.stringify(orderPayment))
         await orderCreated.addShoppingCartItems(allShoppingCarts)
         await orderCreated.setUser(owner)
         await orderCreated.setPayment(orderPayment)

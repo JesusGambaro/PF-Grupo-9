@@ -19,7 +19,6 @@ export default function PaymentCheckout() {
         type: "card",
         card: elements.getElement(CardElement),
       });
-      console.log({error,paymentMethod})
     //   if (!error) {
     //     const { id } = paymentMethod;
     //     elements.getElement(CardElement).clear();

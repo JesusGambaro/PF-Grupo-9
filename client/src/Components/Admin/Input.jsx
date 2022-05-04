@@ -16,9 +16,9 @@ const Input = ({name, setData, error,value}) => {
         placeholder={error === "Is required" ? error : ""}
         value={value}
       />
-      {error && error !== "Is required" && (
+      {/* {error && error !== "Is required" && (
         <span className="input-error"> &#9888; {error}</span>
-      )}
+      )} */}
     </div>
   );
 };

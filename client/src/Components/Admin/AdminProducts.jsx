@@ -27,7 +27,6 @@ const CardProduct = ({shoe, editShoeFunctions}) => {
     }
     else if (role.admin === false) navigate("/home");
   };
-  //console.log(shoe);
   return (
     <div className="product-card">
       {confirmDialog && (
@@ -78,7 +77,6 @@ const AdminProducts = () => {
   const handleShoeToEdit = (param) => {
     if (param) {
       let newShoe = {};
-      console.log("-------------------------New Shoe-------------------------");
       Object.keys(param).map((e) => {
         let value = param[e];
         switch (e) {
@@ -123,8 +121,6 @@ const AdminProducts = () => {
         }
       });
       setShoeToEdit(newShoe);
-      console.log(newShoe);
-      console.log("-------------------------New Shoe-------------------------");
     } else setShoeToEdit(param);
   };
   const {products, loading} = useSelector((state) => state.admin);
@@ -137,8 +133,11 @@ const AdminProducts = () => {
     : (document.body.style.overflow = "auto");
 
   useEffect(() => {
+    const token = window.localStorage.getItem("token");
+    if (!token || (token && !token.length)) navigate("/home");
+    else {
+    }
     if (role.admin) {
-      const token = window.localStorage.getItem("token");
       if (!products.length) dispatch(getAllProductsAdmin(token));
       if (!genders.length) dispatch(getAllGenders(token));
       dispatch(roleUser(token));

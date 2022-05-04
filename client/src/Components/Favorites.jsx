@@ -59,7 +59,6 @@ const Favorites = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const favUser = useSelector((state) => state.root.favUser);
-  //console.log(favUser);
   useEffect(() => {
     if (!token || (token && !token.length)) {
       //dispatch(loadingCartBoolean(true))
@@ -98,7 +97,6 @@ const Favorites = () => {
           ? dispatch(deleteFavItem(id, token))
           : dispatch(deleteAllFav(token));
       }
-      console.log("token: ", token);
     });
   };
   const handleAddCart = (e) => {
@@ -107,7 +105,6 @@ const Favorites = () => {
       sizes[element.size] = element.size;
     });
     if (token) {
-      console.log("addCartFav");
       Swal.fire({
         title: "Select a size",
         input: "select",

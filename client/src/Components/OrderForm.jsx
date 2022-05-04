@@ -99,7 +99,7 @@ const PaymentCheckout = () => {
         if(e.target.name === "address"){
             if(!e.target.value.length)  return setError({...error,address: "Address is required"})
            /*  else if(e.target.value.length)return setError({...error,address: ""}) */
-            if(e.target.value.length > 30 || e.target.value.length<10) return setError({...error,address: "Invalid address"})
+            if(e.target.value.length > 30 || e.target.value.length<5) return setError({...error,address: "Invalid address"})
             else if(e.target.value.length <30 &&e.target.value.length>5) return setError({...error,address: ""})
         }
         if(e.target.name === "name"){

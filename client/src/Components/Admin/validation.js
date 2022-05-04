@@ -9,6 +9,8 @@ const validation = (param, type) => {
       }
       break;
     case "amount":
+      param = Number(param);
+      if (param === 0) return "Can't be null";
       if (!/^[0-9]+$/.test(param)) {
         return "Must be just digits";
       } else if (param > 1000) return "Can't exceeds 1000";

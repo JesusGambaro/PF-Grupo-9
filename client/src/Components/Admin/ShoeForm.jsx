@@ -55,25 +55,48 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
         }
   );
   const handleSubmit = async () => {
-    setErrors({
-      ...errors,
-      model: validation(data.model, "model"),
-      category: validation(data.category, "category"),
-      gender: validation(data.gender, "gender"),
-      brand: validation(data.brand, "brand"),
-      description: validation(data.description, "description"),
-      color: validation(data.color, "color"),
-      price: validation(data.price, "price"),
-      sale: validation(data.sale, "sale"),
-      images: validation(data.images, "images"),
-      stock: validation(data.stock, "stock"),
-    });
-    if (
-      Object.values(errors).some((e) => e.length) ||
-      Object.values(data).some((d) => d === "" || d.length < 1) ||
-      data.images.every((i) => i.url === "")
-    )
-      return;
+    if (!shoeObject) {
+      setErrors({
+        ...errors,
+        model: validation(data.model, "model"),
+        category: validation(data.category, "category"),
+        gender: validation(data.gender, "gender"),
+        brand: validation(data.brand, "brand"),
+        description: validation(data.description, "description"),
+        color: validation(data.color, "color"),
+        price: validation(data.price, "price"),
+        sale: validation(data.sale, "sale"),
+        images: validation(data.images, "images"),
+        stock: validation(data.stock, "stock"),
+      });
+      if (
+        Object.values(errors).some((e) => e.length) ||
+        Object.values(data).some((d) => d === "" || d.length < 1) ||
+        data.images.every((i) => i.url === "")
+      )
+        return;
+    } else {
+      setErrors({
+        ...errors,
+        model: validation(data.model, "model"),
+        category: validation(data.category, "category"),
+        gender: validation(data.gender, "gender"),
+        brand: validation(data.brand, "brand"),
+        description: validation(data.description, "description"),
+        color: validation(data.color, "color"),
+        price: validation(data.price, "price"),
+        sale: validation(data.sale, "sale"),
+        images: validation(data.images, "images"),
+      });
+      if (
+        Object.values(errors).some((e) => e.length) ||
+        Object.values(data).some((d) => d === "") ||
+        data.images.length < 1 ||
+        data.images.every((i) => i.url === "")
+      )
+        return;
+    }
+
     if (role.admin) {
       if (shoeObject) {
         const formData = new FormData();
@@ -168,17 +191,25 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
         stock: [...data.stock, {amount: stock.amount, size: stock.size}],
       });
     }
-    setErrors({
-      ...errors,
-      size: validation(stock.size, "size"),
-      amount: validation(stock.amount, "amount"),
-      stock: validation(data.stock, "stock"),
-    });
+    if (!shoeObject) {
+      setErrors({
+        ...errors,
+        size: validation(stock.size, "size"),
+        amount: validation(stock.amount, "amount"),
+        stock: validation(data.stock, "stock"),
+      });
+    } else {
+      setErrors({
+        ...errors,
+        size: validation(stock.size, "size"),
+        amount: validation(stock.amount, "amount"),
+      });
+    }
   };
   const initialMount = useRef(true);
   useEffect(() => {
     if (initialMount.current) initialMount.current = false;
-    else {
+    else if (!shoeObject) {
       setErrors({
         ...errors,
         stock: validation(data.stock, "stock"),

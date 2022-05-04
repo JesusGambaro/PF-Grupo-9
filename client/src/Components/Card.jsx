@@ -16,7 +16,6 @@ const Card = ({e, horizontal}) => {
     if (token) {
       dispatch(getUserFav(token));
     }
-    //console.log(favUser);
   }, [dispatch, token]); */
   const handleAddProduct = (e, type) => {
     const sizes = {};
@@ -25,7 +24,7 @@ const Card = ({e, horizontal}) => {
     });
     if (token) {
       if (type === "cart") {
-        //console.log("addCart");
+
         Swal.fire({
           title: "Select a size",
           input: "select",
@@ -48,7 +47,7 @@ const Card = ({e, horizontal}) => {
           }
         });
       } else if (type === "addFav") {
-        //console.log("addFav");
+
         const product = {productId: e.id};
         dispatch(addFav(token, product));
         Swal.fire({
@@ -60,10 +59,6 @@ const Card = ({e, horizontal}) => {
         });
       } else if (type === "delFav") {
         const id = e.id;
-        //console.log("token: ",token);
-        /*console.log(favUser.find((e) => {
-          return e.product.id === id;
-        })) */
         Swal.fire({
           text: "Are you sure do you want to delete it from favorites?",
           icon: "warning",

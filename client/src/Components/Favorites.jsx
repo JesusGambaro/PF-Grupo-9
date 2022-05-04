@@ -59,7 +59,6 @@ const Favorites = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const favUser = useSelector((state) => state.root.favUser);
-  //console.log(favUser);
   useEffect(() => {
     if (!token || (token && !token.length)) {
       //dispatch(loadingCartBoolean(true))

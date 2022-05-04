@@ -219,14 +219,12 @@ const ShoeForm = ({handleShoeDialog, shoeObject}) => {
     }
   }, [stock.amount, stock.size, data.stock]);
   useEffect(() => {
-    console.log("Meas=>>>", productsMessagge);
     if (productsMessagge.msg) {
       handleShoeDialog();
       dispatch({type: POST_PRODUCT, payload: {}});
     }
   }, [productsMessagge]);
   useEffect(() => {
-    console.log("Meas=>>>", productUpdateMessagge);
     if (productUpdateMessagge.msg) {
       handleShoeDialog();
       dispatch({type: UPDATE_FORM_PRODUCT, payload: {}});

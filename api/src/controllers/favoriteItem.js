@@ -66,7 +66,7 @@ module.exports = {
         await favItem.destroy()
         return res.send({ msg: "Favorite item deleted" })
       }
-      if (userId === favItemId.id) {
+      if (userId === favItemId.userId) {
         await favItem.destroy()
         return res.send({ msg: "Favorite item deleted" })
       }

@@ -28,7 +28,7 @@ export default function LandingPage() {
   const shoes = useSelector((state) => state.root);
   useEffect(() => {
     if (!shoes.allData.length) dispatch(bringAllData());
-    dispatch(getUserFav(token));
+    if (token) dispatch(getUserFav(token));
   }, [dispatch, addCart]);
 
   // State for Active index

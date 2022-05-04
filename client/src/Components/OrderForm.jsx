@@ -224,7 +224,7 @@ const PaymentCheckout = () => {
    <option value="Angola">Angola</option>
    <option value="Anguilla">Anguilla</option>
    <option value="Antigua  Barbuda">Antigua & Barbuda</option>
-   <option selected value="Argentina" >Argentina</option>
+   <option defaultValue="Argentina" >Argentina</option>
    <option value="Armenia">Armenia</option>
    <option value="Aruba">Aruba</option>
    <option value="Australia">Australia</option>
@@ -477,7 +477,7 @@ const PaymentCheckout = () => {
                     
                     <div style={{width:"100%",borderColor: "rgb(133, 133, 133)",borderStyle:"solid",borderWidth: "1px",height: "max-content"}}>
                     <CardElement options={{style:{base:
-                        {fontSize:"1.5rem"}
+                        {fontSize:"20px"}
                         }}} className="a" onChange={e=>prueba(e)}/>
                     
                     </div>
@@ -485,7 +485,7 @@ const PaymentCheckout = () => {
                         <span>Total footwears: {totalFootwear}</span>
                         <span>Order total: ${total}</span>
                     </div>
-                    <button className="submit-button" disabled={validation} ><i class="bi bi-bag-fill"></i>{loading===true?<Spinner animation="border" role="status">
+                    <button className="submit-button" disabled={validation} ><i className="bi bi-bag-fill"></i>{loading===true?<Spinner animation="border" role="status">
   <span className="visually-hidden">Loading...</span>
 </Spinner>:'Place the order!'}</button>
                 </form>

@@ -14,7 +14,6 @@ export default function AdminOrderDetail() {
   const {order} = useParams();
   const orderDetail = useSelector((state) => state.admin.orderDetail);
   const [dropDown, setDropDown] = useState(false);
-  console.log(orderDetail)
   function abrirYcerrar() {
     setDropDown(!dropDown);
   }

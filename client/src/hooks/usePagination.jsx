@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 const usePagination = (data, cardsPerPage, pageLimit) => {
   const [currentPage, setCurrentPage] = useState(1);
   const pages = Math.ceil(data.length / cardsPerPage);
+  console.log(data);
   const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);
   const prevPage = () => setCurrentPage((currentPage) => currentPage - 1);
   const goPage = (e) => setCurrentPage(Number(e.target.textContent));
@@ -21,7 +22,7 @@ const usePagination = (data, cardsPerPage, pageLimit) => {
       return limit <= pages && limit;
     });
   };
- useEffect(() => {
+  useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",

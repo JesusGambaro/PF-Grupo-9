@@ -1,0 +1,114 @@
+.favorites {
+  width: 60%;
+  margin-top: 5%;
+
+  .favoritesContainer {
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    //overflow: hidden;
+    .cardFavs {
+      border: 1px solid black;
+    }
+    .favorite-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      height: 5rem;
+      //background-color: white;
+      background-color: #f6f6f6;
+      border-radius: 1rem;
+      border: none;
+      justify-content: space-between;
+      box-shadow: 0.2rem 0.2rem 1rem rgba($color: #000, $alpha: 0.25);
+      .img {
+        width: 20%;
+        background: #f6f6f6;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        img {
+          transform: scaleX(-1);
+          width: 50%;
+          cursor: pointer;
+          transition: transform 0.2s ease-out;
+        }
+        &:hover img {
+          transform: scaleX(-1.2) scaleY(1.2);
+        }
+      }
+
+      .textContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        height: 100%;
+      }
+      .actions {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-right: 0.5rem;
+        
+        font-size: small;
+        button {
+          display: flex;
+          border-radius: 0.5rem;
+          border: none;
+          padding: 0.4rem 1rem;
+          background-color: #d4d4d4;
+          white-space: nowrap;
+          color: rgb(255, 255, 255);
+        }
+        a {
+          border-radius: 0.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #d4d4d4;
+          padding: 0.4rem 1rem;
+          white-space: nowrap;
+        }
+        .deleteButton {
+          //font-weight: 500;
+          background: #df0902;
+        }
+        .addToCartButton {
+          //font-weight: 500;
+          background: #df0902;
+        }
+      }
+    }
+    p {
+      text-align: center;
+      font-family: "Gelion", sans-serif;
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+  }
+  .fav-buttons {
+    margin-top: 5%;
+    .deleteAll-button {
+      align-self: center;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 0.5rem;
+      background: #df0902;
+      font-weight: 500;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem;
+    }
+  }
+}

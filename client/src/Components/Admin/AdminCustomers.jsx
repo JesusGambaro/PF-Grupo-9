@@ -8,11 +8,21 @@ import {
   deleteUser,
   getAllUsers,
   changeUserRole,
+  searchUser,
+  filterUsers,
+  filterByName,
 } from "../../redux/actions/userAdmin";
 import {useEffect} from "react";
 import {roleUser} from "../../redux/actions/Loginregister";
-
-const UserCard = ({user, handleDeleteUser, handleUpdateUser, disabled}) => {
+import usePagination from "../../hooks/usePagination";
+import Selection from "./Selection";
+import axios from "axios";
+const UserCard = ({
+  user,
+  handleDeleteUser,
+  handleUpdateUser,
+  isTheMasterOne,
+}) => {
   const [confirmState, setConfirmState] = useState(false);
   return (
     <div className="user-card">
@@ -29,7 +39,7 @@ const UserCard = ({user, handleDeleteUser, handleUpdateUser, disabled}) => {
       <div className="user-profile">
         <i className="bi bi-person-circle"></i>
       </div>
-      <p>$ {user.userName}</p>
+      <p>{user.userName}</p>
       <p
         className="isAdmin-pop"
         style={user.isAdmin ? {background: "#069A8E"} : {background: "#F55353"}}
@@ -40,17 +50,23 @@ const UserCard = ({user, handleDeleteUser, handleUpdateUser, disabled}) => {
       {user.password && (
         <p>{user.password.replace(/./g, "*").substring(0, 10)}</p>
       )}
-      <div className="actions">
-        <button onClick={() => handleUpdateUser(user.email, user.isAdmin)}>
-          <i className="bi bi-pen"></i>
-          {user.isAdmin ? "Remove admin" : "Make admin"}
-        </button>
-        <button
-          onClick={() => setConfirmState(true) /*handleDeleteUser(user.email)*/}
-        >
-          <i className="bi bi-trash"></i> Delete
-        </button>
-      </div>
+      {isTheMasterOne && user.email !== "admin@gmail.com" ? (
+        <div className="actions">
+          <button onClick={() => handleUpdateUser(user.email, user.isAdmin)}>
+            <i className="bi bi-pen"></i>
+            {user.isAdmin ? "Remove admin" : "Make admin"}
+          </button>
+          <button
+            onClick={
+              () => setConfirmState(true) /*handleDeleteUser(user.email)*/
+            }
+          >
+            <i className="bi bi-trash"></i> Delete
+          </button>
+        </div>
+      ) : (
+        <div className="actions"></div>
+      )}
     </div>
   );
 };
@@ -58,21 +74,35 @@ const UserCard = ({user, handleDeleteUser, handleUpdateUser, disabled}) => {
 const AdminCustomers = () => {
   const {users, loading} = useSelector((state) => state.admin);
   const {role} = useSelector((store) => store.root);
+  const [isTheMasterOne, setIsTheMasterOne] = useState(false);
+  const {Pagination, dataPerPage} = usePagination(users, 12, 4);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    if (window.localStorage.getItem("token")) {
-      if (!users.length) {
-        const token = window.localStorage.getItem("token");
+    const token = window.localStorage.getItem("token");
+    if (!token || (token && !token.length)) navigate("/home");
+    else {
+      if (role.admin) {
         dispatch(roleUser(token));
-        if (role.admin) {
+        if (!users.length) {
           dispatch(getAllUsers(token));
-        } else if (role.admin === false) {
-          navigate("/home");
         }
+        (async () => {
+          const {data} = await axios.get(
+            `http://localhost:3001/user/superAdmin`,
+            {
+              headers: {
+                Authorization: `bearer ${token}`,
+              },
+            }
+          );
+          setIsTheMasterOne(data.superAdmin);
+        })();
+      } else if (role.admin === false) {
+        navigate("/home");
       }
     }
-  }, [dispatch, navigate, role.admin, users.length]);
+  }, [dispatch, navigate, role.admin, users]);
 
   const handleDeleteUser = (email) => {
     if (role.admin) {
@@ -95,98 +125,87 @@ const AdminCustomers = () => {
     }
   };
 
-  /* ------------------------------- PAGINATION ------------------------------- */
-  const pageLimit = 4,
-    cardsPerPage = 12;
-  const [currentPage, setCurrentPage] = useState(1);
-  const pages = Math.ceil(users.length / cardsPerPage);
-
-  const nextPage = () => setCurrentPage((currentPage) => currentPage + 1);
-
-  const prevPage = () => setCurrentPage((currentPage) => currentPage - 1);
-
-  const goPage = (e) => setCurrentPage(Number(e.target.textContent));
-
-  useEffect(() => {
-    if (users.length < 40) setCurrentPage(1);
-  }, [users.length]);
-
-  const dataPerPage = () => {
-    const start = currentPage * cardsPerPage - cardsPerPage,
-      end = start + cardsPerPage;
-    return users.slice(start, end);
+  /* --------------------------------- search --------------------------------- */
+  const [searchParam, setSearchParam] = useState("");
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (role.admin) {
+      dispatch(searchUser(window.localStorage.getItem("token"), searchParam));
+    } else if (role.admin === false) {
+      navigate("/home");
+    }
   };
-
-  const dividedGroups = () => {
-    const start = Math.floor((currentPage - 1) / pageLimit) * pageLimit;
-    return new Array(pageLimit).fill().map((_, i) => {
-      let limit = start + i + 1;
-      return limit <= pages && limit;
-    });
+  /* --------------------------------- search --------------------------------- */
+  const handleChange = (e) => {
+    if (role.admin) {
+      if (e.target.value === "Is admin" || e.target.value === "Not admin") {
+        dispatch(
+          filterUsers(
+            window.localStorage.getItem("token"),
+            e.target.value === "Is admin"
+          )
+        );
+      } else if (e.target.value === "All")
+        dispatch(getAllUsers(window.localStorage.getItem("token")));
+      dispatch(filterByName(e.target.value));
+    } else if (role.admin === false) navigate("/home");
   };
-
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [currentPage]);
-  /* ------------------------------- PAGINATION ------------------------------- */
-
   return (
     <div className="admin-container">
-      {loading ? <Loading /> : false}
-
       <div className="customers-section-container">
         <div className="add-section">
           <h1>Customers list</h1>
+          <form
+            className="searchOwn"
+            onSubmit={handleSearch}
+            onClick={() => {
+              //dispatch(resetState());
+              //dispatch(resetFilters());
+            }}
+          >
+            <button type="submit">
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <input
+              type="text"
+              placeholder="SEARCH"
+              value={searchParam}
+              onChange={(e) => setSearchParam(e.target.value)}
+            />
+          </form>
+          <div className="filter-sortby">
+            <Selection
+              options={["All", "Is admin", "Not admin", "A-Z", "Z-A"]}
+              type="Sort By"
+              handleChange={handleChange}
+            />
+          </div>
         </div>
-        <div className="customers-cards-container">
-          {users.length > 0 &&
-            dataPerPage().map((user, id) => (
-              <UserCard
-                key={id}
-                user={user}
-                handleDeleteUser={(email) => handleDeleteUser(email)}
-                handleUpdateUser={(email, state) =>
-                  handleUpdateUser(email, state)
-                }
-                disabled={users.length < 2 || user.isAdmin}
-              />
-            ))}
-        </div>
-        {users.length > 1 && (
-          <div className="pagination-container">
-            <div className="selectionOwn">
-              <button
-                className="btnOwn prev"
-                onClick={prevPage}
-                disabled={currentPage === 1}
-              >
-                <i className="fa-solid fa-angle-left"></i>
-              </button>
-              {dividedGroups().map((e, i) => {
-                return (
-                  e && (
-                    <button
-                      className={currentPage === e ? "btnOwn active" : "btnOwn"}
-                      key={i}
-                      onClick={goPage}
-                    >
-                      {e}
-                    </button>
-                  )
-                );
-              })}
-
-              <button
-                className="btnOwn next"
-                onClick={nextPage}
-                disabled={currentPage === pages}
-              >
-                <i className="fa-solid fa-angle-right"></i>
-              </button>
-            </div>
+        {loading ? (
+          <Loading />
+        ) : (
+          <div className="customers-cards-container">
+            {!users.length ? (
+              <h2>No results</h2>
+            ) : (
+              dataPerPage().map((user, id) =>
+                user.hasOwnProperty("msg") ? (
+                  <h2 key={id}>{user.msg}</h2>
+                ) : (
+                  <UserCard
+                    key={id}
+                    user={user}
+                    id={id}
+                    handleDeleteUser={(email) => handleDeleteUser(email)}
+                    handleUpdateUser={(email, state) =>
+                      handleUpdateUser(email, state)
+                    }
+                    isTheMasterOne={isTheMasterOne}
+                  />
+                )
+              )
+            )}
+            <Pagination />
           </div>
         )}
       </div>

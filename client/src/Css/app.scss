@@ -15,6 +15,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    padding-bottom: 1rem;
     .shoes-container {
       width: 100%;
       @include flex-b();
@@ -63,9 +64,12 @@
               @include flex-b();
               width: 100%;
               .rating {
+                p {
+                  font-size: 1rem;
+                }
                 width: 100%;
                 display: flex;
-                align-self: flex-start;
+                align-items: baseline;
                 i {
                   font-size: 0.8rem;
                 }
@@ -242,7 +246,7 @@
     position: absolute;
     top: -1rem;
     left: -1.3rem;
-    z-index: 888;
+    z-index: 50;
     width: 6rem;
     height: 5rem;
     @include flex-b();

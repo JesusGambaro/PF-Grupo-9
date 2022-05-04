@@ -1,29 +1,29 @@
 import {
-  LOADING,
   GET_ALL_SALES,
   REGISTER_USER,
   LOGIN_USER,
   GET_ROLE,
-} from "../actions/actions";
+} from "../actions/actions"
 
 import {
-  POST_NEW_SHOE,
-  UPDATE_USERS,
-  EDIT_SHOE,
+  GET_ALL_PRODUCTS_A,
   GET_ALL_USERS,
-  DELETE_SHOE,
+  LOADING_A,
   GET_LAST_SEVEN_DAYS_ORDERS,
   GET_ALL_ORDERS,
   GET_ORDER_DETAIL,
   GET_ORDER_BY_EMAIL,
   GET_ORDER_BY_STATUS,
-  SEARCH_A,
   GET_ALL_GAIN,
   UPDATE_ORDER,
-} from "../actions/actionsAdmin";
+  UPDATE_PRODUCT,
+  SEARCH_PRODUCT_A,
+  SEARCH_USER_A,
+  POST_PRODUCT,
+  UPDATE_FORM_PRODUCT,
+} from "../actions/actionsAdmin"
 const initialState = {
-  allData: [],
-  allDataCopy: [],
+  products: [],
   sales: [],
   loading: false,
   registerUser: {},
@@ -34,56 +34,52 @@ const initialState = {
   lastOrders: [],
   orderDetail: {},
   gain: [],
-};
+  productsMessagge: {},
+  productUpdateMessagge: {},
+}
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "@admin/init":
-      return {...state, allData: action.payload, allDataCopy: action.payload};
+    case GET_ALL_PRODUCTS_A:
+      return { ...state, products: action.payload }
     case GET_ALL_USERS:
-      return {...state, users: action.payload};
-    case POST_NEW_SHOE:
-      return {...state, allData: [action.payload, ...state.allData]};
-    case EDIT_SHOE:
-      return {
-        ...state,
-        allData: state.allData.map((el) =>
-          action.payload.id === el.id ? action.payload : el
-        ),
-      };
-    case DELETE_SHOE:
-      return {...state, allData: action.payload, allDataCopy: action.payload};
-    case SEARCH_A:
-      console.log("Soy el reducet=>>>", action.payload);
-      return {...state, allData: action.payload};
-    case UPDATE_USERS:
-      return {...state, users: action.payload};
-    case LOADING:
-      return {...state, loading: action.payload};
+      return { ...state, users: action.payload }
+    case SEARCH_PRODUCT_A:
+      return { ...state, products: action.payload }
+    case UPDATE_PRODUCT:
+      return { ...state, products: action.payload }
+    case SEARCH_USER_A:
+      return { ...state, users: action.payload }
+    case LOADING_A:
+      return { ...state, loading: action.payload }
     case GET_ALL_SALES:
-      return {...state, sales: action.payload};
+      return { ...state, sales: action.payload }
     case REGISTER_USER:
-      return {...state, registerUser: action.payload};
+      return { ...state, registerUser: action.payload }
     case LOGIN_USER:
-      return {...state, loginUser: action.payload};
+      return { ...state, loginUser: action.payload }
     case GET_ROLE:
-      return {...state, role: action.payload};
+      return { ...state, role: action.payload }
     case GET_LAST_SEVEN_DAYS_ORDERS:
-      return {...state, lastOrders: action.payload};
+      return { ...state, lastOrders: action.payload }
     case GET_ALL_ORDERS:
-      return {...state, allOrders: action.payload};
+      return { ...state, allOrders: action.payload }
     case GET_ORDER_DETAIL:
-      return {...state, orderDetail: action.payload};
+      return { ...state, orderDetail: action.payload }
     case GET_ORDER_BY_EMAIL:
-      return {...state, allOrders: action.payload};
+      return { ...state, allOrders: action.payload }
     case GET_ORDER_BY_STATUS:
-      return {...state, allOrders: action.payload};
+      return { ...state, allOrders: action.payload }
     case GET_ALL_GAIN:
-      return {...state, gain: action.payload};
+      return { ...state, gain: action.payload }
     case UPDATE_ORDER:
-      return {...state, orderDetail: action.payload}
+      return { ...state, orderDetail: action.payload }
+    case POST_PRODUCT:
+      return { ...state, productsMessagge: action.payload }
+    case UPDATE_FORM_PRODUCT:
+      return { ...state, productUpdateMessagge: action.payload }
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default adminReducer;
+export default adminReducer

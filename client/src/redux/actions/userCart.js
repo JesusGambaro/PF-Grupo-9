@@ -23,33 +23,68 @@ export const loadingCartBoolean = (payload) => {
 }
 
 export const deleteCartItem = (id, token) => {
-  return async () => {
+  return async (dispatch, getState) => {
     await axios.delete(`${URL}/deleteCart/${id}`, {
       headers: { Authorization: `bearer ${token}` },
+    })
+    // let userData = getState().root.cartUser
+    // userData = {
+    //   ...userData,
+    //   sameUserCartItems: userData.sameUserCartItems.filter((e) => {
+    //     return e.id !== id
+    //   }),
+    // }
+    const { data } = await axios.get(`${URL}`, {
+      headers: { Authorization: `bearer ${token}` },
+    })
+    dispatch({
+      type: GET_CART,
+      payload: data,
     })
   }
 }
 
 export const deleteAllCart = (token) => {
-  return async () => {
+  return async (dispatch) => {
     await axios.delete(`${URL}/deleteAllCart`, {
       headers: { Authorization: `bearer ${token}` },
+    })
+    const { data } = await axios.get(`${URL}`, {
+      headers: { Authorization: `bearer ${token}` },
+    })
+    dispatch({
+      type: GET_CART,
+      payload: data,
     })
   }
 }
 
 export const addCart = (token, product) => {
-  return async () => {
+  return async (dispatch) => {
     await axios.post(`${URL}`, product, {
       headers: { Authorization: `bearer ${token}` },
+    })
+    const { data } = await axios.get(`${URL}`, {
+      headers: { Authorization: `bearer ${token}` },
+    })
+    dispatch({
+      type: GET_CART,
+      payload: data,
     })
   }
 }
 
 export const putCart = (token, product) => {
-  return async () => {
+  return async (dispatch) => {
     await axios.put(`${URL}`, product, {
       headers: { Authorization: `bearer ${token}` },
+    })
+    const { data } = await axios.get(`${URL}`, {
+      headers: { Authorization: `bearer ${token}` },
+    })
+    dispatch({
+      type: GET_CART,
+      payload: data,
     })
   }
 }

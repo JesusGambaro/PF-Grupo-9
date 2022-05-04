@@ -4,7 +4,12 @@ import React from "react";
 import Footer from "./Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "./Card";
-import {agregarFiltros} from "../redux/actions/leftSideFilter";
+import {
+  resetFilters,
+  genderFilter,
+  leftSideFilter,
+  agregarFiltros,
+} from "../redux/actions/leftSideFilter";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import bringAllData from "../redux/actions/bringAllData";
@@ -15,19 +20,20 @@ import {
   CarouselItem,
   CarouselIndicators,
 } from "reactstrap";
-
+import {addCart} from "../redux/actions/userCart";
+import {getUserFav} from "../redux/actions/userFav";
 export default function LandingPage() {
-  /* const dispatch = useDispatch()
-    useEffect(()=>{
-      const datos =  dispatch(bringAllData())
-        console.log(datos)
-    }) */
+  const dispatch = useDispatch();
+  const token = window.localStorage.getItem("token");
+  const shoes = useSelector((state) => state.root);
+  useEffect(() => {
+    if (!shoes.allData.length) dispatch(bringAllData());
+    dispatch(getUserFav(token));
+  }, [dispatch, addCart]);
 
   // State for Active index
   const sales = useSelector((state) => state.root.sales);
   const [activeIndex, setActiveIndex] = React.useState(0);
-
-  const dispatch = useDispatch();
 
   // State for Animation
   const [animating, setAnimating] = React.useState(false);
@@ -44,7 +50,7 @@ export default function LandingPage() {
       /* caption: 'Sample Caption Two', */ src: "https://http2.mlstatic.com/D_NQ_993577-MLA49602953344_042022-OO.webp",
       altText: "Slide Two",
       red: "/home",
-      filtros: [{name: "sale", value: ""}],
+      filtros: [{name: "discount", value: "On Discount"}],
     },
     {
       /* caption: 'Sample Caption Two', */ src: require("../Images/LandingCarruselRunningShoes.png"),
@@ -53,12 +59,7 @@ export default function LandingPage() {
       filtros: [{name: "category", value: "Running"}],
     },
   ];
-  useEffect(() => {
-    if (!sales.length) {
-      dispatch(bringAllData());
-      dispatch(getAllSales());
-    }
-  }, []);
+
   // Items array length
   const itemLength = items.length - 1;
 
@@ -77,10 +78,10 @@ export default function LandingPage() {
   };
 
   // Carousel Item Data
-  const carouselItemData = items.map((item) => {
+  const carouselItemData = items.map((item, i) => {
     return (
       <CarouselItem
-        key={item.src}
+        key={i}
         onExited={() => setAnimating(false)}
         onExiting={() => setAnimating(true)}
       >
@@ -133,15 +134,17 @@ export default function LandingPage() {
           />
         </Carousel>
       </div>
-      <h1 className="oferta">ON SALE</h1>
+      <h1 className="oferta">ON DISCOUNT</h1>
 
       <div className="cards-container">
         {sales.length > 0 &&
-          sales.map((shoe, i) => (
-            <div className="landing-card col col-3" key={i}>
-              <Card e={shoe} key={i} />
-            </div>
-          ))}
+          sales.map((shoe, i) => {
+            return i < 6 ? (
+              <div key={i} className="landing-card col col-3">
+                <Card e={shoe} key={shoe.id} />
+              </div>
+            ) : null;
+          })}
       </div>
 
       <Footer />

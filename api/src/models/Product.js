@@ -73,14 +73,33 @@ module.exports = (sequelize) => {
     finalPrice: {
       type: DataTypes.VIRTUAL,
       get() {
-        const tempPrice = this.getDataValue("price");
-        const tempDiscount = this.getDataValue('sale');
-        if(tempDiscount === 0){
-          return tempPrice;
-        }else{
-          return tempPrice * (100 - tempDiscount) / 100;
+        const tempPrice = this.getDataValue("price")
+        const tempDiscount = this.getDataValue("sale")
+        if (tempDiscount === 0) {
+          return tempPrice
+        } else {
+          return Math.round((tempPrice * (100 - tempDiscount)) / 100)
         }
-      }
+      },
+    },
+    rating: {
+      type: DataTypes.FLOAT,
+      validate: {
+        between1And5(value) {
+          if (parseInt(value) < 0 || parseInt(value) > 5) {
+            throw new Error("Only numbers between 0 and 5 are allowed.")
+          }
+        },
+      },
+      defaultValue: 0,
+    },
+    ratingAmount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
   })
 }

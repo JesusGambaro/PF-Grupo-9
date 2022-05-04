@@ -16,18 +16,19 @@ function LoginGoogle() {
     Swal.fire({
       icon: 'error',
       title: 'Oops...',
-      text: 'Something went wrong!',
+      text: "We couldn't login!",
     })
   }
 
   return (
-    <div className='mt-2'>
+    <div className='mt-4'>
       <GoogleLogin
         clientId="931352466233-7mhmtsa47dv0p2bpi59fsaakomg8fng0.apps.googleusercontent.com"
+        disabled={false}
         buttonText="Login"
         onSuccess={onSuccess}
         onFailure={onFailure}
-        isSignedIn={false}
+        theme={"dark"}
         cookiePolicy={'single_host_origin'}
       />
     </div>

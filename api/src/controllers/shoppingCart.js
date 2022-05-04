@@ -1,4 +1,4 @@
-const { Op } = require("sequelize")
+const { Sequelize, Op } = require("sequelize")
 const { ShoppingCartItem, Product, Stock, Image } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
@@ -14,16 +14,29 @@ module.exports = {
         },
         include: {
           model: Product,
+          required: true,
           include: [
             { model: Image },
             {
               model: Stock,
+              where: { size: { [Op.col]: "shoppingCartItem.size" } },
             },
           ],
         },
+        order: [
+          ["id", "DESC"],
+          ["product", "images", "id", "ASC"],
+        ],
       })
-
-      res.send(sameUserCartItems)
+      let totalFootwear = 0
+      sameUserCartItems.forEach((item) => {
+        totalFootwear += item.amount
+      })
+      let total = 0
+      sameUserCartItems.forEach((item) => {
+        total += item.product.finalPrice * item.amount
+      })
+      res.send({ sameUserCartItems, total, totalFootwear })
     } catch (error) {
       sendError(res, error)
     }
@@ -32,10 +45,22 @@ module.exports = {
   deleteCart: async (req, res) => {
     try {
       const { id } = req.params
-      await ShoppingCartItem.destroy({
+
+      const decodedToken = await verifyToken(req, res)
+      const userId = decodedToken.id
+
+      const shoppingCart = await ShoppingCartItem.findOne({
         where: { id },
       })
-      return res.send({ msg: "Cart item deleted" })
+
+      if (userId === shoppingCart.userId) {
+        await ShoppingCartItem.destroy({
+          where: { id },
+        })
+        return res.send({ msg: "Cart item deleted" })
+      } else {
+        return res.send({ msg: "Wrong credentials" })
+      }
     } catch (error) {
       sendError(res, error)
     }
@@ -91,12 +116,13 @@ module.exports = {
       })
 
       if (productSelected?.stocks[0].amount > 0) {
-        let [cartItem] = await ShoppingCartItem.findOrCreate({
+        const [cartItem] = await ShoppingCartItem.findOrCreate({
           where: { productId, userId, size, ordered: false },
         })
-
-        cartItem.amount++
-        await cartItem.save()
+        if (cartItem.amount < productSelected?.stocks[0].amount) {
+          cartItem.amount++
+          await cartItem.save()
+        }
 
         res.send(cartItem)
       } else {

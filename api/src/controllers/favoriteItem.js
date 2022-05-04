@@ -1,33 +1,31 @@
-const { Op, Sequelize } = require("sequelize")
-const { Product, Image, Stock, ShoppingCartItem, FavoriteItem } = require("../db.js")
+const { Product, Image, Stock, FavoriteItem } = require("../db.js")
 const { sendError } = require("../helpers/error.js")
 const { verifyToken } = require("../helpers/verify.js")
 
 module.exports = {
   postFavoriteItem: async (req, res) => {
     try {
-        const { productId, size } = req.body
-        const decodedToken = await verifyToken(req, res)
-        const userId = decodedToken.id
-        const productSelected = await Product.findOne({
-          where: { id: productId },
-          include: { model: Stock, where: { size } },
+      const { productId } = req.body
+      const decodedToken = await verifyToken(req, res)
+      const userId = decodedToken.id
+      const productSelected = await Product.findOne({
+        where: { id: productId },
+        include: { model: Stock },
+      })
+      if (productSelected?.stocks.length) {
+        let [favoriteItem] = await FavoriteItem.findOrCreate({
+          where: { productId, userId },
         })
-  
-        if (productSelected?.stocks[0].amount > 0) {
-          let [favoriteItem] = await FavoriteItem.findOrCreate({
-            where: { productId, userId, size },
-          })
-  
-        //   await cartItem.save()
-  
-          res.send(favoriteItem)
-        } else {
-          res.send({ Error: `The proctId (${productId}) or the size (${size}) where not found.` })
-        }
-      } catch (error) {
-        sendError(res, error)
+
+        return res.send(favoriteItem)
+      } else {
+        return res.send({
+          Error: `The proctId (${productId}) was not found or stock 0.`,
+        })
       }
+    } catch (error) {
+      sendError(res, error)
+    }
   },
 
   getAllFavoriteItems: async (req, res) => {
@@ -39,11 +37,12 @@ module.exports = {
         },
         include: {
           model: Product,
-          include: [
-            { model: Image },
-            { model: Stock },
-          ],
+          include: [{ model: Image }, { model: Stock }],
         },
+        order: [
+          ["id", "ASC"],
+          ["product", "images", "id", "ASC"],
+        ],
       })
 
       res.send(sameUserFavorites)
@@ -55,10 +54,23 @@ module.exports = {
   deleteOneFavoriteItem: async (req, res) => {
     try {
       const { id } = req.params
-      await FavoriteItem.destroy({
+      const decodedToken = await verifyToken(req, res)
+      const userId = decodedToken.id
+      const favItem = await FavoriteItem.findOne({
+        include: { model: Product, where: { id } },
+      })
+      const favItemId = await FavoriteItem.findOne({
         where: { id },
       })
-      return res.send({ msg: "Favorite item deleted" })
+      if (favItem && userId === favItem.userId) {
+        await favItem.destroy()
+        return res.send({ msg: "Favorite item deleted" })
+      }
+      if (userId === favItemId.id) {
+        await favItem.destroy()
+        return res.send({ msg: "Favorite item deleted" })
+      }
+      return res.send({ msg: "Wrong credentials" })
     } catch (error) {
       sendError(res, error)
     }
@@ -76,5 +88,4 @@ module.exports = {
       sendError(res, error)
     }
   },
-
 }

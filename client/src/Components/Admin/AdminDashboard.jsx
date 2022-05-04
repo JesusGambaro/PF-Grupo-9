@@ -12,12 +12,13 @@ import {
   getLastSevenDaysOrders,
 } from "../../redux/actions/ordersAdmin";
 import {roleUser} from "../../redux/actions/Loginregister";
+import { getAllProductsAdmin } from "../../redux/actions/productsAdmin";
 
 export default function AdminDashboard() {
   const {role} = useSelector((store) => store.root);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const shoes = useSelector((state) => state.admin.allData.length);
+  const shoes = useSelector((state) => state.admin.products.length);
 
   useEffect(() => {
     if (!shoes.length) dispatch(bringAllData(true));
@@ -25,6 +26,7 @@ export default function AdminDashboard() {
       const token = window.localStorage.getItem("token");
       dispatch(roleUser(token));
       if (role.admin) {
+        dispatch(getAllProductsAdmin(token))
         dispatch(getLastSevenDaysOrders(token));
         dispatch(getAllOrders(token));
         dispatch(getAllGain(token));
@@ -91,16 +93,21 @@ export default function AdminDashboard() {
                         </b>
                       </td>
                       <td>
-                      {e.user.email?e.user.email:'No ha sido suministrado'}
+                      {e.user?e.user.email:'User eliminated'}
                         {/* email@example.com */}
                       </td>
                       <td>
                         ${e.total} {/* total */}
                       </td>
                       <td>
-                        <span className="badge rounded-pill alert-success">
+                      {e.delivered==='canceled'? <span className="badge rounded-pill alert-danger">
                           {e.delivered} {/* status */}
-                        </span>
+                        </span>:e.delivered==='completed'?<span className="badge rounded-pill alert-success">
+                          {e.delivered} {/* status */}
+                        </span>:
+                        <span className="badge rounded-pill alert-warning">
+                          {e.delivered} {/* status */}
+                        </span>}
                       </td>
                       <td>
                         {e.createdAt.slice(0, 10)} {/* date */}
@@ -116,25 +123,6 @@ export default function AdminDashboard() {
                     </tr>
                   );
                 })}
-                <tr>
-                  <td>ID order</td>
-                  <td>
-                    <b>Customer name</b>
-                  </td>
-                  <td>email@example.com</td>
-                  <td>$778.35</td>
-                  <td>
-                    <span className="badge rounded-pill alert-success">
-                      status
-                    </span>
-                  </td>
-                  <td>07.05.2020</td>
-                  <td className="text-end">
-                    <a href="#" className="btn btn-light">
-                      Detail
-                    </a>
-                  </td>
-                </tr>
               </tbody>
             </table>
           </div>

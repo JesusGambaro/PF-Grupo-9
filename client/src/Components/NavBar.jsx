@@ -12,6 +12,7 @@ import {
 import {roleUser} from "../redux/actions/Loginregister";
 import {useDispatch, useSelector} from "react-redux";
 import Swal from "sweetalert2";
+import {getUserFav} from "../redux/actions/userFav";
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,14 +22,14 @@ const NavBar = () => {
   const [profileName, setProfileName] = useState("Profile");
   const {role} = useSelector((store) => store.root);
   const token = window.localStorage.getItem("token");
+
   useEffect(() => {
- /*    if (!window.localStorage.getItem("token")) {
+    /*    if (!window.localStorage.getItem("token")) {
       navigate("/home/login");
     } else { */
-      if (role.admin) setProfileName("Dashboard");
-      else if (role.admin === undefined) dispatch(roleUser(token));
-      else setProfileName("Profile");
-    
+    if (role.admin) setProfileName("Dashboard");
+    else if (role.admin === undefined && token) dispatch(roleUser(token));
+    else setProfileName("Profile");
   }, [dispatch, navigate, role.admin, token]);
 
   function abrirYcerrar() {
@@ -63,6 +64,22 @@ const NavBar = () => {
       }
     });
   };
+  const handleFav = () => {
+    if (logueado) return navigate("/home/favorites");
+    Swal.fire({
+      title: "You must login to see your favorites",
+      text: "Do you want to login?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, I want",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/home/login");
+      }
+    });
+  };
 
   useEffect(() => {
     if (token) {
@@ -81,6 +98,7 @@ const NavBar = () => {
         <li onClick={() => {}}>
           <NavLink
             onClick={() => {
+              dispatch(getUserFav(token));
               dispatch(resetState());
               dispatch(resetFilters());
               dispatch(genderFilter("All"));
@@ -92,6 +110,7 @@ const NavBar = () => {
         </li>
         <li
           onClick={() => {
+            dispatch(getUserFav(token));
             dispatch(sortByGender("Male"));
             dispatch(resetFilters());
             dispatch(genderFilter("Male"));
@@ -102,6 +121,7 @@ const NavBar = () => {
         </li>
         <li
           onClick={() => {
+            dispatch(getUserFav(token));
             dispatch(sortByGender("Female"));
             dispatch(resetFilters());
             dispatch(genderFilter("Female"));
@@ -112,6 +132,7 @@ const NavBar = () => {
         </li>
         <li
           onClick={() => {
+            dispatch(getUserFav(token));
             dispatch(sortByGender("Kids"));
             dispatch(resetFilters());
             dispatch(genderFilter("Kids"));
@@ -143,7 +164,7 @@ const NavBar = () => {
 
       <ul className="shortcutOwn">
         <li>
-          <i className="bi bi-heart"></i>
+          <i onClick={handleFav} className="bi bi-heart"></i>
         </li>
         <li>
           <i onClick={handleCart} className="bi bi-bag"></i>
@@ -162,8 +183,12 @@ const NavBar = () => {
               </DropdownMenu>
             </Dropdown>
           ) : (
-            <NavLink to="/home/login" className="text-dark" style={{textDecoration:"none"}}>
-              Log In
+            <NavLink
+              to="/home/login"
+              className="text-dark"
+              style={{textDecoration: "none"}}
+            >
+              LogIn
             </NavLink>
           )}
         </li>

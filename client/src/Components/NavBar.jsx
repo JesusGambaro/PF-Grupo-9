@@ -98,7 +98,7 @@ const NavBar = () => {
         <li onClick={() => {}}>
           <NavLink
             onClick={() => {
-              dispatch(getUserFav(token));
+              if (token) dispatch(getUserFav(token));
               dispatch(resetState());
               dispatch(resetFilters());
               dispatch(genderFilter("All"));
@@ -110,7 +110,7 @@ const NavBar = () => {
         </li>
         <li
           onClick={() => {
-            dispatch(getUserFav(token));
+            if (token) dispatch(getUserFav(token));
             dispatch(sortByGender("Male"));
             dispatch(resetFilters());
             dispatch(genderFilter("Male"));
@@ -121,7 +121,7 @@ const NavBar = () => {
         </li>
         <li
           onClick={() => {
-            dispatch(getUserFav(token));
+            if (token) dispatch(getUserFav(token));
             dispatch(sortByGender("Female"));
             dispatch(resetFilters());
             dispatch(genderFilter("Female"));
@@ -132,7 +132,7 @@ const NavBar = () => {
         </li>
         <li
           onClick={() => {
-            dispatch(getUserFav(token));
+            if (token) dispatch(getUserFav(token));
             dispatch(sortByGender("Kids"));
             dispatch(resetFilters());
             dispatch(genderFilter("Kids"));

@@ -15,7 +15,7 @@ const Shoes = () => {
   const token = window.localStorage.getItem("token");
   useEffect(() => {
     if (!shoes.allData.length) dispatch(bringAllData());
-    dispatch(getUserFav(token));
+    if (token) dispatch(getUserFav(token));
     dispatch(leftSideFilter());
   }, [dispatch]);
 

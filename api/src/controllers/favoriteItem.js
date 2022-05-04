@@ -57,16 +57,17 @@ module.exports = {
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
       const favItem = await FavoriteItem.findOne({
+        where: { userId },
         include: { model: Product, where: { id } },
       })
       const favItemId = await FavoriteItem.findOne({
         where: { id },
       })
-      if (favItem && userId === favItem.userId) {
+      if (userId === favItemId.userId) {
         await favItem.destroy()
         return res.send({ msg: "Favorite item deleted" })
       }
-      if (userId === favItemId.userId) {
+      if (favItem && userId === favItem.userId) {
         await favItem.destroy()
         return res.send({ msg: "Favorite item deleted" })
       }

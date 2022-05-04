@@ -1,4 +1,4 @@
-const { Op, Sequelize } = require("sequelize")
+const {Op, Sequelize} = require("sequelize");
 const {
   Product,
   Image,
@@ -7,20 +7,20 @@ const {
   FavoriteItem,
   Review,
   User,
-} = require("../db.js")
-const { sendError } = require("../helpers/error.js")
-const cloudinary = require("../helpers/cloudinary.js")
+} = require("../db.js");
+const {sendError} = require("../helpers/error.js");
+const cloudinary = require("../helpers/cloudinary.js");
 
 module.exports = {
   getAllFootwear: async (req, res) => {
-    const { footwear } = req.query
+    const {footwear} = req.query;
     try {
       if (footwear) {
         const footwearsSearched = await Product.findAll({
           where: {
             active: true,
             [Op.or]: [
-              { model: { [Op.iLike]: `%${footwear}%` } },
+              {model: {[Op.iLike]: `%${footwear}%`}},
               Sequelize.where(
                 Sequelize.cast(Sequelize.col("brand"), "varchar"),
                 {
@@ -36,7 +36,7 @@ module.exports = {
             {
               model: Stock,
               where: {
-                amount: { [Op.gt]: 0 },
+                amount: {[Op.gt]: 0},
               },
             },
           ],
@@ -44,12 +44,12 @@ module.exports = {
             ["id", "ASC"],
             ["images", "id", "ASC"],
           ],
-        })
-        return res.send(footwearsSearched)
+        });
+        return res.send(footwearsSearched);
       }
       const allFootwears = await Product.findAll({
-        attributes: { exclude: "description" },
-        where: { active: true },
+        attributes: {exclude: "description"},
+        where: {active: true},
         include: [
           {
             model: Image,
@@ -57,7 +57,7 @@ module.exports = {
           {
             model: Stock,
             where: {
-              amount: { [Op.gt]: 0 },
+              amount: {[Op.gt]: 0},
             },
           },
         ],
@@ -65,22 +65,22 @@ module.exports = {
           ["id", "ASC"],
           ["images", "id", "ASC"],
         ],
-      })
-      return res.send(allFootwears)
+      });
+      return res.send(allFootwears);
     } catch (error) {
-      sendError(res, error)
+      sendError(res, error);
     }
   },
 
   getAllFootwearForAdmin: async (req, res) => {
-    const { footwear } = req.query
+    const {footwear} = req.query;
     try {
       if (footwear) {
         const footwearsSearched = await Product.findAll({
           where: {
             active: true,
             [Op.or]: [
-              { model: { [Op.iLike]: `%${footwear}%` } },
+              {model: {[Op.iLike]: `%${footwear}%`}},
               Sequelize.where(
                 Sequelize.cast(Sequelize.col("brand"), "varchar"),
                 {
@@ -89,25 +89,25 @@ module.exports = {
               ),
             ],
           },
-          include: [{ model: Image }, { model: Stock }],
+          include: [{model: Image}, {model: Stock}],
           order: [
             ["id", "ASC"],
             ["images", "id", "ASC"],
           ],
-        })
-        return res.send(footwearsSearched)
+        });
+        return res.send(footwearsSearched);
       }
       const allFootwears = await Product.findAll({
-        where: { active: true },
-        include: [{ model: Image }, { model: Stock }],
+        where: {active: true},
+        include: [{model: Image}, {model: Stock}],
         order: [
           ["id", "ASC"],
           ["images", "id", "ASC"],
         ],
-      })
-      return res.send(allFootwears)
+      });
+      return res.send(allFootwears);
     } catch (error) {
-      sendError(res, error)
+      sendError(res, error);
     }
   },
 
@@ -116,10 +116,10 @@ module.exports = {
       const genders = await Product.findAll({
         attributes: ["gender"],
         group: ["gender"],
-      })
-      res.send(genders ? genders : [])
+      });
+      res.send(genders ? genders : []);
     } catch (error) {
-      sendError(res, error)
+      sendError(res, error);
     }
   },
 
@@ -128,10 +128,10 @@ module.exports = {
       const allCategories = await Product.findAll({
         attributes: ["category"],
         group: ["category"],
-      })
-      res.send(allCategories)
+      });
+      res.send(allCategories);
     } catch (error) {
-      sendError(res, error)
+      sendError(res, error);
     }
   },
 
@@ -141,7 +141,7 @@ module.exports = {
         limit: 6,
         where: {
           active: true,
-          sale: { [Op.gt]: 0 },
+          sale: {[Op.gt]: 0},
         },
         include: [
           {
@@ -150,7 +150,7 @@ module.exports = {
           {
             model: Stock,
             where: {
-              amount: { [Op.gt]: 0 },
+              amount: {[Op.gt]: 0},
             },
           },
         ],
@@ -158,17 +158,17 @@ module.exports = {
           ["id", "ASC"],
           ["images", "id", "ASC"],
         ],
-      })
+      });
 
-      res.send(carouselSale)
+      res.send(carouselSale);
     } catch (error) {
-      sendError(res, error)
+      sendError(res, error);
     }
   },
 
   getAllProductsSameModel: async (req, res) => {
     try {
-      const { model } = req.params
+      const {model} = req.params;
       const productsSearched = await Product.findAll({
         where: {
           active: true,
@@ -185,10 +185,10 @@ module.exports = {
           },
           {
             model: Review,
-            through: { attributes: [] },
+            through: {attributes: []},
             include: {
               model: User,
-              attributes: { exclude: ["password", "token"] },
+              attributes: {exclude: ["password", "token"]},
             },
           },
         ],
@@ -196,16 +196,16 @@ module.exports = {
           ["id", "ASC"],
           ["images", "id", "ASC"],
         ],
-      })
-      res.status(200).send(productsSearched)
+      });
+      res.status(200).send(productsSearched);
     } catch (error) {
-      sendError(res, error)
+      sendError(res, error);
     }
   },
 
   getAllProductsSameModelForAdmin: async (req, res) => {
     try {
-      const { model } = req.params
+      const {model} = req.params;
       const productsSearched = await Product.findAll({
         where: {
           active: true,
@@ -213,24 +213,24 @@ module.exports = {
             [Op.eq]: model,
           },
         },
-        include: [{ model: Image }, { model: Stock }],
+        include: [{model: Image}, {model: Stock}],
         order: [
           ["id", "ASC"],
           ["images", "id", "ASC"],
         ],
-      })
-      res.status(200).send(productsSearched)
+      });
+      res.status(200).send(productsSearched);
     } catch (error) {
-      sendError(res, error)
+      sendError(res, error);
     }
   },
 
   getProductById: async (req, res) => {
     try {
-      const { id } = req.params
+      const {id} = req.params;
       const footwear = await Product.findOne({
         where: {
-          id: { [Op.eq]: id },
+          id: {[Op.eq]: id},
         },
         include: [
           {
@@ -241,10 +241,10 @@ module.exports = {
           },
           {
             model: Review,
-            through: { attributes: [] },
+            through: {attributes: []},
             include: {
               model: User,
-              attributes: { exclude: ["password", "token"] },
+              attributes: {exclude: ["password", "token"]},
             },
           },
         ],
@@ -252,30 +252,30 @@ module.exports = {
           ["id", "ASC"],
           ["images", "id", "ASC"],
         ],
-      })
-      res.send(footwear)
+      });
+      res.send(footwear);
     } catch (error) {
-      sendError(res, error)
+      sendError(res, error);
     }
   },
 
   getProductByIdForAdmin: async (req, res) => {
     try {
-      const { id } = req.params
+      const {id} = req.params;
       const footwear = await Product.findOne({
         where: {
           active: true,
-          id: { [Op.eq]: id },
+          id: {[Op.eq]: id},
         },
-        include: [{ model: Image }, { model: Stock }],
+        include: [{model: Image}, {model: Stock}],
         order: [
           ["id", "ASC"],
           ["images", "id", "ASC"],
         ],
-      })
-      res.send(footwear)
+      });
+      res.send(footwear);
     } catch (error) {
-      sendError(res, error)
+      sendError(res, error);
     }
   },
 
@@ -291,19 +291,19 @@ module.exports = {
         sale,
         color,
         stock,
-      } = req.body
-      const imgFiles = req.files
-      const parsedStock = JSON.parse(stock)
+      } = req.body;
+      const imgFiles = req.files;
+      const parsedStock = JSON.parse(stock);
 
       const foundProduct = await Product.findOne({
-        where: { model, brand, color },
-      })
+        where: {model, brand, color},
+      });
       if (foundProduct) {
         if (foundProduct.active)
-          return res.send({ msg: "This product already exist" })
+          return res.send({msg: "This product already exist"});
         if (!foundProduct.active) {
-          foundProduct.update({ active: true })
-          return res.send({ msg: "Product created" })
+          foundProduct.update({active: true});
+          return res.send({msg: "Product created"});
         }
       }
       let product = await Product.create({
@@ -315,14 +315,14 @@ module.exports = {
         description,
         sale,
         color,
-      })
+      });
 
       if (Object.keys(imgFiles).length !== 0) {
         Object.entries(imgFiles).forEach(async ([key, imgFile]) => {
-          const urlImg = await cloudinary(imgFile.tempFilePath)
-          let imageProduct = await Image.create({ url: urlImg.secure_url })
-          await product.addImage(imageProduct)
-        })
+          const urlImg = await cloudinary(imgFile.tempFilePath);
+          let imageProduct = await Image.create({url: urlImg.secure_url});
+          await product.addImage(imageProduct);
+        });
       }
 
       parsedStock.length > 0 &&
@@ -330,17 +330,17 @@ module.exports = {
           let stockProduct = await Stock.create({
             size: parseInt(amountAndSize.size),
             amount: parseInt(amountAndSize.amount),
-          })
-          await product.addStock(stockProduct)
-        })
+          });
+          await product.addStock(stockProduct);
+        });
       const delay = async () => {
         setTimeout(() => {
-          return res.send({ msg: "Product with its images created!" })
-        }, 3000)
-      }
-      await delay()
+          return res.send({msg: "Product with its images created!"});
+        }, 3000);
+      };
+      await delay();
     } catch (error) {
-      sendError(res, error)
+      sendError(res, error);
     }
   },
 
@@ -357,108 +357,108 @@ module.exports = {
         color,
         stock,
         deletedImages,
-      } = req.body
-      const { id } = req.params
-      const imgFiles = req.files
-      parsedStock = JSON.parse(stock)
-      parsedDeletedImages = JSON.parse(deletedImages)
+      } = req.body;
+      const {id} = req.params;
+      const imgFiles = req.files;
+      parsedStock = JSON.parse(stock);
+      parsedDeletedImages = JSON.parse(deletedImages);
       const product = await Product.findOne({
-        where: { id },
-      })
+        where: {id},
+      });
 
       if (model) {
-        product.model = model
-        await product.save()
+        product.model = model;
+        await product.save();
       }
       if (brand) {
-        product.brand = brand
-        await product.save()
+        product.brand = brand;
+        await product.save();
       }
       if (category) {
-        product.category = category
-        await product.save()
+        product.category = category;
+        await product.save();
       }
       if (gender) {
-        product.gender = gender
-        await product.save()
+        product.gender = gender;
+        await product.save();
       }
       if (price) {
-        product.price = price
-        await product.save()
+        product.price = price;
+        await product.save();
       }
       if (description) {
-        product.description = description
-        await product.save()
+        product.description = description;
+        await product.save();
       }
       if (sale) {
-        product.sale = sale
-        await product.save()
+        product.sale = sale;
+        await product.save();
       }
       if (color) {
-        product.color = color
-        await product.save()
+        product.color = color;
+        await product.save();
       }
-      if (parsedStock.length > 0) {
+      if (parsedStock) {
         await Stock.destroy({
-          where: { productId: product.id },
-        })
+          where: {productId: product.id},
+        });
         parsedStock.map(async (amountAndSize) => {
           let stockProduct = await Stock.create({
             size: parseInt(amountAndSize.size),
             amount: parseInt(amountAndSize.amount),
-          })
-          await product.addStock(stockProduct)
-        })
+          });
+          await product.addStock(stockProduct);
+        });
       }
       if (parsedDeletedImages.length > 0) {
         parsedDeletedImages.map(async (urlImage) => {
           await Image.destroy({
-            where: { url: urlImage.url },
-          })
-        })
+            where: {url: urlImage.url},
+          });
+        });
       }
       if (imgFiles) {
         if (Object.keys(imgFiles).length !== 0) {
           Object.entries(imgFiles).forEach(async ([key, imgFile]) => {
-            const urlImg = await cloudinary(imgFile.tempFilePath)
-            let imageProduct = await Image.create({ url: urlImg.secure_url })
-            await product.addImage(imageProduct)
-          })
+            const urlImg = await cloudinary(imgFile.tempFilePath);
+            let imageProduct = await Image.create({url: urlImg.secure_url});
+            await product.addImage(imageProduct);
+          });
         }
       }
       const delay = async () => {
         setTimeout(() => {
-          return res.send({ msg: "calzado editado" })
-        }, 3000)
-      }
-      await delay()
+          return res.send({msg: "calzado editado"});
+        }, 3000);
+      };
+      await delay();
     } catch (error) {
-      sendError(res, error)
+      sendError(res, error);
     }
   },
 
   deleteProduct: async (req, res) => {
     try {
-      const { id } = req.params
-      const product = await Product.findOne({ where: { id } })
+      const {id} = req.params;
+      const product = await Product.findOne({where: {id}});
       if (product) {
         await Stock.update(
-          { amount: 0 },
+          {amount: 0},
           {
-            where: { productId: id },
+            where: {productId: id},
           }
-        )
+        );
         await ShoppingCartItem.destroy({
-          where: { productId: id, ordered: false },
-        })
+          where: {productId: id, ordered: false},
+        });
         await FavoriteItem.destroy({
-          where: { productId: id },
-        })
-        await product.update({ active: false })
+          where: {productId: id},
+        });
+        await product.update({active: false});
       }
-      res.send("product destroyed")
+      res.send("product destroyed");
     } catch (error) {
-      sendError(res, error)
+      sendError(res, error);
     }
   },
-}
+};

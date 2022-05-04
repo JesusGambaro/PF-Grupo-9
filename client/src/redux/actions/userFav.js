@@ -61,7 +61,6 @@ export const deleteAllFav = (token) => {
 
 export const addFav = (token, product) => {
   return async (dispatch) => {
-    dispatch({type: LOADING, payload: true});
     const addFavIten = await axios.post(`${URL}`, product, {
       headers: {Authorization: `bearer ${token}`},
     });
@@ -70,13 +69,11 @@ export const addFav = (token, product) => {
       payload: [...userData,addFavIten],
     })*/
     dispatch(filtrarLosFav(product.productId, true));
-    dispatch({type: LOADING, payload: false});
   };
 };
 
 const filtrarLosFav = (idFav = null, isFavorite) => {
   return async (dispatch, getState) => {
-    dispatch({type: LOADING, payload: true});
     let filtered = getState().root.genderData;
     let allDataCopy = getState().root.allDataCopy;
     let sales = getState().root.sales;
@@ -99,6 +96,5 @@ const filtrarLosFav = (idFav = null, isFavorite) => {
     dispatch({type: GET_ALL_SALES, payload: sales});
     dispatch({type: LOAD_GENDERS, payload: filtered});
     dispatch(leftSideFilter());
-    dispatch({type: LOADING, payload: false});
   };
 };

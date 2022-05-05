@@ -18,7 +18,7 @@ function Details() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id, model } = useParams();
-  const { detail, loading, detailColor, allData } = useSelector(
+  const { detail, loading, detailColor, allData,allDataCopy } = useSelector(
     (state) => state.root
   );
   const token = window.localStorage.getItem("token");
@@ -124,6 +124,7 @@ function Details() {
   };
 
   useEffect(() => {
+    window.scroll({ top: 0, behavior: "smooth" });
     setReload(false);
     setImages([]);
     setColorSelect()
@@ -137,12 +138,11 @@ function Details() {
   }, [ reload, id, model]);
 
   useEffect(() => {
-    window.scroll({ top: 0, behavior: "smooth" });
-    if (allData.length > 3) {
-      const numRandom = Math.round(Math.random() * (allData.length - 3) + 3);
-      setRelatedProduct(allData.slice(numRandom - 3, numRandom));
+    if (allDataCopy.length > 3) {
+      const numRandom = Math.round(Math.random() * (allDataCopy.length - 3) + 3);
+      setRelatedProduct(allDataCopy.slice(numRandom - 3, numRandom));
     } else if (allData.length === 0) dispatch(bringAllData());
-  }, [reload, allData, detail]);
+  }, [reload, allData, detail,id,model]);
 
   useEffect(()=>{
     return () => dispatch(clearDetail());

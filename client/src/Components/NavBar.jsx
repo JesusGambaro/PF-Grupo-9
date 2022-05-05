@@ -13,6 +13,7 @@ import {roleUser} from "../redux/actions/Loginregister";
 import {useDispatch, useSelector} from "react-redux";
 import Swal from "sweetalert2";
 import {getUserFav} from "../redux/actions/userFav";
+import bringAllData from "../redux/actions/bringAllData";
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,19 +21,23 @@ const NavBar = () => {
   const [logueado, setLogueado] = useState(false);
   const [searchParam, setSearchParam] = useState("");
   const [profileName, setProfileName] = useState("Profile");
-  const {role} = useSelector((store) => store.root);
+  const {role, allData} = useSelector((store) => store.root);
   const token = window.localStorage.getItem("token");
-  
+
   useEffect(() => {
- /*    if (!window.localStorage.getItem("token")) {
+    /*    if (!window.localStorage.getItem("token")) {
       navigate("/home/login");
     } else { */
-      if (role.admin) setProfileName("Dashboard");
-      else if (role.admin === undefined) dispatch(roleUser(token));
-      else setProfileName("Profile");
-    
+    if (role.admin) setProfileName("Dashboard");
+    else if (role.admin === undefined && token) dispatch(roleUser(token));
+    else setProfileName("Profile");
   }, [dispatch, navigate, role.admin, token]);
 
+  useEffect(() => {
+    if (!allData.length) dispatch(bringAllData());
+    if (token) dispatch(getUserFav(token));
+    dispatch(leftSideFilter());
+  }, [dispatch]);
   function abrirYcerrar() {
     setDropDown(!dropDown);
   }
@@ -99,7 +104,7 @@ const NavBar = () => {
         <li onClick={() => {}}>
           <NavLink
             onClick={() => {
-              dispatch(getUserFav(token));
+              if (token) dispatch(getUserFav(token));
               dispatch(resetState());
               dispatch(resetFilters());
               dispatch(genderFilter("All"));
@@ -111,7 +116,7 @@ const NavBar = () => {
         </li>
         <li
           onClick={() => {
-            dispatch(getUserFav(token));
+            if (token) dispatch(getUserFav(token));
             dispatch(sortByGender("Male"));
             dispatch(resetFilters());
             dispatch(genderFilter("Male"));
@@ -122,7 +127,7 @@ const NavBar = () => {
         </li>
         <li
           onClick={() => {
-            dispatch(getUserFav(token));
+            if (token) dispatch(getUserFav(token));
             dispatch(sortByGender("Female"));
             dispatch(resetFilters());
             dispatch(genderFilter("Female"));
@@ -132,8 +137,8 @@ const NavBar = () => {
           WOMEN
         </li>
         <li
-          onClick={() => {
-            dispatch(getUserFav(token));
+          onClick={async () => {
+            if (token) dispatch(getUserFav(token));
             dispatch(sortByGender("Kids"));
             dispatch(resetFilters());
             dispatch(genderFilter("Kids"));
@@ -184,7 +189,11 @@ const NavBar = () => {
               </DropdownMenu>
             </Dropdown>
           ) : (
-            <NavLink to="/home/login" className="text-dark" style={{textDecoration:"none"}}>
+            <NavLink
+              to="/home/login"
+              className="text-dark"
+              style={{textDecoration: "none"}}
+            >
               LogIn
             </NavLink>
           )}

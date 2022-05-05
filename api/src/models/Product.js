@@ -78,7 +78,7 @@ module.exports = (sequelize) => {
         if (tempDiscount === 0) {
           return tempPrice
         } else {
-          return (tempPrice * (100 - tempDiscount)) / 100
+          return Math.round((tempPrice * (100 - tempDiscount)) / 100)
         }
       },
     },
@@ -91,7 +91,15 @@ module.exports = (sequelize) => {
           }
         },
       },
-      defaultValue: 4,
+      defaultValue: 0,
+    },
+    ratingAmount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
   })
 }

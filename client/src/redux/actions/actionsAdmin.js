@@ -10,7 +10,9 @@ const SEARCH_PRODUCT_A = "@admin/searchProduct";
 const GET_ALL_GAIN = "@admin/getAllGain";
 const UPDATE_ORDER = "@admin/updateOrder";
 const UPDATE_PRODUCT = "@admin/updatePrdouct";
-
+const POST_PRODUCT = "@admin/postProduct";
+const LOADING_A = "@admin/loading";
+const UPDATE_FORM_PRODUCT = "@admin/updateFormProduct";
 export {
   GET_ALL_PRODUCTS_A,
   SEARCH_USER_A,
@@ -23,5 +25,8 @@ export {
   GET_ORDER_BY_STATUS,
   GET_ALL_GAIN,
   UPDATE_ORDER,
-  UPDATE_PRODUCT
+  UPDATE_PRODUCT,
+  POST_PRODUCT,
+  UPDATE_FORM_PRODUCT,
+  LOADING_A
 };

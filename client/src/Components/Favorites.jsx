@@ -28,27 +28,27 @@ const CardProduct = ({ id, product, deleteFavItem, addCartItem }) => {
         <p>{brand}</p>
       </div>
       <div className="actions">
-        <div className="cart_detail">
-          <button
-            className="addToCartButton"
-            onClick={() => addCartItem(product)}
-          >
-            <i className="bi bi-bag" title="Add to cart">
-              &nbsp;
-            </i>
-            <p>Add to cart</p>
-          </button>
-          <NavLink
-            to={`/home/${product.id}/${product.model}`}
-            style={{ color: "black", textDecoration: "none" }}
-          >
-            <i className="bi bi-toggles2" title="View details"></i>
-            <p>View Details</p>
-          </NavLink>
-        </div>
-
-        <button className="deleteButton" onClick={(e) => deleteFavItem(id,"oneItem")}>
-          <i className="bi bi-trash"></i> <p>Delete</p>
+        <button
+          className="addToCartButton"
+          onClick={() => addCartItem(product)}
+        >
+          <i className="bi bi-bag" title="Add to cart">
+            &nbsp;
+          </i>
+          <p>Add to cart</p>
+        </button>
+        <NavLink
+          to={`/home/${product.id}/${product.model}`}
+          style={{ color: "black", textDecoration: "none" }}
+        >
+          <i className="bi bi-toggles2" title="View details"></i>
+          <p>View Details</p>
+        </NavLink>
+        <button
+          className="deleteButton"
+          onClick={(e) => deleteFavItem(product.id, "oneItem")}
+        >
+          <i className="bi bi-trash"></i> <p>Delete Favorite</p>
         </button>
       </div>
     </div>
@@ -59,7 +59,6 @@ const Favorites = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const favUser = useSelector((state) => state.root.favUser);
-  //console.log(favUser);
   useEffect(() => {
     if (!token || (token && !token.length)) {
       //dispatch(loadingCartBoolean(true))
@@ -83,9 +82,10 @@ const Favorites = () => {
   }, [dispatch, addFav, navigate, token]);
   const handleDeleteFav = (id, type) => {
     Swal.fire({
-      text: type === "oneItem"
-      ? "Do you want to delete it?"
-      : "Do you want to delete all items?",
+      text:
+        type === "oneItem"
+          ? "Do you want to delete it?"
+          : "Do you want to delete all items?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -97,7 +97,6 @@ const Favorites = () => {
           ? dispatch(deleteFavItem(id, token))
           : dispatch(deleteAllFav(token));
       }
-      console.log("token: ",token);
     });
   };
   const handleAddCart = (e) => {
@@ -106,7 +105,6 @@ const Favorites = () => {
       sizes[element.size] = element.size;
     });
     if (token) {
-      console.log("addCartFav");
       Swal.fire({
         title: "Select a size",
         input: "select",
@@ -119,7 +117,7 @@ const Favorites = () => {
         if (result.isConfirmed) {
           const product = { productId: e.id, size: result.value };
           dispatch(addCart(token, product));
-          
+
           Swal.fire({
             position: "bottom-end",
             icon: "success",
@@ -155,7 +153,10 @@ const Favorites = () => {
               })}
           </div>
           <div className="fav-buttons">
-            <button className="deleteAll-button" onClick={() => handleDeleteFav(0,"all")}>
+            <button
+              className="deleteAll-button"
+              onClick={() => handleDeleteFav(0, "all")}
+            >
               <i className="bi bi-trash"></i> Delete all
             </button>
           </div>

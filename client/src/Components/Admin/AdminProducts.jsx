@@ -22,11 +22,11 @@ const CardProduct = ({shoe, editShoeFunctions}) => {
   const [confirmDialog, setConfirmDialog] = useState(false);
   const {role} = useSelector((store) => store.root);
   const handleDeleteProduct = (id) => {
-    if (role.admin)
+    if (role.admin){
       dispatch(deleteShoe(window.localStorage.getItem("token"), id));
+    }
     else if (role.admin === false) navigate("/home");
   };
-  //console.log(shoe);
   return (
     <div className="product-card">
       {confirmDialog && (
@@ -77,7 +77,6 @@ const AdminProducts = () => {
   const handleShoeToEdit = (param) => {
     if (param) {
       let newShoe = {};
-      console.log("-------------------------New Shoe-------------------------");
       Object.keys(param).map((e) => {
         let value = param[e];
         switch (e) {
@@ -122,8 +121,6 @@ const AdminProducts = () => {
         }
       });
       setShoeToEdit(newShoe);
-      console.log(newShoe);
-      console.log("-------------------------New Shoe-------------------------");
     } else setShoeToEdit(param);
   };
   const {products, loading} = useSelector((state) => state.admin);
@@ -136,28 +133,18 @@ const AdminProducts = () => {
     : (document.body.style.overflow = "auto");
 
   useEffect(() => {
-    if (window.localStorage.getItem("token")) {
-      const token = window.localStorage.getItem("token");
-      if (role.admin) {
-        if (!products.length) dispatch(getAllProductsAdmin(token));
-        if (!genders.length) dispatch(getAllGenders());
-        dispatch(roleUser(token));
-      } else if (role.admin === false) {
-        navigate("/home");
-      }
+    const token = window.localStorage.getItem("token");
+    if (!token || (token && !token.length)) navigate("/home");
+    else {
+    }
+    if (role.admin) {
+      if (!products.length) dispatch(getAllProductsAdmin(token));
+      if (!genders.length) dispatch(getAllGenders(token));
+      dispatch(roleUser(token));
+    } else if (role.admin === false) {
+      navigate("/home");
     }
   }, [dispatch, navigate, products.length, role.admin]);
-
-  useEffect(() => {
-    if (window.localStorage.getItem("token")) {
-      const token = window.localStorage.getItem("token");
-      if (role.admin) {
-        dispatch(getAllProductsAdmin(token));
-      } else if (role.admin === false) {
-        navigate("/home");
-      }
-    }
-  }, [products.length, dispatch, navigate, role.admin]);
   /* ---------------------------------- searh --------------------------------- */
   const [searchParam, setSearchParam] = useState("");
   const handleSearch = (e) => {
@@ -229,9 +216,7 @@ const AdminProducts = () => {
                   />
                 );
               })
-            ) : (
-              <h2>No results</h2>
-            )}
+            ) : (<h2>No results</h2>)}
             <Pagination />
           </div>
         )}

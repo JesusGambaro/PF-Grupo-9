@@ -11,7 +11,7 @@ import {brands, colors, sizes} from "./data";
 const LeftSideFilters = () => {
   const {categories, filters} = useSelector((state) => state.root);
   const dispatch = useDispatch();
-  const [range, setRange] = useState({minValue: 0, maxValue: 75000});
+  const [range, setRange] = useState({minValue: 0, maxValue: 1000});
   const [checkeds, setCheckeds] = useState([]);
   useEffect(() => {
     dispatch(getAllCategories());
@@ -71,8 +71,8 @@ const LeftSideFilters = () => {
         <h4>Price</h4>
         <MultiRangeSlider
           min={0}
-          max={75000}
-          step={10000}
+          max={1000}
+          step={10}
           ruler={false}
           label={true}
           preventWheel={true}
@@ -105,14 +105,14 @@ const LeftSideFilters = () => {
         </div>
       </div>
       <div className="offer-filter">
-        <h4>Sale</h4>
+        <h4>Discount</h4>
         <Checkbox
-          data={"On sale"}
+          data={"On Discount"}
           change={(e) => {
-            handleCheckChange(e, "Sale", "On Sale");
-            handleCheckboxChange("On Sale");
+            handleCheckChange(e, "discount", "On Discount");
+            handleCheckboxChange("On Discount");
           }}
-          selected={checkeds.includes("On Sale")}
+          selected={checkeds.includes("On Discount")}
         />
       </div>
 

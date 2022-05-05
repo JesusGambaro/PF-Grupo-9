@@ -7,6 +7,7 @@ const { verifyToken } = require("../helpers/verify.js")
 const { simpleToken } = require("../helpers/simpleToken.js")
 const { generatePassword } = require("../helpers/generatePassword.js")
 const { emailForgotPassword } = require("../helpers/emailForgotPassword.js")
+const { getTestMessageUrl } = require("nodemailer")
 
 module.exports = {
   userSingUp: async (req, res) => {
@@ -155,6 +156,18 @@ module.exports = {
       sendError(res, error)
     }
   },
+  getSuperAdmin: async (req, res) => {
+    try {
+      const decodedToken = await verifyToken(req, res)
+      const admin = await User.findByPk(decodedToken.id)
+      if (admin.email === "admin@gmail.com") {
+        return res.send({ superAdmin: true })
+      }
+      return res.send({ superAdmin: false })
+    } catch (error) {
+      sendError(res, error)
+    }
+  },
   getAllUsers: async (req, res) => {
     try {
       const { search = "", isAdmin } = req.query
@@ -191,17 +204,21 @@ module.exports = {
   },
   deleteUser: async (req, res) => {
     try {
-      const { email } = req.params
-      const user = await User.findOne({ where: { email } })
-      const removedUser = await User.destroy({
-        where: { email },
+      const decodedToken = await verifyToken(req, res)
+      const userWillingToDelete = await User.findOne({
+        where: { id: decodedToken.id },
       })
-      if (removedUser) {
+      const { email } = req.params
+      if (userWillingToDelete.dataValues.email === "admin@gmail.com") {
+        const user = await User.findOne({ where: { email } })
         await Review.destroy({ where: { userId: user.id } })
+        await User.destroy({
+          where: { email },
+        })
         return res.send({ msg: `User ${email} removed` })
       }
-      return res.status(400).send({
-        error: `User ${email} doesnt exist`,
+      return res.send({
+        msg: `User ${userWillingToDelete.dataValues.email} has no permitions to delete other users`,
       })
     } catch (error) {
       sendError(res, error)
@@ -209,19 +226,28 @@ module.exports = {
   },
   changeUsersRole: async (req, res) => {
     try {
-      const { email, adminState } = req.body
-      const foundUser = await User.findOne({
-        where: { email },
+      const decodedToken = await verifyToken(req, res)
+      const userWillingToChangeRole = await User.findOne({
+        where: { id: decodedToken.id },
       })
-      if (foundUser) {
-        foundUser.isAdmin = adminState
-        foundUser.save()
-        return res.send(
-          `${email} was changed to ${adminState ? "Admin" : "User"}`
-        )
-      } else {
-        return res.send("The email passed was not found")
+      const { email, adminState } = req.body
+      if (userWillingToChangeRole.dataValues.email === "admin@gmail.com") {
+        const foundUser = await User.findOne({
+          where: { email },
+        })
+        if (foundUser) {
+          foundUser.isAdmin = adminState
+          foundUser.save()
+          return res.send(
+            `${email} was changed to ${adminState ? "Admin" : "User"}`
+          )
+        } else {
+          return res.send("The email passed was not found")
+        }
       }
+      return res.send({
+        msg: `User ${userWillingToChangeRole.dataValues.email} has no permitions to change other users role`,
+      })
     } catch (error) {
       return sendError(res, error)
     }

@@ -22,7 +22,9 @@ const orderInclude = {
       include: { model: Product, include: { model: Image, limit: 1 } },
     },
     { model: User },
+    { model: Payment },
   ],
+  order: [["id", "DESC"]],
 }
 
 module.exports = {
@@ -37,12 +39,13 @@ module.exports = {
               include: { model: Product, include: { model: Image, limit: 1 } },
             },
             { model: User },
+            { model: Payment },
           ],
+          order: [["id", "DESC"]],
         })
         return res.send(orderById)
       }
       if (delivered) {
-        console.log(delivered)
         const orderSearched = await Order.findAll({
           where: {
             [Op.or]: [
@@ -60,7 +63,9 @@ module.exports = {
               include: { model: Product, include: { model: Image, limit: 1 } },
             },
             { model: User, where: { email: { [Op.iLike]: `${email}%` } } },
+            { model: Payment },
           ],
+          order: [["id", "DESC"]],
         })
         return res.send(orderSearched)
       }
@@ -72,7 +77,9 @@ module.exports = {
               include: { model: Product, include: { model: Image, limit: 1 } },
             },
             { model: User, where: { email: { [Op.iLike]: `${email}%` } } },
+            { model: Payment },
           ],
+          order: [["id", "DESC"]],
         })
         return res.send(orderSearchedEmail)
       }
@@ -95,7 +102,9 @@ module.exports = {
             include: { model: Product, include: { model: Image, limit: 1 } },
           },
           { model: User },
+          { model: Payment },
         ],
+        order: [["id", "DESC"]],
       })
       if (userOrders.length) {
         return res.send(userOrders)
@@ -122,7 +131,7 @@ module.exports = {
         notes,
       } = order
       const { id, card } = paymentMethod
-      const { brand, funding } = card
+      const { brand, funding, last4 } = card
       const stripe = new Stripe(process.env.STRIPEKEY)
       const decodedToken = await verifyToken(req, res)
       const userId = decodedToken.id
@@ -139,9 +148,10 @@ module.exports = {
           },
         ],
       })
+      const finalTotal = total * 100
       const owner = await User.findOne({ where: { id: userId } })
       const payment = await stripe.paymentIntents.create({
-        amount: total,
+        amount: finalTotal,
         currency: "USD", //ARS? MEX?
         description: "footwears",
         payment_method: id,
@@ -166,6 +176,7 @@ module.exports = {
           paymentId: id,
           cardBrand: brand,
           funding,
+          last4,
         })
         await orderCreated.addShoppingCartItems(allShoppingCarts)
         await orderCreated.setUser(owner)
@@ -243,7 +254,9 @@ module.exports = {
             include: { model: Product, include: { model: Image, limit: 1 } },
           },
           { model: User },
+          { model: Payment },
         ],
+        order: [["id", "DESC"]],
       })
       res.send(lastOrders)
     } catch (error) {

@@ -11,20 +11,20 @@ import {useState} from "react";
 import usePagination from "../hooks/usePagination";
 const Shoes = () => {
   const dispatch = useDispatch();
-  const shoes = useSelector((state) => state.root);
+  const {allData, loading, genderActual} = useSelector((state) => state.root);
   const token = window.localStorage.getItem("token");
   useEffect(() => {
-    if (!shoes.allData.length) dispatch(bringAllData());
-    dispatch(getUserFav(token));
+    if (!allData.length) dispatch(bringAllData());
+    if (token) dispatch(getUserFav(token));
     dispatch(leftSideFilter());
   }, [dispatch]);
+
   const [toggle, setToggle] = useState(true);
-  const {allData, loading, genderActual} = shoes;
   const {Pagination, dataPerPage} = usePagination(allData, 12, 4);
   return (
     <div className="home-container">
       <UpSideBar
-        quantity={shoes.allData.length}
+        quantity={allData.length}
         handleToggle={(p) => setToggle(p)}
         genderActual={genderActual}
       />

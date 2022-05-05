@@ -16,7 +16,13 @@ import {useEffect} from "react";
 import {roleUser} from "../../redux/actions/Loginregister";
 import usePagination from "../../hooks/usePagination";
 import Selection from "./Selection";
-const UserCard = ({id, user, handleDeleteUser, handleUpdateUser, disabled}) => {
+import axios from "axios";
+const UserCard = ({
+  user,
+  handleDeleteUser,
+  handleUpdateUser,
+  isTheMasterOne,
+}) => {
   const [confirmState, setConfirmState] = useState(false);
   return (
     <div className="user-card">
@@ -33,7 +39,7 @@ const UserCard = ({id, user, handleDeleteUser, handleUpdateUser, disabled}) => {
       <div className="user-profile">
         <i className="bi bi-person-circle"></i>
       </div>
-      <p>$ {user.userName}</p>
+      <p>{user.userName}</p>
       <p
         className="isAdmin-pop"
         style={user.isAdmin ? {background: "#069A8E"} : {background: "#F55353"}}
@@ -44,21 +50,23 @@ const UserCard = ({id, user, handleDeleteUser, handleUpdateUser, disabled}) => {
       {user.password && (
         <p>{user.password.replace(/./g, "*").substring(0, 10)}</p>
       )}
-      <div className="actions">
-        <button
-          onClick={() => handleUpdateUser(user.email, user.isAdmin)}
-          disabled={disabled.pos === id && disabled.rep === 1}
-        >
-          <i className="bi bi-pen"></i>
-          {user.isAdmin ? "Remove admin" : "Make admin"}
-        </button>
-        <button
-          onClick={() => setConfirmState(true) /*handleDeleteUser(user.email)*/}
-          disabled={disabled.pos === id && disabled.rep === 1}
-        >
-          <i className="bi bi-trash"></i> Delete
-        </button>
-      </div>
+      {isTheMasterOne && user.email !== "admin@gmail.com" ? (
+        <div className="actions">
+          <button onClick={() => handleUpdateUser(user.email, user.isAdmin)}>
+            <i className="bi bi-pen"></i>
+            {user.isAdmin ? "Remove admin" : "Make admin"}
+          </button>
+          <button
+            onClick={
+              () => setConfirmState(true) /*handleDeleteUser(user.email)*/
+            }
+          >
+            <i className="bi bi-trash"></i> Delete
+          </button>
+        </div>
+      ) : (
+        <div className="actions"></div>
+      )}
     </div>
   );
 };
@@ -66,18 +74,35 @@ const UserCard = ({id, user, handleDeleteUser, handleUpdateUser, disabled}) => {
 const AdminCustomers = () => {
   const {users, loading} = useSelector((state) => state.admin);
   const {role} = useSelector((store) => store.root);
+  const [isTheMasterOne, setIsTheMasterOne] = useState(false);
   const {Pagination, dataPerPage} = usePagination(users, 12, 4);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    if (role.admin) {
-      const token = window.localStorage.getItem("token");
+    const token = window.localStorage.getItem("token");
+    if (!token || (token && !token.length)) navigate("/home");
+    else {
       dispatch(roleUser(token));
-      if (!users.length) {
-        dispatch(getAllUsers(token));
+      if (role.admin) {
+        if (!users.length) {
+          dispatch(getAllUsers(token));
+        }
+        (async () => {
+          const {data} = await axios.get(
+            `https://shoespfhenry.herokuapp.com/user/superAdmin`,
+            {
+              headers: {
+                Authorization: `bearer ${token}`,
+              },
+            }
+          );
+          setIsTheMasterOne(data.superAdmin);
+        })();
+      } else if (role.admin === false) {
+        navigate("/home");
+      } else {
+        dispatch(roleUser(token));
       }
-    } else if (role.admin === false) {
-      navigate("/home");
     }
   }, [dispatch, navigate, role.admin, users]);
 
@@ -177,14 +202,7 @@ const AdminCustomers = () => {
                     handleUpdateUser={(email, state) =>
                       handleUpdateUser(email, state)
                     }
-                    disabled={users.reduce(
-                      (prev, cur, i) => ({
-                        ...prev,
-                        rep: cur.isAdmin ? prev.rep + 1 : prev.rep,
-                        pos: cur.isAdmin ? i : 0,
-                      }),
-                      {rep: 0}
-                    )}
+                    isTheMasterOne={isTheMasterOne}
                   />
                 )
               )

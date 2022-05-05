@@ -21,13 +21,13 @@ const usePagination = (data, cardsPerPage, pageLimit) => {
       return limit <= pages && limit;
     });
   };
-/*   useEffect(() => {
+  useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   }, [currentPage]);
- */
+
   const Pagination = () => {
     return !data.length ? (
       <div className="pagination-container"></div>

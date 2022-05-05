@@ -20,24 +20,23 @@ import {
   CarouselItem,
   CarouselIndicators,
 } from "reactstrap";
-import { addCart } from "../redux/actions/userCart";
-
+import {addCart} from "../redux/actions/userCart";
+import {getUserFav} from "../redux/actions/userFav";
 export default function LandingPage() {
-  
   const dispatch = useDispatch();
-
-    useEffect(()=>{
-      dispatch(getAllSales())
-    },[dispatch,addCart]) 
+  const token = window.localStorage.getItem("token");
+  const shoes = useSelector((state) => state.root);
+  useEffect(() => {
+    if (!shoes.allData.length) dispatch(bringAllData());
+    if (token) dispatch(getUserFav(token));
+  }, [dispatch, addCart]);
 
   // State for Active index
   const sales = useSelector((state) => state.root.sales);
   const [activeIndex, setActiveIndex] = React.useState(0);
 
-
   // State for Animation
   const [animating, setAnimating] = React.useState(false);
-  
 
   // Sample items for Carousel
   const items = [
@@ -51,7 +50,7 @@ export default function LandingPage() {
       /* caption: 'Sample Caption Two', */ src: "https://http2.mlstatic.com/D_NQ_993577-MLA49602953344_042022-OO.webp",
       altText: "Slide Two",
       red: "/home",
-      filtros: [{name: "sale", value: ""}],
+      filtros: [{name: "discount", value: "On Discount"}],
     },
     {
       /* caption: 'Sample Caption Two', */ src: require("../Images/LandingCarruselRunningShoes.png"),
@@ -60,7 +59,7 @@ export default function LandingPage() {
       filtros: [{name: "category", value: "Running"}],
     },
   ];
-  
+
   // Items array length
   const itemLength = items.length - 1;
 
@@ -79,10 +78,10 @@ export default function LandingPage() {
   };
 
   // Carousel Item Data
-  const carouselItemData = items.map((item) => {
+  const carouselItemData = items.map((item, i) => {
     return (
       <CarouselItem
-        key={item.src}
+        key={i}
         onExited={() => setAnimating(false)}
         onExiting={() => setAnimating(true)}
       >
@@ -97,7 +96,6 @@ export default function LandingPage() {
       </CarouselItem>
     );
   });
-  
 
   return (
     <div style={{width: "100%"}}>
@@ -136,15 +134,17 @@ export default function LandingPage() {
           />
         </Carousel>
       </div>
-      <h1 className="oferta">ON SALE</h1>
+      <h1 className="oferta">ON DISCOUNT</h1>
 
       <div className="cards-container">
         {sales.length > 0 &&
-          sales.map((shoe, i) => (
-            <div className="landing-card col col-3" >
-              <Card e={shoe} key={shoe.id}/>
-            </div>
-          ))}
+          sales.map((shoe, i) => {
+            return i < 6 ? (
+              <div key={i} className="landing-card col col-3">
+                <Card e={shoe} key={shoe.id} />
+              </div>
+            ) : null;
+          })}
       </div>
 
       <Footer />

@@ -9,6 +9,8 @@ const validation = (param, type) => {
       }
       break;
     case "amount":
+      param = Number(param);
+      if (param === 0) return "Can't be null";
       if (!/^[0-9]+$/.test(param)) {
         return "Must be just digits";
       } else if (param > 1000) return "Can't exceeds 1000";
@@ -38,15 +40,15 @@ const validation = (param, type) => {
     case "description":
       return param.length < 3
         ? "Minimum length 3"
-        : param.length > 200
-        ? "Maximum length 200"
+        : param.length > 500
+        ? "Maximum length 500"
         : "";
     default:
       return !/^[A-Za-z0-9\s]+$/g.test(param)
         ? "Must be just characters"
         : param.length < 3
         ? "Minimum length 3"
-        : param.length > 20
+        : param.length > 30
         ? "Maximum length 20"
         : "";
   }

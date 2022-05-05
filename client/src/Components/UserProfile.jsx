@@ -12,6 +12,7 @@ function UserProfile() {
   const navigate = useNavigate()
 
   useEffect(() => {
+    window.scroll({ top: 0, behavior: "smooth" });
     if (!window.localStorage.getItem("token")) {
       navigate("/home/login")
     }

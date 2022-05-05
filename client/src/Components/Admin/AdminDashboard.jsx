@@ -12,7 +12,7 @@ import {
   getLastSevenDaysOrders,
 } from "../../redux/actions/ordersAdmin";
 import {roleUser} from "../../redux/actions/Loginregister";
-import { getAllProductsAdmin } from "../../redux/actions/productsAdmin";
+import {getAllProductsAdmin} from "../../redux/actions/productsAdmin";
 
 export default function AdminDashboard() {
   const {role} = useSelector((store) => store.root);
@@ -22,17 +22,19 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (!shoes.length) dispatch(bringAllData(true));
-    if (window.localStorage.getItem("token")) {
-      const token = window.localStorage.getItem("token");
-      dispatch(roleUser(token));
+    const token = window.localStorage.getItem("token");
+    if (!token || (token && !token.length)) navigate("/home");
+    else {
       if (role.admin) {
-        dispatch(getAllProductsAdmin(token))
+        dispatch(getAllProductsAdmin(token));
         dispatch(getLastSevenDaysOrders(token));
         dispatch(getAllOrders(token));
         dispatch(getAllGain(token));
         navigate("/home/admin/dashboard");
       } else if (role.admin === false) {
         navigate("/home");
+      } else {
+        dispatch(roleUser(token));
       }
     }
   }, [dispatch, navigate, role.admin, shoes.length]);
@@ -88,21 +90,30 @@ export default function AdminDashboard() {
                       </td>
                       <td>
                         <b>
-                         
                           {e.name} {e.surname} {/* Customer name */}
                         </b>
                       </td>
                       <td>
-                      {e.user?e.user.email:'User eliminated'}
+                        {e.user ? e.user.email : "User eliminated"}
                         {/* email@example.com */}
                       </td>
                       <td>
                         ${e.total} {/* total */}
                       </td>
                       <td>
-                        <span className="badge rounded-pill alert-success">
-                          {e.delivered} {/* status */}
-                        </span>
+                        {e.delivered === "canceled" ? (
+                          <span className="badge rounded-pill alert-danger">
+                            {e.delivered} {/* status */}
+                          </span>
+                        ) : e.delivered === "completed" ? (
+                          <span className="badge rounded-pill alert-success">
+                            {e.delivered} {/* status */}
+                          </span>
+                        ) : (
+                          <span className="badge rounded-pill alert-warning">
+                            {e.delivered} {/* status */}
+                          </span>
+                        )}
                       </td>
                       <td>
                         {e.createdAt.slice(0, 10)} {/* date */}

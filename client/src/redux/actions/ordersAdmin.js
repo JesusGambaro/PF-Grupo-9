@@ -10,7 +10,7 @@ import {
 
 export const getLastSevenDaysOrders = (token) => {
   return async (dispatch) => {
-    const data = await axios.get(`http://localhost:3001/orders/ByDate`, {
+    const data = await axios.get(`/orders/ByDate`, {
       headers: { Authorization: `bearer ${token}` },
     })
     dispatch({ type: GET_LAST_SEVEN_DAYS_ORDERS, payload: data.data })
@@ -19,7 +19,7 @@ export const getLastSevenDaysOrders = (token) => {
 
 export const getAllOrders = (token) => {
   return async (dispatch) => {
-    const data = await axios.get(`http://localhost:3001/orders`, {
+    const data = await axios.get(`/orders`, {
       headers: { Authorization: `bearer ${token}` },
     })
     dispatch({ type: GET_ALL_ORDERS, payload: data.data })
@@ -28,12 +28,9 @@ export const getAllOrders = (token) => {
 
 export const getOrderDetail = (token, order) => {
   return async (dispatch) => {
-    const data = await axios.get(
-      `http://localhost:3001/orders?order=${order}`,
-      {
-        headers: { Authorization: `bearer ${token}` },
-      }
-    )
+    const data = await axios.get(`/orders?order=${order}`, {
+      headers: { Authorization: `bearer ${token}` },
+    })
 
     dispatch({ type: GET_ORDER_DETAIL, payload: data.data })
   }
@@ -41,12 +38,9 @@ export const getOrderDetail = (token, order) => {
 
 export const getOrderByEmail = (token, email) => {
   return async (dispatch) => {
-    const data = await axios.get(
-      `http://localhost:3001/orders?email=${email}`,
-      {
-        headers: { Authorization: `bearer ${token}` },
-      }
-    )
+    const data = await axios.get(`/orders?email=${email}`, {
+      headers: { Authorization: `bearer ${token}` },
+    })
 
     dispatch({ type: GET_ORDER_BY_EMAIL, payload: data.data })
   }
@@ -54,19 +48,16 @@ export const getOrderByEmail = (token, email) => {
 
 export const getOrderByStatus = (token, delivered) => {
   return async (dispatch) => {
-    const data = await axios.get(
-      `http://localhost:3001/orders?delivered=${delivered}`,
-      {
-        headers: { Authorization: `bearer ${token}` },
-      }
-    )
+    const data = await axios.get(`/orders?delivered=${delivered}`, {
+      headers: { Authorization: `bearer ${token}` },
+    })
 
     dispatch({ type: GET_ORDER_BY_EMAIL, payload: data.data })
   }
 }
 export const getAllGain = (token) => {
   return async (dispatch) => {
-    const data = await axios.get(`http://localhost:3001/orders/totalGain`, {
+    const data = await axios.get(`/orders/totalGain`, {
       headers: { Authorization: `bearer ${token}` },
     })
 
@@ -77,13 +68,13 @@ export const getAllGain = (token) => {
 export const updateOrder = (token, id, delivered) => {
   return async (dispatch) => {
     await axios.put(
-      `http://localhost:3001/orders`,
+      `/orders`,
       { delivered, id },
       {
         headers: { Authorization: `bearer ${token}` },
       }
     )
-    const data = await axios.get(`http://localhost:3001/orders?order=${id}`, {
+    const data = await axios.get(`/orders?order=${id}`, {
       headers: { Authorization: `bearer ${token}` },
     })
 

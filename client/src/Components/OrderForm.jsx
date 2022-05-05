@@ -224,7 +224,7 @@ const PaymentCheckout = () => {
    <option value="Angola">Angola</option>
    <option value="Anguilla">Anguilla</option>
    <option value="Antigua  Barbuda">Antigua & Barbuda</option>
-   <option defaultValue="Argentina" >Argentina</option>
+   <option selected={true} defaultValue="Argentina" >Argentina</option>
    <option value="Armenia">Armenia</option>
    <option value="Aruba">Aruba</option>
    <option value="Australia">Australia</option>

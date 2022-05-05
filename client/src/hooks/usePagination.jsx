@@ -21,7 +21,7 @@ const usePagination = (data, cardsPerPage, pageLimit) => {
       return limit <= pages && limit;
     });
   };
- useEffect(() => {
+  useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
